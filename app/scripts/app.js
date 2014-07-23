@@ -39,31 +39,39 @@ angular.module('WMISoapBuilder', ['ionic', 'WMISoapBuilder.controllers', 'WMISoa
 
     // Each tab has its own nav history stack:
 
-    .state('tab.dash', {
-      url: '/dash',
+    .state('tab.subjective', {
+      url: '/subjective',
       views: {
         'tab-dash': {
-          templateUrl: 'templates/tab-dash.html',
-          controller: 'DashCtrl'
+          templateUrl: 'templates/tab-subjective.html',
+          controller: 'SoapCtrl'
         }
       }
     })
 
-    .state('tab.friends', {
-      url: '/friends',
+    .state('tab.objective', {
+      url: '/objective',
       views: {
-        'tab-friends': {
-          templateUrl: 'templates/tab-friends.html',
-          controller: 'FriendsCtrl'
+        'tab-objective': {
+          templateUrl: 'templates/tab-objective.html'
         }
       }
     })
-    .state('tab.friend-detail', {
-      url: '/friend/:friendId',
+
+    .state('tab.ap', {
+      url: '/ap',
       views: {
-        'tab-friends': {
-          templateUrl: 'templates/friend-detail.html',
-          controller: 'FriendDetailCtrl'
+        'tab-ap': {
+          templateUrl: 'templates/tab-ap.html'
+        }
+      }
+    })
+
+    .state('tab.soap-detail', {
+      url: '/soap/:soapId',
+      views: {
+        'tab-soaps': {
+          templateUrl: 'templates/soap-detail.html',
         }
       }
     })
@@ -82,4 +90,3 @@ angular.module('WMISoapBuilder', ['ionic', 'WMISoapBuilder.controllers', 'WMISoa
   $urlRouterProvider.otherwise('/tab/dash');
 
 });
-
