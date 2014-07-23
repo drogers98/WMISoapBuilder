@@ -11,7 +11,7 @@ Dependencies:
  - npm install -g bower
  - bower install
 - Compass 
--  - gem install compass
+ - gem install compass
 
 Hints:
 - grunt serve:dist  -  will run in browser, once it boots up it will show ip
