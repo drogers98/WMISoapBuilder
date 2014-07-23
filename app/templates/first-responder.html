@@ -1,1 +1,25 @@
-
+<ion-header-bar class="bar-light">
+  <h1 class="title">WMI SOAP NOTE</h1>
+  <!-- need to add logo -->
+</ion-header-bar>
+<ion-content>
+  <div class="list list-inset">
+    <form ng-submit="newFirstResponder(responder)">
+      <label class="item item-input">
+        <input type="text" placeholder="First Name">
+      </label>
+      <label class="item item-input">
+        <input type="text" placeholder="Last Name">
+      </label>
+      <!-- select will need some good style refactoring -->
+      <div class="item item-input item-select">
+        <div class="input-label">
+          Level of Training
+        </div>
+        <select></select>
+      </div>
+      <h5>By using this application, you agree to the Terms of Service</h5>
+      <button type="submit" class="button button-block button-light">Accept and Continue</button>
+    </form>
+  </div>
+</ion-content>
