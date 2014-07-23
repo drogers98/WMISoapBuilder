@@ -30,10 +30,10 @@ angular.module('WMISoapBuilder', ['ionic', 'WMISoapBuilder.controllers', 'WMISoa
   // Each state's controller can be found in controllers.js
   $stateProvider
 
-    .state('first-responser', {
+    .state('first-responder', {
       url: '/',
       templateUrl: 'templates/first-responder.html',
-      controller: 'ResponderCtrl'
+      controller: 'FirstResponderCtrl'
     })
 
     // setup an abstract state for the tabs directive
