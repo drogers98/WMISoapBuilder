@@ -30,6 +30,12 @@ angular.module('WMISoapBuilder', ['ionic', 'WMISoapBuilder.controllers', 'WMISoa
   // Each state's controller can be found in controllers.js
   $stateProvider
 
+    .state('first-responser', {
+      url: '/',
+      templateUrl: 'templates/first-responder.html',
+      controller: 'ResponderCtrl'
+    })
+
     // setup an abstract state for the tabs directive
     .state('tab', {
       url: '/tab',
@@ -87,6 +93,6 @@ angular.module('WMISoapBuilder', ['ionic', 'WMISoapBuilder.controllers', 'WMISoa
     });
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/tab/dash');
+  $urlRouterProvider.otherwise('/');
 
 });
