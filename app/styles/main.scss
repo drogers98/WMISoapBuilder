@@ -48,3 +48,9 @@ a {
 }
 
 // Nav Bar for sub pages
+.bar {
+	&.bar-stable{
+		background-color: $WMIwhite;
+		background-image: none;
+	}
+}
