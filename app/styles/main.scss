@@ -15,6 +15,15 @@ $WMI_DK_grey: darken($WMIgrey, 10%);
 //Fonts
 
 
+// Mixins --------------------------
+@mixin border-radius($radius) {
+  -moz-border-radius: $radius;
+  -webkit-border-radius: $radius;
+  -ms-border-radius: $radius;
+  border-radius: $radius;
+}
+
+
 // Main Styles ---------------------
 
 // Body
@@ -44,6 +53,7 @@ a {
 		background-color: $WMIgold;
 		color: $WMIwhite;
 		border:none;
+		@include border-radius(5px);
 			&:hover{
 				background-color: $WMI_DK_gold;
 				color: $WMIwhite;
@@ -61,11 +71,35 @@ a {
 }
 
 
+.tabs {
+  background-image: none;
+	background-color: $WMIwhite;
+	a:hover {
+		color: $WMIred;
+	}
+	
+	/* Active state for tab */
+	.tab-item.tab-item-active,
+	.tab-item.active,
+	.tab-item.activated {
+	  opacity: 1;
+	  color: $WMIred;
+	  }
+
+}
 
 // First Responder Page (home after splash) -------------------------
+
+// reset for 100% height on FR page
+.scroll-content > .scroll {
+  height: 100%;
+}
+.scroll-content > .scroll > .FirstResponder {
+  height: 100%;
+}
+
 //wrapper
 .FirstResponder {
-	min-height: 100%;
 	padding: 40px;
 	// placeholder for bckrd img
 	background-color: $WMIgrey;
@@ -78,15 +112,15 @@ a {
 	h1 {
 		text-transform: uppercase;
 	}
-	
-// Overide lists div for FR page
-.list-inset{
-	background:none;
-	.item-input {
-		margin-top: 10px;
-		border:none;
-		border-radius: 5px;
+
+	// Overide lists div for FR page
+	.list-inset{
+		background:none;
+		.item-input {
+			margin-top: 10px;
+			border:none;
+			@include border-radius(5px);
+		}
 	}
-}
 	
 }
