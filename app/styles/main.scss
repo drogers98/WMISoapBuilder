@@ -1,0 +1,50 @@
+// WMI Soap Styles
+
+// Vars ----------------------------
+// Color
+$WMIgold: #E89423;
+$WMI_DK_gold: darken($WMIgold, 10%);
+$WMIblue: #244B6F;
+$WMI_DK_blue: darken($WMIblue, 10%);
+$WMIred: #8A171B;
+$WMI_DK_red: darken($WMIred, 10%);
+$WMIwhite: #FFF;
+$WMIgrey: #555555;
+$WMI_DK_grey: darken($WMIgrey, 10%);
+
+// Main Styles ---------------------
+
+// Body
+body {
+  background-color: $WMIwhite;
+  color: $WMIgrey;
+  }
+  
+// Headings
+h1, h2, h3, h4, h5 {
+	color: $WMIgrey;
+}
+
+// Links  
+a {
+	color: $WMIblue;
+		&:hover{
+			color: $WMI_DK_blue;
+		}
+}
+ 
+// Buttons. Overrides ionic button-light
+.button {
+	&.button-light {
+		background-color: $WMIgold;
+		color: $WMIwhite;
+		border:none;
+			&:hover{
+				background-color: $WMI_DK_gold;
+				color: $WMIwhite;
+				border:none;
+			}
+		}
+}
+
+// Nav Bar for sub pages
