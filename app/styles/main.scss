@@ -6,6 +6,7 @@ $WMIgold: #E89423;
 $WMI_DK_gold: darken($WMIgold, 10%);
 $WMIblue: #244B6F;
 $WMI_DK_blue: darken($WMIblue, 10%);
+$WMI_LT_blue: lighten($WMIblue, 35%);
 $WMIred: #8A171B;
 $WMI_DK_red: darken($WMIred, 10%);
 $WMIwhite: #FFF;
@@ -90,6 +91,14 @@ a {
 
 // First Responder Page (home after splash) -------------------------
 
+// Logo
+.WMIlogo {
+	width:150px;
+	height:150px;
+	margin-left: auto;
+	margin-right: auto;
+	background-color: $WMIwhite;
+}
 // reset for 100% height on FR page
 .scroll-content > .scroll {
   height: 100%;
@@ -102,8 +111,14 @@ a {
 .FirstResponder {
 	padding: 40px;
 	// placeholder for bckrd img
-	background-color: $WMIgrey;
+	background-image: url('../images/WMI_APP_BCKRD.png');
+	background-size: cover;
+    background-repeat: no-repeat;
+    background-position: right center;
 	color: $WMIwhite;
+	a {
+		color: $WMI_LT_blue;
+	}
 	h1, h5 {
 		text-align: center;
 		color: $WMIwhite;
