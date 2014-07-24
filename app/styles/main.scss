@@ -12,6 +12,9 @@ $WMIwhite: #FFF;
 $WMIgrey: #555555;
 $WMI_DK_grey: darken($WMIgrey, 10%);
 
+//Fonts
+
+
 // Main Styles ---------------------
 
 // Body
@@ -28,8 +31,10 @@ h1, h2, h3, h4, h5 {
 // Links  
 a {
 	color: $WMIblue;
+	text-decoration: underline;
 		&:hover{
 			color: $WMI_DK_blue;
+			cursor: pointer;
 		}
 }
  
@@ -53,4 +58,35 @@ a {
 		background-color: $WMIwhite;
 		background-image: none;
 	}
+}
+
+
+
+// First Responder Page (home after splash) -------------------------
+//wrapper
+.FirstResponder {
+	min-height: 100%;
+	padding: 40px;
+	// placeholder for bckrd img
+	background-color: $WMIgrey;
+	color: $WMIwhite;
+	h1, h5 {
+		text-align: center;
+		color: $WMIwhite;
+	}
+	
+	h1 {
+		text-transform: uppercase;
+	}
+	
+// Overide lists div for FR page
+.list-inset{
+	background:none;
+	.item-input {
+		margin-top: 10px;
+		border:none;
+		border-radius: 5px;
+	}
+}
+	
 }
