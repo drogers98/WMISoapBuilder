@@ -6,10 +6,10 @@
   <div class="list list-inset">
     <form ng-submit="newFirstResponder(responder)">
       <label class="item item-input">
-        <input type="text" placeholder="First Name">
+        <input type="text" placeholder="First Name" ng-model="responder.firstName">
       </label>
       <label class="item item-input">
-        <input type="text" placeholder="Last Name">
+        <input type="text" placeholder="Last Name" ng-model="responder.lastName">
       </label>
       <!-- select will need some good style refactoring -->
       <div class="item item-input item-select">
