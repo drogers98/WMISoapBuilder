@@ -98,6 +98,15 @@ angular.module('WMISoapBuilder', ['ionic', 'WMISoapBuilder.controllers', 'WMISoa
       }
     })
 
+    .state('tab.image', {
+      url: '/images',
+      views: {
+        'tab-image': {
+          templateUrl: 'templates/tab-images.html'
+        }
+      }
+    })
+
     .state('tab.overview', {
       url: '/overview',
       views: {
