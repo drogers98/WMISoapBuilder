@@ -16,7 +16,7 @@
         <div class="input-label">
           Level of Training
         </div>
-        <select></select>
+        <select ng-model="responder.trainingLevel" ng-options="trainingLevel for trainingLevel in trainingLevels"></select>
       </div>
       <h5>By using this application, you agree to the <a ng-click="termsPage()">Terms of Service.</a></h5>
       <button type="submit" class="button button-block button-light">Accept and Continue</button>

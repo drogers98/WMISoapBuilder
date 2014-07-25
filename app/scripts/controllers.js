@@ -10,7 +10,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql'])
   $scope.responderSoapsPage = function(){$state.go('soaps');}
   //get ready for JS transfer from beta
   //$scope.responder = Responders.all();
-  //$scope.trainingLevels = ['WFA','WAFA','WFR', 'WEMT'];
+  $scope.trainingLevels = ['WFA','WAFA','WFR', 'WEMT'];
 
 })
 
