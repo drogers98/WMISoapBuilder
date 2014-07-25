@@ -15,7 +15,31 @@ angular.module('WMISoapBuilder.services', ['angular-websql'])
        self.db = $webSql.openDatabase('nolsDB', '1.0', 'nols-wmi-db', 10 * 1024 * 1024);
      },
      createResponderTable: function() {
-
+       self.db.createTable('Responder', {
+         "id": {
+           "type": "INTEGER",
+           "null": "NOT NULL",
+           "primary": true,
+           "auto_increment": true
+         },
+         "created": {
+           "type": "TIMESTAMP",
+           "null": "NOT NULL",
+           "default": "CURRENT_TIMESTAMP"
+         },
+         "firstName": {
+           "type": "TEXT",
+           "null": "NOT NULL"
+         },
+         "lastName": {
+           "type": "TEXT",
+           "null": "NOT NULL"
+         },
+         "trainingLevel": {
+           "type": "TEXT",
+           "null": "NOT NULL"
+         }
+       });
      },
      saveResponder: function() {
 
