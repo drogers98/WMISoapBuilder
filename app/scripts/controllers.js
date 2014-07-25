@@ -5,7 +5,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql'])
 
 })
 
-.controller('FirstResponderCtrl', function($scope, $state, Responders) {
+.controller('FirstResponderCtrl', function($scope, $state, $stateParams, Responders) {
   $scope.termsPage = function(){$state.go('terms');}
   $scope.responderSoapsPage = function(){$state.go('soaps');}
   //get ready for JS transfer from beta
