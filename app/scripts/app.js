@@ -66,9 +66,8 @@ angular.module('WMISoapBuilder', ['ionic', 'WMISoapBuilder.controllers', 'WMISoa
     .state('tab.subjective', {
       url: '/subjective',
       views: {
-        'tab-dash': {
+        'tab-subjective': {
           templateUrl: 'templates/tab-subjective.html',
-          controller: 'SoapCtrl'
         }
       }
     })
