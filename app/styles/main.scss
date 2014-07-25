@@ -7,9 +7,11 @@ $WMI_DK_gold: darken($WMIgold, 10%);
 $WMIblue: #244B6F;
 $WMI_DK_blue: darken($WMIblue, 10%);
 $WMI_LT_blue: lighten($WMIblue, 35%);
+$WMI_Really_LT_blue: lighten($WMIblue, 55%);
 $WMIred: #8A171B;
 $WMI_DK_red: darken($WMIred, 10%);
 $WMIwhite: #FFF;
+$WMI_DK_white: darken($WMIwhite, 5%);
 $WMIgrey: #555555;
 $WMI_DK_grey: darken($WMIgrey, 10%);
 
@@ -66,15 +68,19 @@ a {
 // Nav Bar for sub pages
 .bar {
 	&.bar-stable{
-		background-color: $WMIwhite;
+		background-color: $WMIgold;
 		background-image: none;
+		.title {
+			font-weight: bold;
+		}
 	}
 }
 
 
 .tabs {
   background-image: none;
-	background-color: $WMIwhite;
+  background-color: $WMI_DK_white;
+	
 	a:hover {
 		color: $WMIred;
 	}
@@ -138,4 +144,40 @@ a {
 		}
 	}
 	
+}
+
+// SOAP Pages -----------------------------------------------------
+
+// Hide textarea resize
+textarea {
+resize:none;
+}
+
+// Soap Specific
+.SOAP {
+	h5 {
+		margin: 0px;
+		font-weight: bold;
+		background-color: $WMIblue;
+		color: $WMIwhite;
+		padding:15px;
+		text-transform: uppercase;
+		a {
+			float:right;
+			display: block;
+			text-transform: none;
+			width:20px;
+			height:20px;
+			text-align: center;
+			text-decoration: none;
+			color: $WMIgold;
+			background-color: $WMIwhite;
+			@include border-radius(50%);
+			border: 1px solid $WMIgold;
+			&:hover {
+				background-color: $WMI_DK_white;
+			}
+			
+		}
+	}
 }
