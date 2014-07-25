@@ -41,7 +41,15 @@ angular.module('WMISoapBuilder.services', ['angular-websql'])
          }
        });
      },
-     saveResponder: function() {
+     saveResponder: function(responderAttr) {
+       self.db.insert('Responder', {
+         "firstName": responderAttr.responder.firstName,
+         "lastName": responderAttr.responder.lastName,
+         "trainingLevel": responderAttr.responder.trainingLevel
+       }).then(function(results){
+         //todo => save last inserted id for current responder
+         console.log(results.insertId);
+       })
 
      },
      allResponders: function() {
@@ -52,12 +60,17 @@ angular.module('WMISoapBuilder.services', ['angular-websql'])
 
  })
 
-.factory('Responders', function() {
+.factory('Responders', function(nolsDB) {
   var responders = [];
 
   return {
     createNewResponder: function(responderData){
-      //todo => pass data to websql methods
+      //first create responder table if not exist
+      nolsDB.createResponderTable();
+      //alter passed responder json
+      var responderAttr = angular.fromJson(responderData);
+      //call save user passing altered json
+      nolsDb.saveResponder(responderAttr);
     },
     all: function() {
       //todo => return all responders
