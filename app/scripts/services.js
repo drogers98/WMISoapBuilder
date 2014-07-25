@@ -12,7 +12,7 @@ angular.module('WMISoapBuilder.services', ['angular-websql'])
 
    return {
      init: function() {
-       
+       self.db = $webSql.openDatabase('nolsDB', '1.0', 'nols-wmi-db', 10 * 1024 * 1024);
      },
      createResponderTable: function() {
 

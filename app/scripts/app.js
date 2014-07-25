@@ -8,8 +8,10 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('WMISoapBuilder', ['ionic', 'WMISoapBuilder.controllers', 'WMISoapBuilder.services', 'angular-websql'])
 
-.run(function($ionicPlatform) {
+.run(function($ionicPlatform, nolsDB) {
+  nolsDB.init();
   $ionicPlatform.ready(function() {
+
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
     if(window.cordova && window.cordova.plugins.Keyboard) {
