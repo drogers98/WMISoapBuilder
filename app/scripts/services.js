@@ -65,11 +65,11 @@ angular.module('WMISoapBuilder.services', ['angular-websql'])
 
   return {
     createNewResponder: function(responderData){
-      //first create responder table if not exist
+      //Create responder table if not exist
+      //Alter passed responder json
+      //Call save responder passing altered json
       nolsDB.createResponderTable();
-      //alter passed responder json
       var responderAttr = angular.fromJson(responderData);
-      //call save user passing altered json
       nolsDb.saveResponder(responderAttr);
     },
     all: function() {
