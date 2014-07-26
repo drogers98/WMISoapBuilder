@@ -1,7 +1,6 @@
-<ion-content>
-
+<ion-content padding="yes">
 <div class="FirstResponder">
-<div class="WMIlogo"></div>
+<div class="CenteredLogo WMIlogo">logo here</div>
 <h1>Welcome to WMI SOAP Note</h1>
   <div class="list list-inset">
     <form ng-submit="newFirstResponder(responder)">
@@ -14,7 +13,7 @@
       <!-- select will need some good style refactoring -->
       <div class="item item-input item-select">
         <div class="input-label">
-          Level of Training
+          Current Certification
         </div>
         <select ng-model="responder.trainingLevel" ng-options="trainingLevel for trainingLevel in trainingLevels"></select>
       </div>
