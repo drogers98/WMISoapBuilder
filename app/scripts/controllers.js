@@ -2,7 +2,7 @@
 angular.module('WMISoapBuilder.controllers', ['angular-websql'])
 
 .controller('WMICtrl', function($scope,$state) {
-  
+
 })
 
 .controller('FirstResponderCtrl', function($scope, $state, $stateParams, Responders) {

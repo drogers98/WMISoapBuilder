@@ -28,12 +28,19 @@ $WMI_DK_grey: darken($WMIgrey, 10%);
 
 
 // Main Styles ---------------------
-
-// Body
-body {
+//html
+html {
+width: 100%;
+height: 100%;
   background-color: $WMIwhite;
+  background-image: url('../images/WMI_APP_BCKRD_Crushed.png');
+	background-size: cover;
+    background-repeat: no-repeat;
+    background-position: right center;
   color: $WMIgrey;
   }
+// Body
+
   
 // Headings
 h1, h2, h3, h4, h5 {
@@ -52,15 +59,26 @@ a {
  
 // Buttons. Overrides ionic button-light
 .button {
-	&.button-light {
-		background-color: $WMIgold;
+	&.button-light, &.button-calm {
+		
 		color: $WMIwhite;
 		border:none;
 		@include border-radius(5px);
 			&:hover{
-				background-color: $WMI_DK_gold;
 				color: $WMIwhite;
 				border:none;
+			}
+		}
+		&.button-light {
+		background-color: $WMIgold;
+			&:hover{
+				background-color: $WMI_DK_gold;
+			}
+		}
+		&.button-calm {
+		background-color: $WMI_LT_blue;
+			&:hover{
+				background-color: $WMIblue;
 			}
 		}
 }
@@ -72,6 +90,14 @@ a {
 		background-image: none;
 		.title {
 			font-weight: bold;
+		}
+		
+		.button {
+			background: none;
+			border-color: $WMI_DK_gold;
+			&:hover{
+				background-color: $WMI_DK_gold;
+			}
 		}
 	}
 }
@@ -94,17 +120,36 @@ a {
 	  }
 
 }
+.card {
+.item-divider{
+	background-color: $WMIblue;
+	border-color: $WMIblue;
+	color: $WMIwhite;
+	font-weight: normal;
+}
+}
 
-// First Responder Page (home after splash) -------------------------
+// Logos
 
-// Logo
-.WMIlogo {
+.CenteredLogo {
 	width:150px;
 	height:150px;
 	margin-left: auto;
 	margin-right: auto;
-	background-color: $WMIwhite;
+	background-color: $WMI_DK_white;
+	text-align: center;
 }
+.WMIlogo {
+	margin-top: 20px;
+}
+
+.NOLSlogo {
+	
+}
+
+// First Responder Page (home after splash) -------------------------
+
+
 // reset for 100% height on FR page
 .scroll-content > .scroll {
   height: 100%;
@@ -115,12 +160,8 @@ a {
 
 //wrapper
 .FirstResponder {
-	padding: 40px;
+	padding: 20px;
 	// placeholder for bckrd img
-	background-image: url('../images/WMI_APP_BCKRD_Crushed.png');
-	background-size: cover;
-    background-repeat: no-repeat;
-    background-position: right center;
 	color: $WMIwhite;
 	a {
 		color: $WMI_LT_blue;
