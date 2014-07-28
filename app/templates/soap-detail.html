@@ -4,7 +4,7 @@
   </ion-nav-buttons>
 
   <ion-nav-buttons side="right">
-  <button class="button icon ion-edit" ng-click="data.showDelete = !data.showDelete"></button>
+  <button class="button icon ion-ios7-compose-outline" ng-click="data.showDelete = !data.showDelete"></button>
     <button class="button icon ion-ios7-upload-outline" ng-click="data.showDelete = !data.showDelete"></button>
   </ion-nav-buttons>
 
@@ -51,14 +51,14 @@
       <div class="list">
         <ion-list>
           <ion-item class="item-text-wrap">{{soap.patientComplaint}}</ion-item>
-          <div class="list list-inset">
+         
           <ion-item><strong>Onset:</strong> {{soap.patientOnset}}</ion-item>
           <ion-item class="item-text-wrap"><strong>Provokes/Palliates:</strong> {{soap.patientPPalliates}}</ion-item>
           <ion-item class="item-text-wrap"><strong>Quality:</strong> {{soap.patientQuality}}</ion-item>
           <ion-item class="item-text-wrap"><strong>Radiates:</strong> {{soap.patientRadiates}}</ion-item>
           <ion-item class="item-text-wrap"><strong>Severity:</strong> {{soap.patientSeverity}}</ion-item>
           <ion-item class="item-text-wrap"><strong>Time:</strong> {{soap.patientTime}}</ion-item>
-		  </div>
+		  
         </ion-list>
       </div>
       
@@ -81,7 +81,62 @@
       
       <h5>Vitals</h5>
       
-      vitals here
+      <div class="row">
+		  <div class="col"></div>
+		  <div class="col">time 1</div>
+		  <div class="col">time 2</div>
+		  <div class="col">time 3</div>
+	  </div>
+      
+      <div class="row">
+		  <div class="col col-label">LOR:</div>
+		  <div class="col">1</div>
+		  <div class="col">2</div>
+		  <div class="col">3</div>
+	  </div>
+	  
+	  <div class="row">
+		  <div class="col col-label">HR:</div>
+		  <div class="col">1</div>
+		  <div class="col">2</div>
+		  <div class="col">3</div>
+	  </div>
+	  
+	  <div class="row">
+		  <div class="col col-label">RR:</div>
+		  <div class="col">1</div>
+		  <div class="col">2</div>
+		  <div class="col">3</div>
+	  </div>
+	  
+	  <div class="row">
+		  <div class="col col-label">Skin:</div>
+		  <div class="col">1</div>
+		  <div class="col">2</div>
+		  <div class="col">3</div>
+	  </div>
+	  
+	  <div class="row">
+		  <div class="col col-label">BP:</div>
+		  <div class="col">1</div>
+		  <div class="col">2</div>
+		  <div class="col">3</div>
+	  </div>
+	  
+	  <div class="row">
+		  <div class="col col-label">Pupils:</div>
+		  <div class="col">1</div>
+		  <div class="col">2</div>
+		  <div class="col">3</div>
+	  </div>
+	  
+	  <div class="row">
+		  <div class="col col-label">Temp:</div>
+		  <div class="col">1</div>
+		  <div class="col">2</div>
+		  <div class="col">3</div>
+	  </div>
+
       
       </div>
       
