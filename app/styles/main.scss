@@ -146,6 +146,20 @@ width:130px;
 margin-bottom: 20px;
 }
 
+// Delete Icon
+.item-delete .button.icon {
+	color: $WMIred
+}
+
+.margin {
+	margin-left: 10px;
+	margin-right: 10px;
+}
+
+.col-label {
+	font-weight: bold;
+}
+
 // First Responder Page (home after splash) -------------------------
 
 
@@ -196,7 +210,7 @@ resize:none;
 
 // Soap Specific
 .SOAP {
-	h5 {
+	h2, h3, h5 {
 		margin: 0px;
 		font-weight: bold;
 		background-color: $WMIblue;
@@ -206,19 +220,28 @@ resize:none;
 		a {
 			float:right;
 			display: block;
-			text-transform: none;
-			width:20px;
-			height:20px;
-			text-align: center;
+			font-size: 18px;
+			
+			
 			text-decoration: none;
-			color: $WMIgold;
-			background-color: $WMIwhite;
-			@include border-radius(50%);
-			border: 1px solid $WMIgold;
+			color: $WMIwhite;
 			&:hover {
-				background-color: $WMI_DK_white;
+				color: $WMI_DK_white;
 			}
 
 		}
+	}
+	
+	h2 {
+		background-color: $WMI_LT_blue;
+		text-align: center;
+		font-size: 18px;
+	}
+	
+	h3 {
+		background-color: $WMI_Really_LT_blue;
+		color: $WMI_DK_blue;
+		text-align: center;
+		font-size: 14px;
 	}
 }

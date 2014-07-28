@@ -81,6 +81,7 @@ angular.module('WMISoapBuilder.services', ['angular-websql'])
 
 .factory('Soaps', function() {
   //SEED DATA
+
   /*
   patientAge: wmi.patientAge,
         patientDob: wmi.patientDob,
@@ -105,13 +106,22 @@ angular.module('WMISoapBuilder.services', ['angular-websql'])
         patientAnticipatedProblems: wmi.patientAnticipatedProblems
         */
 
+
   var soaps = [
     {
     	id: 0,
+    	created: '02/24/2014',
+    	responderFirstName: 'Dan',
+    	responderLastName: 'Rogers',
+    	responderLevelOfTraining: 'WEMT',
+    	incidentDate: '02/24/2014',
+    	incidentLocation: 'Mt Moran',
+    	incidentLat: '12345678',
+    	incidentLon: '12345678',
+    	patientInitials: 'RC',
     	patientSex: 'Male',
-      patientDob: '01/02/1989',
+		patientDob: '01/02/1989',
    		patientAge: 24,
-   		created: '02/24/2014',
    		patientComplaint: 'Neck Pain',
    		patientOnset: 'rapid',
         patientPPalliates: 'Moving around makes it hurt. Staying still seems fine',
@@ -119,18 +129,19 @@ angular.module('WMISoapBuilder.services', ['angular-websql'])
         patientRadiates: 'To the right shoulder',
         patientSeverity: '8',
         patientTime: '1 hour',
-        patientSpinal: 'no',
+        patientHPI: 'Was scrambling down the CMC route on Mt. Moran, and slipped. Patient fell aprox 30 feet onto a ledge.',
+        patientSpinal: 'Yes',
         patientFound: 'Sitting upright, complaining of neck pain',
         patientExamReveals: 'Bruise to the forehead',
-        patientHistory: 'Lots of broken bones in the past, also a concussion a few months ago.',
+        patientSymptoms: 'Dizzy, lightheaded, nautious.',
         patientAllergies: 'Bee stings',
         patientMedications: 'Has epinepherine',
-        patientMedicalHistory: '',
+        patientMedicalHistory: 'Previous concussion',
         patientLastIntake: 'glass of water this morning, PB & J sandwich an hour ago.',
-        patientEventsForCause: '',
-        patientAssessment: 'Current patient assessment',
-        patientPlan: 'Have group help remove PX from camp, get them to medical facility',
-        patientAnticipatedProblems: 'exfil from the backcountry could prove problematic.' },
+        patientEventsForCause: 'Be was buzzing around, tried to swat it and fell.',
+        patientAssessment: 'Patient likely incured spinal injury on fall. Check for bee stings negligible.',
+        patientPlan: 'Have group help remove PX from camp, get them to medical facility.',
+        patientAnticipatedProblems: 'Exfil from the backcountry could prove problematic.' },
     {
     	id: 1,
     	patientSex: 'Female',
