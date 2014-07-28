@@ -6,15 +6,18 @@
   <ion-nav-buttons side="right">
     <button class="button button-clear" ng-click="data.showDelete = !data.showDelete">Edit</button>
   </ion-nav-buttons>
-
   <ion-content class="has-header">
   <a class="button button-block button-light" ng-click="subjectivePage()">NEW SOAP NOTE</a>
     <ion-list show-delete="data.showDelete">
       <ion-item class="item-icon-right" ng-repeat="soap in soaps" type="item-text-wrap" href="#/soap/{{soap.id}}">
-        {{soap.patientAge}},{{soap.patientSex}}
+        <div class="row">
+          <div class="col">{{soap.patientAge}}, {{soap.patientSex}}</div>
+          <div class="col col-25 col-offset-25">
+            {{soap.created}}
+          </div>
+        </div>
         <ion-delete-button class="ion-minus-circled" ng-click="onItemDelete(item)">
         </ion-delete-button>
-        {{soap.created}}
         <i class="icon ion-chevron-right icon-accessory"></i>
       </ion-item>
     </ion-list>
