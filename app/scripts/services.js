@@ -81,6 +81,29 @@ angular.module('WMISoapBuilder.services', ['angular-websql'])
 
 .factory('Soaps', function() {
   //SEED DATA
+  /*
+  patientAge: wmi.patientAge,
+        patientDob: wmi.patientDob,
+        chiefComplaint: wmi.chiefComplaint,
+        patientOnset: wmi.patientOnset,
+        patientPPalliates: wmi.patientPPalliates,
+        patientQuality: wmi.patientQuality,
+        patientRadiates: wmi.patientRadiates,
+        patientSeverity: wmi.patientSeverity,
+        patientTime: wmi.patientTime,
+        patientSpinal: wmi.patientSpinal,
+        patientFound: wmi.patientFound,
+        patientExamReveals: wmi.patientExamReveals,
+        patientHistory: wmi.patientHistory,
+        patientAllergies: wmi.patientAllergies,
+        patientMedications: wmi.patientMedications,
+        patientMedicalHistory: wmi.patientMedicalHistory,
+        patientLastIntake: wmi.patientLastIntake,
+        patientEventsForCause: wmi.patientEventsForCause,
+        patientAssessment: wmi.patientAssessment,
+        patientPlan: wmi.patientPlan,
+        patientAnticipatedProblems: wmi.patientAnticipatedProblems
+        */
   var soaps = [
     {id: 0, patientSex: 'Male', patientAge: 24, created: '02/24/2014', patientComplaint: 'Neck Pain' },
     {id: 1, patientSex: 'Female', patientAge: 32, created: '01/09/2014', patientComplaint: 'Broken leg'}
