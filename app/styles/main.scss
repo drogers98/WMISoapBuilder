@@ -132,19 +132,18 @@ a {
 // Logos
 
 .CenteredLogo {
-	width:150px;
-	height:150px;
 	margin-left: auto;
 	margin-right: auto;
-	background-color: $WMI_DK_white;
-	text-align: center;
+	
 }
 .WMIlogo {
+width:200px;
 	margin-top: 20px;
 }
 
 .NOLSlogo {
-
+width:130px;
+margin-bottom: 20px;
 }
 
 // First Responder Page (home after splash) -------------------------
@@ -156,6 +155,7 @@ a {
 }
 .scroll-content > .scroll > .FirstResponder {
   height: 100%;
+  
 }
 
 //wrapper
