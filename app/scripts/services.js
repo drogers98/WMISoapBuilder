@@ -71,9 +71,6 @@ angular.module('WMISoapBuilder.services', ['angular-websql'])
       nolsDB.createResponderTable();
       var responderAttr = angular.fromJson(responderData);
       nolsDb.saveResponder(responderAttr);
-    },
-    all: function() {
-      //todo => return all responders
     }
   }
 
@@ -106,11 +103,12 @@ angular.module('WMISoapBuilder.services', ['angular-websql'])
         */
   var soaps = [
     {
-    	id: 0, 
-    	patientSex: 'Male', 
-   		patientAge: 24, 
-   		created: '02/24/2014', 
-   		patientComplaint: 'Neck Pain', 
+    	id: 0,
+    	patientSex: 'Male',
+      patientDob: '01/02/1989',
+   		patientAge: 24,
+   		created: '02/24/2014',
+   		patientComplaint: 'Neck Pain',
    		patientOnset: 'rapid',
         patientPPalliates: 'Moving around makes it hurt. Staying still seems fine',
         patientQuality: 'Sharp',
@@ -126,14 +124,14 @@ angular.module('WMISoapBuilder.services', ['angular-websql'])
         patientMedicalHistory: '',
         patientLastIntake: 'glass of water this morning, PB & J sandwich an hour ago.',
         patientEventsForCause: '',
-        patientAssessment: '',
+        patientAssessment: 'Current patient assessment',
         patientPlan: 'Have group help remove PX from camp, get them to medical facility',
         patientAnticipatedProblems: 'exfil from the backcountry could prove problematic.' },
     {
-    	id: 1, 
-    	patientSex: 'Female', 
-    	patientAge: 32, 
-    	created: '01/09/2014', 
+    	id: 1,
+    	patientSex: 'Female',
+    	patientAge: 32,
+    	created: '01/09/2014',
     	patientComplaint: 'Broken leg'}
   ]
   return {

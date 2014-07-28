@@ -1,11 +1,35 @@
-<ion-view title="MY SOAPS">
+<ion-header-bar class="bar-stable nav-title-slide-ios7">
+
+  <h1 class="title">{{soap.patientSex}},{{soap.patientAge}}</h1>
+  <div class="buttons">
+    <button class="button button-clear" ng-click="data.showDelete = !data.showDelete">Edit</button>
+  </div>
+</ion-header-bar>
+<ion-view>
   <ion-content class="has-header">
-  <a class="button button-block button-light" ng-click="newSoap()">NEW SOAP NOTE</a>
-    <ion-list>
-      <ion-item class="item-icon-right" ng-repeat="soap in soaps" type="item-text-wrap" href="#/tab/soap/{{soap.id}}">
-        {{soap.sex}}
-        <i class="icon ion-chevron-right icon-accessory"></i>
-      </ion-item>
-    </ion-list>
+    <div class="SOAP">
+      <!-- remove inline style after scss fix -->
+      <h5 style="text-align:center">SOAP NOTE OUTLINE</h5>
+      <h4>I have a</h4>
+      <div class="list">
+        <ion-list>
+          <ion-item>{{soap.patientSex}}</ion-item>
+          <ion-item>{{soap.patientDob}}</ion-item>
+          <ion-item>{{soap.patientAge}}</ion-item>
+        </ion-list>
+      </div>
+
+      <h4>WHOSE CHIEF COMPLAINT IS</h4>
+      <div class="list">
+        <ion-list>
+          <ion-item>{{soap.patientComplaint}}</ion-item>
+        </ion-list>
+      </div>
+      <h4>ASSESSMENT</h4>
+      <div class="list">
+        <ion-list>
+          <ion-item>{{soap.patientAssessment}}</ion-item>
+        </ion-list>
+      </div>
   </ion-content>
 </ion-view>

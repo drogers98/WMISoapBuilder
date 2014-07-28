@@ -1,61 +1,64 @@
-<!--
-  This template loads for the 'tab.friend-detail' state (app.js)
-  'firend' is a $scope variable created in the FriendsCtrl controller (controllers.js)
-  The FriendsCtrl pulls data from the Friends service (service.js)
-  The Friends service returns an array of friend data
--->
 <ion-view title="SUBJECTIVE">
   <ion-content has-header="true" padding="true">
     <!-- subjective section 1 -->
-    <div class="list list-inset">
+    <div class="SOAP">
       <h5>I have a</h5><a>i</a>
+      <div class="list">
       <div class="item item-input item-select">
         <div class="input-label">
           Patient Sex
           <!-- leave select empty - data will be brough in through ctrl -->
         </div>
-        <select></select>
+        <select ng-model="wmi.patientGender" ng-options="gender for gender in genders"></select>
       </div>
       <label class="item item-input">
-        <input type="date" placeholder="Patient DOB">
+        <input type="date" placeholder="Patient DOB" ng-model="wmi.patientDob">
       </label>
       <label class="item item-input">
-        <input type="number" placeholder="Patient Age">
+        <input type="number" placeholder="Patient Age" ng-model="wmi.patientAge">
       </label>
     </div>
     <!-- subjective section 2 -->
-    <div class="list list-inset">
-      <h5>Who's chief complaint is</h1><a>i></a>
+    <h5>Who's chief complaint is</h1><a>i</a>
+    <div class="list">
       <label class="item item-input">
-        <input type="text" placeholder="Chief Complaint">
+        <input type="text" placeholder="Chief Complaint" ng-model="wmi.chiefComplaint">
       </label>
     </div>
     <!-- subjective section 3 -->
-    <div class="list list-inset">
+    <div class="list">
       <div class="item item-input item-select">
         <div class="input-label">
           Onset
         </div>
-        <select></select>
+        <select ng-model="wmi.patientOnset" ng-options="onset for onset in onsets"></select>
       </div>
       <label class="item item-input">
-        <input type="text" placeholder="Provokes/Palliates">
+        <input type="time" placeholder="Provokes/Palliates" ng-model="wmi.patientPPalliates">
       </label>
       <label class="item item-input">
-        <input type="text" placeholder="Quality">
+        <input type="time" placeholder="Quality" ng-model="wmi.patientQuality">
       </label>
       <label class="item item-input">
-        <input type="text" placeholder="Radiates">>
+        <input type="time" placeholder="Radiates" ng-model="wmi.patientRadiates">
       </label>
       <div class="item item-input item-select">
         <div class="input-label">
           Severity
         </div>
-        <select></select>
+        <select ng-model="wmi.patientSeverity" ng-options="severity for severity in severities"></select>
       </div>
       <label>
-        <input type="time" placeholder="Time">
+        <input type="time" placeholder="Time" ng-model="wmi.patientTime">
       </label>
+    </div>
+    <h5>MECHANISM OF INJURY/HPI</h5><a>i</a>
+    <div class="list">
+      <label class="item item-input">
+        <input type="text" placeholder="Suspected spinal" ng-model="wmi.patientSpinal">
+      </label>
+    </div>
+      <a class="button button-block button-light" href="#/tab/objective">CONTINUE TO OBJECTIVE</a>
     </div>
   </ion-content>
 </ion-view>
