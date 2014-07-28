@@ -1,13 +1,12 @@
-<ion-header-bar class="bar-stable nav-title-slide-ios7">
-  <div class="buttons">
-    <button class="button button icon ion-gear-a" ng-click="aboutPage()"></button>
-  </div>
-  <h1 class="title">MY SOAPS</h1>
-  <div class="buttons">
-    <button class="button button-clear" ng-click="data.showDelete = !data.showDelete">Edit</button>
-  </div>
-</ion-header-bar>
-<ion-view>
+<ion-view title="MY SOAPS">
+  <ion-nav-bar class="bar-stable nav-title-slide-ios7">
+    <div class="buttons">
+      <button class="button button icon ion-gear-a" ng-click="aboutPage()"></button>
+    </div>
+    <div class="buttons right-buttons">
+      <button class="button button-clear" ng-click="data.showDelete = !data.showDelete">Edit</button>
+    </div>
+  </ion-nav-bar>
   <ion-content class="has-header">
   <a class="button button-block button-light" ng-click="subjectivePage()">NEW SOAP NOTE</a>
     <ion-list show-delete="data.showDelete">
