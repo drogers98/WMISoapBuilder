@@ -2,27 +2,27 @@
   <ion-content has-header="true" padding="false">
     <div class="SOAP">
       <!-- subjective section 1 -->
-      <h5>Patient was found<a>i</a></h5>
+      <h5>Patient was found<a><icon class="ion-ios7-information"></icon></a></h5>
       <div class="list">
         <label class="item item-input">
           <input type="text" placeholder="Location" ng-model="wmi.patientFound">
         </label>
       </div>
-      <h5>Patient Exam Reveals</h5>
+      <h5>Patient Exam Reveals<a><icon class="ion-ios7-information"></icon></a></h5>
       <div class="list">
         <label class="item item-input">
           <input type="text" placeholder="Exam Revelas?" ng-model="wmi.patientExamReveals">
         </label>
       </div>
-      <h5>VITALS</h5>
-      <a class="button button-block button-light" href="#/tab/vitals/new">ADD VITALS</a>
+      <h5>Vitals<a><icon class="ion-ios7-information"></icon></a></h5>
+      <a class="button button-block button-light margin icon ion-plus-circled" href="#/tab/vitals/new"> Add Vitals</a>
       <div class="list">
         <ion-list ng-repeat="vital in vitals">
          {{vital}}
        </ion-list>
       </div>
-      <a class="button button-block button-light" href="#/tab/vitals">VIEW ALL VITALS</a>
-        <label class="item item-inpit">
+      <a class="button button-block button-light margin icon ion-ios7-eye" href="#/tab/vitals"> View All Vitals</a>
+        <label class="item item-input">
           <input type="text" placeholder="History" ng-model="wmi.patientHistory">
         </label>
         <label class="item item-input">
@@ -41,7 +41,7 @@
           <input type="text" placeholder="Events Leading up incident/illness" ng-model="wmi.patientEventsForCause">
         </label>
       </div>
-      <a class="button button-block button-light" href="#/tab/ap">CONTINUE TO ASSESSMENT PLAN</a>
+      <a class="button button-block button-light margin icon-right ion-ios7-arrow-right" href="#/tab/ap">Continue to Assesment & Plan</a>
     </div>
   </ion-content>
 </ion-view>
