@@ -80,5 +80,17 @@ angular.module('WMISoapBuilder.services', ['angular-websql'])
 })
 
 .factory('Soaps', function() {
-
+  //SEED DATA
+  var soaps = [
+    {id: 0, patientSex: 'Male', patientAge: 24, created: '02/24/2014', patientComplaint: 'Neck Pain' },
+    {id: 1, patientSex: 'Female', patientAge: 32, created: '01/09/2014', patientComplaint: 'Broken leg'}
+  ]
+  return {
+    all: function() {
+      return soaps;
+    },
+    get: function(soapId) {
+      return soaps[soapId];
+    }
+  };
 });

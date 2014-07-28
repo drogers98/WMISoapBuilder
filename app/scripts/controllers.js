@@ -31,5 +31,18 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql'])
 
 })
 
-.controller('SoapCtrl', function($scope, Soaps) {
+.controller('SoapCtrl', function($scope, $state, $stateParams, Soaps) {
+  //edit button to delete specific soap
+  $scope.data = {
+    showDelete: false
+  };
+  //$scope.edit = function(soap);
+  $scope.genders = ['Male', 'Female', 'Other'];
+  $scope.severities = [0,1,2,3,4,5,6,7,8,9,10];
+  $scope.onsets = ['Sudden', 'Gradual'];
+
+  //SEED DATA, COMMENT OUT AFTER FRONT_END REVIEW
+  $scope.soaps = Soaps.all();
+  $scope.soap = Soaps.get($stateParams.soapId);
+
 })

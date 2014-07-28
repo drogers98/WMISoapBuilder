@@ -3,12 +3,12 @@
 <div class="CenteredLogo WMIlogo">logo here</div>
 <h1>Welcome to WMI SOAP Note</h1>
   <div class="list list-inset">
-    <form ng-submit="newFirstResponder(responder)">
+    <form>
       <label class="item item-input">
-        <input type="text" placeholder="First Name" ng-model="responder.firstName">
+        <input type="text" placeholder="First Name">
       </label>
       <label class="item item-input">
-        <input type="text" placeholder="Last Name" ng-model="responder.lastName">
+        <input type="text" placeholder="Last Name">
       </label>
       <!-- select will need some good style refactoring -->
       <div class="item item-input item-select">
@@ -18,7 +18,7 @@
         <select ng-model="responder.trainingLevel" ng-options="trainingLevel for trainingLevel in trainingLevels"></select>
       </div>
       <h5>By using this application, you agree to the <a ng-click="termsPage()">Terms of Service.</a></h5>
-      <button type="submit" class="button button-block button-light">Accept and Continue</button>
+      <button type="submit" class="button button-block button-light" ng-click="responderSoapsPage()">Accept and Continue</button>
     </form>
   </div>
 </div>
