@@ -102,8 +102,36 @@ angular.module('WMISoapBuilder.services', ['angular-websql'])
         patientAnticipatedProblems: wmi.patientAnticipatedProblems
         */
   var soaps = [
-    {id: 0, patientSex: 'Male', patientAge: 24, created: '02/24/2014', patientComplaint: 'Neck Pain' },
-    {id: 1, patientSex: 'Female', patientAge: 32, created: '01/09/2014', patientComplaint: 'Broken leg'}
+    {
+    	id: 0, 
+    	patientSex: 'Male', 
+   		patientAge: 24, 
+   		created: '02/24/2014', 
+   		patientComplaint: 'Neck Pain', 
+   		patientOnset: 'rapid',
+        patientPPalliates: 'Moving around makes it hurt. Staying still seems fine',
+        patientQuality: 'Sharp',
+        patientRadiates: 'To the right shoulder',
+        patientSeverity: '8',
+        patientTime: '1 hour',
+        patientSpinal: 'no',
+        patientFound: 'Sitting upright, complaining of neck pain',
+        patientExamReveals: 'Bruise to the forehead',
+        patientHistory: 'Lots of broken bones in the past, also a concussion a few months ago.',
+        patientAllergies: 'Bee stings',
+        patientMedications: 'Has epinepherine',
+        patientMedicalHistory: '',
+        patientLastIntake: 'glass of water this morning, PB & J sandwich an hour ago.',
+        patientEventsForCause: '',
+        patientAssessment: '',
+        patientPlan: 'Have group help remove PX from camp, get them to medical facility',
+        patientAnticipatedProblems: 'exfil from the backcountry could prove problematic.' },
+    {
+    	id: 1, 
+    	patientSex: 'Female', 
+    	patientAge: 32, 
+    	created: '01/09/2014', 
+    	patientComplaint: 'Broken leg'}
   ]
   return {
     all: function() {
