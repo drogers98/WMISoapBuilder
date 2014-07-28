@@ -89,6 +89,33 @@ angular.module('WMISoapBuilder', ['ionic', 'WMISoapBuilder.controllers', 'WMISoa
       }
     })
 
+    .state('tab.vitals', {
+      url: '/vitals',
+      views: {
+        'tab-objective': {
+          templateUrl: 'templates/tab-vitals.html'
+        }
+      }
+    })
+
+    .state('tab.newvital', {
+      url: '/vitals/new',
+      views: {
+        'tab-objective': {
+          templateUrl: 'templates/tab-newvital.html'
+        }
+      }
+    })
+
+    .state('tab.vital-detail', {
+      url: '/vitals/:vitalId',
+      views: {
+        'tab-objective': {
+          templateUrl: 'templates/vital-detail.html'
+        }
+      }
+    })
+
     .state('tab.ap', {
       url: '/ap',
       views: {
