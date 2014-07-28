@@ -1,0 +1,17 @@
+<!-- vital index -->
+<ion-view title="VITALS">
+  <ion-content has-header="true" padding="false">
+    <div class="SOAP">
+      <!-- subjective section 1 -->
+      <h5>VITALS</h5>
+      <div class="list">
+        <label class="item item-list">
+        <input type="text" ng-model="vital.vitalOne">
+      </label>
+      <a class="button button-block button-light" ng-click="addVital(vital)">Add Vital</a>
+      <pre>
+      {{vital}}
+    </pre>
+    </div>
+  </ion-content>
+</ion-view>

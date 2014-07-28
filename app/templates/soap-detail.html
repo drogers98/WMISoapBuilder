@@ -1,0 +1,11 @@
+<ion-view title="MY SOAPS">
+  <ion-content class="has-header">
+  <a class="button button-block button-light" ng-click="newSoap()">NEW SOAP NOTE</a>
+    <ion-list>
+      <ion-item class="item-icon-right" ng-repeat="soap in soaps" type="item-text-wrap" href="#/tab/soap/{{soap.id}}">
+        {{soap.sex}}
+        <i class="icon ion-chevron-right icon-accessory"></i>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-view>

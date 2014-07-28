@@ -41,13 +41,13 @@ height: 100%;
   }
 // Body
 
-  
+
 // Headings
 h1, h2, h3, h4, h5 {
 	color: $WMIgrey;
 }
 
-// Links  
+// Links
 a {
 	color: $WMIblue;
 	text-decoration: underline;
@@ -56,11 +56,11 @@ a {
 			cursor: pointer;
 		}
 }
- 
+
 // Buttons. Overrides ionic button-light
 .button {
 	&.button-light, &.button-calm {
-		
+
 		color: $WMIwhite;
 		border:none;
 		@include border-radius(5px);
@@ -91,7 +91,7 @@ a {
 		.title {
 			font-weight: bold;
 		}
-		
+
 		.button {
 			background: none;
 			border-color: $WMI_DK_gold;
@@ -106,11 +106,11 @@ a {
 .tabs {
   background-image: none;
   background-color: $WMI_DK_white;
-	
+
 	a:hover {
 		color: $WMIred;
 	}
-	
+
 	/* Active state for tab */
 	.tab-item.tab-item-active,
 	.tab-item.active,
@@ -144,7 +144,7 @@ a {
 }
 
 .NOLSlogo {
-	
+
 }
 
 // First Responder Page (home after splash) -------------------------
@@ -170,7 +170,7 @@ a {
 		text-align: center;
 		color: $WMIwhite;
 	}
-	
+
 	h1 {
 		text-transform: uppercase;
 	}
@@ -184,7 +184,7 @@ a {
 			@include border-radius(5px);
 		}
 	}
-	
+
 }
 
 // SOAP Pages -----------------------------------------------------
@@ -218,7 +218,7 @@ resize:none;
 			&:hover {
 				background-color: $WMI_DK_white;
 			}
-			
+
 		}
 	}
 }

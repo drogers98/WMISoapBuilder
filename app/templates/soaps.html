@@ -1,8 +1,20 @@
-<ion-view title="MY SOAPS">
+<ion-header-bar class="bar-stable nav-title-slide-ios7">
+  <div class="buttons">
+    <button class="button button icon ion-gear-a"></button>
+  </div>
+  <h1 class="title">MY SOAPS</h1>
+  <div class="buttons">
+    <button class="button button-clear" ng-click="data.showDelete = !data.showDelete">Edit</button>
+  </div>
+</ion-header-bar>
+<ion-view>
   <ion-content class="has-header">
-    <ion-list>
+  <a class="button button-block button-light" ng-click="newSoap()">NEW SOAP NOTE</a>
+    <ion-list show-delete="data.showDelete">
       <ion-item class="item-icon-right" ng-repeat="soap in soaps" type="item-text-wrap" href="#/tab/soap/{{soap.id}}">
-        {{soap.sex}}
+        {{soap.patientAge}},{{soap.patientSex}}
+        <ion-delete-button class="ion-minus-circled" ng-click="onItemDelete(item)">
+        </ion-delete-button>
         <i class="icon ion-chevron-right icon-accessory"></i>
       </ion-item>
     </ion-list>
