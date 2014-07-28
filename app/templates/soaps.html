@@ -1,11 +1,18 @@
-<ion-view title="MY SOAPS">
+<ion-view title="MY SOAPs">
   <ion-nav-buttons side="left">
     <button class="button button icon ion-gear-a" ng-click="aboutPage()"></button>
   </ion-nav-buttons>
 
   <ion-nav-buttons side="right">
-    <button class="button button-clear" ng-click="data.showDelete = !data.showDelete">Edit</button>
+    <button class="button icon ion-edit" ng-click="data.showDelete = !data.showDelete"></button>
   </ion-nav-buttons>
+  
+  <ion-content class="has-header"  padding="true">
+  <button class="button button-block button-light icon ion-plus-circled" ng-click="subjectivePage()"> New SOAP Note</button>
+    <ion-list show-delete="data.showDelete">
+      <ion-item class="item-icon-right" ng-repeat="soap in soaps" type="item-text-wrap" href="#/soap/{{soap.id}}">
+        <ion-delete-button class="ion-minus-circled" ng-click="onItemDelete(item)">
+        </ion-delete-button>{{soap.patientAge}}, {{soap.patientSex}} | {{soap.created}} | {{soap.patientInitials}}
   <ion-content class="has-header">
   <a class="button button-block button-light" ng-click="subjectivePage()">NEW SOAP NOTE</a>
     <ion-list show-delete="data.showDelete">
@@ -18,6 +25,7 @@
         </div>
         <ion-delete-button class="ion-minus-circled" ng-click="onItemDelete(item)">
         </ion-delete-button>
+
         <i class="icon ion-chevron-right icon-accessory"></i>
       </ion-item>
     </ion-list>
