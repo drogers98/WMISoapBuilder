@@ -1,12 +1,12 @@
 <ion-view title="MY SOAPS">
-  <ion-nav-bar class="bar-stable nav-title-slide-ios7">
-    <div class="buttons">
-      <button class="button button icon ion-gear-a" ng-click="aboutPage()"></button>
-    </div>
-    <div class="buttons right-buttons">
-      <button class="button button-clear" ng-click="data.showDelete = !data.showDelete">Edit</button>
-    </div>
-  </ion-nav-bar>
+  <ion-nav-buttons side="left">
+    <button class="button button icon ion-gear-a" ng-click="aboutPage()"></button>
+  </ion-nav-buttons>
+
+  <ion-nav-buttons side="right">
+    <button class="button button-clear" ng-click="data.showDelete = !data.showDelete">Edit</button>
+  </ion-nav-buttons>
+
   <ion-content class="has-header">
   <a class="button button-block button-light" ng-click="subjectivePage()">NEW SOAP NOTE</a>
     <ion-list show-delete="data.showDelete">
