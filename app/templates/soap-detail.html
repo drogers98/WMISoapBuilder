@@ -21,6 +21,7 @@
        <h5>Location</h5>
       <div class="list">
         <ion-list>
+          <ion-item class="item-text-wrap"><strong>Date: </strong> {{soap.incidentDate}}</ion-item>
           <ion-item class="item-text-wrap">{{soap.incidentLocation}}</ion-item>
           <ion-item class="item-text-wrap"><strong>GPS: </strong> {{soap.incidentLat}}, {{soap.incidentLon}}</ion-item>
         </ion-list>
@@ -30,8 +31,6 @@
       <div class="list">
         <ion-list>
           <ion-item class="item-text-wrap">{{soap.responderFirstName}} {{soap.responderLastName}}, {{soap.responderLevelOfTraining}}</ion-item>
-          <ion-item class="item-text-wrap">Created on: {{soap.created}}</ion-item>
-
         </ion-list>
       </div>
 
