@@ -71,9 +71,6 @@ angular.module('WMISoapBuilder.services', ['angular-websql'])
       nolsDB.createResponderTable();
       var responderAttr = angular.fromJson(responderData);
       nolsDb.saveResponder(responderAttr);
-    },
-    all: function() {
-      //todo => return all responders
     }
   }
 

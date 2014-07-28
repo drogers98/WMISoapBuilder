@@ -1,58 +1,47 @@
-<ion-view title="Objective">
+<ion-view title="OBJECTIVE">
   <ion-content has-header="true" padding="false">
-  <div class="SOAP">
-    <!-- subjective section 1 -->
-    <h5>I have a <a>i</a></h5>
-    <div class="list">
-      <div class="item item-input item-select">
-        <div class="input-label">
-          Patient Sex
-          <!-- leave select empty - data will be brough in through ctrl -->
-        </div>
-        <select></select>
+    <div class="SOAP">
+      <!-- subjective section 1 -->
+      <h5>Patient was found<a>i</a></h5>
+      <div class="list">
+        <label class="item item-input">
+          <input type="text" placeholder="Location" ng-model="wmi.patientFound">
+        </label>
       </div>
-      <label class="item item-input">
-        <input type="date" placeholder="Patient DOB">
-      </label>
-      <label class="item item-input">
-
-        <input type="number" placeholder="Patient Age">
-      </label>
-    </div>
-    <!-- subjective section 2 -->
-    <h5>Who's chief complaint is<a>i</a></h5>
-    <div class="list">
-      <label class="item item-input">
-        <textarea placeholder="Chief Complaint"></textarea>
-      </label>
-    </div>
-    <!-- subjective section 3 -->
-    <div class="list">
-      <div class="item item-input item-select">
-        <div class="input-label">
-          Onset
-        </div>
-        <select></select>
+      <h5>Patient Exam Reveals</h5>
+      <div class="list">
+        <label class="item item-input">
+          <input type="text" placeholder="Exam Revelas?" ng-model="wmi.patientExamReveals">
+        </label>
       </div>
-      <label class="item item-input">
-        <input type="text" placeholder="Provokes/Palliates">
-      </label>
-      <label class="item item-input">
-        <input type="text" placeholder="Quality">
-      </label>
-      <label class="item item-input">
-        <input type="text" placeholder="Radiates">>
-      </label>
-      <div class="item item-input item-select">
-        <div class="input-label">
-          Severity
-        </div>
-        <select></select>
+      <h5>VITALS</h5>
+      <a class="button button-block button-light" href="#/tab/vitals/new">ADD VITALS</a>
+      <div class="list">
+        <ion-list ng-repeat="vital in vitals">
+         {{vital}}
+       </ion-list>
       </div>
-      <label>
-        <input type="time" placeholder="Time">
-      </label>
-    </div>
+      <a class="button button-block button-light" href="#/tab/vitals">VIEW ALL VITALS</a>
+        <label class="item item-inpit">
+          <input type="text" placeholder="History" ng-model="wmi.patientHistory">
+        </label>
+        <label class="item item-input">
+          <input type="text" placeholder="Allergies" ng-model="wmi.patientAllergies">
+        </label>
+        <label class="item item-input">
+          <input type="text" placeholder="Medications" ng-model="wmi.patientMedications">
+        </label>
+        <label class="item item-input">
+          <input type="text" placeholder="Medical History" ng-model="wmi.patientMedicalHistory">
+        </label>
+        <label class="item item-input">
+          <input type="text" placeholder="Last Intake/Output" ng-model="wmi.patientLastIntake">
+        </label>
+        <label class="item item-input">
+          <input type="text" placeholder="Events Leading up incident/illness" ng-model="wmi.patientEventsForCause">
+        </label>
+      </div>
+      <a class="button button-block button-light" href="#/tab/ap">CONTINUE TO ASSESSMENT PLAN</a>
     </div>
   </ion-content>
 </ion-view>
