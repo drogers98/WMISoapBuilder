@@ -75,6 +75,9 @@ angular.module('WMISoapBuilder.services', ['angular-websql'])
   }
 
 })
+.factory('Vitals', function() {
+
+})
 
 .factory('Soaps', function() {
   //SEED DATA
@@ -101,6 +104,7 @@ angular.module('WMISoapBuilder.services', ['angular-websql'])
         patientPlan: wmi.patientPlan,
         patientAnticipatedProblems: wmi.patientAnticipatedProblems
         */
+
   var soaps = [
     {
     	id: 0,
@@ -137,6 +141,7 @@ angular.module('WMISoapBuilder.services', ['angular-websql'])
   return {
     all: function() {
       return soaps;
+      console.log(soaps);
     },
     get: function(soapId) {
       return soaps[soapId];

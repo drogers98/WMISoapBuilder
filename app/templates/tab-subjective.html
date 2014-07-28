@@ -9,20 +9,20 @@
           Patient Sex
           <!-- leave select empty - data will be brough in through ctrl -->
         </div>
-        <select ng-model="wmi.patientGender" ng-options="gender for gender in genders"></select>
+        <select ng-model="soap.patientGender" ng-options="gender for gender in genders"></select>
       </div>
       <label class="item item-input">
-        <input type="date" placeholder="Patient DOB" ng-model="wmi.patientDob">
+        <input type="date" placeholder="Patient DOB" ng-model="soap.patientDob">
       </label>
       <label class="item item-input">
-        <input type="number" placeholder="Patient Age" ng-model="wmi.patientAge">
+        <input type="number" placeholder="Patient Age" ng-model="soap.patientAge">
       </label>
     </div>
     <!-- subjective section 2 -->
     <h5>Who's chief complaint is</h1><a>i</a>
     <div class="list">
       <label class="item item-input">
-        <input type="text" placeholder="Chief Complaint" ng-model="wmi.chiefComplaint">
+        <input type="text" placeholder="Chief Complaint" ng-model="soap.chiefComplaint">
       </label>
     </div>
     <!-- subjective section 3 -->
@@ -34,13 +34,13 @@
         <select ng-model="wmi.patientOnset" ng-options="onset for onset in onsets"></select>
       </div>
       <label class="item item-input">
-        <input type="time" placeholder="Provokes/Palliates" ng-model="wmi.patientPPalliates">
+        <input type="time" placeholder="Provokes/Palliates" ng-model="soap.patientPPalliates">
       </label>
       <label class="item item-input">
-        <input type="time" placeholder="Quality" ng-model="wmi.patientQuality">
+        <input type="time" placeholder="Quality" ng-model="soap.patientQuality">
       </label>
       <label class="item item-input">
-        <input type="time" placeholder="Radiates" ng-model="wmi.patientRadiates">
+        <input type="time" placeholder="Radiates" ng-model="soap.patientRadiates">
       </label>
       <div class="item item-input item-select">
         <div class="input-label">

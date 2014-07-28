@@ -34,6 +34,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql'])
 .controller('SoapCtrl', function($scope, $state, $stateParams, Soaps) {
   $scope.aboutPage = function(){$state.go('about');}
   $scope.subjectivePage = function(){$state.go('tab.subjective');}
+  $scope.objectivePage = function(){$state.go('tab.objective');}
   //edit button to delete specific soap
   $scope.data = {
     showDelete: false
@@ -46,5 +47,35 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql'])
   //SEED DATA, COMMENT OUT AFTER FRONT_END REVIEW
   $scope.soaps = Soaps.all();
   $scope.soap = Soaps.get($stateParams.soapId);
+  //$scope.soap.vitals = Vitals.all($stateParams.soapId)
+  //$scope.soap.vital = Vitals.get($stateParams.soapId);
 
+})
+
+.controller('VitalCtrl', function($scope, $timeout, $state, $stateParams, Vitals) {
+
+
+
+  $scope.counter = '1:00';
+  $scope.startCounter = function() {
+    $scope.counter = 60;
+    $scope.countdown();
+  }
+  var stopped;
+  $scope.countdown = function() {
+    if($scope.counter == 0) {
+      $scope.stop();
+      $scope.counter = '1:00'
+    }
+    stopped = $timeout(function() {
+     $scope.counter--;
+     $scope.countdown();
+    }, 1000);
+  };
+
+
+$scope.stop = function(){
+   $timeout.cancel(stopped);
+
+    }
 })

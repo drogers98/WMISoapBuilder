@@ -1,0 +1,102 @@
+<ion-view title="Add Vitals">
+  <ion-nav-buttons side="left">
+    <button class="button button">Cancel</button>
+  </ion-nav-buttons>
+
+  <ion-content class="has-header">
+  <div class="SOAP">
+    <div class="list">
+      <div class="item item-input item-select">
+        <div class="input-label">
+          LOR
+          <!-- leave select empty - data will be brough in through ctrl -->
+        </div>
+        <select ng-model="vital.lor" ng-options="lor for lor in lors"></select>
+      </div>
+      <label class="item item-input">
+        <input type="number" placeholder="HR:RATE">
+      </label>
+      <div class="item item-input item-select">
+        <div class="input-label">
+          HR:RHYTHM
+          <!-- leave select empty - data will be brough in through ctrl -->
+        </div>
+        <select ng-model="vital.patientGender" ng-options="rhythm for rhythm in rhythms"></select>
+      </div>
+      <div class="item item-input item-select">
+        <div class="input-label">
+          HR:QUALITY
+          <!-- leave select empty - data will be brough in through ctrl -->
+        </div>
+        <select ng-model="vital.quality" ng-options="quality for quality in qualities"></select>
+      </div>
+      <label class="item item-input">
+        <input type="number" placeholder="RR:RATE">
+      </label>
+      <div class="item item-input item-select">
+        <div class="input-label">
+          RR:RHYTHM
+          <!-- leave select empty - data will be brough in through ctrl -->
+        </div>
+        <select ng-model="vital.rrhythm" ng-options="rrhythm for rrhythm in rrhythms"></select>
+      </div>
+      <div class="item item-input item-select">
+        <div class="input-label">
+          RR:QUALITY
+          <!-- leave select empty - data will be brough in through ctrl -->
+        </div>
+        <select ng-model="vital.rquality" ng-options="rquality for rquality in rqualities"></select>
+      </div>
+      <div class="item item-input item-select">
+        <div class="input-label">
+          SCTM:COLOR
+          <!-- leave select empty - data will be brough in through ctrl -->
+        </div>
+        <select ng-model="vital.sctmcolor" ng-options="sctmcolor for sctmcolor in sctmcolors"></select>
+      </div>
+      <div class="item item-input item-select">
+        <div class="input-label">
+          SCTM:TEMP
+          <!-- leave select empty - data will be brough in through ctrl -->
+        </div>
+        <select ng-model="vital.sctmtemp" ng-options="sctmtemp for sctmtemp in sctmtemps"></select>
+      </div>
+      <div class="item item-input item-select">
+        <div class="input-label">
+          SCTM:MOISTURE
+          <!-- leave select empty - data will be brough in through ctrl -->
+        </div>
+        <select ng-model="vital.sctmmoisture" ng-options="sctmmoisture for sctmmoisture in sctmmoistures"></select>
+      </div>
+      <div class="item item-input item-select">
+        <div class="input-label">
+          BP:RADIAL PULSE
+          <!-- leave select empty - data will be brough in through ctrl -->
+        </div>
+        <select ng-model="vital.brradialpulse" ng-options="brradialpulse for brradialpulse in brradialpulses"></select>
+      </div>
+      <label class="item item-input">
+        <input type="number" placeholder="BP:SYSTOLIC">
+      </label>
+      <label class="item item-input">
+        <input type="number" placeholder="BP:DIASTOLIC">
+      </label>
+      <div class="item item-input item-select">
+        <div class="input-label">
+          PUPILS(PERRl)
+          <!-- leave select empty - data will be brough in through ctrl -->
+        </div>
+        <select ng-model="vital.pulils" ng-options="pupil for pupil in pupils"></select>
+      </div>
+    </div>
+    <div class="list">
+      <div class="item">
+        <h1 ng-bind="counter"></h1>
+      </div>
+    </div>
+      <button ng-click="startCounter()">Start</button>
+      <button ng-click="stop()">Stop</button>
+      <a class="button button-block button-light">Save Vital Set</a>
+  </div>
+  </ion-content>
+</ion-view>

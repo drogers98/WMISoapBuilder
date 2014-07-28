@@ -1,4 +1,4 @@
-<ion-view title="My Soaps">
+<ion-view title="MY SOAPS">
   <ion-nav-buttons side="left">
     <button class="button button icon ion-gear-a" ng-click="aboutPage()"></button>
   </ion-nav-buttons>
@@ -9,11 +9,10 @@
   <ion-content class="has-header">
   <a class="button button-block button-light" ng-click="subjectivePage()">NEW SOAP NOTE</a>
     <ion-list show-delete="data.showDelete">
-      <ion-item class="item-icon-right" ng-repeat="soap in soaps" type="item-text-wrap" href="#/soap/{{soap.id}}">
+      <ion-item class="item-icon-right" ng-repeat="vital in vitals" type="item-text-wrap" href="#/vitals/{{vital.id}}">
         <div class="row">
-          <div class="col">{{soap.patientAge}}, {{soap.patientSex}}</div>
+          <div class="col">{{vital}.vitalOne}}</div>
           <div class="col col-25 col-offset-25">
-            {{soap.created}}
           </div>
         </div>
         <ion-delete-button class="ion-minus-circled" ng-click="onItemDelete(item)">
