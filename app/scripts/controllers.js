@@ -44,6 +44,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql'])
   $scope.genders = ['Male', 'Female', 'Other'];
   $scope.severities = [0,1,2,3,4,5,6,7,8,9,10];
   $scope.onsets = ['Sudden', 'Gradual'];
+  $scope.quality = ['Aching', 'Burning', 'Cramping','Dull Pressure', 'Sharp', 'Squeezing','Stabbing', 'Tight', ]
 
   //SEED DATA, COMMENT OUT AFTER FRONT_END REVIEW
   $scope.soaps = Soaps.all();

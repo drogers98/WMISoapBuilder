@@ -13,7 +13,7 @@
     <ion-list show-delete="data.showDelete">
       <ion-item class="item-icon-right" ng-repeat="soap in soaps" type="item-text-wrap" href="#/soap/{{soap.id}}">
         <ion-delete-button class="ion-minus-circled" ng-click="onItemDelete(item)">
-        </ion-delete-button>{{soap.patientAge}}, {{soap.patientSex}} | {{soap.created}} | {{soap.patientInitials}}
+        </ion-delete-button>{{soap.patientAge}}, {{soap.patientSex}} | {{soap.patientInitials}} | {{soap.created}}
 
         <i class="icon ion-ios7-arrow-forward"></i>
       </ion-item>
