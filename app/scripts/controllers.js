@@ -49,9 +49,9 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql'])
   $scope.pupils = ['Yes', 'No'];
   $scope.BPmeasureds = ['Systolic', 'Diastolic'];
   $scope.BPpulses = ['Radial Pulse Present', 'Radial Pulse Weak', 'Radial Pulse Absent'];
-  
+
   $scope.LORs = ['Awake & Oriented x 4', 'Awake & Oriented x 3', 'Awake & Oriented x 2', 'Awake & Oriented x 1', 'Awake & Oriented x 0', 'Verbal Stimulus', 'Pain Stimulus', 'Unresponsive'];
-  
+
   //SEED DATA, COMMENT OUT AFTER FRONT_END REVIEW
   $scope.soaps = Soaps.all();
   $scope.soap = Soaps.get($stateParams.soapId);

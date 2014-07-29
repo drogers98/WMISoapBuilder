@@ -6,7 +6,7 @@
   <ion-content class="has-header">
   <div class="SOAP VITALS">
     <div class="list">
-    
+
     <!-- LOR -->
       <div class="item item-input item-select">
         <div class="input-label">
@@ -14,9 +14,9 @@
         </div>
         <select ng-model="vital.lor" ng-options="LOR for LOR in LORs"></select>
       </div>
-      
+
       <!-- Heart -->
-      
+
      <div class="row">
   <div class="col col-33"><strong>Heart</strong></div>
   <div class="col">
@@ -63,7 +63,7 @@
         <select ng-model="vital.rquality" ng-options="rquality for rquality in rqualities"></select>
       </div>
 
-     
+
   </div>
 </div>
 
@@ -91,15 +91,15 @@
           <!-- leave select empty - data will be brough in through ctrl -->
         </div>
         <select ng-model="vital.sctmmoisture" ng-options="sctmmoisture for sctmmoisture in sctmmoistures"></select>
-      </div>     
+      </div>
   </div>
 </div>
 
 
-                
-    
- 
- <!-- Blood Pressure -->     
+
+
+
+ <!-- Blood Pressure -->
 <div class="row">
   <div class="col col-33"><strong>Blood Pressure</strong></div>
   <div class="col">
@@ -118,9 +118,9 @@
       </label>
   </div>
 </div>
-      
-      
-      
+
+
+
       <div class="item item-input item-select">
         <div class="input-label">
           Pupils(PERRL)
@@ -129,28 +129,32 @@
         <select ng-model="vital.pulils" ng-options="pupil for pupil in pupils"></select>
       </div>
     </div>
-    
-    
+
+
+
     <div class="item">
     <label class="item-input">
         <input type="number" placeholder="Temperature">
     </label>
     </div>
-    
-    
-    <div class="row">
-      <div class="col counterText">
-        <h1 ng-bind="counter"></h1>
-      </div>
-    <div class="col">
-      <button class="button button-calm" ng-click="startCounter()">Start</button>
-      <button class="button button-calm"ng-click="stop()">Stop</button>
-      </div>
-      </div>
-      <a class="button button-block margin button-light">Save Vital Set</a>
-    
-  </div> 
+
   </div>
-  
+
   </ion-content>
+  <div class="vital">
+    <div class="vital-top">
+        <h1 class=""ng-bind="counter"></h1>
+    </div>
+    <div class="vital-bottom-left">
+      <div class="vital-thumb">
+      <p ng-click="startCounter()">Start</p>
+    </div>
+    </div>
+    <div class="vital-bottom-right">
+      <div class="vital-thumb">
+      <p ng-click="stop()">Stop</p>
+    </div>
+    </div>
+    <a class="button button-block button-light">Save Vital Set</a>
+  </div>
 </ion-view>
