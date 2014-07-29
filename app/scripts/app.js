@@ -95,6 +95,16 @@ angular.module('WMISoapBuilder', ['ionic', 'WMISoapBuilder.controllers', 'WMISoa
       }
     })
 
+    .state('tab.vitals', {
+      url: '/vitals',
+      views: {
+        'tab-objective': {
+          templateUrl: 'templates/vitals.html',
+          controller: 'VitalCtrl'
+        }
+      }
+    })
+
     .state('tab.newvital', {
       url: '/vitals/new',
       views: {

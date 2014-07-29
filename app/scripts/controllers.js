@@ -31,11 +31,16 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql'])
 
 })
 
-.controller('SoapCtrl', function($scope, $state, $stateParams, Soaps) {
+.controller('SoapCtrl', function($scope, $state, $stateParams,$ionicNavBarDelegate, Soaps) {
+  $scope.goBack = function() {
+    $ionicNavBarDelegate.back();
+  };
   $scope.aboutPage = function(){$state.go('about');}
+  $scope.mySoapsPage = function(){$state.go('soaps')}
   $scope.subjectivePage = function(){$state.go('tab.subjective');}
   $scope.objectivePage = function(){$state.go('tab.objective');}
   $scope.apPage = function(){$state.go('tab.ap');}
+  $scope.imagePage = function(){$state.go('tab.image');}
   //edit button to delete specific soap
   $scope.data = {
     showDelete: false
@@ -63,7 +68,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql'])
 .controller('VitalCtrl', function($scope, $timeout, $state, $stateParams, Vitals) {
 
 
-
+  $scope.vitals = Vitals.all();
   $scope.counter = '1:00';
   $scope.startCounter = function() {
     $scope.counter = 60;

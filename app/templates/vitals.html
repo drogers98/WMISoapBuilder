@@ -1,4 +1,4 @@
-<ion-view title="MY SOAPS">
+<ion-view title="Vitals">
   <ion-nav-buttons side="left">
     <button class="button button icon ion-gear-a" ng-click="aboutPage()"></button>
   </ion-nav-buttons>
@@ -7,11 +7,11 @@
     <button class="button button-clear" ng-click="data.showDelete = !data.showDelete">Edit</button>
   </ion-nav-buttons>
   <ion-content class="has-header">
-  <a class="button button-block button-light" ng-click="subjectivePage()">NEW SOAP NOTE</a>
+  <a class="button button-block button-light" href="#/tab/vitals/new">Add Vitals</a>
     <ion-list show-delete="data.showDelete">
       <ion-item class="item-icon-right" ng-repeat="vital in vitals" type="item-text-wrap" href="#/vitals/{{vital.id}}">
         <div class="row">
-          <div class="col">{{vital}.vitalOne}}</div>
+          <div class="col">{{vital.time}}</div>
           <div class="col col-25 col-offset-25">
           </div>
         </div>

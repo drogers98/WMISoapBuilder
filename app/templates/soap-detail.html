@@ -1,6 +1,6 @@
 <ion-view title="{{soap.patientSex}}, {{soap.patientAge}} | {{soap.patientInitials}}">
 <ion-nav-buttons side="left">
-    <button class="button icon ion-ios7-arrow-back" ng-click="data.showDelete = !data.showDelete"></button>
+    <button class="button icon ion-ios7-arrow-back" ng-click="mySoapsPage()"></button>
   </ion-nav-buttons>
 
   <ion-nav-buttons side="right">
@@ -44,7 +44,7 @@
           <ion-item class="item-text-wrap"><strong>Age:</strong> {{soap.patientAge}}</ion-item>
           <ion-item class="item-text-wrap"><strong>Sex: </strong> {{soap.patientSex}}</ion-item>
           <ion-item class="item-text-wrap"><strong>DOB: </strong> {{soap.patientDob}}</ion-item>
-          
+
         </ion-list>
       </div>
 

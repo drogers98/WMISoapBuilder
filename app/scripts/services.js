@@ -76,7 +76,16 @@ angular.module('WMISoapBuilder.services', ['angular-websql'])
 
 })
 .factory('Vitals', function() {
-
+  var vitals = [
+  {
+    time: '7:00PM'
+  }
+  ]
+  return {
+    all: function() {
+      return vitals;
+    }
+  }
 })
 
 .factory('Soaps', function() {
