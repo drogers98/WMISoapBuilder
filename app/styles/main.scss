@@ -106,6 +106,7 @@ a {
 .tabs {
   background-image: none;
   background-color: $WMI_DK_white;
+  text-transform: uppercase;
 
 	a:hover {
 		color: $WMIred;
@@ -162,6 +163,10 @@ margin-bottom: 20px;
 
 .counterText {
 	text-align: right;
+}
+
+textarea {
+	height:60px;
 }
 
 // First Responder Page (home after splash) -------------------------
@@ -247,5 +252,14 @@ resize:none;
 		color: $WMI_DK_blue;
 		text-align: center;
 		font-size: 14px;
+	}
+}
+
+// vitals
+.VITALS {
+	.row {
+		padding-top: 10px;
+		padding-bottom: 10px;
+		border-bottom: 1px solid #DDD;
 	}
 }

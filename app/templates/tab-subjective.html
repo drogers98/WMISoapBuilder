@@ -27,6 +27,8 @@
       <label class="item item-input">
         <input type="number" placeholder="Patient Age" ng-model="soap.patientAge">
       </label>
+
+
     </div>
     <!-- subjective section 2 -->
     <h5>Who's chief complaint is<a><icon class="ion-ios7-information"></icon></a></h5>
@@ -44,22 +46,29 @@
         <select ng-model="wmi.patientOnset" ng-options="onset for onset in onsets"></select>
       </div>
       <label class="item item-input">
-        <input type="text" placeholder="Provokes/Palliates" ng-model="soap.patientPPalliates">
+        <textarea type="text" placeholder="Provokes/Palliates" ng-model="soap.patientPPalliates"></textarea>
       </label>
+      
+      <div class="item item-input item-select">
+      <div class="input-label">
+        Quality
+      </div>
+        <select ng-model="wmi.patientQuality" ng-options="quality for quality in qualities"></select>
+      </div>
+      
       <label class="item item-input">
-        <input type="text" placeholder="Quality" ng-model="soap.patientQuality">
+        <textarea type="text" placeholder="Radiates" ng-model="soap.patientRadiates"></textarea>
       </label>
-      <label class="item item-input">
-        <input type="text" placeholder="Radiates" ng-model="soap.patientRadiates">
-      </label>
+      
       <div class="item item-input item-select">
         <div class="input-label">
           Severity
         </div>
         <select ng-model="wmi.patientSeverity" ng-options="severity for severity in severities"></select>
       </div>
+      
       <label class="item item-input">
-        <input type="time" placeholder="Time" ng-model="wmi.patientTime">
+        <input type="time" placeholder="Time (Duration)" ng-model="wmi.patientTime">
       </label>
     </div>
     <h5>Mechanism of Injury/HPI<a><icon class="ion-ios7-information"></icon></a></h5>
@@ -68,9 +77,14 @@
      <label class="item item-input">
         <textarea type="text" placeholder="MOI/HPI" ng-model="wmi.patientHPI"></textarea>
       </label>
-      <label class="item item-input">
-        <input type="text" placeholder="Suspected Spinal Injury" ng-model="wmi.patientSpinal">
-      </label>
+      
+      <div class="item item-input item-select">
+      <div class="input-label">
+        Suspected Spinal Injury
+      </div>
+        <select ng-model="wmi.wmi.patientSpinal" ng-options="spinal for spinal in spinals"></select>
+      </div>
+      
     </div>
       <a class="button button-block button-light margin icon-right ion-ios7-arrow-right" href="#/tab/objective">Continue to Objective</a>
     </div>

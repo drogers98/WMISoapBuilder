@@ -122,6 +122,7 @@ angular.module('WMISoapBuilder.services', ['angular-websql'])
     	patientSex: 'Male',
 		patientDob: '01/02/1989',
    		patientAge: 24,
+   		patientLOR: 'Awake & Oriented x 3',
    		patientComplaint: 'Neck Pain',
    		patientOnset: 'rapid',
         patientPPalliates: 'Moving around makes it hurt. Staying still seems fine',
