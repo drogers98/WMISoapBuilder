@@ -89,14 +89,20 @@
         <select ng-model="vital.pulils" ng-options="pupil for pupil in pupils"></select>
       </div>
     </div>
-    <div class="list">
-      <div class="item">
+    
+    <div class="row">
+      <div class="col counterText">
         <h1 ng-bind="counter"></h1>
       </div>
-    </div>
-      <button ng-click="startCounter()">Start</button>
-      <button ng-click="stop()">Stop</button>
-      <a class="button button-block button-light">Save Vital Set</a>
+    <div class="col">
+      <button class="button button-calm" ng-click="startCounter()">Start</button>
+      <button class="button button-calm"ng-click="stop()">Stop</button>
+      </div>
+      </div>
+      <a class="button button-block margin button-light">Save Vital Set</a>
+    
+  </div> 
   </div>
+  
   </ion-content>
 </ion-view>
