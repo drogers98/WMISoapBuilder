@@ -1,5 +1,18 @@
 <ion-view title="A-P">
-  <ion-content class="has-header padding">
-    <h1></h1>
-  </ion-content>
-</ion-view>
+  <ion-content has-header="true" padding="false">
+    <div class="SOAP">
+      <h5>ASSESSMENT</h5><a>i</a>
+      <div class="list">
+        <label class="item item-input">
+          <input type="text" placeholder="Assessment" ng-model="soap.patientAssessment">
+        </label>
+        <label class="item item-input">
+          <input type="text" placeholder="Plan" ng-model="soap.patientPlan">
+        </label>
+        <label class="item item-input">
+          <input type="text" placeholder="Anticipated Problems" ng-model="soap.patientAnticipatedProblems">
+        </label>
+      </div>
+      <a class="button button-block button-light">ADD PHOTOS</a>
+      <a class="button button-block button-lgith" ng-click="newSoap(wmi)">SHARE SOAP NOTE</a>
+    </div>

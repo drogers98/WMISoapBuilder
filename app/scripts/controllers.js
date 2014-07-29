@@ -35,6 +35,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql'])
   $scope.aboutPage = function(){$state.go('about');}
   $scope.subjectivePage = function(){$state.go('tab.subjective');}
   $scope.objectivePage = function(){$state.go('tab.objective');}
+  $scope.apPage = function(){$state.go('tab.ap');}
   //edit button to delete specific soap
   $scope.data = {
     showDelete: false
