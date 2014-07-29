@@ -107,7 +107,9 @@ a {
   background-image: none;
   background-color: $WMI_DK_white;
   text-transform: uppercase;
-
+  .tab-title {
+  font-size: 10px;
+  }
 	a:hover {
 		color: $WMIred;
 	}
@@ -161,10 +163,6 @@ margin-bottom: 20px;
 	font-weight: bold;
 }
 
-.counterText {
-	text-align: right;
-}
-
 textarea {
 	height:60px;
 }
@@ -183,7 +181,7 @@ textarea {
 
 //wrapper
 .FirstResponder {
-	padding: 20px;
+	
 	// placeholder for bckrd img
 	color: $WMIwhite;
 	a {
@@ -257,6 +255,7 @@ resize:none;
 
 // vitals
 .VITALS {
+padding-bottom: 120px;
 	.row {
 		padding-top: 10px;
 		padding-bottom: 10px;
@@ -266,46 +265,23 @@ resize:none;
 .vital {
   position:fixed;
   bottom:50px;
-  background:#FAFAFA;
-  height:50px;
+  background:$WMI_DK_white;
+  
   width:100%;
   z-index:10;
-  text-align:center;
   display:inline-table;
-  border-top:1px solid #B6B6B6;
-  .vital-top{
-    width:100%;
-    padding:10px 0 0 0;
+  border-top:1px solid $WMIgrey;
+  margin: 0;
+  padding: 0;
+  .vital-left {
+	  text-align: right;
   }
-  .vital-bottom-left {
-    float:left;
-    width:50%;
-    padding-bottom:10px;
+  .row, h1 {
+	  margin: 0px;
+	  padding: 0px;
   }
-  .vital-bottom-right {
-    float:right;
-    width:50%;
-    padding-bottom:10px;
-  }.vital-thumb {
-    content: "";
-    display: block;
-    width: 22%;
-    height: 0;
-    padding-bottom: 20%;
-    background: #D1D1D1;
-    border: 2px solid #B6B6B6;
-    border-radius: 65%;
-    margin-left:35%;
-    box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    p {
-      float: left;
-      width: 100%;
-      padding-top: 45%;
-      margin-top: -0.5em;
-      text-align: center;
-      color: gray;
-      font-size: 1em;
-    }
+  
+  .button-small {
+	  margin-top:7px;
   }
 }
