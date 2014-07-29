@@ -62,6 +62,7 @@ a {
 	&.button-light, &.button-calm {
 
 		color: $WMIwhite;
+		font-weight: bold;
 		border:none;
 		@include border-radius(5px);
 			&:hover{
@@ -145,7 +146,7 @@ width:200px;
 }
 
 .NOLSlogo {
-width:130px;
+width:100px;
 margin-bottom: 20px;
 }
 
@@ -194,6 +195,7 @@ textarea {
 
 	h1 {
 		text-transform: uppercase;
+		font-weight: 300;
 	}
 
 	// Overide lists div for FR page

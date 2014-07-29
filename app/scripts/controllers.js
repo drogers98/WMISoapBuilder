@@ -10,7 +10,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql'])
   $scope.responderSoapsPage = function(){$state.go('soaps');}
   //get ready for JS transfer from beta
   //$scope.responder = Responders.all();
-  $scope.trainingLevels = ['WFA','WAFA','WFR', 'WEMT'];
+  $scope.trainingLevels = ['WFA','WAFA','WFR', 'WEMT', 'Other'];
 
   $scope.newResponder = function(responder) {
     var attributes = {
@@ -66,6 +66,8 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql'])
   $scope.HEARTrythms = ['Regular', 'Irregular'];
 
   $scope.LORs = ['Awake & Oriented x 4', 'Awake & Oriented x 3', 'Awake & Oriented x 2', 'Awake & Oriented x 1', 'Awake & Oriented x 0', 'Verbal Stimulus', 'Pain Stimulus', 'Unresponsive'];
+  
+  $scope.trainingLevels = ['WFA','WAFA','WFR', 'WEMT', 'Other'];
 
   //SEED DATA, COMMENT OUT AFTER FRONT_END REVIEW
   $scope.soaps = Soaps.all();

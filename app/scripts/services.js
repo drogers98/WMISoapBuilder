@@ -154,6 +154,7 @@ angular.module('WMISoapBuilder.services', ['angular-websql'])
         patientAnticipatedProblems: 'Exfil from the backcountry could prove problematic.' },
     {
     	id: 1,
+    	patientInitials: 'WR',
     	patientSex: 'Female',
     	patientAge: 32,
     	created: '01/09/2014',
