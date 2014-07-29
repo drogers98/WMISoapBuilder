@@ -4,10 +4,10 @@
   </ion-nav-buttons>
 
   <ion-nav-buttons side="right">
-    <button class="button button-clear" ng-click="data.showDelete = !data.showDelete">Edit</button>
+    <button class="button icon ion-ios7-compose-outline" ng-click="data.showDelete = !data.showDelete"></button>
   </ion-nav-buttons>
   <ion-content class="has-header">
-  <a class="button button-block button-light" href="#/tab/vitals/new">Add Vitals</a>
+  <a class="button button-block button-light margin icon ion-plus-circled" href="#/tab/vitals/new"> Add Vitals</a>
     <ion-list show-delete="data.showDelete">
       <ion-item class="item-icon-right" ng-repeat="vital in vitals" type="item-text-wrap" href="#/vitals/{{vital.id}}">
         <div class="row">
