@@ -129,7 +129,7 @@ angular.module('WMISoapBuilder.services', ['angular-websql'])
     	incidentLon: '12345678',
     	patientInitials: 'RC',
     	patientSex: 'Male',
-		patientDob: '01/02/1989',
+		  patientDob: '01/02/1989',
    		patientAge: 24,
    		patientLOR: 'Awake & Oriented x 3',
    		patientComplaint: 'Neck Pain',
@@ -151,19 +151,11 @@ angular.module('WMISoapBuilder.services', ['angular-websql'])
         patientEventsForCause: 'Be was buzzing around, tried to swat it and fell.',
         patientAssessment: 'Patient likely incured spinal injury on fall. Check for bee stings negligible.',
         patientPlan: 'Have group help remove PX from camp, get them to medical facility.',
-        patientAnticipatedProblems: 'Exfil from the backcountry could prove problematic.' },
-    {
-    	id: 1,
-    	patientInitials: 'WR',
-    	patientSex: 'Female',
-    	patientAge: 32,
-    	created: '01/09/2014',
-    	patientComplaint: 'Broken leg'}
+        patientAnticipatedProblems: 'Exfil from the backcountry could prove problematic.' }
   ]
   return {
     all: function() {
       return soaps;
-      console.log(soaps);
     },
     get: function(soapId) {
       return soaps[soapId];

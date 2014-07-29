@@ -41,7 +41,7 @@ angular.module('WMISoapBuilder', ['ionic', 'WMISoapBuilder.controllers', 'WMISoa
     .state('settings', {
         url: '/settings',
         templateUrl: 'templates/settings.html',
-        controller: 'FirstResponderCtrl'
+        controller: 'SoapCtrl'
     })
 
     .state('terms', {
@@ -53,7 +53,7 @@ angular.module('WMISoapBuilder', ['ionic', 'WMISoapBuilder.controllers', 'WMISoa
     .state('about', {
       url: '/about',
       templateUrl: 'templates/about.html',
-      controller: 'WMICtrl'
+      controller: 'SoapCtrl'
     })
 
     .state('help', {

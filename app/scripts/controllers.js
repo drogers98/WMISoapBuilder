@@ -31,13 +31,11 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql'])
 
 })
 
-.controller('SoapCtrl', function($scope, $state, $stateParams,$ionicNavBarDelegate, Soaps) {
+.controller('SoapCtrl', function($scope, $state, $stateParams, Soaps) {
   $scope.settingsPage = function() {$state.go('settings');}
-  $scope.goBack = function() {
-    $ionicNavBarDelegate.back();
-  };
+
   $scope.aboutPage = function(){$state.go('about');}
-  $scope.mySoapsPage = function(){$state.go('soaps')}
+  $scope.mySoapsPage = function(){$state.go('soaps');}
   $scope.subjectivePage = function(){$state.go('tab.subjective');}
   $scope.objectivePage = function(){$state.go('tab.objective');}
   $scope.apPage = function(){$state.go('tab.ap');}
@@ -66,7 +64,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql'])
   $scope.HEARTrythms = ['Regular', 'Irregular'];
 
   $scope.LORs = ['Awake & Oriented x 4', 'Awake & Oriented x 3', 'Awake & Oriented x 2', 'Awake & Oriented x 1', 'Awake & Oriented x 0', 'Verbal Stimulus', 'Pain Stimulus', 'Unresponsive'];
-  
+
   $scope.trainingLevels = ['WFA','WAFA','WFR', 'WEMT', 'Other'];
 
   //SEED DATA, COMMENT OUT AFTER FRONT_END REVIEW
