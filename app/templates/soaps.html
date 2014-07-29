@@ -9,7 +9,7 @@
   </ion-nav-buttons>
 
   <ion-content class="has-header"  padding="true">
-  <button class="button button-block button-light icon ion-plus-circled" ng-click="subjectivePage()"> New SOAP Note</button>
+  <button class="button button-block button-light icon ion-plus-circled" ng-click="overviewPage()"> New SOAP Note</button>
     <ion-list show-delete="data.showDelete">
       <ion-item class="item-icon-right" ng-repeat="soap in soaps" type="item-text-wrap" href="#/soap/{{soap.id}}">
         <ion-delete-button class="ion-minus-circled" ng-click="onItemDelete(item)">
