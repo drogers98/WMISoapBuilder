@@ -1,0 +1,14 @@
+<ion-view title="VITALS">
+  <ion-content has-header="true" padding="false">
+    <div class="SOAP">
+      <!-- subjective section 1 -->
+      <h5>VITALS</h5>
+      <a class="button button-block button-light">ADD VITALS</a>
+      <div class="list">
+        <ion-list ng-repeat="vital in soap.vitals">
+          {{vital.vitalOne}}
+        </ion-list>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>
