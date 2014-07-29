@@ -1,4 +1,12 @@
-<ion-view title="OBJECTIVE">
+<ion-view title="Objective">
+<ion-nav-buttons side="left">
+    <button class="button icon ion-ios7-arrow-back" ng-click="data.showDelete = !data.showDelete"></button>
+  </ion-nav-buttons>
+
+  <ion-nav-buttons side="right">
+    <button class="button icon ion-ios7-upload-outline" ng-click="data.showDelete = !data.showDelete"></button>
+  </ion-nav-buttons>
+
   <ion-content has-header="true" padding="false">
     <div class="SOAP">
       <!-- subjective section 1 -->
@@ -11,7 +19,7 @@
       <h5>Patient Exam Reveals<a><icon class="ion-ios7-information"></icon></a></h5>
       <div class="list">
         <label class="item item-input">
-          <input type="text" placeholder="Exam Revelas?" ng-model="wmi.patientExamReveals">
+          <input type="text" placeholder="Exam Reveals?" ng-model="wmi.patientExamReveals">
         </label>
       </div>
       <h5>Vitals<a><icon class="ion-ios7-information"></icon></a></h5>
@@ -41,7 +49,7 @@
           <input type="text" placeholder="Events Leading up incident/illness" ng-model="wmi.patientEventsForCause">
         </label>
       </div>
-      <a class="button button-block button-light margin icon-right ion-ios7-arrow-right" ng-click="apPage()">Continue to Assesment & Plan</a>
+      <a class="button button-block button-light margin icon-right ion-ios7-arrow-right" ng-click="apPage()">Continue to Assessment & Plan</a>
     </div>
   </ion-content>
 </ion-view>

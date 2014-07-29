@@ -4,92 +4,142 @@
   </ion-nav-buttons>
 
   <ion-content class="has-header">
-  <div class="SOAP">
+  <div class="SOAP VITALS">
     <div class="list">
+
+    <!-- LOR -->
       <div class="item item-input item-select">
         <div class="input-label">
           LOR
-          <!-- leave select empty - data will be brough in through ctrl -->
         </div>
-        <select ng-model="vital.lor" ng-options="lor for lor in lors"></select>
+        <select ng-model="vital.lor" ng-options="LOR for LOR in LORs"></select>
       </div>
-      <label class="item item-input">
-        <input type="number" placeholder="HR:RATE">
+
+      <!-- Heart -->
+
+     <div class="row">
+  <div class="col col-33"><strong>Heart</strong></div>
+  <div class="col">
+	  <label class="item item-input">
+        <input type="number" placeholder="Rate">
       </label>
       <div class="item item-input item-select">
         <div class="input-label">
-          HR:RHYTHM
+          Rythm
           <!-- leave select empty - data will be brough in through ctrl -->
         </div>
         <select ng-model="vital.patientGender" ng-options="rhythm for rhythm in rhythms"></select>
       </div>
       <div class="item item-input item-select">
         <div class="input-label">
-          HR:QUALITY
+          Quality
           <!-- leave select empty - data will be brough in through ctrl -->
         </div>
         <select ng-model="vital.quality" ng-options="quality for quality in qualities"></select>
       </div>
-      <label class="item item-input">
-        <input type="number" placeholder="RR:RATE">
+      </label>
+  </div>
+</div>
+
+      <!-- Respritory -->
+<div class="row">
+  <div class="col col-33"><strong>Respritory</strong></div>
+  <div class="col">
+	  <label class="item item-input">
+        <input type="number" placeholder="Rate">
       </label>
       <div class="item item-input item-select">
         <div class="input-label">
-          RR:RHYTHM
+          Rythm
           <!-- leave select empty - data will be brough in through ctrl -->
         </div>
         <select ng-model="vital.rrhythm" ng-options="rrhythm for rrhythm in rrhythms"></select>
       </div>
       <div class="item item-input item-select">
         <div class="input-label">
-          RR:QUALITY
+          Quality
           <!-- leave select empty - data will be brough in through ctrl -->
         </div>
         <select ng-model="vital.rquality" ng-options="rquality for rquality in rqualities"></select>
       </div>
-      <div class="item item-input item-select">
+
+
+  </div>
+</div>
+
+      <!-- Skin -->
+<div class="row">
+  <div class="col col-33"><strong>Skin</strong></div>
+  <div class="col">
+	   <div class="item item-input item-select">
         <div class="input-label">
-          SCTM:COLOR
+          Color
           <!-- leave select empty - data will be brough in through ctrl -->
         </div>
         <select ng-model="vital.sctmcolor" ng-options="sctmcolor for sctmcolor in sctmcolors"></select>
       </div>
       <div class="item item-input item-select">
         <div class="input-label">
-          SCTM:TEMP
+          Temp
           <!-- leave select empty - data will be brough in through ctrl -->
         </div>
         <select ng-model="vital.sctmtemp" ng-options="sctmtemp for sctmtemp in sctmtemps"></select>
       </div>
       <div class="item item-input item-select">
         <div class="input-label">
-          SCTM:MOISTURE
+          Moisture
           <!-- leave select empty - data will be brough in through ctrl -->
         </div>
         <select ng-model="vital.sctmmoisture" ng-options="sctmmoisture for sctmmoisture in sctmmoistures"></select>
       </div>
-      <div class="item item-input item-select">
+  </div>
+</div>
+
+
+
+
+
+ <!-- Blood Pressure -->
+<div class="row">
+  <div class="col col-33"><strong>Blood Pressure</strong></div>
+  <div class="col">
+    <div class="item item-input item-select">
         <div class="input-label">
-          BP:RADIAL PULSE
+          Radial Pulse
           <!-- leave select empty - data will be brough in through ctrl -->
         </div>
         <select ng-model="vital.brradialpulse" ng-options="brradialpulse for brradialpulse in brradialpulses"></select>
       </div>
-      <label class="item item-input">
-        <input type="number" placeholder="BP:SYSTOLIC">
+	  <label class="item item-input">
+        <input type="number" placeholder="Systolic">
       </label>
-      <label class="item item-input">
-        <input type="number" placeholder="BP:DIASTOLIC">
+	  <label class="item item-input">
+        <input type="number" placeholder="Diastolic">
       </label>
+  </div>
+</div>
+
+
+
       <div class="item item-input item-select">
         <div class="input-label">
-          PUPILS(PERRl)
+          Pupils(PERRL)
           <!-- leave select empty - data will be brough in through ctrl -->
         </div>
         <select ng-model="vital.pulils" ng-options="pupil for pupil in pupils"></select>
       </div>
     </div>
+
+
+
+    <div class="item">
+    <label class="item-input">
+        <input type="number" placeholder="Temperature">
+    </label>
+    </div>
+    
   </div>
+
   </ion-content>
   <ion-footer-bar>
     <h1 class=""ng-bind="counter"></h1>

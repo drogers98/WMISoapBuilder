@@ -1,8 +1,18 @@
-<ion-view title="SUBJECTIVE">
-  <ion-content has-header="true" padding="true">
+<ion-view title="Subjective">
+
+<ion-nav-buttons side="left">
+    <button class="button icon ion-ios7-arrow-back" ng-click="data.showDelete = !data.showDelete"></button>
+  </ion-nav-buttons>
+
+  <ion-nav-buttons side="right">
+    <button class="button icon ion-ios7-upload-outline" ng-click="data.showDelete = !data.showDelete"></button>
+  </ion-nav-buttons>
+
+  <ion-content has-header="true" padding="false">
+
     <!-- subjective section 1 -->
     <div class="SOAP">
-      <h5>I have a</h5><a>i</a>
+      <h5>I have a<a><icon class="ion-ios7-information"></icon></a></h5>
       <div class="list">
       <div class="item item-input item-select">
         <div class="input-label">
@@ -17,12 +27,14 @@
       <label class="item item-input">
         <input type="number" placeholder="Patient Age" ng-model="soap.patientAge">
       </label>
+
+
     </div>
     <!-- subjective section 2 -->
-    <h5>Who's chief complaint is</h1><a>i</a>
+    <h5>Who's chief complaint is<a><icon class="ion-ios7-information"></icon></a></h5>
     <div class="list">
       <label class="item item-input">
-        <input type="text" placeholder="Chief Complaint" ng-model="soap.chiefComplaint">
+        <textarea type="text" placeholder="Chief Complaint" ng-model="soap.chiefComplaint"></textarea>
       </label>
     </div>
     <!-- subjective section 3 -->
@@ -34,31 +46,47 @@
         <select ng-model="wmi.patientOnset" ng-options="onset for onset in onsets"></select>
       </div>
       <label class="item item-input">
-        <input type="time" placeholder="Provokes/Palliates" ng-model="soap.patientPPalliates">
+        <textarea type="text" placeholder="Provokes/Palliates" ng-model="soap.patientPPalliates"></textarea>
       </label>
+
+      <div class="item item-input item-select">
+      <div class="input-label">
+        Quality
+      </div>
+        <select ng-model="wmi.patientQuality" ng-options="quality for quality in qualities"></select>
+      </div>
+
       <label class="item item-input">
-        <input type="time" placeholder="Quality" ng-model="soap.patientQuality">
+        <textarea type="text" placeholder="Radiates" ng-model="soap.patientRadiates"></textarea>
       </label>
-      <label class="item item-input">
-        <input type="time" placeholder="Radiates" ng-model="soap.patientRadiates">
-      </label>
+
       <div class="item item-input item-select">
         <div class="input-label">
           Severity
         </div>
         <select ng-model="wmi.patientSeverity" ng-options="severity for severity in severities"></select>
       </div>
-      <label>
-        <input type="time" placeholder="Time" ng-model="wmi.patientTime">
-      </label>
-    </div>
-    <h5>MECHANISM OF INJURY/HPI</h5><a>i</a>
-    <div class="list">
+
       <label class="item item-input">
-        <input type="text" placeholder="Suspected spinal" ng-model="wmi.patientSpinal">
+        <input type="time" placeholder="Time (Duration)" ng-model="wmi.patientTime">
       </label>
     </div>
-      <a class="button button-block button-light" href="#/tab/objective">CONTINUE TO OBJECTIVE</a>
+    <h5>Mechanism of Injury/HPI<a><icon class="ion-ios7-information"></icon></a></h5>
+    <div class="list">
+
+     <label class="item item-input">
+        <textarea type="text" placeholder="MOI/HPI" ng-model="wmi.patientHPI"></textarea>
+      </label>
+
+      <div class="item item-input item-select">
+      <div class="input-label">
+        Suspected Spinal Injury
+      </div>
+        <select ng-model="wmi.wmi.patientSpinal" ng-options="spinal for spinal in spinals"></select>
+      </div>
+
+    </div>
+      <a class="button button-block button-light margin icon-right ion-ios7-arrow-right" href="#/tab/objective">Continue to Objective</a>
     </div>
   </ion-content>
 </ion-view>

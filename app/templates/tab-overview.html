@@ -1,58 +1,44 @@
-<ion-view title="Objective">
+<ion-view title="Location">
+
+<ion-nav-buttons side="left">
+    <button class="button icon ion-ios7-arrow-back" ng-click="data.showDelete = !data.showDelete"></button>
+  </ion-nav-buttons>
+
+  <ion-nav-buttons side="right">
+    <button class="button icon ion-ios7-upload-outline" ng-click="data.showDelete = !data.showDelete"></button>
+  </ion-nav-buttons>
+  
   <ion-content has-header="true" padding="false">
   <div class="SOAP">
-    <!-- subjective section 1 -->
-    <h5>I have a <a>i</a></h5>
-    <div class="list">
-      <div class="item item-input item-select">
-        <div class="input-label">
-          Patient Sex
-          <!-- leave select empty - data will be brough in through ctrl -->
-        </div>
-        <select></select>
-      </div>
+    
+    <h5>Responder Information<a><icon class="ion-ios7-information"></icon></a></h5>
+      <div class="list">
       <label class="item item-input">
-        <input type="date" placeholder="Patient DOB">
+        <input type="text" placeholder="First Name">
       </label>
       <label class="item item-input">
+        <input type="text" placeholder="Last Name">
+      </label>
+      <!-- select will need some good style refactoring -->
+      <div class="item item-input item-select">
+        <div class="input-label">
+          Current Certification
+        </div>
+        <select ng-model="responder.trainingLevel" ng-options="trainingLevel for trainingLevel in trainingLevels"></select>
+      </div>
+      
+          <h5>Location<a><icon class="ion-ios7-information"></icon></a></h5>
+      <div class="list">
+      <label class="item item-input">
+        <textarea type="text" placeholder="Location"></textarea>
+      </label>
+      <label class="item item-input">
+        <input type="text" placeholder="Lat/Lon here">
+      </label>
+      </div>
+      
 
-        <input type="number" placeholder="Patient Age">
-      </label>
-    </div>
-    <!-- subjective section 2 -->
-    <h5>Who's chief complaint is<a>i</a></h5>
-    <div class="list">
-      <label class="item item-input">
-        <textarea placeholder="Chief Complaint"></textarea>
-      </label>
-    </div>
-    <!-- subjective section 3 -->
-    <div class="list">
-      <div class="item item-input item-select">
-        <div class="input-label">
-          Onset
-        </div>
-        <select></select>
-      </div>
-      <label class="item item-input">
-        <input type="text" placeholder="Provokes/Palliates">
-      </label>
-      <label class="item item-input">
-        <input type="text" placeholder="Quality">
-      </label>
-      <label class="item item-input">
-        <input type="text" placeholder="Radiates">>
-      </label>
-      <div class="item item-input item-select">
-        <div class="input-label">
-          Severity
-        </div>
-        <select></select>
-      </div>
-      <label>
-        <input type="time" placeholder="Time">
-      </label>
-    </div>
+<a class="button button-block button-light margin icon-right ion-ios7-arrow-right" href="#/tab/objective">Continue to Subjective</a>
     </div>
   </ion-content>
 </ion-view>
