@@ -13,6 +13,7 @@ $WMI_DK_red: darken($WMIred, 10%);
 $WMIwhite: #FFF;
 $WMI_DK_white: darken($WMIwhite, 5%);
 $WMIgrey: #555555;
+$WMI_LT_grey: #DDD;
 $WMI_DK_grey: darken($WMIgrey, 10%);
 
 //Fonts
@@ -32,7 +33,7 @@ $WMI_DK_grey: darken($WMIgrey, 10%);
 html {
 width: 100%;
 height: 100%;
-  background-color: $WMIwhite;
+  background-color: $WMI_LT_blue;
   background-image: url('../images/WMI_APP_BCKRD_Crushed.png');
 	background-size: cover;
     background-repeat: no-repeat;
@@ -59,12 +60,14 @@ a {
 
 // Buttons. Overrides ionic button-light
 .button {
+	min-height: 30px;
 	&.button-light, &.button-calm {
-
+		font-size: 14px;
 		color: $WMIwhite;
-		font-weight: bold;
+		text-transform: uppercase;
 		border:none;
-		@include border-radius(5px);
+		
+		@include border-radius(2px);
 			&:hover{
 				color: $WMIwhite;
 				border:none;
@@ -95,7 +98,7 @@ a {
 
 		.button {
 			background: none;
-			border-color: $WMI_DK_gold;
+			border: none;
 			&:hover{
 				background-color: $WMI_DK_gold;
 			}
@@ -168,6 +171,10 @@ textarea {
 	height:60px;
 }
 
+.pane {
+	background-color: $WMI_DK_white;
+}
+
 // First Responder Page (home after splash) -------------------------
 
 
@@ -185,6 +192,9 @@ textarea {
 	
 	// placeholder for bckrd img
 	color: $WMIwhite;
+	p {
+		text-align: center;
+	}
 	a {
 		color: $WMI_LT_blue;
 	}
@@ -204,7 +214,7 @@ textarea {
 		.item-input {
 			margin-top: 10px;
 			border:none;
-			@include border-radius(5px);
+			@include border-radius(2px);
 		}
 	}
 
@@ -219,25 +229,15 @@ resize:none;
 
 // Soap Specific
 .SOAP {
-	h2, h3, h5 {
+	
+	h2, h3 {
 		margin: 0px;
 		font-weight: bold;
 		background-color: $WMIblue;
 		color: $WMIwhite;
 		padding:15px;
 		text-transform: uppercase;
-		a {
-			float:right;
-			display: block;
-			font-size: 18px;
-
-
-			text-decoration: none;
-			color: $WMIwhite;
-			&:hover {
-				color: $WMI_DK_white;
-			}
-
+		
 		}
 	}
 
@@ -253,16 +253,55 @@ resize:none;
 		text-align: center;
 		font-size: 14px;
 	}
+	
+	h4, h5 {
+		text-transform: uppercase;
+		font-weight: 400;
+		a {
+			margin-left: 5px;
+			display: block;
+			float: right;
+			width: 20px;
+			height:20px;
+			line-height: 20px;
+			text-align: center;
+			font-size: 18px;
+			text-decoration: none;
+			color: $WMIgold;
+			@include border-radius(50%);
+			background-color: $WMIwhite;
+			&:hover {
+				
+			}
+
+	}
 }
 
 // vitals
+	.VitalsTable {
+	width: 100%;
+	text-align: center;
+	border: 1px solid $WMI_LT_grey;
+	th, td {
+		width:25%;
+		padding:5px;
+		border: 1px solid $WMI_LT_grey;
+	}
+		th {
+		text-align: right;
+		padding-right: 10px;
+			background-color: $WMI_LT_grey;
+			text-transform: uppercase;
+		}
+	}
 .VITALS {
 padding-bottom: 120px;
 	.row {
 		padding-top: 10px;
 		padding-bottom: 10px;
-		border-bottom: 1px solid #DDD;
+		border-bottom: 1px solid $WMI_LT_grey;
 	}
+
 }
 .vital {
   position:fixed;

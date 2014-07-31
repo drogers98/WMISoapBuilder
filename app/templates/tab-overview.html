@@ -5,13 +5,24 @@
   </ion-nav-buttons>
 
   <ion-nav-buttons side="right">
-    <button class="button icon ion-ios7-upload-outline" ng-click="data.showDelete = !data.showDelete"></button>
+    <button class="button icon ion-ios7-email-outline" ng-click="data.showDelete = !data.showDelete"></button>
   </ion-nav-buttons>
 
-  <ion-content has-header="true" padding="false">
+  <ion-content has-header="true" padding="true">
   <div class="SOAP">
+  
+  <h5>Location<a><icon class="ion-ios7-information-outline"></icon></a></h5>
+      <div class="list">
+      <label class="item item-input">
+        <textarea type="text" placeholder="Location"></textarea>
+      </label>
+      <label class="item item-input">
+        <input type="text" placeholder="Lat/Lon here">
+      </label>
+      </div>
 
-    <h5>Responder Information<a><icon class="ion-ios7-information"></icon></a></h5>
+
+    <h5>Responder Information<a><icon class="ion-ios7-information-outline"></icon></a></h5>
       <div class="list">
       <label class="item item-input">
         <input type="text" placeholder="First Name">
@@ -26,19 +37,9 @@
         </div>
         <select ng-model="responder.trainingLevel" ng-options="trainingLevel for trainingLevel in trainingLevels"></select>
       </div>
-
-          <h5>Location<a><icon class="ion-ios7-information"></icon></a></h5>
-      <div class="list">
-      <label class="item item-input">
-        <textarea type="text" placeholder="Location"></textarea>
-      </label>
-      <label class="item item-input">
-        <input type="text" placeholder="Lat/Lon here">
-      </label>
       </div>
 
-
-<a class="button button-block button-light margin icon-right ion-ios7-arrow-right" href="#/tab/subjective">Continue to Subjective</a>
+<a class="button button-block button-light icon-right ion-ios7-arrow-right" href="#/tab/subjective">Continue to Subjective</a>
     </div>
   </ion-content>
 </ion-view>

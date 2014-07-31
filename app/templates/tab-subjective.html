@@ -5,14 +5,14 @@
   </ion-nav-buttons>
 
   <ion-nav-buttons side="right">
-    <button class="button icon ion-ios7-upload-outline" ng-click="data.showDelete = !data.showDelete"></button>
+    <button class="button icon ion-ios7-email-outline" ng-click="data.showDelete = !data.showDelete"></button>
   </ion-nav-buttons>
 
-  <ion-content has-header="true" padding="false">
+  <ion-content has-header="true" padding="true">
 
     <!-- subjective section 1 -->
     <div class="SOAP">
-      <h5>I have a<a><icon class="ion-ios7-information"></icon></a></h5>
+      <h5>I have a<a><icon class="ion-ios7-information-outline"></icon></a></h5>
       <div class="list">
       <div class="item item-input item-select">
         <div class="input-label">
@@ -31,7 +31,7 @@
 
     </div>
     <!-- subjective section 2 -->
-    <h5>Who's chief complaint is<a><icon class="ion-ios7-information"></icon></a></h5>
+    <h5>Who's chief complaint is<a><icon class="ion-ios7-information-outline"></icon></a></h5>
     <div class="list">
       <label class="item item-input">
         <textarea type="text" placeholder="Chief Complaint" ng-model="soap.chiefComplaint"></textarea>
@@ -71,7 +71,7 @@
         <input type="time" placeholder="Time (Duration)" ng-model="wmi.patientTime">
       </label>
     </div>
-    <h5>Mechanism of Injury/HPI<a><icon class="ion-ios7-information"></icon></a></h5>
+    <h5>Mechanism of Injury/HPI<a><icon class="ion-ios7-information-outline"></icon></a></h5>
     <div class="list">
 
      <label class="item item-input">
@@ -86,7 +86,7 @@
       </div>
 
     </div>
-      <a class="button button-block button-light margin icon-right ion-ios7-arrow-right" href="#/tab/objective">Continue to Objective</a>
+      <a class="button button-block button-light icon-right ion-ios7-arrow-right" href="#/tab/objective">Continue to Objective</a>
     </div>
   </ion-content>
 </ion-view>

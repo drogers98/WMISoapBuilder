@@ -2,7 +2,7 @@
 
   <ion-nav-buttons side="left">
 
-    <button class="button button icon ion-gear-a" ng-click="settingsPage()"></button>
+    <button class="button button icon ion-ios7-information-outline" ng-click="aboutPage()"></button>
   </ion-nav-buttons>
 
   <ion-nav-buttons side="right">
@@ -10,7 +10,7 @@
   </ion-nav-buttons>
 
   <ion-content class="has-header"  padding="true">
-  <button class="button button-block button-light icon icon-left ion-plus-circled" ng-click="overviewPage()">New SOAP Note</button>
+  <button class="button button-block button-light icon icon-right ion-plus-circled" ng-click="overviewPage()">New SOAP Note</button>
     <ion-list show-delete="data.showDelete">
       <ion-item class="item-icon-right" ng-repeat="soap in soaps" type="item-text-wrap" href="#/soap/{{soap.id}}">
         <ion-delete-button class="ion-minus-circled" ng-click="onItemDelete(item)">

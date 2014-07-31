@@ -1,11 +1,11 @@
 <ion-view title="{{soap.patientSex}}, {{soap.patientAge}} | {{soap.patientInitials}}">
 <ion-nav-buttons side="left">
-    <button class="button icon ion-ios7-arrow-back" ng-click="mySoapsPage()"></button>
+    <button class="button icon ion-ios7-arrow-back" ng-click="mySoapsPage()">My SOAPs</button>
   </ion-nav-buttons>
 
   <ion-nav-buttons side="right">
   <button class="button icon ion-ios7-compose-outline" ng-click="data.showDelete = !data.showDelete"></button>
-    <button class="button icon ion-ios7-upload-outline" ng-click="data.showDelete = !data.showDelete"></button>
+    <button class="button icon ion-ios7-email-outline" ng-click="data.showDelete = !data.showDelete"></button>
   </ion-nav-buttons>
 
 
@@ -13,12 +13,10 @@
 
 <div class="SOAP">
 
-  <ion-content class="has-header" padding="yes">
+  <ion-content class="has-header" padding="true">
     <div class="SOAP">
       <h2>Review SOAP Note</h2>
-      <h3>Location</h3>
-
-       <h5>Location</h5>
+      <h4>Location</h4>
       <div class="list">
         <ion-list>
           <ion-item class="item-text-wrap"><strong>Date: </strong> {{soap.incidentDate}}</ion-item>
@@ -35,10 +33,10 @@
       </div>
 
 
-     <h3>Subjective</h3>
+     <h4>Subjective</h4>
 
 
-      <h5>I have a</h5>
+      
       <div class="list">
         <ion-list>
           <ion-item class="item-text-wrap"><strong>Age:</strong> {{soap.patientAge}}</ion-item>
@@ -71,7 +69,7 @@
         </ion-list>
       </div>
 
-      <h3>Objective</h3>
+      <h4>Objective</h4>
       <h5>General</h5>
       <div class="list">
         <ion-list>
@@ -82,64 +80,57 @@
 
       <h5>Vitals</h5>
 
-      <div class="row">
-		  <div class="col"></div>
-		  <div class="col">time 1</div>
-		  <div class="col">time 2</div>
-		  <div class="col">time 3</div>
-	  </div>
+      <table class="VitalsTable">
+            <tr>
+                <th>Time</th>
+                <td>data</td>
+                <td>data</td>
+                <td>data</td>
+            </tr>
+            <tr>
+                <th>LOR</th>
+                <td>data</td>
+                <td>data</td>
+                <td>data</td>
+            </tr>
+            <tr>
+                <th>HR</th>
+                <td>data</td>
+                <td>data</td>
+                <td>data</td>
+            </tr>
+            <tr>
+                <th>RR</th>
+                <td>data</td>
+                <td>data</td>
+                <td>data</td>
+            </tr>
+            <tr>
+                <th>Skin</th>
+                <td>data</td>
+                <td>data</td>
+                <td>data</td>
+            </tr>
+            <tr>
+                <th>BP</th>
+                <td>data</td>
+                <td>data</td>
+                <td>data</td>
+            </tr>
+            <tr>
+                <th>Pupils</th>
+                <td>data</td>
+                <td>data</td>
+                <td>data</td>
+            </tr>
+            <tr>
+                <th>Temp</th>
+                <td>data</td>
+                <td>data</td>
+                <td>data</td>
+            </tr>
+        </table>
 
-      <div class="row">
-		  <div class="col col-label">LOR:</div>
-		  <div class="col">1</div>
-		  <div class="col">2</div>
-		  <div class="col">3</div>
-	  </div>
-
-	  <div class="row">
-		  <div class="col col-label">HR:</div>
-		  <div class="col">1</div>
-		  <div class="col">2</div>
-		  <div class="col">3</div>
-	  </div>
-
-	  <div class="row">
-		  <div class="col col-label">RR:</div>
-		  <div class="col">1</div>
-		  <div class="col">2</div>
-		  <div class="col">3</div>
-	  </div>
-
-	  <div class="row">
-		  <div class="col col-label">Skin:</div>
-		  <div class="col">1</div>
-		  <div class="col">2</div>
-		  <div class="col">3</div>
-	  </div>
-
-	  <div class="row">
-		  <div class="col col-label">BP:</div>
-		  <div class="col">1</div>
-		  <div class="col">2</div>
-		  <div class="col">3</div>
-	  </div>
-
-	  <div class="row">
-		  <div class="col col-label">Pupils:</div>
-		  <div class="col">1</div>
-		  <div class="col">2</div>
-		  <div class="col">3</div>
-	  </div>
-
-	  <div class="row">
-		  <div class="col col-label">Temp:</div>
-		  <div class="col">1</div>
-		  <div class="col">2</div>
-		  <div class="col">3</div>
-	  </div>
-
-
-      </div>
 
       <h5>Patient History</h5>
       <div class="list">
@@ -153,16 +144,14 @@
         </ion-list>
       </div>
 
-	  <h3>Assesment</h3>
-      <h5>The Assesment</h5>
+	  <h4>Assesment</h4>
       <div class="list">
         <ion-list>
           <ion-item class="item-text-wrap">{{soap.patientAssessment}}</ion-item>
         </ion-list>
       </div>
 
-      <h3>Plan</h3>
-      <h5>The Plan</h5>
+      <h4>Plan</h4>
       <div class="list">
         <ion-list>
           <ion-item class="item-text-wrap">{{soap.patientPlan}}</ion-item>
@@ -176,7 +165,7 @@
         </ion-list>
       </div>
 
-
+<a class="button button-block button-light icon icon-right ion-ios7-email-outline" ng-click="newSoap(wmi)">Share This SOAP</a>
 
       </div>
   </ion-content>
