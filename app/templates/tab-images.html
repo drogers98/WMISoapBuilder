@@ -7,8 +7,19 @@
      <button class="button button-icon ion-navicon" ng-controller="MenuCtrl" ng-click="toggleSideMenu()"></button>
   </ion-nav-buttons>
   <ion-content has-header="true" padding="false" has-bouncing="false">
-  <div class="SOAP">
+  
 
+  <div class="SOAP">
+  
+<div id="camera">
+    
+ 
+    <div style="text-align:center;margin:20px;">
+        <img id="cameraPic" src="" style="width:auto;height:120px;"></img>
+    </div>
+</div>
+
+<button class="button button-block button-light margin" onclick="capturePhoto();">Capture Photo</button>
 
 <a class="button button-block button-light margin"><i class="icon ion-app-photos margin"></i>Add Photos</a>
 
