@@ -1,9 +1,13 @@
-<ion-content padding="true">
+<ion-view hide-nav-bar="true">
+<ion-content padding="false" has-header="false" has-bouncing="false">
+
 <div class="FirstResponder">
+
   <div class="CenteredLogo WMIlogo">
 	  <img src="images/WMI_Logo_WHT.svg">
   </div>
-<h1>Welcome to WMI SOAP Notes</h1>
+  
+<h1>SOAP Notes</h1>
   <div class="list list-inset">
     <form>
       <label class="item item-input">
@@ -19,9 +23,10 @@
         </div>
         <select ng-model="responder.trainingLevel" ng-options="trainingLevel for trainingLevel in trainingLevels"></select>
       </div>
-      <p>By using this application, you agree to the <a ng-click="termsPage()">Terms of Service.</a></p>
-      <button type="submit" class="button button-block button-light" ng-click="responderSoapsPage()">Accept and Continue</button>
+      <p>By using this application, you agree to the <br /><a ng-click="termsPage()">Terms of Service.</a></p>
+      <button type="submit" class="button button-block button-light icon-right ion-ios7-arrow-right" ng-click="responderSoapsPage()">Accept and Continue</button>
     </form>
   </div>
 </div>
 </ion-content>
+</ion-view>

@@ -1,23 +1,26 @@
-<ion-view title="My Soaps">
+<ion-view title="My SOAPs">
 
   <ion-nav-buttons side="left">
 
-    <button class="button button icon ion-ios7-information-outline" ng-click="aboutPage()"></button>
+    <button class="button button icon ion-information-circled" ng-click="aboutPage()"></button>
   </ion-nav-buttons>
 
   <ion-nav-buttons side="right">
-    <button class="button icon ion-ios7-compose-outline" ng-click="data.showDelete = !data.showDelete"></button>
+    <button class="button icon ion-edit" ng-click="data.showDelete = !data.showDelete"></button>
+    <button class="button button-icon ion-navicon" ng-controller="MenuCtrl" ng-click="toggleSideMenu()"></button>
   </ion-nav-buttons>
+  
 
-  <ion-content class="has-header"  padding="true">
-  <button class="button button-block button-light icon icon-right ion-plus-circled" ng-click="overviewPage()">New SOAP Note</button>
+  <ion-content has-header="true" padding="false" has-bouncing="false">
+  <div class="SOAP">
+  <a class="button button-block button-light margin" ng-click="overviewPage()"><icon class="icon ion-plus-circled "></icon>Create New SOAP Note</a>
     <ion-list show-delete="data.showDelete">
       <ion-item class="item-icon-right" ng-repeat="soap in soaps" type="item-text-wrap" href="#/soap/{{soap.id}}">
         <ion-delete-button class="ion-minus-circled" ng-click="onItemDelete(item)">
         </ion-delete-button>{{soap.patientAge}}, {{soap.patientSex}} | {{soap.patientInitials}} | {{soap.created}}
-
         <i class="icon ion-ios7-arrow-forward"></i>
       </ion-item>
     </ion-list>
+  </div>
   </ion-content>
 </ion-view>

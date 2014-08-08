@@ -79,6 +79,8 @@ angular.module('WMISoapBuilder', ['ionic', 'WMISoapBuilder.controllers', 'WMISoa
       templateUrl: 'templates/soap-detail.html',
       controller: 'SoapCtrl'
     })
+    
+   
 
     // setup an abstract state for the tabs directive
     .state('tab', {

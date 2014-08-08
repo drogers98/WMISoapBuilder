@@ -3,23 +3,29 @@
     <a class="button button" href="#/tab/objective">Cancel</a>
   </ion-nav-buttons>
 
-  <ion-content class="has-header" padding="true">
+  <ion-content has-header="true" padding="false" has-bouncing="false">
   <div class="SOAP VITALS">
     <div class="list">
+    
+        <!-- Time Taken -->
+        <h6>Time Taken</h6>
+      <div class="item item-input">
+       add time field here. adjustable.
+      </div>
 
     <!-- LOR -->
+    <h6>Level of Responsiveness</h6>
       <div class="item item-input item-select">
         <div class="input-label">
-          LOR
+          
         </div>
         <select ng-model="vital.lor" ng-options="LOR for LOR in LORs"></select>
       </div>
 
       <!-- Heart -->
 
-     <div class="row">
-  <div class="col col-33"><strong>Heart</strong></div>
-  <div class="col">
+     <h6>Heart</h6>
+
 	  <label class="item item-input">
         <input type="number" placeholder="Rate (BPM)">
       </label>
@@ -38,13 +44,11 @@
         <select ng-model="vital.quality" ng-options="HEARTquality for HEARTquality in HEARTqualities"></select>
       </div>
       </label>
-  </div>
-</div>
 
-      <!-- Respritory -->
-<div class="row">
-  <div class="col col-33"><strong>Respritory</strong></div>
-  <div class="col">
+
+      <!-- Respiratory -->
+<h6>Respiratory</h6>
+  
 	  <label class="item item-input">
         <input type="number" placeholder="Rate (BPM)">
       </label>
@@ -64,13 +68,10 @@
       </div>
 
 
-  </div>
-</div>
+
 
       <!-- Skin -->
-<div class="row">
-  <div class="col col-33"><strong>Skin</strong></div>
-  <div class="col">
+      <h6>Skin</h6>
 	   <div class="item item-input item-select">
         <div class="input-label">
           Color
@@ -92,17 +93,15 @@
         </div>
         <select ng-model="vital.sctmmoisture" ng-options="SKINmoist for SKINmoist in SKINmoists"></select>
       </div>
-  </div>
-</div>
+
 
 
 
 
 
  <!-- Blood Pressure -->
-<div class="row">
-  <div class="col col-33"><strong>Blood Pressure</strong></div>
-  <div class="col">
+ <h6>Blood Pressure</h6>
+ 
     <div class="item item-input item-select">
         <div class="input-label">
           Radial Pulse
@@ -115,29 +114,44 @@
       </label>
 	  <label class="item item-input">
         <input type="number" placeholder="Diastolic">
+        
       </label>
   </div>
-</div>
 
 
 
+ <h6>Pupils</h6>
       <div class="item item-input item-select">
         <div class="input-label">
-          Pupils(PERRL)
+          Pupils
           <!-- leave select empty - data will be brough in through ctrl -->
         </div>
         <select ng-model="vital.pulils" ng-options="pupil for pupil in pupils"></select>
       </div>
-    </div>
-
-
-
-    <div class="item">
-    <label class="item-input">
-        <input type="number" placeholder="Temperature">
+      
+      
+    <h6>Temperature</h6>
+    <div class="row">
+  <div class="col">
+	  <label class="item item-input">
+	  <input type="number" placeholder="Degrees">
     </label>
+  </div>
+  <div class="col col-33">
+	   <div class="item item-input item-select">
+        <select ng-model="vital.tempDegrees" ng-options="tempDegree for tempDegree in tempDegrees"></select>
+      </div>
+
+  </div>
     </div>
-<a class="button button-block button-light" ng-click="objectivePage()">Save Vital Set</a>
+        
+    
+ 
+
+
+
+    
+<a class="button button-block button-light margin" ng-click="objectivePage()">Save Vital Set</a>
   </div>
 
   </ion-content>
@@ -152,8 +166,6 @@
     <div class="col">
 
       <button ng-click="startCounter()" class="button button-calm icon ion-play button-small"></button>
-
-
       <button ng-click="stop()" class="button button-calm icon ion-stop button-small"></button>
 
     </div>

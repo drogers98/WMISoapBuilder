@@ -1,54 +1,45 @@
 <ion-view title="{{soap.patientSex}}, {{soap.patientAge}} | {{soap.patientInitials}}">
 <ion-nav-buttons side="left">
-    <button class="button icon ion-ios7-arrow-back" ng-click="mySoapsPage()"></button>
+    <button class="button icon ion-ios7-arrow-back" ng-click="mySoapsPage()">My SOAPs</button>
   </ion-nav-buttons>
 
   <ion-nav-buttons side="right">
-  <button class="button icon ion-ios7-compose-outline" ng-click="data.showDelete = !data.showDelete"></button>
-    <button class="button icon ion-ios7-upload-outline" ng-click="data.showDelete = !data.showDelete"></button>
+  <button class="button icon ion-edit" ng-click="data.showDelete = !data.showDelete"></button>
+    <button class="button icon ion-app-share" ng-click="data.showDelete = !data.showDelete"></button>
   </ion-nav-buttons>
 
 
-
-
-<div class="SOAP">
-
-  <ion-content class="has-header" padding="yes">
+  <ion-content class="has-header" padding="false" has-bouncing="false">
     <div class="SOAP">
-      <h2>Review SOAP Note</h2>
-      <h3>Location</h3>
 
-       <h5>Location</h5>
+      <h5>Location</h5>
       <div class="list">
         <ion-list>
-          <ion-item class="item-text-wrap"><strong>Date: </strong> {{soap.incidentDate}}</ion-item>
-          <ion-item class="item-text-wrap">{{soap.incidentLocation}}</ion-item>
-          <ion-item class="item-text-wrap"><strong>GPS: </strong> {{soap.incidentLat}}, {{soap.incidentLon}}</ion-item>
-        </ion-list>
-      </div>
-
-       <h5>Responder</h5>
-      <div class="list">
-        <ion-list>
-          <ion-item class="item-text-wrap">{{soap.responderFirstName}} {{soap.responderLastName}}, {{soap.responderLevelOfTraining}}</ion-item>
+          <ion-item class="item-text-wrap"><strong>Date of Incident: </strong> {{soap.incidentDate}}</ion-item>
+          <ion-item class="item-text-wrap"><strong>Location: </strong>{{soap.incidentLocation}}</ion-item>
+          <ion-item class="item-text-wrap"><strong>Coordinates: </strong> {{soap.incidentLat}}, {{soap.incidentLon}}</ion-item>
+           <ion-item class="item-text-wrap"><strong>Responder: </strong>{{soap.responderFirstName}} {{soap.responderLastName}}, {{soap.responderLevelOfTraining}}</ion-item>
         </ion-list>
       </div>
 
 
-     <h3>Subjective</h3>
+
+     <h5>Subjective</h5>
 
 
-      <h5>I have a</h5>
+      
       <div class="list">
         <ion-list>
+        <ion-item class="item-text-wrap"><strong>Patient Initials:</strong> {{soap.patientInitials}}</ion-item>
+        <ion-item class="item-text-wrap"><strong>DOB: </strong> {{soap.patientDob}}</ion-item>
           <ion-item class="item-text-wrap"><strong>Age:</strong> {{soap.patientAge}}</ion-item>
           <ion-item class="item-text-wrap"><strong>Sex: </strong> {{soap.patientSex}}</ion-item>
-          <ion-item class="item-text-wrap"><strong>DOB: </strong> {{soap.patientDob}}</ion-item>
+          
 
         </ion-list>
       </div>
 
-      <h5>Whose chief complaint is</h5>
+      <h6>Whose chief complaint is:</h6>
       <div class="list">
         <ion-list>
           <ion-item class="item-text-wrap">{{soap.patientComplaint}}</ion-item>
@@ -56,14 +47,14 @@
           <ion-item><strong>Onset:</strong> {{soap.patientOnset}}</ion-item>
           <ion-item class="item-text-wrap"><strong>Provokes/Palliates:</strong> {{soap.patientPPalliates}}</ion-item>
           <ion-item class="item-text-wrap"><strong>Quality:</strong> {{soap.patientQuality}}</ion-item>
-          <ion-item class="item-text-wrap"><strong>Radiates:</strong> {{soap.patientRadiates}}</ion-item>
-          <ion-item class="item-text-wrap"><strong>Severity:</strong> {{soap.patientSeverity}}</ion-item>
-          <ion-item class="item-text-wrap"><strong>Time:</strong> {{soap.patientTime}}</ion-item>
+          <ion-item class="item-text-wrap"><strong>Radiation/Region/Referred:</strong> {{soap.patientRadiates}}</ion-item>
+          <ion-item class="item-text-wrap"><strong>Severity:</strong> {{soap.patientSeverity}} out of 10</ion-item>
+          <ion-item class="item-text-wrap"><strong>Time of Onset:</strong> {{soap.patientTime}}</ion-item>
 
         </ion-list>
       </div>
 
-      <h5>Mechanism of Injury/HPI</h5>
+      <h6>MOI/HPI</h6>
       <div class="list">
         <ion-list>
           <ion-item class="item-text-wrap">{{soap.patientHPI}}</ion-item>
@@ -71,77 +62,71 @@
         </ion-list>
       </div>
 
-      <h3>Objective</h3>
-      <h5>General</h5>
+      <h5>Objective</h5>
+      <h6>General</h6>
       <div class="list">
         <ion-list>
-          <ion-item class="item-text-wrap"><strong>Patient Found:</strong> {{soap.patientFound}}</ion-item>
-          <ion-item class="item-text-wrap"><strong>Patient Exam Reveals:</strong> {{soap.patientExamReveals}}</ion-item>
+          <ion-item class="item-text-wrap"><strong>Patient Position When Found:</strong> {{soap.patientFound}}</ion-item>
+          <ion-item class="item-text-wrap"><strong>Patient Exam:</strong> {{soap.patientExamReveals}}</ion-item>
         </ion-list>
       </div>
 
-      <h5>Vitals</h5>
+      <h6>Vital Signs</h6>
+      <div class="list">
 
-      <div class="row">
-		  <div class="col"></div>
-		  <div class="col">time 1</div>
-		  <div class="col">time 2</div>
-		  <div class="col">time 3</div>
-	  </div>
-
-      <div class="row">
-		  <div class="col col-label">LOR:</div>
-		  <div class="col">1</div>
-		  <div class="col">2</div>
-		  <div class="col">3</div>
-	  </div>
-
-	  <div class="row">
-		  <div class="col col-label">HR:</div>
-		  <div class="col">1</div>
-		  <div class="col">2</div>
-		  <div class="col">3</div>
-	  </div>
-
-	  <div class="row">
-		  <div class="col col-label">RR:</div>
-		  <div class="col">1</div>
-		  <div class="col">2</div>
-		  <div class="col">3</div>
-	  </div>
-
-	  <div class="row">
-		  <div class="col col-label">Skin:</div>
-		  <div class="col">1</div>
-		  <div class="col">2</div>
-		  <div class="col">3</div>
-	  </div>
-
-	  <div class="row">
-		  <div class="col col-label">BP:</div>
-		  <div class="col">1</div>
-		  <div class="col">2</div>
-		  <div class="col">3</div>
-	  </div>
-
-	  <div class="row">
-		  <div class="col col-label">Pupils:</div>
-		  <div class="col">1</div>
-		  <div class="col">2</div>
-		  <div class="col">3</div>
-	  </div>
-
-	  <div class="row">
-		  <div class="col col-label">Temp:</div>
-		  <div class="col">1</div>
-		  <div class="col">2</div>
-		  <div class="col">3</div>
-	  </div>
-
-
+      <table class="VitalsTable">
+            <tr>
+                <th>Time Taken</th>
+                <td>data</td>
+                <td>data</td>
+                <td>data</td>
+            </tr>
+            <tr>
+                <th>LOR</th>
+                <td>data</td>
+                <td>data</td>
+                <td>data</td>
+            </tr>
+            <tr>
+                <th>HR</th>
+                <td>data</td>
+                <td>data</td>
+                <td>data</td>
+            </tr>
+            <tr>
+                <th>RR</th>
+                <td>data</td>
+                <td>data</td>
+                <td>data</td>
+            </tr>
+            <tr>
+                <th>Skin</th>
+                <td>data</td>
+                <td>data</td>
+                <td>data</td>
+            </tr>
+            <tr>
+                <th>BP</th>
+                <td>data</td>
+                <td>data</td>
+                <td>data</td>
+            </tr>
+            <tr>
+                <th>Pupils</th>
+                <td>data</td>
+                <td>data</td>
+                <td>data</td>
+            </tr>
+            <tr>
+                <th>Temp</th>
+                <td>data</td>
+                <td>data</td>
+                <td>data</td>
+            </tr>
+        </table>
       </div>
 
-      <h5>Patient History</h5>
+      <h6>Patient History</h6>
       <div class="list">
         <ion-list>
           <ion-item class="item-text-wrap"><strong>Symptoms:</strong> {{soap.patientSymptoms}}</ion-item>
@@ -149,34 +134,27 @@
           <ion-item class="item-text-wrap"><strong>Medications:</strong> {{soap.patientMedications}}</ion-item>
           <ion-item class="item-text-wrap"><strong>Pertinent Medical History:</strong> {{soap.patientMedicalHistory}}</ion-item>
           <ion-item class="item-text-wrap"><strong>Last Intake/Output:</strong> {{soap.patientLastIntake}}</ion-item>
-          <ion-item class="item-text-wrap"><strong>Events Leading to Injury/Illness:</strong> {{soap.patientEventsForCause}}</ion-item>
+          <ion-item class="item-text-wrap"><strong>Events Leading up to Injury/Illness:</strong> {{soap.patientEventsForCause}}</ion-item>
         </ion-list>
       </div>
 
-	  <h3>Assesment</h3>
-      <h5>The Assesment</h5>
+	  <h5>Assessment</h5>
       <div class="list">
         <ion-list>
           <ion-item class="item-text-wrap">{{soap.patientAssessment}}</ion-item>
         </ion-list>
       </div>
 
-      <h3>Plan</h3>
-      <h5>The Plan</h5>
+      <h5>Plan</h5>
       <div class="list">
         <ion-list>
           <ion-item class="item-text-wrap">{{soap.patientPlan}}</ion-item>
         </ion-list>
-      </div>
-
-      <h5>Anticipated Problems</h5>
-      <div class="list">
-        <ion-list>
-          <ion-item class="item-text-wrap">{{soap.patientAnticipatedProblems}}</ion-item>
+          <ion-item class="item-text-wrap"><strong>Anticipated Problems:</strong> {{soap.patientAnticipatedProblems}}</ion-item>
         </ion-list>
       </div>
 
-
+<a class="button button-block button-light icon icon-right ion-app-share margin" ng-click="newSoap(wmi)">Share This SOAP</a>
 
       </div>
   </ion-content>
