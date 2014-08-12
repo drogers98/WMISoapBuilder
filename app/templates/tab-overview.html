@@ -18,29 +18,47 @@
        Add date field here. auto populated, but adjustable. will drive soap date/display.
       </div>
       <h6>Location</h6>
-      <label class="item item-input">
-        <textarea type="text" placeholder="Location"></textarea>
+           <label class="item item-input">
+        <textarea id="Location" type="text" placeholder="Location" ng-controller="SoapCtrl"
+	ng-keyup="expandText($event)"
+	ng-keydown="expandText($event)"></textarea>
+
+</textarea> 
       </label>
+      <h6>Coordinates</h6>
+      
+      
+
       <label class="item item-input">
-        <input type="text" placeholder="Lat/Long here. autopopulated on phone">
+        <input type="text" id="GeoLocation" placeholder="">
       </label>
+      
+      <a id="coordsBtn" class="button button-block button-light margin" onclick="javascript:latLong()"><icon class="ion-pinpoint"></icon><span id="GeoLocationBtnInner">Get Coordinates</span></a>
+    
       </div>
 
 
     <h5>Responder Information<a>i</a></h5>
       <div class="list">
+      <h6>First Name</h6>
       <label class="item item-input">
         <input type="text" placeholder="First Name">
       </label>
+      <h6>Last Name</h6>
       <label class="item item-input">
         <input type="text" placeholder="Last Name">
       </label>
-      <!-- select will need some good style refactoring -->
-      <div class="item item-input item-select">
-        <div class="input-label">
-          Current Certification
-        </div>
-        <select ng-model="responder.trainingLevel" ng-options="trainingLevel for trainingLevel in trainingLevels"></select>
+      
+      
+      <h6>Current Training Level</h6>
+      <div class="item item-select">
+       <div class="input-label">
+          Training Level
+       </div>
+        <select ng-model="responder.trainingLevel" ng-options="trainingLevel for trainingLevel in trainingLevels">
+	        <option style="display:none;" value="" selected>Please Choose</option>
+        </select>
+       
       </div>
       </div>
 

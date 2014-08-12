@@ -192,6 +192,14 @@ width:100px;
 margin-bottom: 20px;
 }
 
+
+.item-select {
+
+	.input-label {
+		height:0px;
+		display:block;
+	}
+}
 // Delete Icon
 .item-delete .button.icon {
 	color: $WMIred
@@ -210,9 +218,21 @@ margin-bottom: 20px;
 }
 
 textarea {
-	height:60px;
+	height:auto;
 }
 
+.item-select {
+
+select {
+
+	background-color: $WMIwhite;
+	width: 100%;
+	max-width: 100%;
+	text-align: left;
+	direction: ltr;
+	padding-left: 5px;
+}
+}
 
 .list {
 	margin-bottom: 0;

@@ -15,21 +15,21 @@
       <h5>Assessment<a>i</a></h5>
       <div class="list">
         <label class="item item-input">
-          <textarea type="text" placeholder="List all possible problems." ng-model="soap.patientAssessment"></textarea>
+          <textarea id="Assessment" type="text" placeholder="List all possible problems." ng-model="soap.patientAssessment" ng-controller="SoapCtrl" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
         </label>
       </div>
 
         <h5>Plan<a>i</a></h5>
         <div class="list">
         <label class="item item-input">
-          <textarea type="text" placeholder="Describe actions taken for each problem and plans for further care." ng-model="soap.patientPlan"></textarea>
+          <textarea id="Plan" type="text" placeholder="Describe actions taken for each problem and plans for further care." ng-model="soap.patientPlan" ng-controller="SoapCtrl" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
         </label>
         </div>
 
         <h6>Anticipated Problems<a>i</a></h6>
         <div class="list">
         <label class="item item-input">
-          <textarea type="text" placeholder="Consider anticipated problems and possible impact on evacuation needs." ng-model="soap.patientAnticipatedProblems"></textarea>
+          <textarea id="AP" type="text" placeholder="Consider anticipated problems and possible impact on evacuation needs." ng-model="soap.patientAnticipatedProblems" ng-controller="SoapCtrl" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
         </label>
       </div>
 

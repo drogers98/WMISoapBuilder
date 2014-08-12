@@ -42,8 +42,13 @@ $scope.toggleSideMenu = function() {
 .controller('SoapCtrl', function($scope, $state, $stateParams, Soaps) {
 "use strict";
 
+  // Auto expand text boxes vertically
+  $scope.expandText = function(obj){
+	var valueID = obj.target.attributes.id.value;
+	var element = document.getElementById(valueID);
+	element.style.height =  element.scrollHeight + "px";}
+	
   $scope.settingsPage = function() {$state.go('settings');}
-
   $scope.aboutPage = function(){$state.go('about');}
   $scope.mySoapsPage = function(){$state.go('soaps');}
   $scope.subjectivePage = function(){$state.go('tab.subjective');}
@@ -60,7 +65,7 @@ $scope.toggleSideMenu = function() {
   $scope.genders = ['Male', 'Female', 'Transgender'];
   $scope.severities = [0,1,2,3,4,5,6,7,8,9,10];
   $scope.onsets = ['Sudden', 'Gradual'];
-  $scope.qualities = ['Aching', 'Burning', 'Cramping','Dull Pressure', 'Sharp', 'Squeezing', 'Stabbing', 'Tight', 'Tearing', 'Crushing', 'Other'];
+  $scope.qualities = ['Aching', 'Burning', 'Cramping', 'Crushing', 'Dull Pressure', 'Sharp', 'Squeezing', 'Stabbing', 'Tearing', 'Tight', 'Other'];
   $scope.spinals = ['Yes', 'No'];
   $scope.pupils = ['PERRL', 'Not PERRL'];
   $scope.BPmeasureds = ['Systolic', 'Diastolic'];
@@ -85,11 +90,13 @@ $scope.toggleSideMenu = function() {
 
 })
 
+
+// coundown controlls
 .controller('VitalCtrl', function($scope, $timeout, $state, $stateParams, Vitals) {
 
 
   $scope.vitals = Vitals.all();
-  $scope.counter = '1:00';
+  $scope.counter = '60';
   $scope.startCounter = function() {
     $scope.counter = 60;
     $scope.countdown();
@@ -98,10 +105,10 @@ $scope.toggleSideMenu = function() {
   $scope.countdown = function() {
     if($scope.counter == 0) {
       $scope.stop();
-      $scope.counter = '1:00'
+      $scope.counter = '60'
     }
     stopped = $timeout(function() {
-     $scope.counter--;
+     $scope.counter --;
      $scope.countdown();
     }, 1000);
   };
