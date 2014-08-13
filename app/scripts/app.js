@@ -34,19 +34,19 @@ angular.module('WMISoapBuilder', ['ionic', 'WMISoapBuilder.controllers', 'WMISoa
 
     .state('first-responder', {
       url: '/',
-      templateUrl: 'templates/first-responder.html',
+      templateUrl: 'templates/responder/first-responder.html',
       controller: 'FirstResponderCtrl'
     })
 
     .state('settings', {
         url: '/settings',
-        templateUrl: 'templates/settings.html',
+        templateUrl: 'templates/responder/settings.html',
         controller: 'SoapCtrl'
     })
 
     .state('terms', {
       url: '/terms',
-      templateUrl: 'templates/terms.html',
+      templateUrl: 'templates/wmi/terms.html',
       controller: 'WMICtrl'
     })
 
@@ -58,25 +58,25 @@ angular.module('WMISoapBuilder', ['ionic', 'WMISoapBuilder.controllers', 'WMISoa
 
     .state('help', {
       url: '/help',
-      templateUrl: 'templates/help.html',
+      templateUrl: 'templates/soap/help.html',
       controller: 'SoapCtrl'
     })
 
     .state('soaps', {
       url: '/responder/soaps',
-      templateUrl: 'templates/soaps.html',
+      templateUrl: 'templates/soap/soaps.html',
       controller: 'SoapCtrl'
     })
 
     .state('soap-review', {
       url: '/soap/review',
-      templateUrl: 'templates/soap-review.html',
+      templateUrl: 'templates/soap/soap-review.html',
       controller: 'SoapCtrl'
     })
 
     .state('soap-detail', {
       url: '/soap/:soapId',
-      templateUrl: 'templates/soap-detail.html',
+      templateUrl: 'templates/soap/soap-detail.html',
       controller: 'SoapCtrl'
     })
     
@@ -86,7 +86,7 @@ angular.module('WMISoapBuilder', ['ionic', 'WMISoapBuilder.controllers', 'WMISoa
     .state('tab', {
       url: '/tab',
       abstract: true,
-      templateUrl: 'templates/tabs.html'
+      templateUrl: 'templates/soap/tabs.html'
     })
 
     // Each tab has its own nav history stack:
@@ -95,7 +95,7 @@ angular.module('WMISoapBuilder', ['ionic', 'WMISoapBuilder.controllers', 'WMISoa
       url: '/subjective',
       views: {
         'tab-subjective': {
-          templateUrl: 'templates/tab-subjective.html',
+          templateUrl: 'templates/soap/tab-subjective.html',
         }
       }
     })
@@ -104,7 +104,7 @@ angular.module('WMISoapBuilder', ['ionic', 'WMISoapBuilder.controllers', 'WMISoa
       url: '/objective',
       views: {
         'tab-objective': {
-          templateUrl: 'templates/tab-objective.html'
+          templateUrl: 'templates/soap/tab-objective.html'
         }
       }
     })
@@ -113,7 +113,7 @@ angular.module('WMISoapBuilder', ['ionic', 'WMISoapBuilder.controllers', 'WMISoa
       url: '/vitals',
       views: {
         'tab-objective': {
-          templateUrl: 'templates/vitals.html',
+          templateUrl: 'templates/soap/vitals.html',
           controller: 'VitalCtrl'
         }
       }
@@ -123,7 +123,7 @@ angular.module('WMISoapBuilder', ['ionic', 'WMISoapBuilder.controllers', 'WMISoa
       url: '/vitals/new',
       views: {
         'tab-objective': {
-          templateUrl: 'templates/vitalnew.html',
+          templateUrl: 'templates/soap/vitalnew.html',
           controller: 'VitalCtrl'
         }
       }
@@ -133,7 +133,7 @@ angular.module('WMISoapBuilder', ['ionic', 'WMISoapBuilder.controllers', 'WMISoa
       url: '/vitals/:vitalId',
       views: {
         'tab-objective': {
-          templateUrl: 'templates/vital.html'
+          templateUrl: 'templates/soap/vital.html'
         }
       }
     })
@@ -142,7 +142,7 @@ angular.module('WMISoapBuilder', ['ionic', 'WMISoapBuilder.controllers', 'WMISoa
       url: '/ap',
       views: {
         'tab-ap': {
-          templateUrl: 'templates/tab-ap.html'
+          templateUrl: 'templates/soap/tab-ap.html'
         }
       }
     })
@@ -151,7 +151,7 @@ angular.module('WMISoapBuilder', ['ionic', 'WMISoapBuilder.controllers', 'WMISoa
       url: '/images',
       views: {
         'tab-image': {
-          templateUrl: 'templates/tab-images.html'
+          templateUrl: 'templates/soap/tab-images.html'
         }
       }
     })
@@ -160,7 +160,7 @@ angular.module('WMISoapBuilder', ['ionic', 'WMISoapBuilder.controllers', 'WMISoa
       url: '/overview',
       views: {
         'tab-overview': {
-          templateUrl: 'templates/tab-overview.html'
+          templateUrl: 'templates/soap/tab-overview.html'
         }
       }
     })
@@ -280,9 +280,10 @@ document.getElementById("Diastolic").placeholder = "N/A";
 };
 
 // stopwatch on vitals page
-window.onload=function(){
-var h1 = document.getElementById('Stopwatch'),
-    start = document.getElementById('start'),
+
+function onDeviceReady() {
+    var h1 = document.getElementById('Stopwatch'),
+        start = document.getElementById('start'),
     stop = document.getElementById('stop'),
     clear = document.getElementById('clear'),
     seconds = 0, minutes = 0,
@@ -306,18 +307,21 @@ function timer() {
     t = setTimeout(add, 1000);
 }
 timer();
-clearTimeout(t);
 
-// Start button 
+
+/* Start button */
 start.onclick = timer;
-// Stop button 
+
+/* Stop button */
 stop.onclick = function() {
     clearTimeout(t);
 }
-// Clear button 
+
+/* Clear button */
 clear.onclick = function() {
     h1.textContent = "00:00";
     seconds = 0; minutes = 0;
     clearTimeout(t);
 }
-};
+}
+document.addEventListener("deviceready", onDeviceReady, false);

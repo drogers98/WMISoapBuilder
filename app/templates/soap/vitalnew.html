@@ -4,6 +4,7 @@
   </ion-nav-buttons>
 
   <ion-content has-header="true" padding="false" has-bouncing="false">
+ 
   <div class="SOAP VITALS">
     <div class="list">
     
@@ -199,19 +200,20 @@
   <div class="row">
 
     <div class="vital-left col">
-        <h1 id="Stopwatch"><time>00:00</time></h1>
+        <h1 id="Stopwatch">{{timeValue}}</h1>
 
     </div>
 
     <div class="col">
 
-<a class="button button-calm button-small icon ion-play" id="start"></a>
-<a class="button button-calm button-small icon ion-stop"id="stop"></a>
-<a class="button button-calm button-small icon ion-refresh"id="clear"></a>
+<a ng-click="start()" ng-disabled="play" ng-init="play=false" class="button button-calm button-small icon ion-play" id="start"></a>
+
+<a ng-click="stop()" ng-disabled="pause" ng-init="pause=true" class="button button-calm button-small icon ion-stop"id="stop"></a>
+
+<a ng-click="reset()"class="button button-calm button-small icon ion-refresh" id="clear"></a>
 
     </div>
     </div>
- 
 
   </div>
 </ion-view>

@@ -6,8 +6,8 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql'])
 })
 
 .controller('FirstResponderCtrl', function($scope, $state, $stateParams, Responders) {
-  $scope.termsPage = function(){$state.go('terms');}
-  $scope.responderSoapsPage = function(){$state.go('soaps');}
+  $scope.termsPage = function(){$state.go('terms');};
+  $scope.responderSoapsPage = function(){$state.go('soaps');};
   //get ready for JS transfer from beta
   //$scope.responder = Responders.all();
   $scope.trainingLevels = ['WFA','WAFA','WFR', 'WEMT', 'Other'];
@@ -26,7 +26,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql'])
     $scope.responders.push(responderData);
     //after save link to soaps
     $state.responderSoapsPage();
-  }
+  };
 
 
 })
@@ -114,31 +114,39 @@ $scope.shareSOAP = function() {
 })
 
 
-// coundown controlls. DELETE DELE6TE DELETE
-.controller('VitalCtrl', function($scope, $timeout, $state, $stateParams, Vitals) {
-  $scope.vitals = Vitals.all();
-  $scope.counter = '60';
-  $scope.startCounter = function() {
-    $scope.counter = 60;
-    $scope.countdown();
-  }
-  var stopped;
-  $scope.countdown = function() {
-    if($scope.counter == 0) {
-      $scope.stop();
-      $scope.counter = '60'
-    }
-    stopped = $timeout(function() {
-     $scope.counter --;
-     $scope.countdown();
-    }, 1000);
+// coundown controls. 
+.controller('VitalCtrl', ['$scope', '$timeout', function($scope, $timeout) {
+
+  $scope.timeValue = 0;
+  
+  function countdown() {
+    $scope.timeValue++;
+    $scope.timeout = $timeout(countdown, 1000);
   };
+  
+  $scope.start = function() {
+    countdown();
+    $scope.play = true;
+    $scope.pause = false;
+  };
+  
+  $scope.stop = function() {
+    $timeout.cancel($scope.timeout);
+    $scope.play = false;
+    $scope.pause = true;
+  };
+  
+  $scope.reset = function() {
+	$scope.timeValue = 0;
+    $timeout.cancel($scope.timeout);
+    $scope.play = false;
+    $scope.pause = true;
+   
+  };
+}]);
 
 
-$scope.stop = function(){
-   $timeout.cancel(stopped);
-    }
-})
+
 
 
 
