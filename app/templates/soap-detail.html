@@ -5,7 +5,7 @@
 
   <ion-nav-buttons side="right">
   <button class="button icon ion-edit" ng-click="data.showDelete = !data.showDelete"></button>
-    <button class="button icon ion-app-share" ng-click="data.showDelete = !data.showDelete"></button>
+    <button class="button icon ion-app-share" ng-controller="SoapCtrl" ng-click="shareSOAP($event)"></button>
   </ion-nav-buttons>
 
 

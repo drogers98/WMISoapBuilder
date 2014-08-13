@@ -96,7 +96,21 @@ $scope.toggleSideMenu = function() {
   $scope.soap = Soaps.get($stateParams.soapId);
   //$scope.soap.vitals = Vitals.all($stateParams.soapId)
   //$scope.soap.vital = Vitals.get($stateParams.soapId);
+  
+  
+    // Email Share Function
+$scope.shareSOAP = function() {
+   window.plugin.email.open({
+    to:      ['rogers@eyebytesolutions.com'],
+    cc:      ['vehr@eyebytesolutions.com'],
+    bcc:     [''],
+    subject: 'SOAP Note: Test',
+    body:    '<h1>Test</h1><p>Data Here</p>',
+    isHtml:  true
+});
+};
 
+// end soap cntrl
 })
 
 
@@ -125,5 +139,7 @@ $scope.stop = function(){
    $timeout.cancel(stopped);
     }
 })
+
+
 
 
