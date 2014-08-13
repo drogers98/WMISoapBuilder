@@ -5,6 +5,13 @@
   </ion-nav-buttons>
 
   <ion-content has-header="true" padding="false">
+
+  <ion-list>
+    <ion-item ng-repeat="detail in user.details">
+     {{detail.firstName}} {{detail.lastName}}
+    </ion-item>
+  </ion-list>
+
   <div class="SOAP">
     <label class="item item-input">
       <input type="text" placeholder="First Name">
