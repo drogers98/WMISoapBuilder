@@ -14,13 +14,13 @@
       <h5>Patient Position When Found<a ng-controller="SoapCtrl" ng-click="helpPage()">i</a></h5>
       <div class="list">
         <label class="item item-input">
-          <textarea id="Position" type="text" placeholder="Describe the physical position of your patient." ng-model="wmi.patientFound" ng-controller="SoapCtrl" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
+          <textarea id="Position" type="text" placeholder="Describe the physical position of your patient." ng-model="soap.patientFound" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
         </label>
       </div>
       <h5>Patient Exam<a>i</a></h5>
       <div class="list">
         <label class="item item-input">
-          <textarea id="PatientExam" type="text" placeholder="Describe in detail the injuries observed in the head-to-toe examination. Include pertinent negatives. Assess CSM's." ng-model="wmi.patientExamReveals" ng-controller="SoapCtrl" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
+          <textarea id="PatientExam" type="text" placeholder="Describe in detail the injuries observed in the head-to-toe examination. Include pertinent negatives. Assess CSM's." ng-model="soap.patientExamReveals" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
         </label>
       </div>
       <h5>Vital Signs<a>i</a></h5>
@@ -91,37 +91,37 @@
       <h6>Symptoms<a>i</a></h6>
       <div class="list">
         <label class="item item-input">
-          <textarea id="Symptoms" type="text" placeholder="Headache? Dizziness? Nausea? Cold? Hot?" ng-model="wmi.patientSymptoms" ng-controller="SoapCtrl" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
+          <textarea id="Symptoms" type="text" placeholder="Headache? Dizziness? Nausea? Cold? Hot?" ng-model="soap.patientSymptoms" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
         </label>
       </div>
       <h6>Allergies<a>i</a></h6>
         <div class="list">
         <label class="item item-input">
-          <textarea id="Allergies" type="text" placeholder="Allergies to Medications? Foods? Insects? Pollens? Exposure? What happens with exposure?" ng-model="wmi.patientAllergies" ng-controller="SoapCtrl" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
+          <textarea id="Allergies" type="text" placeholder="Allergies to Medications? Foods? Insects? Pollens? Exposure? What happens with exposure?" ng-model="soap.patientAllergies" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
         </label>
         </div>
         <h6>Medications<a>i</a></h6>
         <div class="list">
         <label class="item item-input">
-          <textarea id="Medications" type="text" placeholder="Over the Counter? Prescription? Alcohol or Recreational?" ng-model="wmi.patientMedications" ng-controller="SoapCtrl" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
+          <textarea id="Medications" type="text" placeholder="Over the Counter? Prescription? Alcohol or Recreational?" ng-model="soap.patientMedications" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
         </label>
         </div>
         <h6>Pertinent Medical History<a>i</a></h6>
         <div class="list">
         <label class="item item-input">
-          <textarea id="History" type="text" placeholder="Felt this way before? Problems with Heart? Breathing? Digestion? History of Seizures? Diabetes?" ng-model="wmi.patientMedicalHistory" ng-controller="SoapCtrl" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
+          <textarea id="History" type="text" placeholder="Felt this way before? Problems with Heart? Breathing? Digestion? History of Seizures? Diabetes?" ng-model="soap.patientMedicalHistory" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
         </label>
         </div>
         <h6>Last Intake/Output<a>i</a></h6>
         <div class="list">
         <label class="item item-input">
-          <textarea id="LIO" type="text" placeholder="Food? Water? Urination? Defecation? Vomiting?" ng-model="wmi.patientLastIntake" ng-controller="SoapCtrl" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
+          <textarea id="LIO" type="text" placeholder="Food? Water? Urination? Defecation? Vomiting?" ng-model="soap.patientLastIntake" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
         </label>
         </div>
         <h6>Events Leading up to Incident/Illness<a>i</a></h6>
         <div class="list">
         <label class="item item-input">
-          <textarea id="ELUT" type="text" placeholder="Events leading up to or causing the incident/illness." ng-model="wmi.patientEventsForCause" ng-controller="SoapCtrl" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
+          <textarea id="ELUT" type="text" placeholder="Events leading up to or causing the incident/illness." ng-model="soap.patientEventsForCause" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
         </label>
       </div>
       <a class="button button-block button-light icon-right ion-ios7-arrow-right margin last" ng-click="apPage()">Continue to Assessment & Plan</a>

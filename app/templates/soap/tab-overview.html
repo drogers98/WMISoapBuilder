@@ -14,7 +14,7 @@
   <h5>Date & Location<a>i</a></h5>
       <div class="list">
       <h6>Date of Incident</h6>
-      <div class="item item-input" ng-controller="SoapCtrl">
+      <div class="item item-input" ng-model="soap.date">
        <input type="date" value="{{dt | date:'yyyy-MM-dd'}}"/>
       </div>
       
@@ -22,7 +22,7 @@
       
       <h6>Location</h6>
            <label class="item item-input">
-        <textarea id="Location" type="text" placeholder="Describe where it happened." ng-controller="SoapCtrl"
+        <textarea id="Location" type="text" placeholder="Describe where it happened." ng-model="soap.latLng"
 	ng-keyup="expandText($event)"
 	ng-keydown="expandText($event)"></textarea>
 
@@ -32,11 +32,13 @@
       
       
 
-      <label class="item item-input">
-        <input type="text" id="GeoLocation" placeholder="">
+      <label class="item">
+        {{latLng}} 
       </label>
-      <a id="coordsBtn" class="button button-block button-light margin" onclick="javascript:latLong()"><icon class="ion-pinpoint"></icon><span id="GeoLocationBtnInner">Get Coordinates</span></a>
-    
+      <a id="coordsBtn" class="button button-block button-light margin" ng-click="getLocation()"><icon class="ion-pinpoint"></icon><span id="GeoLocationBtnInner">Get Coordinates</span></a>
+
+               
+  
       </div>
 
 
@@ -44,11 +46,11 @@
       <div class="list">
       <h6>First Name</h6>
       <label class="item item-input">
-        <input type="text" placeholder="First Name">
+        <input type="text" placeholder="First Name" ng-model="soap.firstName">
       </label>
       <h6>Last Name</h6>
       <label class="item item-input">
-        <input type="text" placeholder="Last Name">
+        <input type="text" placeholder="Last Name" ng-model="soap.lastName">
       </label>
       
       
@@ -57,7 +59,7 @@
        <div class="input-label">
           Training Level
        </div>
-        <select id="TrainingLevelSOAP" ng-model="responder.trainingLevel" ng-options="trainingLevel for trainingLevel in trainingLevels"  onchange="changeClass(this.id)">
+        <select id="TrainingLevelSOAP" ng-model="soap.trainingLevel" ng-options="trainingLevel for trainingLevel in trainingLevels"  onchange="changeClass(this.id)">
 	        <option style="display:none;" value="" selected>Please Choose</option>
         </select>
        

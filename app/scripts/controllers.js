@@ -42,11 +42,47 @@ $scope.toggleSideMenu = function() {
 .controller('SoapCtrl', function($scope, $state, $stateParams, Soaps) {
 "use strict";
 
+// Geolocation Stuff
+	   $scope.showPosition = function (position) {
+            $scope.latLng = position.coords.latitude + ", " + position.coords.longitude;
+            $scope.lng = position.coords.longitude;
+            $scope.$apply();
+        }
+        
+        // Change btn text if geo unavailable to device
+         if (navigator.geolocation) {
+                
+           }
+            else {
+               document.getElementById('GeoLocationBtnInner').innerHTML = "GPS Unavailable";
+			   document.getElementById("coordsBtn").className = "";
+			   document.getElementById("coordsBtn").className = "button button-block button-calm margin";
+            }
+
+
+ 
+        $scope.getLocation = function () {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition($scope.showPosition);
+                document.getElementById('GeoLocationBtnInner').innerHTML = "Reset Coordinates";
+				document.getElementById("coordsBtn").className = "";
+				document.getElementById("coordsBtn").className = "button button-block button-calm margin";
+            }
+            else {
+               alert('Sorry, this feature currently unavailable') 
+            }
+        }
+ // end geo stuff
+            
+            
+
   // Auto expand text boxes vertically
   $scope.expandText = function(obj){
 	var valueID = obj.target.attributes.id.value;
 	var element = document.getElementById(valueID);
 	element.style.height =  element.scrollHeight + "px";}
+	
+// end auto expand
 	
   $scope.settingsPage = function() {$state.go('settings');}
   $scope.aboutPage = function(){$state.go('about');}
@@ -65,12 +101,7 @@ $scope.toggleSideMenu = function() {
   //$scope.edit = function(soap);
   
   
-   $scope.dt = new Date();
-    
-   
-  
- 
-  
+  $scope.dt = new Date();
   $scope.genders = ['Male', 'Female', 'Transgender'];
   $scope.severities = [0,1,2,3,4,5,6,7,8,9,10];
   $scope.onsets = ['Sudden', 'Gradual'];
@@ -109,6 +140,7 @@ $scope.shareSOAP = function() {
     isHtml:  true
 });
 };
+// end email
 
 // end soap cntrl
 })

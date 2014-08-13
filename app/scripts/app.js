@@ -183,8 +183,7 @@ angular.module('WMISoapBuilder', ['ionic', 'WMISoapBuilder.controllers', 'WMISoa
 
 
 
-// Photo test.
-
+// Photo capture.
 function capturePhoto(){
     navigator.camera.getPicture(uploadPhoto,null,{sourceType:1,quality:60});
 }
@@ -217,111 +216,19 @@ function uploadPhoto(data){
 	} 
 }
 
-function okay(){
-	// Do something
-}
-
-
-
-
-// Lat / Lon test stuff
-function latLong(){
-if (navigator.geolocation) {
-// Show loading text
-document.getElementById('GeoLocation').value = "Loading...";
-  var timeoutVal = 10 * 1000 * 1000;
-  navigator.geolocation.getCurrentPosition(
-    displayPosition, 
-    displayError,
-    { enableHighAccuracy: true, timeout: timeoutVal, maximumAge: 0 }
-  );
-}
-else {
-  alert("Geolocation is not supported at this time");
-}
-
-function displayPosition(position) {
-document.getElementById('GeoLocation').value = position.coords.latitude + ", " + position.coords.longitude;
-document.getElementById('GeoLocationBtnInner').innerHTML = "Reset Coordinates";
-document.getElementById("coordsBtn").className = "";
-document.getElementById("coordsBtn").className = "button button-block button-calm margin";
- 
-}
-
-function displayError(error) {
-document.getElementById('GeoLocation').value = "Lat/Long Unavailable";
-  var errors = { 
-    1: 'Permission denied',
-    2: 'Position unavailable',
-    3: 'Request timeout'
-  };
-  alert("Error: " + errors[error.code]);
-}
-}
-
 // Change select classes for greyed out appearance to live.
 function changeClass(id) {
 	document.getElementById(id).setAttribute('class','active');
 	}
 	
 // enable/disable field based on BP taken or palpation. currently val is 1, change to actual val
-function check_option(val)
-{
-if(val == 0)
-{
-document.getElementById("Diastolic").disabled = false;
-document.getElementById("Diastolic").placeholder = "Reading";
-}
-else
-{
-document.getElementById("Diastolic").disabled = true;
-document.getElementById("Diastolic").placeholder = "N/A";
-}
+function check_option(val){
+	if(val == 0){
+	document.getElementById("Diastolic").disabled = false;
+	document.getElementById("Diastolic").placeholder = "Reading";
+	}
+else {
+	document.getElementById("Diastolic").disabled = true;
+	document.getElementById("Diastolic").placeholder = "N/A";
+	}
 };
-
-// stopwatch on vitals page
-
-function onDeviceReady() {
-    var h1 = document.getElementById('Stopwatch'),
-        start = document.getElementById('start'),
-    stop = document.getElementById('stop'),
-    clear = document.getElementById('clear'),
-    seconds = 0, minutes = 0,
-    t;
-
-function add() {
-    seconds++;
-    if (seconds >= 60) {
-        seconds = 0;
-        minutes++;
-        if (minutes >= 60) {
-            minutes = 0;
-        }
-    }
-    
-    h1.textContent = (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds);
-
-    timer();
-}
-function timer() {
-    t = setTimeout(add, 1000);
-}
-timer();
-
-
-/* Start button */
-start.onclick = timer;
-
-/* Stop button */
-stop.onclick = function() {
-    clearTimeout(t);
-}
-
-/* Clear button */
-clear.onclick = function() {
-    h1.textContent = "00:00";
-    seconds = 0; minutes = 0;
-    clearTimeout(t);
-}
-}
-document.addEventListener("deviceready", onDeviceReady, false);

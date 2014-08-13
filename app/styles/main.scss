@@ -21,8 +21,8 @@ $WMIshadow: rgba(0,0,0,.5);
 
 //Fonts
 // Reset placeholder text
-input::-webkit-input-placeholder {
-	color: $WMI_DK_grey;
+input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
+	color: $WMIblack;
 }
 
 input[disabled] {
@@ -186,6 +186,10 @@ a {
 	  }
 
 }
+
+.item {
+	font-size: 14px;
+}
 .card {
 .item-divider{
 	background-color: $WMI_LT_grey;
@@ -215,9 +219,9 @@ margin-bottom: 20px;
 .item-select {
 
 select {
-color: $WMI_DK_grey;
- &.active { 
- color: $WMIblack; }
+
+ &.ng-dirty { 
+  }
 
 }
 	.input-label {
