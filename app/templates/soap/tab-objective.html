@@ -1,55 +1,130 @@
 <ion-view title="Objective">
+
 <ion-nav-buttons side="left">
-    <a class="button icon ion-ios7-arrow-back" href="#/responder/soaps">SOAPs</a>
-  </ion-nav-buttons>
+    <a class="button icon ion-ios7-arrow-back" href="#/tab/subjective">Subjective</a>
+</ion-nav-buttons>
 
   <ion-nav-buttons side="right">
-    <button class="button icon ion-ios7-upload-outline" ng-click="data.showDelete = !data.showDelete"></button>
+    <button class="button button-icon ion-navicon" ng-controller="MenuCtrl" ng-click="toggleSideMenu()"></button>
   </ion-nav-buttons>
 
-  <ion-content has-header="true" padding="false">
+  <ion-content has-header="true" padding="false" has-bouncing="false">
     <div class="SOAP">
       <!-- subjective section 1 -->
-      <h5>Patient was found<a><icon class="ion-ios7-information"></icon></a></h5>
+      <h5>Patient Position When Found<a ng-controller="SoapCtrl" ng-click="helpPage()">i</a></h5>
       <div class="list">
         <label class="item item-input">
-          <textarea type="text" placeholder="Location" ng-model="wmi.patientFound"></textarea>
+          <textarea id="Position" type="text" placeholder="Describe the physical position of your patient." ng-model="wmi.patientFound" ng-controller="SoapCtrl" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
         </label>
       </div>
-      <h5>Patient Exam Reveals<a><icon class="ion-ios7-information"></icon></a></h5>
+      <h5>Patient Exam<a>i</a></h5>
       <div class="list">
         <label class="item item-input">
-          <textarea type="text" placeholder="What did you find?" ng-model="wmi.patientExamReveals"></textarea>
+          <textarea id="PatientExam" type="text" placeholder="Describe in detail the injuries observed in the head-to-toe examination. Include pertinent negatives. Assess CSM's." ng-model="wmi.patientExamReveals" ng-controller="SoapCtrl" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
         </label>
       </div>
-      <h5>Vitals<a><icon class="ion-ios7-information"></icon></a></h5>
-      <a class="button button-block button-light margin icon icon-left ion-plus-circled" href="#/tab/vitals/new">Add Vitals</a>
+      <h5>Vital Signs<a>i</a></h5>
       <div class="list">
+      <a class="button button-block button-light margin" href="#/tab/vitals/new"><icon class="icon icon-right ion-plus-circled"></icon> Add Vitals</a>
+      
+
+	  <table class="VitalsTable">
+            <tr>
+                <th>Time</th>
+                <td>data</td>
+                <td>data</td>
+                <td>data</td>
+            </tr>
+            <tr>
+                <th>LOR</th>
+                <td>data</td>
+                <td>data</td>
+                <td>data</td>
+            </tr>
+            <tr>
+                <th>HR</th>
+                <td>data</td>
+                <td>data</td>
+                <td>data</td>
+            </tr>
+            <tr>
+                <th>RR</th>
+                <td>data</td>
+                <td>data</td>
+                <td>data</td>
+            </tr>
+            <tr>
+                <th>Skin</th>
+                <td>data</td>
+                <td>data</td>
+                <td>data</td>
+            </tr>
+            <tr>
+                <th>BP</th>
+                <td>data</td>
+                <td>data</td>
+                <td>data</td>
+            </tr>
+            <tr>
+                <th>Pupils</th>
+                <td>data</td>
+                <td>data</td>
+                <td>data</td>
+            </tr>
+            <tr>
+                <th>Temp</th>
+                <td>data</td>
+                <td>data</td>
+                <td>data</td>
+            </tr>
+        </table>
+
+
+     
         <ion-list ng-repeat="vital in vitals">
          {{vital}}
        </ion-list>
+      
+      <a class="button button-block button-calm margin" href="#/tab/vitals">View All Vitals</a>
       </div>
-      <a class="button button-block button-light margin icon icon-left ion-ios7-eye" href="#/tab/vitals">View All Vitals</a>
+      <h5>Patient History</h5>
+      <h6>Symptoms<a>i</a></h6>
+      <div class="list">
         <label class="item item-input">
-          <textarea type="text" placeholder="History" ng-model="wmi.patientHistory"></textarea>
-        </label>
-        <label class="item item-input">
-          <textarea type="text" placeholder="Allergies" ng-model="wmi.patientAllergies"></textarea>
-        </label>
-        <label class="item item-input">
-          <textarea type="text" placeholder="Medications" ng-model="wmi.patientMedications"></textarea>
-        </label>
-        <label class="item item-input">
-          <textarea type="text" placeholder="Medical History" ng-model="wmi.patientMedicalHistory"></textarea>
-        </label>
-        <label class="item item-input">
-          <textarea type="text" placeholder="Last Intake/Output" ng-model="wmi.patientLastIntake"></textarea>
-        </label>
-        <label class="item item-input">
-          <textarea type="text" placeholder="Events Leading up incident/illness" ng-model="wmi.patientEventsForCause"></textarea>
+          <textarea id="Symptoms" type="text" placeholder="Headache? Dizziness? Nausea? Cold? Hot?" ng-model="wmi.patientSymptoms" ng-controller="SoapCtrl" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
         </label>
       </div>
-      <a class="button button-block button-light margin icon-right ion-ios7-arrow-right" ng-click="apPage()">Continue to Assessment & Plan</a>
+      <h6>Allergies<a>i</a></h6>
+        <div class="list">
+        <label class="item item-input">
+          <textarea id="Allergies" type="text" placeholder="Allergies to Medications? Foods? Insects? Pollens? Exposure? What happens with exposure?" ng-model="wmi.patientAllergies" ng-controller="SoapCtrl" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
+        </label>
+        </div>
+        <h6>Medications<a>i</a></h6>
+        <div class="list">
+        <label class="item item-input">
+          <textarea id="Medications" type="text" placeholder="Over the Counter? Prescription? Alcohol or Recreational?" ng-model="wmi.patientMedications" ng-controller="SoapCtrl" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
+        </label>
+        </div>
+        <h6>Pertinent Medical History<a>i</a></h6>
+        <div class="list">
+        <label class="item item-input">
+          <textarea id="History" type="text" placeholder="Felt this way before? Problems with Heart? Breathing? Digestion? History of Seizures? Diabetes?" ng-model="wmi.patientMedicalHistory" ng-controller="SoapCtrl" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
+        </label>
+        </div>
+        <h6>Last Intake/Output<a>i</a></h6>
+        <div class="list">
+        <label class="item item-input">
+          <textarea id="LIO" type="text" placeholder="Food? Water? Urination? Defecation? Vomiting?" ng-model="wmi.patientLastIntake" ng-controller="SoapCtrl" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
+        </label>
+        </div>
+        <h6>Events Leading up to Incident/Illness<a>i</a></h6>
+        <div class="list">
+        <label class="item item-input">
+          <textarea id="ELUT" type="text" placeholder="Events leading up to or causing the incident/illness." ng-model="wmi.patientEventsForCause" ng-controller="SoapCtrl" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
+        </label>
+      </div>
+      <a class="button button-block button-light icon-right ion-ios7-arrow-right margin last" ng-click="apPage()">Continue to Assessment & Plan</a>
     </div>
   </ion-content>
 </ion-view>

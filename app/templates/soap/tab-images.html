@@ -1,20 +1,31 @@
 <ion-view title="Add Photos">
 <ion-nav-buttons side="left">
-    <a class="button icon ion-ios7-arrow-back" href="#/responder/soaps">SOAPs</a>
+    <a class="button icon ion-ios7-arrow-back" href="#/tab/ap">A + P</a>
   </ion-nav-buttons>
 
   <ion-nav-buttons side="right">
-    <button class="button icon ion-ios7-upload-outline" ng-click="data.showDelete = !data.showDelete"></button>
+     <button class="button button-icon ion-navicon" ng-controller="MenuCtrl" ng-click="toggleSideMenu()"></button>
   </ion-nav-buttons>
-  <ion-content has-header="true" padding="false">
+  <ion-content has-header="true" padding="false" has-bouncing="false">
+  
+
   <div class="SOAP">
+  
+<div id="camera">
+    
+ 
+    <div style="text-align:center;margin:20px;">
+        <img id="cameraPic" src="" style="width:auto;height:120px;"></img>
+    </div>
+</div>
+
+<a class="button button-block button-light margin" onclick="capturePhoto();">Capture Photo</a>
+
+<a class="button button-block button-light margin"><i class="icon ion-app-photos margin"></i>Add Photos</a>
 
 
-<a class="button button-block button-light margin icon icon-left ion-image" >Add Photos</a>
-
-
-<a class="button button-block button-light margin icon-right ion-ios7-arrow-right">Review SOAP Note</a>
-      <a class="button button-block button-light margin icon icon-left ion-ios7-upload-outline" ng-click="newSoap(wmi)">Share This SOAP</a>
+<a class="button button-block button-calm icon-right ion-ios7-arrow-right margin">Review SOAP Note</a>
+      <a class="button button-block button-calm margin" ng-click="newSoap(wmi)"><icon class="icon ion-app-share"></icon> Share This SOAP</a>
 
     </div>
   </ion-content>

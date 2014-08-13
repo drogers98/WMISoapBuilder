@@ -1,44 +1,70 @@
-<ion-view title="Location">
+<ion-view title="Overview">
 
 <ion-nav-buttons side="left">
-    <a class="button icon ion-ios7-arrow-back" href="#/responder/soaps">SOAPs</a>
+    <a class="button icon ion-ios7-arrow-back" href="#/responder/soaps">My SOAPs</a>
   </ion-nav-buttons>
 
   <ion-nav-buttons side="right">
-    <button class="button icon ion-ios7-upload-outline" ng-click="data.showDelete = !data.showDelete"></button>
+    <button class="button button-icon ion-navicon" ng-controller="MenuCtrl" ng-click="toggleSideMenu()"></button>
   </ion-nav-buttons>
 
-  <ion-content has-header="true" padding="false">
+  <ion-content has-header="true" padding="false"has-bouncing="false">
   <div class="SOAP">
-
-    <h5>Responder Information<a><icon class="ion-ios7-information"></icon></a></h5>
+  
+  <h5>Date & Location<a>i</a></h5>
       <div class="list">
+      <h6>Date of Incident</h6>
+      <div class="item item-input" ng-controller="SoapCtrl">
+       <input type="date" value="{{dt | date:'yyyy-MM-dd'}}"/>
+      </div>
+      
+
+      
+      <h6>Location</h6>
+           <label class="item item-input">
+        <textarea id="Location" type="text" placeholder="Describe where it happened." ng-controller="SoapCtrl"
+	ng-keyup="expandText($event)"
+	ng-keydown="expandText($event)"></textarea>
+
+</textarea> 
+      </label>
+      <h6>Coordinates</h6>
+      
+      
+
+      <label class="item item-input">
+        <input type="text" id="GeoLocation" placeholder="">
+      </label>
+      <a id="coordsBtn" class="button button-block button-light margin" onclick="javascript:latLong()"><icon class="ion-pinpoint"></icon><span id="GeoLocationBtnInner">Get Coordinates</span></a>
+    
+      </div>
+
+
+    <h5>Responder Information<a>i</a></h5>
+      <div class="list">
+      <h6>First Name</h6>
       <label class="item item-input">
         <input type="text" placeholder="First Name">
       </label>
+      <h6>Last Name</h6>
       <label class="item item-input">
         <input type="text" placeholder="Last Name">
       </label>
-      <!-- select will need some good style refactoring -->
-      <div class="item item-input item-select">
-        <div class="input-label">
-          Current Certification
-        </div>
-        <select ng-model="responder.trainingLevel" ng-options="trainingLevel for trainingLevel in trainingLevels"></select>
+      
+      
+      <h6>Current Training Level</h6>
+      <div class="item item-select">
+       <div class="input-label">
+          Training Level
+       </div>
+        <select id="TrainingLevelSOAP" ng-model="responder.trainingLevel" ng-options="trainingLevel for trainingLevel in trainingLevels"  onchange="changeClass(this.id)">
+	        <option style="display:none;" value="" selected>Please Choose</option>
+        </select>
+       
+      </div>
       </div>
 
-          <h5>Location<a><icon class="ion-ios7-information"></icon></a></h5>
-      <div class="list">
-      <label class="item item-input">
-        <textarea type="text" placeholder="Location"></textarea>
-      </label>
-      <label class="item item-input">
-        <input type="text" placeholder="Lat/Lon here">
-      </label>
-      </div>
-
-
-<a class="button button-block button-light margin icon-right ion-ios7-arrow-right" href="#/tab/subjective">Continue to Subjective</a>
+<a class="button button-block button-light icon-right ion-ios7-arrow-right margin" href="#/tab/subjective">Continue to Subjective</a>
     </div>
   </ion-content>
 </ion-view>

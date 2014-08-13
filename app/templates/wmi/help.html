@@ -1,12 +1,9 @@
-<ion-header-bar align-title="center" class="bar-stable">
-  <div class="buttons">
-    <button class="button icon-left ion-chevron-left" ng-click="doSomething()">Back</button>
-  </div>
-  <h1 class="title">Help</h1>
-</ion-header-bar>
+<ion-view title="Help">
+<ion-nav-buttons side="left">
+    <button class="button icon ion-ios7-arrow-back" ng-click="mySoapsPage()">My SOAPs</button>
+  </ion-nav-buttons>
 
 <ion-content>
-  <h1>Help</h1>
   <p>{{help.info}}</p>
   <div class="card">
   <div class="item item-divider">
@@ -17,3 +14,4 @@
    </div>
   </div>
 </ion-content>
+</ion-view>

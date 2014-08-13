@@ -1,92 +1,117 @@
 <ion-view title="Subjective">
 
 <ion-nav-buttons side="left">
-    <a class="button icon ion-ios7-arrow-back" href="#/responder/soaps">SOAPs</a>
+    <a class="button icon ion-ios7-arrow-back" href="#/tab/overview">Overview</a>
   </ion-nav-buttons>
 
   <ion-nav-buttons side="right">
-    <button class="button icon ion-ios7-upload-outline" ng-click="data.showDelete = !data.showDelete"></button>
+    <button class="button button-icon ion-navicon" ng-controller="MenuCtrl" ng-click="toggleSideMenu()"></button>
   </ion-nav-buttons>
 
-  <ion-content has-header="true" padding="false">
+  <ion-content has-header="true" padding="false" has-bouncing="false">
 
     <!-- subjective section 1 -->
     <div class="SOAP">
-      <h5>I have a<a><icon class="ion-ios7-information"></icon></a></h5>
+      <h5>Patient Information<a>i</a></h5>
       <div class="list">
-      <div class="item item-input item-select">
-        <div class="input-label">
-          Patient Sex
-          <!-- leave select empty - data will be brough in through ctrl -->
-        </div>
-        <select ng-model="soap.patientGender" ng-options="gender for gender in genders"></select>
-      </div>
+      <!-- initials -->
+      <h6>Patient Initials</h6>
+      <label class="item item-input">
+        <input type="text" placeholder="Enter up to three characters." ng-model="soap.patientInitials">
+      </label>
+      <!-- DOB -->
+      <h6>Date of Birth</h6>
       <label class="item item-input">
         <input type="date" placeholder="Patient DOB" ng-model="soap.patientDob">
       </label>
+      <!-- Age. Auto populate from DOB if filled -->
+      <h6>Age</h6>
       <label class="item item-input">
         <input type="number" placeholder="Patient Age" ng-model="soap.patientAge">
       </label>
-
+      <!-- Sex -->
+      <h6>Sex</h6>
+      <div class="item item-select">
+      <div class="input-label">
+          Sex
+       </div>
+        <select id="Sex" ng-model="soap.patientGender" ng-options="gender for gender in genders"  onchange="changeClass(this.id)">
+	        <option style="display:none;" value="" selected>Please Choose</option>
+        </select>
+      </div>
+      
 
     </div>
     <!-- subjective section 2 -->
-    <h5>Who's chief complaint is<a><icon class="ion-ios7-information"></icon></a></h5>
+    <h5>Chief Complaint<a>i</a></h5>
     <div class="list">
       <label class="item item-input">
-        <textarea type="text" placeholder="Chief Complaint" ng-model="soap.chiefComplaint"></textarea>
+        <textarea id ="ChiefComplaint" type="text" placeholder="Describe the patient's chief complaint." ng-model="soap.chiefComplaint" ng-controller="SoapCtrl"
+	ng-keyup="expandText($event)"
+	ng-keydown="expandText($event)"></textarea>
       </label>
     
     <!-- subjective section 3 -->
-   
-      <div class="item item-input item-select">
-        <div class="input-label">
-          Onset
-        </div>
-        <select ng-model="wmi.patientOnset" ng-options="onset for onset in onsets"></select>
-      </div>
-      <label class="item item-input">
-        <textarea type="text" placeholder="Provokes/Palliates" ng-model="soap.patientPPalliates"></textarea>
-      </label>
-
-      <div class="item item-input item-select">
+   <h6>Onset</h6>
+      <div class="item item-select">
       <div class="input-label">
-        Quality
+          Onset
+       </div>
+        <select id="Onset" ng-model="wmi.patientOnset" ng-options="onset for onset in onsets"  onchange="changeClass(this.id)">
+	        <option style="display:none;" value="" selected>Please Choose</option>
+        </select>
       </div>
-        <select ng-model="wmi.patientQuality" ng-options="quality for quality in qualities"></select>
-      </div>
-
+      <h6>Provokes/Palliates</h6>
       <label class="item item-input">
-        <textarea type="text" placeholder="Radiates" ng-model="soap.patientRadiates"></textarea>
+        <textarea id="PP" type="text" placeholder="What makes the pain better or worse?" ng-model="soap.patientPPalliates" ng-controller="SoapCtrl" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
       </label>
-
-      <div class="item item-input item-select">
-        <div class="input-label">
-          Severity
-        </div>
-        <select ng-model="wmi.patientSeverity" ng-options="severity for severity in severities"></select>
+	  <h6>Quality</h6>
+      <div class="item item-select">
+      <div class="input-label">
+          Quality
+       </div>
+        <select id="Quality" ng-model="wmi.patientQuality" ng-options="quality for quality in qualities"  onchange="changeClass(this.id)">
+	        <option style="display:none;" value="" selected>Please Choose</option>
+        </select>
       </div>
-
+	  <h6>Radiation/Region/Referred</h6>
       <label class="item item-input">
-        <input type="time" placeholder="Time (Duration)" ng-model="wmi.patientTime">
+        <textarea id="RRR" type="text" placeholder="Does the feeling move anywhere? Where is it located?" ng-model="soap.patientRadiates" ng-controller="SoapCtrl"
+	ng-keyup="expandText($event)"
+	ng-keydown="expandText($event)"></textarea>
+      </label>
+	  <h6>Severity</h6>
+      <div class="item item-select">
+      <div class="input-label">
+          Severity
+       </div>
+        <select id="Severity" ng-model="wmi.patientSeverity" ng-options="severity for severity in severities"  onchange="changeClass(this.id)">
+	        <option style="display:none;" value="" selected>Please Choose</option>
+        </select>
+      </div>
+	  <h6>Time of Onset</h6>
+      <label class="item item-input">
+        <input type="time" placeholder="" ng-model="wmi.patientTime">
       </label>
     </div>
-    <h5>Mechanism of Injury/HPI<a><icon class="ion-ios7-information"></icon></a></h5>
+    <h5>MOI/HPI<a>i</a></h5>
     <div class="list">
 
      <label class="item item-input">
-        <textarea type="text" placeholder="MOI/HPI" ng-model="wmi.patientHPI"></textarea>
+        <textarea id="MOI" type="text" placeholder="Describe in detail the mechanism of injury or the history of the illness." ng-model="wmi.patientHPI" ng-controller="SoapCtrl" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
       </label>
-
-      <div class="item item-input item-select">
+	  <h6>Suspected Spinal MOI</h6>
+      <div class="item item-select">
       <div class="input-label">
-        Suspected Spinal Injury
-      </div>
-        <select ng-model="wmi.wmi.patientSpinal" ng-options="spinal for spinal in spinals"></select>
+          Suspected Spinal MOI
+       </div>
+        <select id="SMOI" ng-model="wmi.wmi.patientSpinal" ng-options="spinal for spinal in spinals"  onchange="changeClass(this.id)">
+	        <option style="display:none;" value="" selected>Please Choose</option>
+        </select>
       </div>
 
     </div>
-      <a class="button button-block button-light margin icon-right ion-ios7-arrow-right" href="#/tab/objective">Continue to Objective</a>
+      <a class="button button-block button-light icon-right ion-ios7-arrow-right margin" href="#/tab/objective">Continue to Objective</a>
     </div>
   </ion-content>
 </ion-view>

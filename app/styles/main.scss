@@ -8,14 +8,26 @@ $WMIblue: #244b6f;
 $WMI_DK_blue: darken($WMIblue, 10%);
 $WMI_LT_blue: lighten($WMIblue, 35%);
 $WMI_Really_LT_blue: lighten($WMIblue, 55%);
-$WMIred: #8a171a;
+$WMIred: #8B0000;
 $WMI_DK_red: darken($WMIred, 10%);
 $WMIwhite: #FFF;
 $WMI_DK_white: darken($WMIwhite, 5%);
-$WMIgrey: #555555;
+$WMIgrey: #CCCCCC;
+$WMI_LT_grey: #EFEFEF;
 $WMI_DK_grey: darken($WMIgrey, 10%);
+$WMIblack: #111;
+$WMIshadow: rgba(0,0,0,.5);
+
 
 //Fonts
+// Reset placeholder text
+input::-webkit-input-placeholder {
+	color: $WMI_DK_grey;
+}
+
+input[disabled] {
+	background-color: $WMIwhite;
+}
 
 
 // Mixins --------------------------
@@ -26,25 +38,57 @@ $WMI_DK_grey: darken($WMIgrey, 10%);
   border-radius: $radius;
 }
 
+.boxShadow {
+	box-shadow: 0 0 10px $WMIshadow;
+}
 
 // Main Styles ---------------------
 //html
 html {
 width: 100%;
 height: 100%;
-  background-color: $WMIwhite;
-  background-image: url('../images/WMI_APP_BCKRD_Crushed.png');
-	background-size: cover;
-    background-repeat: no-repeat;
-    background-position: right center;
-  color: $WMIgrey;
+  
   }
 // Body
 
 
 // Headings
-h1, h2, h3, h4, h5 {
-	color: $WMIgrey;
+h1, h2, h3, h4, h5, h6 {
+	color: $WMIwhite;
+	text-transform: uppercase;
+	
+}
+
+h1 {
+	text-transform: capitalize;
+}
+h5 {
+	font-size: 17px;
+	line-height: 17px;
+	padding: 10px;
+	background-color: $WMI_DK_grey;
+	margin: 0;
+
+	
+}
+h6 {
+	padding: 10px;
+	font-size: 16px;
+	margin: 0;
+	color: $WMIred;
+	background-color: $WMI_LT_grey;
+	text-transform: capitalize;
+}
+
+h7 {
+	padding: 3px;
+	padding-left: 10px;
+	font-size: 12px;
+	margin: 0;
+	color: $WMIwhite;
+	background-color: $WMIgrey;
+	text-transform: capitalize;
+	display: block;
 }
 
 // Links
@@ -55,50 +99,67 @@ a {
 			color: $WMI_DK_blue;
 			cursor: pointer;
 		}
+		icon {
+			margin-right: 10px;
+		}
 }
 
 // Buttons. Overrides ionic button-light
 .button {
+	min-height: 30px;
 	&.button-light, &.button-calm {
-
+		font-size: 18px;
 		color: $WMIwhite;
-		font-weight: bold;
+		text-transform: capitalize;
 		border:none;
-		@include border-radius(5px);
+		
+		@include border-radius(4px);
 			&:hover{
 				color: $WMIwhite;
 				border:none;
 			}
 		}
 		&.button-light {
-		background-color: $WMIgold;
-			&:hover{
-				background-color: $WMI_DK_gold;
+		background-color: $WMIblue;
+			&:hover, &:active, &:focus{
+				background-color: $WMI_DK_blue;
 			}
 		}
 		&.button-calm {
-		background-color: $WMI_LT_blue;
-			&:hover{
-				background-color: $WMIblue;
+		background-color: $WMIgrey;
+		color: $WMIblack;
+			&:hover, &:active, &:focus{
+				background-color: $WMI_DK_grey;
+				color: $WMIblack;
 			}
+		}
+		&.lowercase {
+			text-transform: none;
 		}
 }
 
 // Nav Bar for sub pages
 .bar {
 	&.bar-stable{
-		background-color: $WMIgold;
+		background-color: $WMIwhite;
+		color: $WMIblack;
 		background-image: none;
+		@extend .boxShadow;
+		
+		
 		.title {
-			font-weight: bold;
-		}
-
+				color: $WMIred;
+				font-weight: normal;
+			}
 		.button {
 			background: none;
-			border-color: $WMI_DK_gold;
+			color: $WMIblue;
+			border: none;
 			&:hover{
-				background-color: $WMI_DK_gold;
+				
 			}
+			
+			
 		}
 	}
 }
@@ -106,8 +167,9 @@ a {
 
 .tabs {
   background-image: none;
-  background-color: $WMI_DK_white;
+  background-color: $WMIwhite;
   text-transform: uppercase;
+  @extend .boxShadow;
   .tab-title {
   font-size: 10px;
   }
@@ -126,9 +188,9 @@ a {
 }
 .card {
 .item-divider{
-	background-color: $WMIblue;
-	border-color: $WMIblue;
-	color: $WMIwhite;
+	background-color: $WMI_LT_grey;
+	border-color: $WMI_LT_grey;
+	color: $WMIred;
 	font-weight: normal;
 }
 }
@@ -142,13 +204,28 @@ a {
 }
 .WMIlogo {
 width:200px;
-	margin-top: 20px;
 }
 
 .NOLSlogo {
 width:100px;
 margin-bottom: 20px;
 }
+
+
+.item-select {
+
+select {
+color: $WMI_DK_grey;
+ &.active { 
+ color: $WMIblack; }
+
+}
+	.input-label {
+		height:0px;
+		display:block;
+	}
+}
+
 
 // Delete Icon
 .item-delete .button.icon {
@@ -158,14 +235,58 @@ margin-bottom: 20px;
 .margin {
 	margin-left: 10px;
 	margin-right: 10px;
+	&.last {
+		margin-bottom: 10px;
+	}
 }
 
 .col-label {
 	font-weight: bold;
 }
+	.item-select {
+		height:47px;
+	}
+
+.col, .row {
+	padding: 0;
+	
+
+}
 
 textarea {
-	height:60px;
+	height:auto;
+}
+
+.item-select {
+
+select {
+
+	background-color: $WMIwhite;
+	width: 100%;
+	max-width: 100%;
+	text-align: left;
+	direction: ltr;
+	padding-left: 10px;
+}
+}
+
+.list {
+	margin-bottom: 0;
+	background-color: $WMIwhite;
+}
+
+.input-label {
+	font-weight: normal;
+}
+.pane {
+	 background-image: url('../images/WMI_APP_BCKRD_Crushed.png');
+	background-size: cover;
+    background-repeat: no-repeat;
+    background-position: right center;
+}
+.menu {
+	background-color:rgba(255, 255, 255, 0.4);
+	padding-top: 40px;
 }
 
 // First Responder Page (home after splash) -------------------------
@@ -182,31 +303,42 @@ textarea {
 
 //wrapper
 .FirstResponder {
-	
-	// placeholder for bckrd img
+padding-top: 10px;
+padding-bottom: 10px;
 	color: $WMIwhite;
+	p {
+		text-align: center;
+		margin-top: 10px;
+	}
 	a {
 		color: $WMI_LT_blue;
 	}
 	h1, h5 {
 		text-align: center;
 		color: $WMIwhite;
+		
 	}
 
 	h1 {
 		text-transform: uppercase;
 		font-weight: 300;
+		margin-top: 0px;
 	}
 
 	// Overide lists div for FR page
-	.list-inset{
+	.list-inset {
 		background:none;
+		@include border-radius(2px);
 		.item-input {
-			margin-top: 10px;
+	
 			border:none;
-			@include border-radius(5px);
+			
 		}
 	}
+	button {
+		margin-bottom: 10px;
+	}
+	
 
 }
 
@@ -219,25 +351,19 @@ resize:none;
 
 // Soap Specific
 .SOAP {
-	h2, h3, h5 {
+padding-bottom: 10px;
+background-color: $WMIwhite;
+min-height: 100%;
+overflow: auto;
+	
+	h2, h3 {
 		margin: 0px;
 		font-weight: bold;
 		background-color: $WMIblue;
 		color: $WMIwhite;
 		padding:15px;
 		text-transform: uppercase;
-		a {
-			float:right;
-			display: block;
-			font-size: 18px;
-
-
-			text-decoration: none;
-			color: $WMIwhite;
-			&:hover {
-				color: $WMI_DK_white;
-			}
-
+		
 		}
 	}
 
@@ -253,30 +379,72 @@ resize:none;
 		text-align: center;
 		font-size: 14px;
 	}
+	
+	
+	h4, h5, h6 {
+		font-weight: 400;
+		a {
+			
+			display: block;
+			font-family: serif;
+			text-transform: none;
+			
+			float: right;
+			width: 18px;
+			height:18px;
+			line-height: 18px;
+			text-align: center;
+			vertical-align: middle;
+			font-size: 14px;
+			text-decoration: none;
+			color: $WMIgold;
+			@include border-radius(50%);
+			background-color: $WMIwhite;
+			border: 1px solid $WMIgold;
+			&:hover {
+				
+			}
+
+	}
 }
 
 // vitals
-.VITALS {
-padding-bottom: 120px;
-	.row {
-		padding-top: 10px;
-		padding-bottom: 10px;
-		border-bottom: 1px solid #DDD;
+	.VitalsTable {
+	width: 100%;
+	text-align: center;
+	border: 1px solid $WMI_LT_grey;
+	th, td {
+		width:25%;
+		padding:5px;
+		border: 1px solid $WMI_LT_grey;
 	}
+		th {
+		text-align: right;
+		padding-right: 10px;
+			background-color: $WMI_LT_grey;
+			text-transform: uppercase;
+		}
+	}
+.VITALS {
+padding-bottom: 50px;
+
+
 }
 .vital {
   position:fixed;
-  bottom:50px;
+  bottom:49px;
   background:$WMI_DK_white;
-  
   width:100%;
   z-index:10;
   display:inline-table;
-  border-top:1px solid $WMIgrey;
   margin: 0;
   padding: 0;
+  h1 {
+	  color: $WMIgrey;
+  }
   .vital-left {
 	  text-align: right;
+	  padding-right: 10px;
   }
   .row, h1 {
 	  margin: 0px;
@@ -286,4 +454,8 @@ padding-bottom: 120px;
   .button-small {
 	  margin-top:7px;
   }
+}
+
+.AboutWMI {
+	padding-bottom: 10px;
 }

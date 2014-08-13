@@ -31,9 +31,24 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql'])
 
 })
 
-.controller('SoapCtrl', function($scope, $state, $stateParams, Soaps) {
-  $scope.settingsPage = function() {$state.go('settings');}
+// Controller for slide menu. could prolly be reworked a bit. DR
+.controller('MenuCtrl', function($scope, $ionicSideMenuDelegate) {
+$scope.toggleSideMenu = function() {
+            $ionicSideMenuDelegate.toggleRight();
+        };
+})
 
+
+.controller('SoapCtrl', function($scope, $state, $stateParams, Soaps) {
+"use strict";
+
+  // Auto expand text boxes vertically
+  $scope.expandText = function(obj){
+	var valueID = obj.target.attributes.id.value;
+	var element = document.getElementById(valueID);
+	element.style.height =  element.scrollHeight + "px";}
+	
+  $scope.settingsPage = function() {$state.go('settings');}
   $scope.aboutPage = function(){$state.go('about');}
   $scope.mySoapsPage = function(){$state.go('soaps');}
   $scope.subjectivePage = function(){$state.go('tab.subjective');}
@@ -42,19 +57,28 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql'])
   $scope.imagePage = function(){$state.go('tab.image');}
   $scope.overviewPage = function(){$state.go('tab.overview');}
   $scope.reviewSoapPage = function(){$state.go('soap-review');}
+  $scope.helpPage = function(){$state.go('help');}
   //edit button to delete specific soap
   $scope.data = {
     showDelete: false
   };
   //$scope.edit = function(soap);
-  $scope.genders = ['Male', 'Female', 'Other'];
+  
+  
+   $scope.dt = new Date();
+    
+   
+  
+ 
+  
+  $scope.genders = ['Male', 'Female', 'Transgender'];
   $scope.severities = [0,1,2,3,4,5,6,7,8,9,10];
   $scope.onsets = ['Sudden', 'Gradual'];
-  $scope.qualities = ['Aching', 'Burning', 'Cramping','Dull Pressure', 'Sharp', 'Squeezing', 'Stabbing', 'Tight'];
+  $scope.qualities = ['Aching', 'Burning', 'Cramping', 'Crushing', 'Dull Pressure', 'Sharp', 'Squeezing', 'Stabbing', 'Tearing', 'Tight', 'Other'];
   $scope.spinals = ['Yes', 'No'];
-  $scope.pupils = ['Yes', 'No'];
-  $scope.BPmeasureds = ['Systolic', 'Diastolic'];
-  $scope.BPpulses = ['Radial Pulse Present', 'Radial Pulse Weak', 'Radial Pulse Absent'];
+  $scope.pupils = ['PERRL', 'Not PERRL'];
+  $scope.BPtakens = ['Taken', 'Palpated'];
+  $scope.BPpulses = ['Present', 'Weak', 'Absent'];
   $scope.SKINmoists = ['Dry', 'Moist', 'Wet'];
   $scope.SKINtemps = ['Warm', 'Cool', 'Hot'];
   $scope.SKINcolors = ['Pink', 'Pale', 'Red'];
@@ -62,8 +86,8 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql'])
   $scope.RESPqualities = ['Easy', 'Shallow', 'Labored'];
   $scope.HEARTqualities = ['Strong', 'Weak', 'Bounding'];
   $scope.HEARTrythms = ['Regular', 'Irregular'];
-
-  $scope.LORs = ['Awake & Oriented x 4', 'Awake & Oriented x 3', 'Awake & Oriented x 2', 'Awake & Oriented x 1', 'Awake & Oriented x 0', 'Verbal Stimulus', 'Pain Stimulus', 'Unresponsive'];
+  $scope.tempDegrees = ['°Fahrenheit', '°Celsius'];
+  $scope.LORs = ['Awake & Oriented x 4', 'Awake & Oriented x 3', 'Awake & Oriented x 2', 'Awake & Oriented x 1', 'Awake & Oriented x 0', 'Verbal Stimulus', 'Painful Stimulus', 'Unresponsive'];
 
   $scope.trainingLevels = ['WFA','WAFA','WFR', 'WEMT', 'Other'];
 
@@ -75,11 +99,11 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql'])
 
 })
 
+
+// coundown controlls. DELETE DELE6TE DELETE
 .controller('VitalCtrl', function($scope, $timeout, $state, $stateParams, Vitals) {
-
-
   $scope.vitals = Vitals.all();
-  $scope.counter = '1:00';
+  $scope.counter = '60';
   $scope.startCounter = function() {
     $scope.counter = 60;
     $scope.countdown();
@@ -88,10 +112,10 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql'])
   $scope.countdown = function() {
     if($scope.counter == 0) {
       $scope.stop();
-      $scope.counter = '1:00'
+      $scope.counter = '60'
     }
     stopped = $timeout(function() {
-     $scope.counter--;
+     $scope.counter --;
      $scope.countdown();
     }, 1000);
   };
@@ -99,6 +123,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql'])
 
 $scope.stop = function(){
    $timeout.cancel(stopped);
-
     }
 })
+
+
