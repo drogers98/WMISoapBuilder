@@ -8,149 +8,188 @@
     <div class="list">
     
         <!-- Time Taken -->
-        <h6>Time Taken</h6>
+        <h6>Time Taken<a>i</a></h6>
       <div class="item item-input">
        add time field here. adjustable.
       </div>
+      
+
 
     <!-- LOR -->
     <h6>Level of Responsiveness</h6>
-      <div class="item item-input item-select">
+      <div class="item item-select">
         <div class="input-label">
-          
+          LOR
         </div>
-        <select ng-model="vital.lor" ng-options="LOR for LOR in LORs"></select>
+        <select id="test" ng-model="vital.lor" ng-options="LOR for LOR in LORs" onchange="changeClass(this.id)">
+	        <option value="" default selected>Please Choose</option>
+        </select>
       </div>
 
       <!-- Heart -->
 
-     <h6>Heart</h6>
-
+     <h6>Heart<a>i</a></h6>
+<h7>Rate (Beats Per Minute)</h7>
 	  <label class="item item-input">
         <input type="number" placeholder="Rate (BPM)">
       </label>
-      <div class="item item-input item-select">
+      <h7>Rythm</h7>
+      <div class="item item-select">
         <div class="input-label">
           Rhythm
           <!-- leave select empty - data will be brough in through ctrl -->
         </div>
-        <select ng-model="vital.patientGender" ng-options="HEARTrythm for HEARTrythm in HEARTrythms"></select>
+        <select id="HRythym" ng-model="vital.patientGender" ng-options="HEARTrythm for HEARTrythm in HEARTrythms" onchange="changeClass(this.id)">
+	        <option style="display:none;" value="" selected>Please Choose</option>
+        </select>
       </div>
-      <div class="item item-input item-select">
+      <h7>Quality</h7>
+      <div class="item item-select">
         <div class="input-label">
           Quality
           <!-- leave select empty - data will be brough in through ctrl -->
         </div>
-        <select ng-model="vital.quality" ng-options="HEARTquality for HEARTquality in HEARTqualities"></select>
+        <select id="HRQuality" ng-model="vital.quality" ng-options="HEARTquality for HEARTquality in HEARTqualities" onchange="changeClass(this.id)">
+	        <option style="display:none;" value="" selected>Please Choose</option>
+        </select>
       </div>
       </label>
 
 
       <!-- Respiratory -->
-<h6>Respiratory</h6>
+<h6>Respiratory<a>i</a></h6>
+<h7>Rate (Breaths Per Minute)</h7>
   
 	  <label class="item item-input">
         <input type="number" placeholder="Rate (BPM)">
       </label>
-      <div class="item item-input item-select">
+      <h7>Rhythm</h7>
+      <div class="item item-select">
         <div class="input-label">
           Rhythm
           <!-- leave select empty - data will be brough in through ctrl -->
         </div>
-        <select ng-model="vital.rrhythm" ng-options="RESPrythm for RESPrythm in RESPrythms"></select>
+        <select id="RRythm" ng-model="vital.rrhythm" ng-options="RESPrythm for RESPrythm in RESPrythms" onchange="changeClass(this.id)">
+	        <option style="display:none;" value="" selected>Please Choose</option>
+        </select>
       </div>
-      <div class="item item-input item-select">
+      <h7>Quality</h7>
+      <div class="item item-select">
         <div class="input-label">
           Quality
           <!-- leave select empty - data will be brough in through ctrl -->
         </div>
-        <select ng-model="vital.rquality" ng-options="RESPquality for RESPquality in RESPqualities"></select>
+        <select id="RQuality" ng-model="vital.rquality" ng-options="RESPquality for RESPquality in RESPqualities" onchange="changeClass(this.id)">
+	        <option style="display:none;" value="" selected>Please Choose</option>
+        </select>
       </div>
 
 
 
 
       <!-- Skin -->
-      <h6>Skin</h6>
-	   <div class="item item-input item-select">
+      <h6>Skin<a>i</a></h6>
+      <h7>Color</h7>
+	   <div class="item item-select">
         <div class="input-label">
           Color
           <!-- leave select empty - data will be brough in through ctrl -->
         </div>
-        <select ng-model="vital.sctmcolor" ng-options="SKINcolor for SKINcolor in SKINcolors"></select>
+        <select id="SColor" ng-model="vital.sctmcolor" ng-options="SKINcolor for SKINcolor in SKINcolors" onchange="changeClass(this.id)">
+	        <option style="display:none;" value="" selected>Please Choose</option>
+        </select>
       </div>
-      <div class="item item-input item-select">
+      <h7>Temperature</h7>
+      <div class="item item-select">
         <div class="input-label">
-          Temp
-          <!-- leave select empty - data will be brough in through ctrl -->
+          Temperature
         </div>
-        <select ng-model="vital.sctmtemp" ng-options="SKINtemp for SKINtemp in SKINtemps"></select>
+        <select id="STemp" ng-model="vital.sctmtemp" ng-options="SKINtemp for SKINtemp in SKINtemps" onchange="changeClass(this.id)">
+	        <option style="display:none;" value="" selected>Please Choose</option>
+        </select>
       </div>
-      <div class="item item-input item-select">
+      <h7>Moisture</h7>
+      <div class="item item-select">
         <div class="input-label">
           Moisture
-          <!-- leave select empty - data will be brough in through ctrl -->
         </div>
-        <select ng-model="vital.sctmmoisture" ng-options="SKINmoist for SKINmoist in SKINmoists"></select>
+        <select id="SMoist" ng-model="vital.sctmmoisture" ng-options="SKINmoist for SKINmoist in SKINmoists" onchange="changeClass(this.id)">
+	        <option style="display:none;" value="" selected>Please Choose</option>
+        </select>
       </div>
-
-
-
-
 
 
  <!-- Blood Pressure -->
- <h6>Blood Pressure</h6>
- 
-    <div class="item item-input item-select">
+ <h6>Blood Pressure<a>i</a></h6>
+ <h7>Radial Pulse</h7>
+    <div class="item item-select">
         <div class="input-label">
           Radial Pulse
           <!-- leave select empty - data will be brough in through ctrl -->
         </div>
-        <select ng-model="vital.brradialpulse" ng-options="BPpulse for BPpulse in BPpulses"></select>
+        <select id="BPRP" ng-model="vital.brradialpulse" ng-options="BPpulse for BPpulse in BPpulses" onchange="changeClass(this.id)">
+	        <option style="display:none;" value="" selected>Please Choose</option>
+        </select>
       </div>
+      <h7>Systolic</h7>
 	  <label class="item item-input">
-        <input type="number" placeholder="Systolic">
+        <input type="number" placeholder="Reading">
       </label>
-	  <label class="item item-input">
-        <input type="number" placeholder="Diastolic">
-        
-      </label>
+      <h7>Diastolic</h7>
+	  
+      
+      <div class="row">
+  <div class="col">
+	  <div class="item item-select">
+        <div class="input-label">
+          Taken/Palpated
+        </div>
+        <select id="TP" ng-model="vital.brradialpulse" ng-options="BPtaken for BPtaken in BPtakens" onchange="changeClass(this.id); check_option(this.value);">
+	        <option style="display:none;" value="" selected>Please Choose</option>
+        </select>
+      </div>
+
+  </div>
+  <div class="col col-50">
+	   <label class="item item-input">
+        <input id="Diastolic" type="number" placeholder="N/A" disabled="disabled">
+      </label>  </div>
+    </div>
   </div>
 
 
-
- <h6>Pupils</h6>
-      <div class="item item-input item-select">
+ <h6>Pupils<a>i</a></h6>
+      <div class="item item-select">
         <div class="input-label">
           Pupils
-          <!-- leave select empty - data will be brough in through ctrl -->
         </div>
-        <select ng-model="vital.pulils" ng-options="pupil for pupil in pupils"></select>
+        <select id="Pupils" ng-model="vital.pulils" ng-options="pupil for pupil in pupils" onchange="changeClass(this.id)">
+	        <option style="display:none;" value="" selected>Please Choose</option>
+        </select>
       </div>
       
       
-    <h6>Temperature</h6>
+    <h6>Temperature<a>i</a></h6>
     <div class="row">
   <div class="col">
 	  <label class="item item-input">
 	  <input type="number" placeholder="Degrees">
     </label>
   </div>
-  <div class="col col-33">
-	   <div class="item item-input item-select">
-        <select ng-model="vital.tempDegrees" ng-options="tempDegree for tempDegree in tempDegrees"></select>
+  <div class="col col-50">
+	   <div class="item item-select">
+	   <div class="input-label">
+          Degrees
+        </div>
+        <select id="Degrees" ng-model="vital.tempDegrees" ng-options="tempDegree for tempDegree in tempDegrees" onchange="changeClass(this.id)">
+	        <option style="display:none;" value="" selected>Please Choose</option>
+        </select>
       </div>
 
   </div>
     </div>
         
-    
- 
-
-
-
-    
+   
 <a class="button button-block button-light margin" ng-click="objectivePage()">Save Vital Set</a>
   </div>
 
@@ -160,18 +199,19 @@
   <div class="row">
 
     <div class="vital-left col">
-        <h1 class=""ng-bind="counter"></h1>
+        <h1 id="Stopwatch"><time>00:00</time></h1>
+
     </div>
 
     <div class="col">
 
-      <button ng-click="startCounter()" class="button button-calm icon ion-play button-small"></button>
-      <button ng-click="stop()" class="button button-calm icon ion-stop button-small"></button>
+<a class="button button-calm button-small icon ion-play" id="start"></a>
+<a class="button button-calm button-small icon ion-stop"id="stop"></a>
+<a class="button button-calm button-small icon ion-refresh"id="clear"></a>
 
     </div>
     </div>
-
-    
+ 
 
   </div>
 </ion-view>

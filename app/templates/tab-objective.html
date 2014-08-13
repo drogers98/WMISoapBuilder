@@ -11,7 +11,7 @@
   <ion-content has-header="true" padding="false" has-bouncing="false">
     <div class="SOAP">
       <!-- subjective section 1 -->
-      <h5>Patient Position When Found<a>i</a></h5>
+      <h5>Patient Position When Found<a ng-controller="SoapCtrl" ng-click="helpPage()">i</a></h5>
       <div class="list">
         <label class="item item-input">
           <textarea id="Position" type="text" placeholder="Describe the physical position of your patient." ng-model="wmi.patientFound" ng-controller="SoapCtrl" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
@@ -124,7 +124,7 @@
           <textarea id="ELUT" type="text" placeholder="Events leading up to or causing the incident/illness." ng-model="wmi.patientEventsForCause" ng-controller="SoapCtrl" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
         </label>
       </div>
-      <a class="button button-block button-light icon-right ion-ios7-arrow-right margin last" ng-click="apPage()">Continue to Assessment + Plan</a>
+      <a class="button button-block button-light icon-right ion-ios7-arrow-right margin last" ng-click="apPage()">Continue to Assessment & Plan</a>
     </div>
   </ion-content>
 </ion-view>

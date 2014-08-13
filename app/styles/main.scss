@@ -15,11 +15,19 @@ $WMI_DK_white: darken($WMIwhite, 5%);
 $WMIgrey: #CCCCCC;
 $WMI_LT_grey: #EFEFEF;
 $WMI_DK_grey: darken($WMIgrey, 10%);
-$WMIblack: #000;
+$WMIblack: #111;
 $WMIshadow: rgba(0,0,0,.5);
 
 
 //Fonts
+// Reset placeholder text
+input::-webkit-input-placeholder {
+	color: $WMI_DK_grey;
+}
+
+input[disabled] {
+	background-color: $WMIwhite;
+}
 
 
 // Mixins --------------------------
@@ -70,6 +78,17 @@ h6 {
 	color: $WMIred;
 	background-color: $WMI_LT_grey;
 	text-transform: capitalize;
+}
+
+h7 {
+	padding: 3px;
+	padding-left: 10px;
+	font-size: 12px;
+	margin: 0;
+	color: $WMIwhite;
+	background-color: $WMIgrey;
+	text-transform: capitalize;
+	display: block;
 }
 
 // Links
@@ -195,11 +214,19 @@ margin-bottom: 20px;
 
 .item-select {
 
+select {
+color: $WMI_DK_grey;
+ &.active { 
+ color: $WMIblack; }
+
+}
 	.input-label {
 		height:0px;
 		display:block;
 	}
 }
+
+
 // Delete Icon
 .item-delete .button.icon {
 	color: $WMIred
@@ -216,6 +243,15 @@ margin-bottom: 20px;
 .col-label {
 	font-weight: bold;
 }
+	.item-select {
+		height:47px;
+	}
+
+.col, .row {
+	padding: 0;
+	
+
+}
 
 textarea {
 	height:auto;
@@ -230,7 +266,7 @@ select {
 	max-width: 100%;
 	text-align: left;
 	direction: ltr;
-	padding-left: 5px;
+	padding-left: 10px;
 }
 }
 
@@ -292,10 +328,11 @@ padding-bottom: 10px;
 	// Overide lists div for FR page
 	.list-inset {
 		background:none;
+		@include border-radius(2px);
 		.item-input {
-			margin-top: 10px;
+	
 			border:none;
-			@include border-radius(2px);
+			
 		}
 	}
 	button {
@@ -390,11 +427,7 @@ overflow: auto;
 	}
 .VITALS {
 padding-bottom: 50px;
-	.row {
-		padding-top: 10px;
-		padding-bottom: 10px;
-		border-bottom: 1px solid $WMI_LT_grey;
-	}
+
 
 }
 .vital {
@@ -411,6 +444,7 @@ padding-bottom: 50px;
   }
   .vital-left {
 	  text-align: right;
+	  padding-right: 10px;
   }
   .row, h1 {
 	  margin: 0px;

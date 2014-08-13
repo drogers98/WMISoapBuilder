@@ -59,7 +59,7 @@ angular.module('WMISoapBuilder', ['ionic', 'WMISoapBuilder.controllers', 'WMISoa
     .state('help', {
       url: '/help',
       templateUrl: 'templates/help.html',
-      controller: 'WMICtrl'
+      controller: 'SoapCtrl'
     })
 
     .state('soaps', {
@@ -258,3 +258,65 @@ document.getElementById('GeoLocation').value = "Lat/Long Unavailable";
   alert("Error: " + errors[error.code]);
 }
 }
+
+// Change select classes for greyed out appearance to live.
+function changeClass(id) {
+	document.getElementById(id).setAttribute('class','active');
+	}
+	
+// enable/disable field based on BP taken or palpation. currently val is 1, change to actual val
+function check_option(val)
+{
+if(val == 0)
+{
+document.getElementById("Diastolic").disabled = false;
+document.getElementById("Diastolic").placeholder = "Reading";
+}
+else
+{
+document.getElementById("Diastolic").disabled = true;
+document.getElementById("Diastolic").placeholder = "N/A";
+}
+};
+
+// stopwatch on vitals page
+window.onload=function(){
+var h1 = document.getElementById('Stopwatch'),
+    start = document.getElementById('start'),
+    stop = document.getElementById('stop'),
+    clear = document.getElementById('clear'),
+    seconds = 0, minutes = 0,
+    t;
+
+function add() {
+    seconds++;
+    if (seconds >= 60) {
+        seconds = 0;
+        minutes++;
+        if (minutes >= 60) {
+            minutes = 0;
+        }
+    }
+    
+    h1.textContent = (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds);
+
+    timer();
+}
+function timer() {
+    t = setTimeout(add, 1000);
+}
+timer();
+
+// Start button 
+start.onclick = timer;
+// Stop button 
+stop.onclick = function() {
+    clearTimeout(t);
+}
+// Clear button 
+clear.onclick = function() {
+    h1.textContent = "00:00";
+    seconds = 0; minutes = 0;
+    clearTimeout(t);
+}
+};

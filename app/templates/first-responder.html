@@ -10,16 +10,26 @@
 <h1>SOAP Notes</h1>
   <div class="list list-inset">
     <form>
+    <h6>First Name</h6>
       <label class="item item-input">
         <input type="text" placeholder="First Name">
       </label>
+    </div>
+    <div class="list list-inset">
+      <h6>Last Name</h6>
       <label class="item item-input">
         <input type="text" placeholder="Last Name">
       </label>
-      <!-- select will need some good style refactoring -->
+    </div>
+    <div class="list list-inset">
+     <h6>Training Level</h6>
       <div class="item item-select">
-        <select ng-model="responder.trainingLevel" ng-options="trainingLevel for trainingLevel in trainingLevels">
-	        <option value="" selected>Please Choose Training Level</option>
+      
+      <div class="input-label">
+          Training Level
+       </div>
+        <select id="TrainingLevel" ng-model="responder.trainingLevel" ng-options="trainingLevel for trainingLevel in trainingLevels" onchange="changeClass(this.id)">
+	        <option style="display:none;" value="" selected>Please Choose</option>
         </select>
       </div>
       <p>By using this application, you agree to the <br /><a ng-click="termsPage()">Terms of Service.</a></p>

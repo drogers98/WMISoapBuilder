@@ -35,16 +35,11 @@
       <div class="input-label">
           Sex
        </div>
-        <select ng-model="soap.patientGender" ng-options="gender for gender in genders">
+        <select id="Sex" ng-model="soap.patientGender" ng-options="gender for gender in genders"  onchange="changeClass(this.id)">
 	        <option style="display:none;" value="" selected>Please Choose</option>
         </select>
       </div>
       
-      
-      
-      
-      
-
 
     </div>
     <!-- subjective section 2 -->
@@ -62,7 +57,7 @@
       <div class="input-label">
           Onset
        </div>
-        <select ng-model="wmi.patientOnset" ng-options="onset for onset in onsets">
+        <select id="Onset" ng-model="wmi.patientOnset" ng-options="onset for onset in onsets"  onchange="changeClass(this.id)">
 	        <option style="display:none;" value="" selected>Please Choose</option>
         </select>
       </div>
@@ -75,7 +70,7 @@
       <div class="input-label">
           Quality
        </div>
-        <select ng-model="wmi.patientQuality" ng-options="quality for quality in qualities">
+        <select id="Quality" ng-model="wmi.patientQuality" ng-options="quality for quality in qualities"  onchange="changeClass(this.id)">
 	        <option style="display:none;" value="" selected>Please Choose</option>
         </select>
       </div>
@@ -90,7 +85,7 @@
       <div class="input-label">
           Severity
        </div>
-        <select ng-model="wmi.patientSeverity" ng-options="severity for severity in severities">
+        <select id="Severity" ng-model="wmi.patientSeverity" ng-options="severity for severity in severities"  onchange="changeClass(this.id)">
 	        <option style="display:none;" value="" selected>Please Choose</option>
         </select>
       </div>
@@ -110,7 +105,7 @@
       <div class="input-label">
           Suspected Spinal MOI
        </div>
-        <select ng-model="wmi.wmi.patientSpinal" ng-options="spinal for spinal in spinals">
+        <select id="SMOI" ng-model="wmi.wmi.patientSpinal" ng-options="spinal for spinal in spinals"  onchange="changeClass(this.id)">
 	        <option style="display:none;" value="" selected>Please Choose</option>
         </select>
       </div>

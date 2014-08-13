@@ -14,12 +14,15 @@
   <h5>Date & Location<a>i</a></h5>
       <div class="list">
       <h6>Date of Incident</h6>
-      <div class="item item-input">
-       Add date field here. auto populated, but adjustable. will drive soap date/display.
+      <div class="item item-input" ng-controller="SoapCtrl">
+       <input type="date" value="{{dt | date:'yyyy-MM-dd'}}"/>
       </div>
+      
+
+      
       <h6>Location</h6>
            <label class="item item-input">
-        <textarea id="Location" type="text" placeholder="Location" ng-controller="SoapCtrl"
+        <textarea id="Location" type="text" placeholder="Describe where it happened." ng-controller="SoapCtrl"
 	ng-keyup="expandText($event)"
 	ng-keydown="expandText($event)"></textarea>
 
@@ -32,7 +35,6 @@
       <label class="item item-input">
         <input type="text" id="GeoLocation" placeholder="">
       </label>
-      
       <a id="coordsBtn" class="button button-block button-light margin" onclick="javascript:latLong()"><icon class="ion-pinpoint"></icon><span id="GeoLocationBtnInner">Get Coordinates</span></a>
     
       </div>
@@ -55,7 +57,7 @@
        <div class="input-label">
           Training Level
        </div>
-        <select ng-model="responder.trainingLevel" ng-options="trainingLevel for trainingLevel in trainingLevels">
+        <select id="TrainingLevelSOAP" ng-model="responder.trainingLevel" ng-options="trainingLevel for trainingLevel in trainingLevels"  onchange="changeClass(this.id)">
 	        <option style="display:none;" value="" selected>Please Choose</option>
         </select>
        

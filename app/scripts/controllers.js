@@ -57,18 +57,27 @@ $scope.toggleSideMenu = function() {
   $scope.imagePage = function(){$state.go('tab.image');}
   $scope.overviewPage = function(){$state.go('tab.overview');}
   $scope.reviewSoapPage = function(){$state.go('soap-review');}
+  $scope.helpPage = function(){$state.go('help');}
   //edit button to delete specific soap
   $scope.data = {
     showDelete: false
   };
   //$scope.edit = function(soap);
+  
+  
+   $scope.dt = new Date();
+    
+   
+  
+ 
+  
   $scope.genders = ['Male', 'Female', 'Transgender'];
   $scope.severities = [0,1,2,3,4,5,6,7,8,9,10];
   $scope.onsets = ['Sudden', 'Gradual'];
   $scope.qualities = ['Aching', 'Burning', 'Cramping', 'Crushing', 'Dull Pressure', 'Sharp', 'Squeezing', 'Stabbing', 'Tearing', 'Tight', 'Other'];
   $scope.spinals = ['Yes', 'No'];
   $scope.pupils = ['PERRL', 'Not PERRL'];
-  $scope.BPmeasureds = ['Systolic', 'Diastolic'];
+  $scope.BPtakens = ['Taken', 'Palpated'];
   $scope.BPpulses = ['Present', 'Weak', 'Absent'];
   $scope.SKINmoists = ['Dry', 'Moist', 'Wet'];
   $scope.SKINtemps = ['Warm', 'Cool', 'Hot'];
@@ -77,7 +86,7 @@ $scope.toggleSideMenu = function() {
   $scope.RESPqualities = ['Easy', 'Shallow', 'Labored'];
   $scope.HEARTqualities = ['Strong', 'Weak', 'Bounding'];
   $scope.HEARTrythms = ['Regular', 'Irregular'];
-  $scope.tempDegrees = ['Fahrenheit', 'Celsius'];
+  $scope.tempDegrees = ['°Fahrenheit', '°Celsius'];
   $scope.LORs = ['Awake & Oriented x 4', 'Awake & Oriented x 3', 'Awake & Oriented x 2', 'Awake & Oriented x 1', 'Awake & Oriented x 0', 'Verbal Stimulus', 'Painful Stimulus', 'Unresponsive'];
 
   $scope.trainingLevels = ['WFA','WAFA','WFR', 'WEMT', 'Other'];
@@ -91,10 +100,8 @@ $scope.toggleSideMenu = function() {
 })
 
 
-// coundown controlls
+// coundown controlls. DELETE DELE6TE DELETE
 .controller('VitalCtrl', function($scope, $timeout, $state, $stateParams, Vitals) {
-
-
   $scope.vitals = Vitals.all();
   $scope.counter = '60';
   $scope.startCounter = function() {
@@ -116,6 +123,7 @@ $scope.toggleSideMenu = function() {
 
 $scope.stop = function(){
    $timeout.cancel(stopped);
-
     }
 })
+
+
