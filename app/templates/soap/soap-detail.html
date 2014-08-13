@@ -12,7 +12,11 @@
   <ion-content class="has-header" padding="false" has-bouncing="false">
     <div class="SOAP">
 
-      <h5>Location</h5>
+      <h2>Review SOAP Note</h2>
+      <h3>Location</h3>
+      {{ soap.created_at | soapDate:"MMM d, yyy" }}
+       <h5>Location</h5>
+
       <div class="list">
         <ion-list>
           <ion-item class="item-text-wrap"><strong>Date of Incident: </strong> {{soap.incidentDate}}</ion-item>
@@ -27,14 +31,14 @@
      <h5>Subjective</h5>
 
 
-      
+
       <div class="list">
         <ion-list>
         <ion-item class="item-text-wrap"><strong>Patient Initials:</strong> {{soap.patientInitials}}</ion-item>
         <ion-item class="item-text-wrap"><strong>DOB: </strong> {{soap.patientDob}}</ion-item>
           <ion-item class="item-text-wrap"><strong>Age:</strong> {{soap.patientAge}}</ion-item>
           <ion-item class="item-text-wrap"><strong>Sex: </strong> {{soap.patientSex}}</ion-item>
-          
+
 
         </ion-list>
       </div>
