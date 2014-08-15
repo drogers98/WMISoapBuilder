@@ -55,7 +55,7 @@ height: 100%;
 // Headings
 h1, h2, h3, h4, h5, h6 {
 	color: $WMIwhite;
-	text-transform: uppercase;
+	
 	
 }
 
@@ -77,7 +77,7 @@ h6 {
 	margin: 0;
 	color: $WMIred;
 	background-color: $WMI_LT_grey;
-	text-transform: capitalize;
+	
 }
 
 h7 {
@@ -87,7 +87,7 @@ h7 {
 	margin: 0;
 	color: $WMIwhite;
 	background-color: $WMIgrey;
-	text-transform: capitalize;
+	
 	display: block;
 }
 
@@ -199,6 +199,18 @@ a {
 }
 }
 
+.modal ion-content{
+	padding-top: 40px;
+	.last {
+		margin-bottom: 10px;
+	}
+	ul {
+	margin-left: 20px;
+	li {
+		list-style-type: disc;
+	}
+	}
+}
 // Logos
 
 .CenteredLogo {
@@ -282,7 +294,7 @@ select {
 .input-label {
 	font-weight: normal;
 }
-.pane {
+.pane, .modal {
 	 background-image: url('../images/WMI_APP_BCKRD_Crushed.png');
 	background-size: cover;
     background-repeat: no-repeat;
@@ -388,23 +400,30 @@ overflow: auto;
 	h4, h5, h6 {
 		font-weight: 400;
 		a {
+		margin: 0;
+		
+		span {
+		display: inline-block;
 			
-			display: block;
-			font-family: serif;
 			text-transform: none;
-			
-			float: right;
-			width: 18px;
-			height:18px;
-			line-height: 18px;
+			width: 20px;
+			height:20px;
+			line-height: 20px;
 			text-align: center;
 			vertical-align: middle;
-			font-size: 14px;
-			text-decoration: none;
-			color: $WMIgold;
 			@include border-radius(50%);
 			background-color: $WMIwhite;
-			border: 1px solid $WMIgold;
+			border: 1px solid $WMIred;
+		}
+			font-size: 16px;
+			color: $WMIred;
+			font-family: serif;
+			padding-left:10px;
+			padding-right: 10px;
+			text-decoration: none;
+			float: right;
+		
+			
 			&:hover {
 				
 			}

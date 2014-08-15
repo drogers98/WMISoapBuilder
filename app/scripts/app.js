@@ -8,6 +8,42 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('WMISoapBuilder', ['ionic', 'WMISoapBuilder.controllers', 'WMISoapBuilder.services', 'angular-websql'])
 
+
+
+.directive('camera', function() {
+   return {
+      restrict: 'A',
+      require: 'ngModel',
+      link: function(scope, elm, attrs, ctrl) {
+
+
+         elm.on('click', function() {
+            navigator.camera.getPicture(function (imageURI) {
+               scope.$apply(function() {
+                  ctrl.$setViewValue(imageURI);
+               });
+            }, function (err) {
+               ctrl.$setValidity('error', false);
+            }, { 
+                quality : 50,
+                destinationType : Camera.DestinationType.DATA_URL,
+                sourceType : Camera.PictureSourceType.PHOTOLIBRARY,
+                allowEdit : true,
+                encodingType: Camera.EncodingType.JPEG,
+                targetWidth: 1000,
+                targetHeight: 1000,
+                popoverOptions: CameraPopoverOptions,
+                saveToPhotoAlbum: false 
+            })
+         });  
+      }
+   };
+})
+
+
+
+
+
 .run(function($ionicPlatform, nolsDB) {
   nolsDB.init();
   $ionicPlatform.ready(function() {
@@ -54,12 +90,6 @@ angular.module('WMISoapBuilder', ['ionic', 'WMISoapBuilder.controllers', 'WMISoa
       url: '/about',
       templateUrl: 'templates/wmi/about.html',
       controller: 'WMICtrl'
-    })
-
-    .state('help', {
-      url: '/help',
-      templateUrl: 'templates/soap/help.html',
-      controller: 'SoapCtrl'
     })
 
     .state('soaps', {
@@ -183,38 +213,7 @@ angular.module('WMISoapBuilder', ['ionic', 'WMISoapBuilder.controllers', 'WMISoa
 
 
 
-// Photo capture.
-function capturePhoto(){
-    navigator.camera.getPicture(uploadPhoto,null,{sourceType:1,quality:60});
-}
 
-function uploadPhoto(data){
-// this is where you would send the image file to server
-
-	cameraPic.src = "data:image/jpeg;base64," + data;
-	// Successful upload to the server
-	navigator.notification.alert(
-		'Your Photo has been uploaded',  // message
-		okay,                           // callback
-	    'Photo Uploaded',              // title
-	    'OK'                          // buttonName
-	);
-
-	// upload has failed Fail
-
-	
-
-	if (failedToUpload){
-
-	navigator.notification.alert(
-		'Your Photo has failed to upload',
-		failedDismissed,
-	    'Photo Not Uploaded',
-	    'OK'
-		);
-
-	} 
-}
 
 // Change select classes for greyed out appearance to live.
 function changeClass(id) {

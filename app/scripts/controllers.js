@@ -5,6 +5,8 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql'])
 
 })
 
+
+
 .controller('FirstResponderCtrl', function($scope, $state, $stateParams, Responders) {
   $scope.termsPage = function(){$state.go('terms');};
   $scope.responderSoapsPage = function(){$state.go('soaps');};
@@ -39,13 +41,13 @@ $scope.toggleSideMenu = function() {
 })
 
 
-.controller('SoapCtrl', function($scope, $state, $stateParams, Soaps) {
+.controller('SoapCtrl', function($scope, $state, $stateParams, Soaps, $ionicModal) {
 "use strict";
 
 // Geolocation Stuff
+$scope.latLng = "Please click the button below, if GPS is available.";
 	   $scope.showPosition = function (position) {
             $scope.latLng = position.coords.latitude + ", " + position.coords.longitude;
-            $scope.lng = position.coords.longitude;
             $scope.$apply();
         }
         
@@ -93,7 +95,8 @@ $scope.toggleSideMenu = function() {
   $scope.imagePage = function(){$state.go('tab.image');}
   $scope.overviewPage = function(){$state.go('tab.overview');}
   $scope.reviewSoapPage = function(){$state.go('soap-review');}
-  $scope.helpPage = function(){$state.go('help');}
+  
+  
   //edit button to delete specific soap
   $scope.data = {
     showDelete: false
@@ -129,7 +132,7 @@ $scope.toggleSideMenu = function() {
   //$scope.soap.vital = Vitals.get($stateParams.soapId);
   
   
-    // Email Share Function
+// Email Share Function
 $scope.shareSOAP = function() {
    window.plugin.email.open({
     to:      ['rogers@eyebytesolutions.com'],
@@ -142,8 +145,200 @@ $scope.shareSOAP = function() {
 };
 // end email
 
+
+
+//modals. DRY up, and seperate templates later.
+ // Modal 1
+    $ionicModal.fromTemplateUrl('modal-1.html', {
+      id: '1', // We need to use and ID to identify the modal that is firing the event!
+      scope: $scope,
+      animation: 'slide-in-up'
+    }).then(function(modal) {
+      $scope.oModal1 = modal;
+    });
+    
+    // Modal 2
+    $ionicModal.fromTemplateUrl('modal-2.html', {
+      id: '2', // We need to use and ID to identify the modal that is firing the event!
+      scope: $scope,
+      animation: 'slide-in-up'
+    }).then(function(modal) {
+      $scope.oModal2 = modal;
+    });
+    
+        // Modal 3
+    $ionicModal.fromTemplateUrl('modal-3.html', {
+      id: '3', // We need to use and ID to identify the modal that is firing the event!
+      scope: $scope,
+      animation: 'slide-in-up'
+    }).then(function(modal) {
+      $scope.oModal3 = modal;
+    });
+    
+            // Modal 4
+    $ionicModal.fromTemplateUrl('modal-4.html', {
+      id: '4', // We need to use and ID to identify the modal that is firing the event!
+      scope: $scope,
+      animation: 'slide-in-up'
+    }).then(function(modal) {
+      $scope.oModal4 = modal;
+    });
+
+    $scope.openModal = function(index) {
+      if(index == 1) $scope.oModal1.show();
+      if(index == 2) $scope.oModal2.show();
+      if(index == 3) $scope.oModal3.show();
+      if(index == 4) $scope.oModal4.show();
+      
+    };
+    
+    $scope.closeModal = function(index) {
+      if(index == 1) $scope.oModal1.hide();
+      if(index == 2) $scope.oModal2.hide();
+      if(index == 3) $scope.oModal3.hide();
+      if(index == 4) $scope.oModal4.hide();
+      
+    };
+    
+    
+
+    /* Listen for broadcasted messages */
+    
+    $scope.$on('modal.shown', function(event, modal) {
+      console.log('Modal ' + modal.id + ' is shown!');
+    });
+    
+    $scope.$on('modal.hidden', function(event, modal) {
+      console.log('Modal ' + modal.id + ' is hidden!');
+    });
+    
+    // Cleanup the modals when we're done with them (i.e: state change)
+    // Angular will broadcast a $destroy event just before tearing down a scope 
+    // and removing the scope from its parent.
+    $scope.$on('$destroy', function() {
+      console.log('Destroying modals...');
+      $scope.oModal1.remove();
+      $scope.oModal2.remove();
+      $scope.oModal3.remove();
+      $scope.oModal4.remove();
+    });
+// end modals
+
+
+
+// ang picture test
+$scope.myPictures = [];
+$scope.$watch('myPicture', function(value) {
+   if(value) {
+      myPictures.push(value);
+   }
+}, true);
+
+
+
+
+// Photo capture.
+
+//begin test
+var pictureSource; // picture source
+var destinationType; // sets the format of returned value
+ 
+// Wait for PhoneGap to connect with the device
+//
+document.addEventListener("deviceready",onDeviceReady,false);
+ 
+// PhoneGap is ready to be used!
+//
+function onDeviceReady() {
+pictureSource=navigator.camera.PictureSourceType;
+destinationType=navigator.camera.DestinationType;
+}
+ 
+// Called when a photo is successfully retrieved
+//
+function onPhotoDataSuccess(imageData) {
+// Get image handle
+//
+var smallImage = document.getElementById('smallImage');
+ 
+// Unhide image elements
+//
+smallImage.style.display = 'block';
+ 
+// Show the captured photo
+// The inline CSS rules are used to resize the image
+//
+smallImage.src = "data:image/jpeg;base64," + imageData;
+}
+// Called when a photo is successfully retrieved
+//
+function onPhotoFileSuccess(imageData) {
+// Get image handle
+console.log(JSON.stringify(imageData));
+// Get image handle
+//
+var smallImage = document.getElementById('smallImage');
+ 
+// Unhide image elements
+//
+smallImage.style.display = 'block';
+ 
+// Show the captured photo
+// The inline CSS rules are used to resize the image
+//
+smallImage.src = imageData;
+}
+ 
+// Called when a photo is successfully retrieved
+//
+function onPhotoURISuccess(imageURI) {
+// Uncomment to view the image file URI
+// console.log(imageURI);
+ 
+// Get image handle
+//
+var largeImage = document.getElementById('largeImage');
+ 
+// Unhide image elements
+//
+largeImage.style.display = 'block';
+ 
+// Show the captured photo
+// The inline CSS rules are used to resize the image
+//
+largeImage.src = imageURI;
+}
+ 
+function capturePhotoWithFile() {
+navigator.camera.getPicture(onPhotoFileSuccess, onFail, { quality: 50, destinationType: Camera.DestinationType.FILE_URI });
+}
+// A button will call this function
+//
+function getPhoto(source) {
+// Retrieve image file location from specified source
+navigator.camera.getPicture(onPhotoURISuccess, onFail, { quality: 50,
+destinationType: destinationType.FILE_URI,
+sourceType: source });
+}
+ 
+// Called if something bad happens.
+//
+function onFail(message) {
+alert('Failed because: ' + message);
+}
+
+//end test
+
+
+
 // end soap cntrl
 })
+
+
+
+
+
+
 
 
 // coundown controls. 
@@ -176,9 +371,6 @@ $scope.shareSOAP = function() {
    
   };
 }]);
-
-
-
 
 
 

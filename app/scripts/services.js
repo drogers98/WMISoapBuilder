@@ -161,6 +161,7 @@ angular.module('WMISoapBuilder.services', ['angular-websql'])
       return soaps[soapId];
     }
   };
+  
 });
 
 
