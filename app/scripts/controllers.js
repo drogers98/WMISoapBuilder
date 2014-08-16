@@ -43,6 +43,23 @@ $scope.toggleSideMenu = function() {
 
 .controller('SoapCtrl', function($scope, $state, $stateParams, Soaps, $ionicModal) {
 "use strict";
+  $scope.newSoap = function(soap) {
+    var attributes = {
+      soap: {
+        incidentDate: soap.incidentDate,
+        incidentLocation: soap.incidentLocation,
+        incidentLat: soap.incidentLat,
+        incidentLon: soap.incidentLon,
+        patientInitials: soap.patientInitials,
+        patientSex: soap.patientSex
+      }
+    };
+    //below call service methods - todo => implement service methods
+    var soapData = angular.toJson(attributes);
+    Soaps.createNewSoap(soapData);
+    $scope.soaps.push(soapData);
+    //after save link to soaps
+  };
 
 // Geolocation Stuff
 $scope.latLng = "Please click the button below, if GPS is available.";
@@ -50,10 +67,10 @@ $scope.latLng = "Please click the button below, if GPS is available.";
             $scope.latLng = position.coords.latitude + ", " + position.coords.longitude;
             $scope.$apply();
         }
-        
+
         // Change btn text if geo unavailable to device
          if (navigator.geolocation) {
-                
+
            }
             else {
                document.getElementById('GeoLocationBtnInner').innerHTML = "GPS Unavailable";
@@ -62,7 +79,7 @@ $scope.latLng = "Please click the button below, if GPS is available.";
             }
 
 
- 
+
         $scope.getLocation = function () {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition($scope.showPosition);
@@ -71,21 +88,21 @@ $scope.latLng = "Please click the button below, if GPS is available.";
 				document.getElementById("coordsBtn").className = "button button-block button-calm margin";
             }
             else {
-               alert('Sorry, this feature currently unavailable') 
+               alert('Sorry, this feature currently unavailable')
             }
         }
  // end geo stuff
-            
-            
+
+
 
   // Auto expand text boxes vertically
   $scope.expandText = function(obj){
 	var valueID = obj.target.attributes.id.value;
 	var element = document.getElementById(valueID);
 	element.style.height =  element.scrollHeight + "px";}
-	
+
 // end auto expand
-	
+
   $scope.settingsPage = function() {$state.go('settings');}
   $scope.aboutPage = function(){$state.go('about');}
   $scope.mySoapsPage = function(){$state.go('soaps');}
@@ -95,15 +112,15 @@ $scope.latLng = "Please click the button below, if GPS is available.";
   $scope.imagePage = function(){$state.go('tab.image');}
   $scope.overviewPage = function(){$state.go('tab.overview');}
   $scope.reviewSoapPage = function(){$state.go('soap-review');}
-  
-  
+
+
   //edit button to delete specific soap
   $scope.data = {
     showDelete: false
   };
   //$scope.edit = function(soap);
-  
-  
+
+
   $scope.dt = new Date();
   $scope.genders = ['Male', 'Female', 'Transgender'];
   $scope.severities = [0,1,2,3,4,5,6,7,8,9,10];
@@ -130,8 +147,8 @@ $scope.latLng = "Please click the button below, if GPS is available.";
   $scope.soap = Soaps.get($stateParams.soapId);
   //$scope.soap.vitals = Vitals.all($stateParams.soapId)
   //$scope.soap.vital = Vitals.get($stateParams.soapId);
-  
-  
+
+
 // Email Share Function
 $scope.shareSOAP = function() {
    window.plugin.email.open({
@@ -156,7 +173,7 @@ $scope.shareSOAP = function() {
     }).then(function(modal) {
       $scope.oModal1 = modal;
     });
-    
+
     // Modal 2
     $ionicModal.fromTemplateUrl('modal-2.html', {
       id: '2', // We need to use and ID to identify the modal that is firing the event!
@@ -165,7 +182,7 @@ $scope.shareSOAP = function() {
     }).then(function(modal) {
       $scope.oModal2 = modal;
     });
-    
+
         // Modal 3
     $ionicModal.fromTemplateUrl('modal-3.html', {
       id: '3', // We need to use and ID to identify the modal that is firing the event!
@@ -174,7 +191,7 @@ $scope.shareSOAP = function() {
     }).then(function(modal) {
       $scope.oModal3 = modal;
     });
-    
+
             // Modal 4
     $ionicModal.fromTemplateUrl('modal-4.html', {
       id: '4', // We need to use and ID to identify the modal that is firing the event!
@@ -189,31 +206,31 @@ $scope.shareSOAP = function() {
       if(index == 2) $scope.oModal2.show();
       if(index == 3) $scope.oModal3.show();
       if(index == 4) $scope.oModal4.show();
-      
+
     };
-    
+
     $scope.closeModal = function(index) {
       if(index == 1) $scope.oModal1.hide();
       if(index == 2) $scope.oModal2.hide();
       if(index == 3) $scope.oModal3.hide();
       if(index == 4) $scope.oModal4.hide();
-      
+
     };
-    
-    
+
+
 
     /* Listen for broadcasted messages */
-    
+
     $scope.$on('modal.shown', function(event, modal) {
       console.log('Modal ' + modal.id + ' is shown!');
     });
-    
+
     $scope.$on('modal.hidden', function(event, modal) {
       console.log('Modal ' + modal.id + ' is hidden!');
     });
-    
+
     // Cleanup the modals when we're done with them (i.e: state change)
-    // Angular will broadcast a $destroy event just before tearing down a scope 
+    // Angular will broadcast a $destroy event just before tearing down a scope
     // and removing the scope from its parent.
     $scope.$on('$destroy', function() {
       console.log('Destroying modals...');
@@ -242,29 +259,29 @@ $scope.$watch('myPicture', function(value) {
 //begin test
 var pictureSource; // picture source
 var destinationType; // sets the format of returned value
- 
+
 // Wait for PhoneGap to connect with the device
 //
 document.addEventListener("deviceready",onDeviceReady,false);
- 
+
 // PhoneGap is ready to be used!
 //
 function onDeviceReady() {
 pictureSource=navigator.camera.PictureSourceType;
 destinationType=navigator.camera.DestinationType;
 }
- 
+
 // Called when a photo is successfully retrieved
 //
 function onPhotoDataSuccess(imageData) {
 // Get image handle
 //
 var smallImage = document.getElementById('smallImage');
- 
+
 // Unhide image elements
 //
 smallImage.style.display = 'block';
- 
+
 // Show the captured photo
 // The inline CSS rules are used to resize the image
 //
@@ -278,37 +295,37 @@ console.log(JSON.stringify(imageData));
 // Get image handle
 //
 var smallImage = document.getElementById('smallImage');
- 
+
 // Unhide image elements
 //
 smallImage.style.display = 'block';
- 
+
 // Show the captured photo
 // The inline CSS rules are used to resize the image
 //
 smallImage.src = imageData;
 }
- 
+
 // Called when a photo is successfully retrieved
 //
 function onPhotoURISuccess(imageURI) {
 // Uncomment to view the image file URI
 // console.log(imageURI);
- 
+
 // Get image handle
 //
 var largeImage = document.getElementById('largeImage');
- 
+
 // Unhide image elements
 //
 largeImage.style.display = 'block';
- 
+
 // Show the captured photo
 // The inline CSS rules are used to resize the image
 //
 largeImage.src = imageURI;
 }
- 
+
 function capturePhotoWithFile() {
 navigator.camera.getPicture(onPhotoFileSuccess, onFail, { quality: 50, destinationType: Camera.DestinationType.FILE_URI });
 }
@@ -320,7 +337,7 @@ navigator.camera.getPicture(onPhotoURISuccess, onFail, { quality: 50,
 destinationType: destinationType.FILE_URI,
 sourceType: source });
 }
- 
+
 // Called if something bad happens.
 //
 function onFail(message) {
@@ -341,37 +358,33 @@ alert('Failed because: ' + message);
 
 
 
-// coundown controls. 
+// coundown controls.
 .controller('VitalCtrl', ['$scope', '$timeout', function($scope, $timeout) {
 
   $scope.timeValue = 0;
-  
+
   function countdown() {
     $scope.timeValue++;
     $scope.timeout = $timeout(countdown, 1000);
   };
-  
+
   $scope.start = function() {
     countdown();
     $scope.play = true;
     $scope.pause = false;
   };
-  
+
   $scope.stop = function() {
     $timeout.cancel($scope.timeout);
     $scope.play = false;
     $scope.pause = true;
   };
-  
+
   $scope.reset = function() {
 	$scope.timeValue = 0;
     $timeout.cancel($scope.timeout);
     $scope.play = false;
     $scope.pause = true;
-   
+
   };
 }]);
-
-
-
-

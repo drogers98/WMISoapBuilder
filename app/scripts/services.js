@@ -52,9 +52,56 @@ angular.module('WMISoapBuilder.services', ['angular-websql'])
        })
 
      },
-     allResponders: function() {
+     createSoapTable: function() {
+       self.db.createTable('Soap', {
+         "id": {"type": "INTEGER","null": "NOT NULL","primary": true,"auto_increment": true},
+         "created": {"type": "TIMESTAMP","null": "NOT NULL","default": "CURRENT_TIMESTAMP"},
+         "incidentDate": {"type": "DATE","null": "NOT NULL"},
+         "incidentLocation": {"type": "TEXT","null": "NOT NULL"},
+         "incidentLat": {"type": "TEXT","null": "NOT NULL"},
+         "incidentLon": {"type": "TEXT","null": "NOT NULL"},
+         "patientInitials": {"type": "TEXT","null": "NOT NULL"},
+         "patientSex": {"type": "TEXT","null": "NOT NULL"},
+         "patientDob": {"type": "DATE","null": "NOT NULL"},
+         "patientAge": {"type": "INTEGER","null": "NOT NULL"},
+         "patientLOR": {"type": "TEXT","null": "NOT NULL"},
+         "patientComplaint": {"type": "TEXT","null": "NOT NULL"},
+         "patientOnset": {"type": "TEXT","null": "NOT NULL"},
+         "patientPPalliates": {"type": "TEXT","null": "NOT NULL" },
+         "patientQuality": {"type": "TEXT","null": "NOT NULL"},
+         "patientRadiates": {"type": "TEXT","null": "NOT NULL"},
+         "patientSeverity": {"type": "TEXT","null": "NOT NULL"},
+         "patientTime": {"type": "TEXT","null": "NOT NULL"},
+         "patientHPI": {"type": "TEXT","null": "NOT NULL"},
+         "patientSpinal": {"type": "TEXT","null": "NOT NULL"},
+         "patientFound": {"type": "TEXT","null": "NOT NULL"},
+         "patientExamReveals": {"type": "TEXT","null": "NOT NULL"},
+         "patientSymptoms": {"type": "TEXT","null": "NOT NULL"},
+         "patientAllergies": {"type": "TEXT","null": "NOT NULL"},
+         "patientMedications": {"type": "TEXT","null": "NOT NULL"},
+         "patientMedicalHistory": {"type": "TEXT","null": "NOT NULL"},
+         "patientLastIntake": {"type": "TEXT","null": "NOT NULL"},
+         "patientEventsForCause": {"type": "TEXT","null": "NOT NULL"},
+         "patientAssessment": {"type": "TEXT","null": "NOT NULL"},
+         "patientPlan": {"type": "TEXT","null": "NOT NULL"},
+         "patientAnticipatedProblems": {"type": "TEXT","null": "NOT NULL"}
+       })
+     },
+     saveSoap: function(soapAttr) {
+       self.db.insert('Responder', {
+         "incidentDate": soapAttr.soap.incidentDate,
+         "incidentLocation": soapAttr.soap.incidentLocation,
+         "incidentLat": soapAttr.soap.incidentLat,
+         "incidentLon": soapAttr.soap.incidentLon,
+         "patientInitials": soapAttr.soap.patientInitials,
+         "patientSex": soapAttr.soap.patientSex
+       }).then(function(results){
+         //todo => save last inserted id for current responder
+         console.log(results.insertId);
+       })
 
      }
+
    };
 
 
@@ -88,7 +135,17 @@ angular.module('WMISoapBuilder.services', ['angular-websql'])
   }
 })
 
-.factory('Soaps', function() {
+.factory('Soaps', function(nolsDB) {
+  var soaps = [];
+
+  return {
+    createNewSoap: function(soapData) {
+      nolsDB.createSoapTable();
+      var soapAttr = angular.fromJson(soapData);
+      nolsDB.saveSoap(soapAttr);
+    }
+  }
+
   //SEED DATA
 
   /*
@@ -161,9 +218,5 @@ angular.module('WMISoapBuilder.services', ['angular-websql'])
       return soaps[soapId];
     }
   };
-  
+
 });
-
-
-
-
