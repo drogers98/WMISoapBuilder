@@ -43,6 +43,15 @@ $scope.toggleSideMenu = function() {
 
 .controller('SoapCtrl', function($scope, $state, $stateParams, Soaps, $ionicModal) {
 "use strict";
+
+  $scope.soaps = Soaps.all();
+  $scope.soap = "";
+  $scope.soapDetail = function(soapId) {
+    $scope.soap = Soaps.get(soapId);
+
+  }
+
+  //WHATS IN HERE IS WHAT WILL BE SAVED...
   $scope.newSoap = function(soap) {
     var attributes = {
       soap: {
@@ -51,13 +60,15 @@ $scope.toggleSideMenu = function() {
         incidentLat: soap.incidentLat,
         incidentLon: soap.incidentLon,
         patientInitials: soap.patientInitials,
-        patientSex: soap.patientSex
+        patientGender: soap.patientGender,
+        patientFound: soap.patientFound,
+        patientAnticipatedProblems: soap.patientAnticipatedProblems
       }
     };
     //below call service methods - todo => implement service methods
     var soapData = angular.toJson(attributes);
     Soaps.createNewSoap(soapData);
-    $scope.soaps.push(soapData);
+    //$scope.soaps.push(soapData);
     //after save link to soaps
   };
 
@@ -110,7 +121,8 @@ $scope.latLng = "Please click the button below, if GPS is available.";
   $scope.objectivePage = function(){$state.go('tab.objective');}
   $scope.apPage = function(){$state.go('tab.ap');}
   $scope.imagePage = function(){$state.go('tab.image');}
-  $scope.overviewPage = function(){$state.go('tab.overview');}
+  $scope.overviewPage = function(){
+    $state.go('tab.overview');}
   $scope.reviewSoapPage = function(){$state.go('soap-review');}
 
 
@@ -121,7 +133,7 @@ $scope.latLng = "Please click the button below, if GPS is available.";
   //$scope.edit = function(soap);
 
 
-  $scope.dt = new Date();
+  //$scope.dt = new Date();
   $scope.genders = ['Male', 'Female', 'Transgender'];
   $scope.severities = [0,1,2,3,4,5,6,7,8,9,10];
   $scope.onsets = ['Sudden', 'Gradual'];
@@ -143,8 +155,8 @@ $scope.latLng = "Please click the button below, if GPS is available.";
   $scope.trainingLevels = ['WFA','WAFA','WFR', 'WEMT', 'Other'];
 
   //SEED DATA, COMMENT OUT AFTER FRONT_END REVIEW
-  $scope.soaps = Soaps.all();
-  $scope.soap = Soaps.get($stateParams.soapId);
+  //$scope.soaps = Soaps.all();
+  //$scope.soap = Soaps.get($stateParams.soapId);
   //$scope.soap.vitals = Vitals.all($stateParams.soapId)
   //$scope.soap.vital = Vitals.get($stateParams.soapId);
 

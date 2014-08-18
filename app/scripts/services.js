@@ -61,7 +61,7 @@ angular.module('WMISoapBuilder.services', ['angular-websql'])
          "incidentLat": {"type": "TEXT","null": "NOT NULL"},
          "incidentLon": {"type": "TEXT","null": "NOT NULL"},
          "patientInitials": {"type": "TEXT","null": "NOT NULL"},
-         "patientSex": {"type": "TEXT","null": "NOT NULL"},
+         "patientGender": {"type": "TEXT","null": "NOT NULL"},
          "patientDob": {"type": "DATE","null": "NOT NULL"},
          "patientAge": {"type": "INTEGER","null": "NOT NULL"},
          "patientLOR": {"type": "TEXT","null": "NOT NULL"},
@@ -88,18 +88,60 @@ angular.module('WMISoapBuilder.services', ['angular-websql'])
        })
      },
      saveSoap: function(soapAttr) {
-       self.db.insert('Responder', {
+       self.db.insert('Soap', {
          "incidentDate": soapAttr.soap.incidentDate,
          "incidentLocation": soapAttr.soap.incidentLocation,
          "incidentLat": soapAttr.soap.incidentLat,
          "incidentLon": soapAttr.soap.incidentLon,
          "patientInitials": soapAttr.soap.patientInitials,
-         "patientSex": soapAttr.soap.patientSex
+         "patientGender": soapAttr.soap.patientGender,
+         "patientDob": soapAttr.soap.patientDob,
+         "patientAge": soapAttr.soap.patientAge,
+         "patientLOR": soapAttr.soap.patientLOR,
+         "patientComplaint": soapAttr.soap.patientComplaint,
+         "patientOnset": soapAttr.soap.patientOnset,
+         "patientPPalliates": soapAttr.soap.patientPPalliates,
+         "patientQuality": soapAttr.soap.patientQuality,
+         "patientRadiates": soapAttr.soap.patientRadiates,
+         "patientSeverity": soapAttr.soap.patientSeverity,
+         "patientTime": soapAttr.soap.patientTime,
+         "patientHPI": soapAttr.soap.patientHPI,
+         "patientSpinal": soapAttr.soap.patientSpinal,
+         "patientFound": soapAttr.soap.patientFound,
+         "patientExamReveals": soapAttr.soap.patientExamReveals,
+         "patientSymptoms": soapAttr.soap.patientSymptoms,
+         "patientAllergies": soapAttr.soap.patientAllergies,
+         "patientMedications": soapAttr.soap.patientMedications,
+         "patientMedicalHistory": soapAttr.soap.MedicalHistory,
+         "patientLastIntake": soapAttr.soap.LastIntake,
+         "patientEventsForCause": soapAttr.soap.patientEventsForCause,
+         "patientAssessment": soapAttr.soap.patientAssessment,
+         "patientPlan": soapAttr.soap.patientPlan,
+         "patientAnticipatedProblems": soapAttr.soap.patientAnticipatedProblems
        }).then(function(results){
          //todo => save last inserted id for current responder
          console.log(results.insertId);
        })
 
+     },
+     soaps: function(soaps) {
+       soaps = [];
+       self.db.selectAll("Soap").then(function(results) {
+          for(var i=0; i < results.rows.length; i++){
+          soaps.push(results.rows.item(i));
+          }
+       })
+       return soaps;
+     },
+     soap: function(soapId) {
+       var soap = "";
+       self.db.select("Soap", {
+         "id": soapId
+       }).then(function(results) {
+         for(var i=0; i < results.rows.length;i++){
+           console.log(results.rows.item(i));
+         }
+       })
      }
 
    };
@@ -143,37 +185,21 @@ angular.module('WMISoapBuilder.services', ['angular-websql'])
       nolsDB.createSoapTable();
       var soapAttr = angular.fromJson(soapData);
       nolsDB.saveSoap(soapAttr);
+      soaps.push(soapAttr);
+      console.log(soaps);
+    },
+    all: function() {
+    return nolsDB.soaps(soaps);
+    },
+    get: function(soapId) {
+    return nolsDB.soap(soapId);
     }
   }
 
-  //SEED DATA
-
-  /*
-  patientAge: wmi.patientAge,
-        patientDob: wmi.patientDob,
-        chiefComplaint: wmi.chiefComplaint,
-        patientOnset: wmi.patientOnset,
-        patientPPalliates: wmi.patientPPalliates,
-        patientQuality: wmi.patientQuality,
-        patientRadiates: wmi.patientRadiates,
-        patientSeverity: wmi.patientSeverity,
-        patientTime: wmi.patientTime,
-        patientSpinal: wmi.patientSpinal,
-        patientFound: wmi.patientFound,
-        patientExamReveals: wmi.patientExamReveals,
-        patientHistory: wmi.patientHistory,
-        patientAllergies: wmi.patientAllergies,
-        patientMedications: wmi.patientMedications,
-        patientMedicalHistory: wmi.patientMedicalHistory,
-        patientLastIntake: wmi.patientLastIntake,
-        patientEventsForCause: wmi.patientEventsForCause,
-        patientAssessment: wmi.patientAssessment,
-        patientPlan: wmi.patientPlan,
-        patientAnticipatedProblems: wmi.patientAnticipatedProblems
-        */
 
 
-  var soaps = [
+
+  /*var soaps = [
     {
     	id: 0,
     	created: '02/24/2014',
@@ -210,13 +236,7 @@ angular.module('WMISoapBuilder.services', ['angular-websql'])
         patientPlan: 'Have group help remove PX from camp, get them to medical facility.',
         patientAnticipatedProblems: 'Exfil from the backcountry could prove problematic.' }
   ]
-  return {
-    all: function() {
-      return soaps;
-    },
-    get: function(soapId) {
-      return soaps[soapId];
-    }
-  };
+  */
+
 
 });

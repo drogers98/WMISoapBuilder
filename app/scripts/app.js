@@ -24,7 +24,7 @@ angular.module('WMISoapBuilder', ['ionic', 'WMISoapBuilder.controllers', 'WMISoa
                });
             }, function (err) {
                ctrl.$setValidity('error', false);
-            }, { 
+            }, {
                 quality : 50,
                 destinationType : Camera.DestinationType.DATA_URL,
                 sourceType : Camera.PictureSourceType.PHOTOLIBRARY,
@@ -33,9 +33,9 @@ angular.module('WMISoapBuilder', ['ionic', 'WMISoapBuilder.controllers', 'WMISoa
                 targetWidth: 1000,
                 targetHeight: 1000,
                 popoverOptions: CameraPopoverOptions,
-                saveToPhotoAlbum: false 
+                saveToPhotoAlbum: false
             })
-         });  
+         });
       }
    };
 })
@@ -109,8 +109,8 @@ angular.module('WMISoapBuilder', ['ionic', 'WMISoapBuilder.controllers', 'WMISoa
       templateUrl: 'templates/soap/soap-detail.html',
       controller: 'SoapCtrl'
     })
-    
-   
+
+
 
     // setup an abstract state for the tabs directive
     .state('tab', {
@@ -219,7 +219,7 @@ angular.module('WMISoapBuilder', ['ionic', 'WMISoapBuilder.controllers', 'WMISoa
 function changeClass(id) {
 	document.getElementById(id).setAttribute('class','active');
 	}
-	
+
 // enable/disable field based on BP taken or palpation. currently val is 1, change to actual val
 function check_option(val){
 	if(val == 0){
