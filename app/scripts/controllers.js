@@ -72,6 +72,7 @@ $scope.toggleSideMenu = function() {
     var soap = {};
     $scope.newSoap(soap);
     $state.go('tab.subjective')
+    //ToDo grab insert ID and pass it to idk yet
   };
 
   $scope.newSoap = function(soap) {

@@ -128,6 +128,11 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
          }
        })
      },
+     soapUpdate: function(newSoapParam) {
+       self.db.update('Soap', {newSoapParam.column: newSoapParam.val} {
+         "id": newSoapParam.id
+       })
+     },
      createVitalTable: function() {
        self.db.createTable('Vital', {
          "id": {"type": "INTEGER", "null": "NOT NULL", "primary": true, "auto_increment": true},
@@ -186,6 +191,10 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
       nolsDB.saveSoap(soapAttr);
       soaps.push(soapAttr);
       console.log(soaps);
+    },
+    updateSoap: function(newSoapParam) {
+      //make sure soap ID is being sent
+      nolsDB.soapUpdate(newSoapParam);
     },
     all: function() {
     return nolsDB.soaps(soaps);
