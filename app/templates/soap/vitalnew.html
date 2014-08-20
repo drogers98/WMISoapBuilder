@@ -4,16 +4,16 @@
   </ion-nav-buttons>
 
   <ion-content has-header="true" padding="false" has-bouncing="false">
- 
+
   <div class="SOAP VITALS">
     <div class="list">
-    
+
         <!-- Time Taken -->
         <h6>Time Taken<a>i</a></h6>
       <div class="item item-input">
        add time field here. adjustable.
       </div>
-      
+
 
 
     <!-- LOR -->
@@ -22,7 +22,7 @@
         <div class="input-label">
           LOR
         </div>
-        <select id="test" ng-model="vital.lor" ng-options="LOR for LOR in LORs" onchange="changeClass(this.id)">
+        <select id="test" ng-model="vital.lor" ng-options="lor for lor in lors" onchange="changeClass(this.id)">
 	        <option value="" default selected>Please Choose</option>
         </select>
       </div>
@@ -60,7 +60,7 @@
       <!-- Respiratory -->
 <h6>Respiratory<a>i</a></h6>
 <h7>Rate (Breaths Per Minute)</h7>
-  
+
 	  <label class="item item-input">
         <input type="number" placeholder="Rate (BPM)">
       </label>
@@ -137,8 +137,8 @@
         <input type="number" placeholder="Reading">
       </label>
       <h7>Diastolic</h7>
-	  
-      
+
+
       <div class="row">
   <div class="col">
 	  <div class="item item-select">
@@ -168,8 +168,8 @@
 	        <option style="display:none;" value="" selected>Please Choose</option>
         </select>
       </div>
-      
-      
+
+
     <h6>Temperature<a>i</a></h6>
     <div class="row">
   <div class="col">
@@ -189,9 +189,9 @@
 
   </div>
     </div>
-        
-   
-<a class="button button-block button-light margin" ng-click="objectivePage()">Save Vital Set</a>
+
+
+<a class="button button-block button-light margin" ng-click="saveVital(vital)">Save Vital Set</a>
   </div>
 
   </ion-content>

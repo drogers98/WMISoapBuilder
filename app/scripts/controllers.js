@@ -1,5 +1,5 @@
 'use strict';
-angular.module('WMISoapBuilder.controllers', ['angular-websql'])
+angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce'])
 
 .controller('WMICtrl', function($scope,$state) {
 
@@ -14,6 +14,10 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql'])
   //$scope.responder = Responders.all();
   $scope.trainingLevels = ['WFA','WAFA','WFR', 'WEMT', 'Other'];
 
+  $scope.currentResponder = function(responderId) {
+    $scope.responder = Responders.currentResponder(responderId)
+  }
+
   $scope.newResponder = function(responder) {
     var attributes = {
       responder: {
@@ -25,9 +29,10 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql'])
     //below call service methods - todo => implement service methods
     var responderData = angular.toJson(attributes);
     Responders.createNewResponder(responderData);
-    $scope.responders.push(responderData);
+    $state.go('soaps');
+    //$scope.responders.push(responderData);
     //after save link to soaps
-    $state.responderSoapsPage();
+
   };
 
 
@@ -41,17 +46,34 @@ $scope.toggleSideMenu = function() {
 })
 
 
-.controller('SoapCtrl', function($scope, $state, $stateParams, Soaps, $ionicModal) {
+.controller('SoapCtrl', function($scope, $state, $stateParams, Soaps, $ionicModal, $timeout) {
 "use strict";
+
+  var timeout = null;
+  var debounceSaveUpdates = function(newVal, oldVal) {
+    if(newVal != oldVal) {
+      if(timeout) {
+        $timeout.cancel(timeout)
+      }
+      timeout = $timeout(alert(newVal), 1000);
+    }
+  }
+
+  $scope.$watch('soap.patientInitials', debounceSaveUpdates);
 
   $scope.soaps = Soaps.all();
   $scope.soap = "";
+
   $scope.soapDetail = function(soapId) {
     $scope.soap = Soaps.get(soapId);
-
   }
 
-  //WHATS IN HERE IS WHAT WILL BE SAVED...
+  $scope.initiateSoap = function() {
+    var soap = {};
+    $scope.newSoap(soap);
+    $state.go('tab.subjective')
+  };
+
   $scope.newSoap = function(soap) {
     var attributes = {
       soap: {
@@ -68,6 +90,7 @@ $scope.toggleSideMenu = function() {
     //below call service methods - todo => implement service methods
     var soapData = angular.toJson(attributes);
     Soaps.createNewSoap(soapData);
+
     //$scope.soaps.push(soapData);
     //after save link to soaps
   };
@@ -363,15 +386,34 @@ alert('Failed because: ' + message);
 // end soap cntrl
 })
 
-
-
-
-
-
-
-
 // coundown controls.
-.controller('VitalCtrl', ['$scope', '$timeout', function($scope, $timeout) {
+.controller('VitalCtrl', function($scope, $state, $stateParams, Vitals) {
+"use strict";
+  //$scope.vitals = Vitals.all();
+  $scope.lors = ["one", "two"];
+
+  $scope.saveVital = function(vital) {
+    //pass in current soapId
+
+    var attributes = {
+      vital: {
+        lor: vital.lor,
+        rate: vital.rate,
+        quality: vital.quality,
+        rrhythm: vital.rrhythm,
+        rquality: vital.rquality,
+        sctmcolor: vital.sctmcolor,
+        sctmtemp: vital.sctmtemp,
+        sctmmoisture: vital.sctmmoisture,
+        brradialpulse: vital.brradialpulse,
+        pulils: vital.pulils,
+        tempDegrees: vital.tempDegrees
+      }
+    };
+    var vitalData = angular.toJson(attributes);
+    Vitals.createNewVital(vitalData);
+
+  };
 
   $scope.timeValue = 0;
 
@@ -399,4 +441,4 @@ alert('Failed because: ' + message);
     $scope.pause = true;
 
   };
-}]);
+});

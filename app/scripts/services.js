@@ -1,5 +1,5 @@
 'use strict';
-angular.module('WMISoapBuilder.services', ['angular-websql'])
+angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
 
 /**
  * A simple example service that returns some data.
@@ -16,29 +16,11 @@ angular.module('WMISoapBuilder.services', ['angular-websql'])
      },
      createResponderTable: function() {
        self.db.createTable('Responder', {
-         "id": {
-           "type": "INTEGER",
-           "null": "NOT NULL",
-           "primary": true,
-           "auto_increment": true
-         },
-         "created": {
-           "type": "TIMESTAMP",
-           "null": "NOT NULL",
-           "default": "CURRENT_TIMESTAMP"
-         },
-         "firstName": {
-           "type": "TEXT",
-           "null": "NOT NULL"
-         },
-         "lastName": {
-           "type": "TEXT",
-           "null": "NOT NULL"
-         },
-         "trainingLevel": {
-           "type": "TEXT",
-           "null": "NOT NULL"
-         }
+         "id": {"type": "INTEGER","null": "NOT NULL","primary": true,"auto_increment": true},
+         "created": {"type": "TIMESTAMP","null": "NOT NULL","default": "CURRENT_TIMESTAMP"},
+         "firstName": {"type": "TEXT","null": "NOT NULL"},
+         "lastName": {"type": "TEXT","null": "NOT NULL"},
+         "trainingLevel": {"type": "TEXT","null": "NOT NULL"}
        });
      },
      saveResponder: function(responderAttr) {
@@ -47,10 +29,15 @@ angular.module('WMISoapBuilder.services', ['angular-websql'])
          "lastName": responderAttr.responder.lastName,
          "trainingLevel": responderAttr.responder.trainingLevel
        }).then(function(results){
-         //todo => save last inserted id for current responder
-         console.log(results.insertId);
-       })
+         self.db.select("Responder", {
+           "id": results.insertId
+         }).then(function(results) {
+           for(var i=0; i < results.rows.length;i++){
+             console.log(results.rows.item(i));
 
+           }
+         })
+       })
      },
      createSoapTable: function() {
        self.db.createTable('Soap', {
@@ -119,10 +106,8 @@ angular.module('WMISoapBuilder.services', ['angular-websql'])
          "patientPlan": soapAttr.soap.patientPlan,
          "patientAnticipatedProblems": soapAttr.soap.patientAnticipatedProblems
        }).then(function(results){
-         //todo => save last inserted id for current responder
          console.log(results.insertId);
        })
-
      },
      soaps: function(soaps) {
        soaps = [];
@@ -142,6 +127,20 @@ angular.module('WMISoapBuilder.services', ['angular-websql'])
            console.log(results.rows.item(i));
          }
        })
+     },
+     createVitalTable: function() {
+       self.db.createTable('Vital', {
+         "id": {"type": "INTEGER", "null": "NOT NULL", "primary": true, "auto_increment": true},
+         "created": {"type": "TIMESTAMP", "null": "NOT NULL", "default": "CURRENT_TIMESTAMP" },
+         "lor": {"type": "TEXT", "null": "NOT NULL"}
+       })
+     },
+     saveVital: function(vitalAttr) {
+       self.db.insert('Vital', {
+         "lor": vitalAttr.lor
+       }).then(function(results) {
+         console.log(results.insertId);
+       })
      }
 
    };
@@ -150,27 +149,27 @@ angular.module('WMISoapBuilder.services', ['angular-websql'])
  })
 
 .factory('Responders', function(nolsDB) {
-  var responders = [];
+  var responder = [];
 
   return {
-    createNewResponder: function(responderData){
-      //Create responder table if not exist
-      //Alter passed responder json
-      //Call save responder passing altered json
+    createNewResponder: function(responderData, responder){
       nolsDB.createResponderTable();
       var responderAttr = angular.fromJson(responderData);
-      nolsDb.saveResponder(responderAttr);
+      return nolsDB.saveResponder(responderAttr);
+      console.log(responder);
     }
   }
 
 })
-.factory('Vitals', function() {
-  var vitals = [
-  {
-    time: '7:00PM'
-  }
-  ]
+.factory('Vitals', function(nolsDB) {
+  var vitals = [];
+
   return {
+    createNewVital: function(vitalData) {
+      nolsDB.createVitalTable();
+      var vitalAttr = angular.fromJson(vitalData);
+      nolsDB.saveVital(vitalAttr);
+    },
     all: function() {
       return vitals;
     }
