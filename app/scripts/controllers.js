@@ -49,6 +49,9 @@ $scope.toggleSideMenu = function() {
 .controller('SoapCtrl', function($scope, $state, $stateParams, Soaps, $ionicModal, $timeout) {
 "use strict";
 
+
+  $scope.soaps = Soaps.all();
+
   var timeout = null;
   var debounceSaveUpdates = function(newVal, oldVal) {
     if(newVal != oldVal) {
@@ -86,19 +89,11 @@ $scope.toggleSideMenu = function() {
   $scope.$watch('soap.patientAge', debounceSaveUpdates);
 
 
-  $scope.soaps = Soaps.all();
-  $scope.soap = "";
 
   $scope.soapDetail = function(soapId) {
     $scope.soap = Soaps.get(soapId);
+    console.log($scope.soap);
   }
-
-  $scope.initiateSoap = function() {
-    var soap = {};
-    $scope.newSoap(soap);
-    $state.go('tab.subjective')
-    //ToDo grab insert ID and pass it to idk whe
-  };
 
   $scope.updateSoapParam = function(newParam) {
     //var paramAttributes = {
@@ -109,7 +104,8 @@ $scope.toggleSideMenu = function() {
     console.log(newParam.id);
   }
 
-  $scope.newSoap = function(soap) {
+  $scope.initiateSoap = function() {
+    var soap = {};
     var attributes = {
       soap: {
         incidentDate: soap.incidentDate,
@@ -117,15 +113,18 @@ $scope.toggleSideMenu = function() {
         incidentLat: soap.incidentLat,
         incidentLon: soap.incidentLon,
         patientInitials: soap.patientInitials,
-        patientGender: soap.patientGender,
         patientFound: soap.patientFound,
         patientAnticipatedProblems: soap.patientAnticipatedProblems
       }
     };
     //below call service methods - todo => implement service methods
-    var soapData = angular.toJson(attributes);
-    Soaps.createNewSoap(soapData);
-
+    var soapParams = angular.toJson(attributes);
+    Soaps.createSoapTable();
+    var saveSoap = function() {
+      $scope.soap = Soaps.saveNewSoap(soapParams);
+      $state.go('tab.subjective');
+    }
+    return saveSoap();
     //$scope.soaps.push(soapData);
     //after save link to soaps
   };
