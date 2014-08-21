@@ -129,6 +129,7 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
        })
      },
      soapUpdate: function(newSoapParam) {
+
        self.db.update('Soap', {newSoapParam.column: newSoapParam.val} {
          "id": newSoapParam.id
        })

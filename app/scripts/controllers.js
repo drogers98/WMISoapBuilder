@@ -55,7 +55,7 @@ $scope.toggleSideMenu = function() {
       if(timeout) {
         $timeout.cancel(timeout)
       }
-      timeout = $timeout(alert(newVal), 1000);
+      timeout = $timeout($scope.updateSoapParam(newVal), 1000);
     }
   }
 
@@ -72,8 +72,12 @@ $scope.toggleSideMenu = function() {
     var soap = {};
     $scope.newSoap(soap);
     $state.go('tab.subjective')
-    //ToDo grab insert ID and pass it to idk yet
+    //ToDo grab insert ID and pass it to idk whe
   };
+
+  $scope.updateSoapParam = function(newParam) {
+    Soaps.updateSoap(newParam);
+  }
 
   $scope.newSoap = function(soap) {
     var attributes = {
