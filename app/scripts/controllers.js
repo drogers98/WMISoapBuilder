@@ -55,11 +55,36 @@ $scope.toggleSideMenu = function() {
       if(timeout) {
         $timeout.cancel(timeout)
       }
-      timeout = $timeout($scope.updateSoapParam(newVal), 1000);
+
+      var newSoapParamForUpdate = function() {
+         $scope.soap.getSoapKeyByValue = function (value) {
+          for(var prop in this) {
+            if(this.hasOwnProperty(prop)) {
+              if( this[ prop ] === value)
+                return prop;
+            }
+          }
+        }
+
+        var soapValue = $scope.soap.getSoapKeyByValue(newVal);
+
+        var buildSoapParamObject = function(soapVal,newVal) {
+          var updateParams = {};
+          updateParams["key"] = soapVal;
+          updateParams["val"] = newVal;
+          updateParams["id"] = 1;
+          return updateParams;
+        }
+        return buildSoapParamObject(soapValue, newVal);
+      }
+      timeout = $timeout($scope.updateSoapParam(newSoapParamForUpdate()), 1000);
+      //$scope.updateSoapParam(newVal)
     }
   }
 
   $scope.$watch('soap.patientInitials', debounceSaveUpdates);
+  $scope.$watch('soap.patientAge', debounceSaveUpdates);
+
 
   $scope.soaps = Soaps.all();
   $scope.soap = "";
@@ -76,7 +101,12 @@ $scope.toggleSideMenu = function() {
   };
 
   $scope.updateSoapParam = function(newParam) {
-    Soaps.updateSoap(newParam);
+    //var paramAttributes = {
+    //}
+    //Soaps.updateSoap(newParam);
+    console.log(newParam.key);
+    console.log(newParam.val);
+    console.log(newParam.id);
   }
 
   $scope.newSoap = function(soap) {
