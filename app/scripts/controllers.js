@@ -14,10 +14,6 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce'])
   //$scope.responder = Responders.all();
   $scope.trainingLevels = ['WFA','WAFA','WFR', 'WEMT', 'Other'];
 
-  $scope.currentResponder = function(responderId) {
-    $scope.responder = Responders.currentResponder(responderId)
-  }
-
   $scope.newResponder = function(responder) {
     var attributes = {
       responder: {
@@ -32,8 +28,10 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce'])
     $state.go('soaps');
     //$scope.responders.push(responderData);
     //after save link to soaps
-
   };
+  $scope.currentResponder = function(responderId) {
+    $scope.responder = Responders.get(responderId)
+  }
 
 
 })
@@ -51,6 +49,20 @@ $scope.toggleSideMenu = function() {
 
 
   $scope.soaps = Soaps.all();
+
+  $scope.initiateSoap = function(soap) {
+    Soaps.createSoapTable();
+    var saveSoap = function() {
+      Soaps.savenewSoap(soap); //Saves empty table entry
+      $state.go('tab.subjective')
+    }
+    saveSoap();
+    logSoapArray();
+  }
+
+  var logSoapArray = function() {
+    console.log($scope.soaps.slice(-1[0]));
+  }
 
   var timeout = null;
   var debounceSaveUpdates = function(newVal, oldVal) {

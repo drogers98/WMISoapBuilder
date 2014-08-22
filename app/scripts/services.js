@@ -9,7 +9,6 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
  .factory('nolsDB', function($webSql, $rootScope) {
    var self = this;
    self.db = null;
-
    return {
      init: function() {
        self.db = $webSql.openDatabase('nolsDB', '1.0', 'nols-wmi-db', 10 * 1024 * 1024);
@@ -129,7 +128,7 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
        self.db.select("Soap", {
          "id": soapId
        }).then(function(results) {
-         for(var i=0; i < results.rows.length;i++){
+         for(var i = 0;i < results.rows.lenght;i++){
            return results.rows.item(i);
          }
        })
@@ -188,7 +187,6 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
 })
 
 .factory('Soaps', function(nolsDB) {
-  var soaps = [];
 
   return {
     createSoapTable: function() {
