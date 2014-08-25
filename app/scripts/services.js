@@ -135,16 +135,10 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
           }
        })
      },
-     soap: function(soapId, callback) {
-       var soap = {}
-       self.db.select("Soap", {
-         "id": soapId
-       }).then(function(results) {
-         for(var i = 0;i < results.rows.lenght;i++){
-           soaps = results.rows.item(i);
-           callback(null, soap);
-         }
-       })
+     soap: function(object, query, callback) {
+      self.db.select(object,query).then(function(results){
+        callback(null, results.rows);
+      })
      },
      soapUpdate: function(newSoapParam) {
        //self.db.update('Soap', {newSoapParam.column: newSoapParam.val} {
@@ -219,7 +213,11 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
     return nolsDB.soaps(callback);
     },
     get: function(soapId, callback) {
-    return nolsDB.soap(soapId, callback);
+      return nolsDB.soap('Soap', {id: soapId}, function(err, data){
+        for(var i=0;i < data.length;i++){
+          callback(null,data.item(i));
+        }
+      })
     }
 
   }

@@ -107,7 +107,7 @@ angular.module('WMISoapBuilder', ['ionic', 'WMISoapBuilder.controllers', 'WMISoa
     .state('soap-detail', {
       url: '/soaps/:soapId',
       templateUrl: 'templates/soap/soap-detail.html',
-      controller: 'SoapCtrl'
+      controller: 'SoapDetailCtrl'
     })
 
 

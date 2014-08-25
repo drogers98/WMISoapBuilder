@@ -41,7 +41,7 @@ $scope.toggleSideMenu = function() {
     $scope.responders = responders;
     console.log(responders)
   })
-  
+
   $scope.soaps = [];
   $scope.soap = null;
 
@@ -50,17 +50,13 @@ $scope.toggleSideMenu = function() {
   });
 
   $scope.initiateSoap = function(soap) {
-    var soap = {};
+    var soap = {};//deliver empty soap object
     Soaps.createSoapTable();
     Soaps.saveNewSoap(soap, function(err, callback){
       $scope.soap = soap;
-      console.log(soap);
+      $state.go('tab.subjective');
     });
-
-    $state.go('tab.subjective');
-
   }
-
 
   var timeout = null;
   var debounceSaveUpdates = function(newVal, oldVal) {
@@ -85,7 +81,7 @@ $scope.toggleSideMenu = function() {
           var updateParams = {};
           updateParams["key"] = soapVal;
           updateParams["val"] = newVal;
-          updateParams["id"] = 1;
+          updateParams["id"] = //Either call get or pass from save.
           return updateParams;
         }
         return buildSoapParamObject(soapValue, newVal);
@@ -403,9 +399,8 @@ alert('Failed because: ' + message);
 
 .controller('SoapDetailCtrl', function($scope, $stateParams, Soaps) {
   $scope.soap = null;
-  Soaps.get($stateParams.userId, function(err, soaps) {
-    if(err) throw err;
-    $scope.soap = soaps;
+  Soaps.get($stateParams.soapId, function(err, soap) {
+    $scope.soap = soap;
   })
 })
 
