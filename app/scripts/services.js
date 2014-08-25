@@ -22,20 +22,29 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
          "trainingLevel": {"type": "TEXT","null": "NOT NULL"}
        });
      },
-     saveResponder: function(responderAttr) {
+     saveResponder: function(responder, callback) {
        self.db.insert('Responder', {
-         "firstName": responderAttr.responder.firstName,
-         "lastName": responderAttr.responder.lastName,
-         "trainingLevel": responderAttr.responder.trainingLevel
+         "firstName": responder.firstName,
+         "lastName": responder.lastName,
+         "trainingLevel": responder.trainingLevel
        }).then(function(results){
          self.db.select("Responder", {
            "id": results.insertId
          }).then(function(results) {
            for(var i=0; i < results.rows.length;i++){
-             console.log(results.rows.item(i));
-
+              callback(null, results.rows.item(i));
            }
          })
+       })
+     },
+     getResponder: function(callback) {
+       var responders = {}
+       self.db.selectAll("Responder").then(function(results) {
+          var len = results.rows.length - 1;
+          for(var i=len; i < results.rows.length; i++){
+            responders = results.rows.item(i);
+            callback(null, responders);
+          }
        })
      },
      createSoapTable: function() {
@@ -73,63 +82,67 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
          "patientAnticipatedProblems": {"type": "TEXT","null": "NOT NULL"}
        })
      },
-     saveSoap: function(soapAttr) {
+     saveSoap: function(soapAttr, callback) {
+       var soap = {};
        self.db.insert('Soap', {
-         "incidentDate": soapAttr.soap.incidentDate,
-         "incidentLocation": soapAttr.soap.incidentLocation,
-         "incidentLat": soapAttr.soap.incidentLat,
-         "incidentLon": soapAttr.soap.incidentLon,
-         "patientInitials": soapAttr.soap.patientInitials,
-         "patientGender": soapAttr.soap.patientGender,
-         "patientDob": soapAttr.soap.patientDob,
-         "patientAge": soapAttr.soap.patientAge,
-         "patientLOR": soapAttr.soap.patientLOR,
-         "patientComplaint": soapAttr.soap.patientComplaint,
-         "patientOnset": soapAttr.soap.patientOnset,
-         "patientPPalliates": soapAttr.soap.patientPPalliates,
-         "patientQuality": soapAttr.soap.patientQuality,
-         "patientRadiates": soapAttr.soap.patientRadiates,
-         "patientSeverity": soapAttr.soap.patientSeverity,
-         "patientTime": soapAttr.soap.patientTime,
-         "patientHPI": soapAttr.soap.patientHPI,
-         "patientSpinal": soapAttr.soap.patientSpinal,
-         "patientFound": soapAttr.soap.patientFound,
-         "patientExamReveals": soapAttr.soap.patientExamReveals,
-         "patientSymptoms": soapAttr.soap.patientSymptoms,
-         "patientAllergies": soapAttr.soap.patientAllergies,
-         "patientMedications": soapAttr.soap.patientMedications,
-         "patientMedicalHistory": soapAttr.soap.MedicalHistory,
-         "patientLastIntake": soapAttr.soap.LastIntake,
-         "patientEventsForCause": soapAttr.soap.patientEventsForCause,
-         "patientAssessment": soapAttr.soap.patientAssessment,
-         "patientPlan": soapAttr.soap.patientPlan,
-         "patientAnticipatedProblems": soapAttr.soap.patientAnticipatedProblems
-       }).then(function(results){
-         self.db.select('Soap', {
+         "incidentDate": soapAttr.incidentDate,
+         "incidentLocation": soapAttr.incidentLocation,
+         "incidentLat": soapAttr.incidentLat,
+         "incidentLon": soapAttr.incidentLon,
+         "patientInitials": soapAttr.patientInitials,
+         "patientGender": soapAttr.patientGender,
+         "patientDob": soapAttr.patientDob,
+         "patientAge": soapAttr.patientAge,
+         "patientLOR": soapAttr.patientLOR,
+         "patientComplaint": soapAttr.patientComplaint,
+         "patientOnset": soapAttr.patientOnset,
+         "patientPPalliates": soapAttr.patientPPalliates,
+         "patientQuality": soapAttr.patientQuality,
+         "patientRadiates": soapAttr.patientRadiates,
+         "patientSeverity": soapAttr.patientSeverity,
+         "patientTime": soapAttr.patientTime,
+         "patientHPI": soapAttr.patientHPI,
+         "patientSpinal": soapAttr.patientSpinal,
+         "patientFound": soapAttr.patientFound,
+         "patientExamReveals": soapAttr.patientExamReveals,
+         "patientSymptoms": soapAttr.patientSymptoms,
+         "patientAllergies": soapAttr.patientAllergies,
+         "patientMedications": soapAttr.patientMedications,
+         "patientMedicalHistory": soapAttr.MedicalHistory,
+         "patientLastIntake": soapAttr.LastIntake,
+         "patientEventsForCause": soapAttr.patientEventsForCause,
+         "patientAssessment": soapAttr.patientAssessment,
+         "patientPlan": soapAttr.patientPlan,
+         "patientAnticipatedProblems": soapAttr.patientAnticipatedProblems
+       }).then(function(results) {
+         self.db.select("Soap", {
            "id": results.insertId
          }).then(function(results) {
-           for(var i=0; i<results.rows.length; i++) {
-             console.log(results.rows.item(i));
+           for(var i = 0;i < results.rows.length;i++){
+             soap = results.rows.item(i);
+             callback(null, soap);
            }
          })
        })
 
      },
-     soaps: function() {
-       var soaps = [];
+     soaps: function(callback) {
+       var soaps = []
        self.db.selectAll("Soap").then(function(results) {
           for(var i=0; i < results.rows.length; i++){
-          soaps.push(results.rows.item(i));
+            soaps.push(results.rows.item(i));
+            callback(null, soaps);
           }
        })
-       return soaps;
      },
-     soap: function(soapId) {
+     soap: function(soapId, callback) {
+       var soap = {}
        self.db.select("Soap", {
          "id": soapId
        }).then(function(results) {
          for(var i = 0;i < results.rows.lenght;i++){
-           return results.rows.item(i);
+           soaps = results.rows.item(i);
+           callback(null, soap);
          }
        })
      },
@@ -162,11 +175,14 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
   var responder = [];
 
   return {
-    createNewResponder: function(responderData, responder){
+    createResponderTable: function(){
       nolsDB.createResponderTable();
-      var responderAttr = angular.fromJson(responderData);
-      return nolsDB.saveResponder(responderAttr);
-      console.log(responder);
+    },
+    saveResponder: function(responder, callback){
+      return nolsDB.saveResponder(responder, callback);
+    },
+    get: function(callback) {
+      return nolsDB.getResponder(callback);
     }
   }
 
@@ -192,19 +208,18 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
     createSoapTable: function() {
       nolsDB.createSoapTable();
     },
-    saveNewSoap: function(soapParams) {
-      var soapAttr = angular.fromJson(soapParams);
-      return nolsDB.saveSoap(soapAttr);
+    saveNewSoap: function(soapAttr, callback) {
+      return nolsDB.saveSoap(soapAttr, callback);
     },
     updateSoap: function(newSoapParam) {
       //make sure soap ID is being sent
       nolsDB.soapUpdate(newSoapParam);
     },
-    all: function() {
-    return nolsDB.soaps();
+    all: function(callback) {
+    return nolsDB.soaps(callback);
     },
-    get: function(soapId) {
-    return nolsDB.soap(soapId);
+    get: function(soapId, callback) {
+    return nolsDB.soap(soapId, callback);
     }
 
   }

@@ -7,32 +7,22 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce'])
 
 
 
-.controller('FirstResponderCtrl', function($scope, $state, $stateParams, Responders) {
+.controller('FirstResponderCtrl', function($scope, $state, $stateParams, Responders, Soaps) {
   $scope.termsPage = function(){$state.go('terms');};
   $scope.responderSoapsPage = function(){$state.go('soaps');};
   //get ready for JS transfer from beta
   //$scope.responder = Responders.all();
   $scope.trainingLevels = ['WFA','WAFA','WFR', 'WEMT', 'Other'];
+  $scope.responder = null;
 
   $scope.newResponder = function(responder) {
-    var attributes = {
-      responder: {
-        firstName: responder.firstName,
-        lastName: responder.lastName,
-        trainingLevel: responder.trainingLevel
-      }
-    };
-    //below call service methods - todo => implement service methods
-    var responderData = angular.toJson(attributes);
-    Responders.createNewResponder(responderData);
+    Responders.createResponderTable();
+    Responders.saveResponder(responder, function (err, responder){
+      if(err) throw err;
+        $scope.responder = responder;
+    });
     $state.go('soaps');
-    //$scope.responders.push(responderData);
-    //after save link to soaps
   };
-  $scope.currentResponder = function(responderId) {
-    $scope.responder = Responders.get(responderId)
-  }
-
 
 })
 
@@ -44,25 +34,33 @@ $scope.toggleSideMenu = function() {
 })
 
 
-.controller('SoapCtrl', function($scope, $state, $stateParams, Soaps, $ionicModal, $timeout) {
+.controller('SoapCtrl', function($scope, $state, $stateParams, Soaps, Responders, $ionicModal, $timeout) {
 "use strict";
 
+  Responders.get(function(err,responders) {
+    $scope.responders = responders;
+    console.log(responders)
+  })
+  
+  $scope.soaps = [];
+  $scope.soap = null;
 
-  $scope.soaps = Soaps.all();
+  Soaps.all(function(err, soaps) {
+    $scope.soaps = soaps;
+  });
 
   $scope.initiateSoap = function(soap) {
+    var soap = {};
     Soaps.createSoapTable();
-    var saveSoap = function() {
-      Soaps.savenewSoap(soap); //Saves empty table entry
-      $state.go('tab.subjective')
-    }
-    saveSoap();
-    logSoapArray();
+    Soaps.saveNewSoap(soap, function(err, callback){
+      $scope.soap = soap;
+      console.log(soap);
+    });
+
+    $state.go('tab.subjective');
+
   }
 
-  var logSoapArray = function() {
-    console.log($scope.soaps.slice(-1[0]));
-  }
 
   var timeout = null;
   var debounceSaveUpdates = function(newVal, oldVal) {
@@ -101,12 +99,6 @@ $scope.toggleSideMenu = function() {
   $scope.$watch('soap.patientAge', debounceSaveUpdates);
 
 
-
-  $scope.soapDetail = function(soapId) {
-    $scope.soap = Soaps.get(soapId);
-    console.log($scope.soap);
-  }
-
   $scope.updateSoapParam = function(newParam) {
     //var paramAttributes = {
     //}
@@ -116,30 +108,7 @@ $scope.toggleSideMenu = function() {
     console.log(newParam.id);
   }
 
-  $scope.initiateSoap = function() {
-    var soap = {};
-    var attributes = {
-      soap: {
-        incidentDate: soap.incidentDate,
-        incidentLocation: soap.incidentLocation,
-        incidentLat: soap.incidentLat,
-        incidentLon: soap.incidentLon,
-        patientInitials: soap.patientInitials,
-        patientFound: soap.patientFound,
-        patientAnticipatedProblems: soap.patientAnticipatedProblems
-      }
-    };
-    //below call service methods - todo => implement service methods
-    var soapParams = angular.toJson(attributes);
-    Soaps.createSoapTable();
-    var saveSoap = function() {
-      $scope.soap = Soaps.saveNewSoap(soapParams);
-      $state.go('tab.subjective');
-    }
-    return saveSoap();
-    //$scope.soaps.push(soapData);
-    //after save link to soaps
-  };
+
 
 // Geolocation Stuff
 $scope.latLng = "Please click the button below, if GPS is available.";
@@ -430,6 +399,14 @@ alert('Failed because: ' + message);
 
 
 // end soap cntrl
+})
+
+.controller('SoapDetailCtrl', function($scope, $stateParams, Soaps) {
+  $scope.soap = null;
+  Soaps.get($stateParams.userId, function(err, soaps) {
+    if(err) throw err;
+    $scope.soap = soaps;
+  })
 })
 
 // coundown controls.
