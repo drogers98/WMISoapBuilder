@@ -51,6 +51,8 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
        self.db.createTable('Soap', {
          "id": {"type": "INTEGER","null": "NOT NULL","primary": true,"auto_increment": true},
          "created": {"type": "TIMESTAMP","null": "NOT NULL","default": "CURRENT_TIMESTAMP"},
+         "responderFirstName": {"type": "TEXT", "null": "NOT NULL"},
+         "responderLastName": {"type": "TEXT", "null": "NOT NULL"},
          "incidentDate": {"type": "DATE","null": "NOT NULL"},
          "incidentLocation": {"type": "TEXT","null": "NOT NULL"},
          "incidentLat": {"type": "TEXT","null": "NOT NULL"},
@@ -82,9 +84,11 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
          "patientAnticipatedProblems": {"type": "TEXT","null": "NOT NULL"}
        })
      },
-     saveSoap: function(soapAttr, callback) {
+     saveSoap: function(soapAttr, responderAttr, callback) {
        var soap = {};
        self.db.insert('Soap', {
+         "responderFirstName": responderAttr.firstName,
+         "responderLastName": responderAttr.lastName,
          "incidentDate": soapAttr.incidentDate,
          "incidentLocation": soapAttr.incidentLocation,
          "incidentLat": soapAttr.incidentLat,
@@ -145,6 +149,9 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
       //   "id": newSoapParam.id
       // })
      },
+     dropSoap: function() {
+       self.db.dropTable("Soap");
+     },
      createVitalTable: function() {
        self.db.createTable('Vital', {
          "id": {"type": "INTEGER", "null": "NOT NULL", "primary": true, "auto_increment": true},
@@ -202,8 +209,8 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
     createSoapTable: function() {
       nolsDB.createSoapTable();
     },
-    saveNewSoap: function(soapAttr, callback) {
-      return nolsDB.saveSoap(soapAttr, callback);
+    saveNewSoap: function(soapAttr, responderAttr, callback) {
+      return nolsDB.saveSoap(soapAttr, responderAttr, callback);
     },
     updateSoap: function(newSoapParam) {
       //make sure soap ID is being sent
@@ -218,6 +225,9 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
           callback(null,data.item(i));
         }
       })
+    },
+    drop: function(){
+      nolsDB.dropSoap();
     }
 
   }

@@ -15,6 +15,15 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce'])
   $scope.trainingLevels = ['WFA','WAFA','WFR', 'WEMT', 'Other'];
   $scope.responder = null;
 
+  Responders.get(function(err,responders) {
+    if(responders){
+      $scope.responders = responders;
+      $state.go('soaps');
+    }else {
+      return;
+    }
+  })
+
   $scope.newResponder = function(responder) {
     Responders.createResponderTable();
     Responders.saveResponder(responder, function (err, responder){
@@ -37,9 +46,8 @@ $scope.toggleSideMenu = function() {
 .controller('SoapCtrl', function($scope, $state, $stateParams, Soaps, Responders, $ionicModal, $timeout) {
 "use strict";
 
-  Responders.get(function(err,responders) {
-    $scope.responders = responders;
-    console.log(responders)
+  Responders.get(function(err,responder) {
+    $scope.responder = responder;
   })
 
   $scope.soaps = [];
@@ -49,10 +57,12 @@ $scope.toggleSideMenu = function() {
     $scope.soaps = soaps;
   });
 
-  $scope.initiateSoap = function(soap) {
-    var soap = {};//deliver empty soap object
+  //Soaps.drop();
+
+  $scope.initiateSoap = function(soap, responder) {
+    var soap = {};
     Soaps.createSoapTable();
-    Soaps.saveNewSoap(soap, function(err, callback){
+    Soaps.saveNewSoap(soap,responder,function(err, callback){
       $scope.soap = soap;
       $state.go('tab.subjective');
     });
@@ -81,7 +91,7 @@ $scope.toggleSideMenu = function() {
           var updateParams = {};
           updateParams["key"] = soapVal;
           updateParams["val"] = newVal;
-          updateParams["id"] = //Either call get or pass from save.
+          updateParams["id"] = 1
           return updateParams;
         }
         return buildSoapParamObject(soapValue, newVal);
@@ -390,15 +400,10 @@ function onFail(message) {
 alert('Failed because: ' + message);
 }
 
-//end test
-
-
-
-// end soap cntrl
 })
 
 .controller('SoapDetailCtrl', function($scope, $stateParams, Soaps) {
-  $scope.soap = null;
+  $scope.soap;
   Soaps.get($stateParams.soapId, function(err, soap) {
     $scope.soap = soap;
   })
