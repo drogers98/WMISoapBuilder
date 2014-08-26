@@ -10,35 +10,35 @@
 
   <ion-content has-header="true" padding="false"has-bouncing="false">
   <div class="SOAP">
-  
+
   <h5>Date & Location<a ng-click="openModal(1)"><span>i</span></a></h5>
       <div class="list">
       <h6>Date of Incident</h6>
       <div class="item item-input" ng-model="soap.date">
        <input type="date" value="{{dt | date:'yyyy-MM-dd'}}"/>
       </div>
-      
 
-      
+
+
       <h6>Location</h6>
            <label class="item item-input">
         <textarea id="Location" type="text" placeholder="Describe where it happened." ng-model="soap.latLng"
 	ng-keyup="expandText($event)"
 	ng-keydown="expandText($event)"></textarea>
 
-</textarea> 
+</textarea>
       </label>
       <h6>Coordinates</h6>
-      
-      
+
+
 
       <label class="item">
-        {{latLng}} 
+        {{latLng}}
       </label>
       <a id="coordsBtn" class="button button-block button-light margin" ng-click="getLocation()"><icon class="ion-pinpoint"></icon><span id="GeoLocationBtnInner">Get Coordinates</span></a>
 
-               
-  
+
+
       </div>
 
 
@@ -46,28 +46,28 @@
       <div class="list">
       <h6>First Name</h6>
       <label class="item item-input">
-        <input type="text" placeholder="First Name" ng-model="soap.firstName">
+        <input type="text" placeholder="First Name" ng-model="responder.firstName" >
       </label>
       <h6>Last Name</h6>
       <label class="item item-input">
-        <input type="text" placeholder="Last Name" ng-model="soap.lastName">
+        <input type="text" placeholder="Last Name" ng-model="responder.lastName">
       </label>
-      
-      
+
+
       <h6>Current Training Level</h6>
       <div class="item item-select">
        <div class="input-label">
           Training Level
        </div>
-        <select id="TrainingLevelSOAP" ng-model="soap.trainingLevel" ng-options="trainingLevel for trainingLevel in trainingLevels"  onchange="changeClass(this.id)">
+        <select id="TrainingLevelSOAP" ng-model="responder.trainingLevel" ng-options="trainingLevel for trainingLevel in trainingLevels"  onchange="changeClass(this.id)">
 	        <option style="display:none;" value="" selected>Please Choose</option>
         </select>
-       
+
       </div>
       </div>
 
 <a class="button button-block button-light icon-right ion-ios7-arrow-right margin" href="#/tab/subjective">Continue to Subjective</a>
     </div>
-    
+
   </ion-content>
 </ion-view>

@@ -53,6 +53,7 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
          "created": {"type": "TIMESTAMP","null": "NOT NULL","default": "CURRENT_TIMESTAMP"},
          "responderFirstName": {"type": "TEXT", "null": "NOT NULL"},
          "responderLastName": {"type": "TEXT", "null": "NOT NULL"},
+         "responderUid": {"type": "TEXT", "null": "NOT NULL"},
          "incidentDate": {"type": "DATE","null": "NOT NULL"},
          "incidentLocation": {"type": "TEXT","null": "NOT NULL"},
          "incidentLat": {"type": "TEXT","null": "NOT NULL"},
@@ -89,6 +90,7 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
        self.db.insert('Soap', {
          "responderFirstName": responderAttr.firstName,
          "responderLastName": responderAttr.lastName,
+         "responderUid": responderAttr.id,
          "incidentDate": soapAttr.incidentDate,
          "incidentLocation": soapAttr.incidentLocation,
          "incidentLat": soapAttr.incidentLat,
@@ -145,9 +147,24 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
       })
      },
      soapUpdate: function(newSoapParam) {
-       //self.db.update('Soap', {newSoapParam.column: newSoapParam.val} {
-      //   "id": newSoapParam.id
-      // })
+       var objectForUpdate = function(newSoapParam) {
+         var  buildKeyValue = {};
+         buildKeyValue[newSoapParam.key] = newSoapParam.val;
+         return buildKeyValue;
+       }
+
+       var grabLastId = function(){
+         self.db.selectAll('Soap').then(function(results){
+           for(var i = results.rows.length - 1;i < results.rows.length;i++){
+             var soapID = results.rows.item(i).id;
+           }
+           self.db.update('Soap', objectForUpdate(newSoapParam),{
+             "id": soapID
+           })
+         })
+       }
+       grabLastId()
+
      },
      dropSoap: function() {
        self.db.dropTable("Soap");
@@ -213,11 +230,20 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
       return nolsDB.saveSoap(soapAttr, responderAttr, callback);
     },
     updateSoap: function(newSoapParam) {
-      //make sure soap ID is being sent
       nolsDB.soapUpdate(newSoapParam);
     },
     all: function(callback) {
-    return nolsDB.soaps(callback);
+    return nolsDB.soaps(callback)
+    },
+    getLast: function(callback) {
+      return nolsDB.soaps('Soap', function(err, data){
+        var soap = {};
+        var len = data.length - 1;
+        for(var i=len;i < data.length;i++){
+          soap = data.item(i);
+          callback(null, soap.id);
+        }
+      })
     },
     get: function(soapId, callback) {
       return nolsDB.soap('Soap', {id: soapId}, function(err, data){

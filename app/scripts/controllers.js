@@ -45,26 +45,28 @@ $scope.toggleSideMenu = function() {
 
 .controller('SoapCtrl', function($scope, $state, $stateParams, Soaps, Responders, $ionicModal, $timeout) {
 "use strict";
+  /* leave drop commented out unless soap table is being altered */
+  //Soaps.drop();
 
   Responders.get(function(err,responder) {
     $scope.responder = responder;
   })
 
-  $scope.soaps = [];
-  $scope.soap = null;
+  $scope.soaps;
+  $scope.soap;
 
   Soaps.all(function(err, soaps) {
     $scope.soaps = soaps;
   });
 
-  //Soaps.drop();
+
 
   $scope.initiateSoap = function(soap, responder) {
     var soap = {};
     Soaps.createSoapTable();
     Soaps.saveNewSoap(soap,responder,function(err, callback){
       $scope.soap = soap;
-      $state.go('tab.subjective');
+      $state.go('tab.overview');
     });
   }
 
@@ -91,29 +93,55 @@ $scope.toggleSideMenu = function() {
           var updateParams = {};
           updateParams["key"] = soapVal;
           updateParams["val"] = newVal;
-          updateParams["id"] = 1
           return updateParams;
         }
         return buildSoapParamObject(soapValue, newVal);
       }
       timeout = $timeout($scope.updateSoapParam(newSoapParamForUpdate()), 1000);
-      //$scope.updateSoapParam(newVal)
+      $scope.updateSoapParam(newVal)
     }
   }
 
+  //there has got to be a cleaner way of doing this but time is of the essence
+  $scope.$watch('responder.firstName', debounceSaveUpdates);
+  
+  $scope.$watch('soap.incidentDate', debounceSaveUpdates);
+  $scope.$watch('soap.incidentLocation', debounceSaveUpdates);
+  $scope.$watch('soap.incidentLat', debounceSaveUpdates);
+  $scope.$watch('soap.incidentLon', debounceSaveUpdates);
   $scope.$watch('soap.patientInitials', debounceSaveUpdates);
+  $scope.$watch('soap.patientGender', debounceSaveUpdates);
+  $scope.$watch('soap.patientDob', debounceSaveUpdates);
   $scope.$watch('soap.patientAge', debounceSaveUpdates);
+  $scope.$watch('soap.patientLOR', debounceSaveUpdates);
+  $scope.$watch('soap.patientComplaint', debounceSaveUpdates);
+  $scope.$watch('soap.patientOnset', debounceSaveUpdates);
+  $scope.$watch('soap.patientPPalliates', debounceSaveUpdates);
+  $scope.$watch('soap.patientQuality', debounceSaveUpdates);
+  $scope.$watch('soap.patientRadiates', debounceSaveUpdates);
+  $scope.$watch('soap.patientSeverity', debounceSaveUpdates);
+  $scope.$watch('soap.patientTime', debounceSaveUpdates);
+  $scope.$watch('soap.patientHPI', debounceSaveUpdates);
+  $scope.$watch('soap.patientSpinal', debounceSaveUpdates);
+  $scope.$watch('soap.patientFound', debounceSaveUpdates);
+  $scope.$watch('soap.patientExamReveals', debounceSaveUpdates);
+  $scope.$watch('soap.patientSymptoms', debounceSaveUpdates);
+  $scope.$watch('soap.patientAllergies', debounceSaveUpdates);
+  $scope.$watch('soap.patientMedications', debounceSaveUpdates);
+  $scope.$watch('soap.patientMedicalHistory', debounceSaveUpdates);
+  $scope.$watch('soap.patientLastIntake', debounceSaveUpdates);
+  $scope.$watch('soap.patientEventsForCause', debounceSaveUpdates);
+  $scope.$watch('soap.patientAssessment', debounceSaveUpdates);
+  $scope.$watch('soap.patientPlan', debounceSaveUpdates);
+  $scope.$watch('soap.patientAnticipatedProblems', debounceSaveUpdates);
+
+
+
 
 
   $scope.updateSoapParam = function(newParam) {
-    //var paramAttributes = {
-    //}
-    //Soaps.updateSoap(newParam);
-    console.log(newParam.key);
-    console.log(newParam.val);
-    console.log(newParam.id);
+    Soaps.updateSoap(newParam);
   }
-
 
 
 // Geolocation Stuff
@@ -399,6 +427,8 @@ sourceType: source });
 function onFail(message) {
 alert('Failed because: ' + message);
 }
+
+
 
 })
 
