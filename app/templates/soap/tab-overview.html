@@ -14,15 +14,15 @@
   <h5>Date & Location<a ng-click="openModal(1)"><span>i</span></a></h5>
       <div class="list">
       <h6>Date of Incident</h6>
-      <div class="item item-input" ng-model="soap.date">
-       <input type="date" value="{{dt | date:'yyyy-MM-dd'}}"/>
+      <div class="item item-input" >
+       <input type="date" ng-model="soap.incidentDate" value="{{dt | date:'yyyy-MM-dd'}}"/>
       </div>
 
 
 
       <h6>Location</h6>
            <label class="item item-input">
-        <textarea id="Location" type="text" placeholder="Describe where it happened." ng-model="soap.latLng"
+        <textarea id="Location" type="text" placeholder="Describe where it happened." ng-model="soap.incidentLocation"
 	ng-keyup="expandText($event)"
 	ng-keydown="expandText($event)"></textarea>
 
@@ -33,8 +33,9 @@
 
 
       <label class="item">
-        {{incidentLat}}, {{incidentLon}}
+      {{soap.incidentLat}} {{soap.incidentLon}}
       </label>
+      
       <a id="coordsBtn" class="button button-block button-light margin" ng-click="getLocation()"><icon class="ion-pinpoint"></icon><span id="GeoLocationBtnInner">Get Coordinates</span></a>
 
 

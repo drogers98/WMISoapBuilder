@@ -145,10 +145,10 @@ $scope.toggleSideMenu = function() {
 
 
 // Geolocation Stuff
-$scope.latLng = "Please click the button below, if GPS is available.";
+
 	   $scope.showPosition = function (position) {
-            $scope.incidentLat = position.coords.latitude;
-            $scope.incidentLon = position.coords.longitude;
+            $scope.soap.incidentLat = position.coords.latitude;
+            $scope.soap.incidentLon = position.coords.longitude;
             $scope.$apply();
         }
 
@@ -184,8 +184,7 @@ $scope.latLng = "Please click the button below, if GPS is available.";
 	var valueID = obj.target.attributes.id.value;
 	var element = document.getElementById(valueID);
 	element.style.height =  element.scrollHeight + "px";}
-
-// end auto expand
+  // end auto expand
 
   $scope.settingsPage = function() {$state.go('settings');}
   $scope.aboutPage = function(){$state.go('about');}
@@ -195,7 +194,7 @@ $scope.latLng = "Please click the button below, if GPS is available.";
   $scope.apPage = function(){$state.go('tab.ap');}
   $scope.imagePage = function(){$state.go('tab.image');}
   $scope.overviewPage = function(){
-    $state.go('tab.overview');}
+  $state.go('tab.overview');}
   $scope.reviewSoapPage = function(){$state.go('soap-review');}
 
 
