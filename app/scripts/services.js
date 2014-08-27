@@ -42,8 +42,8 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
        self.db.selectAll("Responder").then(function(results) {
           var len = results.rows.length - 1;
           for(var i=len; i < results.rows.length; i++){
-            responders = results.rows.item(i);
-            callback(null, responders);
+            responder = results.rows.item(i);
+            callback(null, responder);
           }
        }, function(){
          callback(null,null);
