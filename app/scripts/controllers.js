@@ -235,14 +235,39 @@ $scope.toggleSideMenu = function() {
 
 // Email Share Function
 $scope.shareSOAP = function() {
+
+// add hooks for soap id ?, and display info here
+
+var htmlbody = '<h2>Location</h2>'+
+'<strong>Date of Incident</strong>: ' + $scope.soap.incidentDate + '<br/>' +
+'<strong>Location</strong>: ' + $scope.soap.incidentLocation + '<br/>' +
+'<strong>Coordinates</strong>: ' + $scope.soap.incidentLat + ', ' + $scope.soap.incidentLon + '<br/>' +
+'<strong>Responder</strong>: ' + $scope.soap.responderFirstName + $scope.soap.responderFirstName + ', ' + $scope.soap.responderTrainingLevel + '<br/>' +
+'<h2>Subjective</h2>'+
+'<strong>Initials</strong>' + $scope.soap.patientInitials + '<br/>' +
+'<strong>DOB</strong>' + $scope.soap.patientDob + '<br/>' +
+'<strong>Age</strong>' + $scope.soap.patientAge + '<br/>' +
+'<strong>Sex</strong>' + $scope.soap.patientGender + '<br/>' +
+'<h3>Chief Complaint</h3>'+
+'<p>' + $scope.soap.patientComplaint + '</p>' +
+'<strong>Onset</strong>' + $scope.soap.patientOnset + '<br/>' +
+'<strong>Provokes/Palliates</strong>' + $scope.soap.patientPPalliates + '<br/>' +
+'<strong>Quality</strong>' + $scope.soap.patientQuality + '<br/>' +
+'<strong>Radiation/Region/Referred</strong>' + $scope.soap.patientRadiates + '<br/>' +
+'<strong>Severity</strong>' + $scope.soap.patientSeverity + '<br/>' +
+'<strong>Time of Onset</strong>' + $scope.soap.patientTime + '<br/>' +
+'<p>end</p>';
+
    window.plugin.email.open({
     to:      ['rogers@eyebytesolutions.com'],
     cc:      ['vehr@eyebytesolutions.com'],
     bcc:     [''],
     subject: 'SOAP Note: Test',
-    body:    '<h1>Test</h1><p>Data Here</p>',
+    body:    htmlbody,
     isHtml:  true
 });
+
+
 };
 // end email
 

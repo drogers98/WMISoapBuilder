@@ -1,7 +1,7 @@
 <ion-view title="{{soap.patientGender}}, {{soap.patientAge}} | {{soap.patientInitials}}">
 <ion-nav-buttons side="left">
-    <button class="button icon ion-ios7-arrow-back" href="#/responder/soaps">My SOAPs</button>
-  </ion-nav-buttons>
+    <button class="button icon ion-ios7-arrow-back">My SOAPs</button>
+</ion-nav-buttons>
 
   <ion-nav-buttons side="right">
   <button class="button icon ion-edit" ng-click="data.showDelete = !data.showDelete"></button>
@@ -39,7 +39,7 @@
         </ion-list>
       </div>
 
-      <h6>Whose chief complaint is:</h6>
+      <h6>Chief Complaint:</h6>
       <div class="list">
         <ion-list>
           <ion-item class="item-text-wrap">{{soap.patientComplaint}}</ion-item>
