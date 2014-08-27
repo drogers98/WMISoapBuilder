@@ -232,14 +232,59 @@ $scope.toggleSideMenu = function() {
 
 // Email Share Function
 $scope.shareSOAP = function() {
+
+// add hooks for soap id in order for vitals?
+
+var htmlbody = '<h2>Location</h2>'+
+'<strong>Date of Incident</strong>: ' + $scope.soap.incidentDate + '<br/>' +
+'<strong>Location</strong>: ' + $scope.soap.incidentLocation + '<br/>' +
+'<strong>Coordinates</strong>: ' + $scope.soap.incidentLat + ', ' + $scope.soap.incidentLon + '<br/>' +
+'<strong>Responder</strong>: ' + $scope.soap.responderFirstName + ' ' + $scope.soap.responderLastName + ', ' + $scope.soap.responderTrainingLevel + '<br/>' +
+'<h2>Subjective</h2>'+
+'<strong>Initials</strong>: ' + $scope.soap.patientInitials + '<br/>' +
+'<strong>DOB</strong>: ' + $scope.soap.patientDob + '<br/>' +
+'<strong>Age</strong>: ' + $scope.soap.patientAge + '<br/>' +
+'<strong>Sex</strong>: ' + $scope.soap.patientGender + '<br/>' +
+'<h3>Chief Complaint</h3>'+
+'<p>' + $scope.soap.patientComplaint + '</p>' +
+'<strong>Onset</strong>: ' + $scope.soap.patientOnset + '<br/>' +
+'<strong>Provokes/Palliates</strong>: ' + $scope.soap.patientPPalliates + '<br/>' +
+'<strong>Quality</strong>: ' + $scope.soap.patientQuality + '<br/>' +
+'<strong>Radiation/Region/Referred</strong>: ' + $scope.soap.patientRadiates + '<br/>' +
+'<strong>Severity</strong>: ' + $scope.soap.patientSeverity + ' out of 10<br/>' +
+'<strong>Time of Onset</strong>: ' + $scope.soap.patientTime + '<br/>' +
+'<h3>MOI/HPI</h3>'+
+'<p>' + $scope.soap.patientHPI + '</p>' +
+'<strong>Suspected Spinal MOI</strong>: ' + $scope.soap.patientSpinal + '<br/>' +
+'<h2>Objective</h2>'+
+'<h3>General</h3>'+
+'<strong>Patient Position When Found</strong>: ' + $scope.soap.patientFound + '<br/>' +
+'<strong>Patient Exam</strong>: ' + $scope.soap.patientExamReveals + '<br/>' +
+'<h3>Vital Signs</h3>'+
+'<p>Vital Signs table to go here</p>'+
+'<h3>Patient History</h3>'+
+'<strong>Symptoms</strong>: ' + $scope.soap.patientSymptoms + '<br/>' +
+'<strong>Allergies</strong>: ' + $scope.soap.patientAllergies + '<br/>' +
+'<strong>Medications</strong>: ' + $scope.soap.patientMedications + '<br/>' +
+'<strong>Pertinent Medical History</strong>: ' + $scope.soap.patientMedicalHistory + '<br/>' +
+'<strong>Last Intake/Output</strong>: ' + $scope.soap.patientLastIntake + '<br/>' +
+'<strong>Events Leading up to Injury/Illness</strong>: ' + $scope.soap.patientEventsForCause + '<br/>' +
+'<h2>Assessment</h2>'+
+'<p>' + $scope.soap.patientAssessment + '</p>' +
+'<h2>Plan</h2>'+
+'<p>' + $scope.soap.patientPlan + '</p>' +
+'<strong>Anticipated Problems</strong>: ' + $scope.soap.patientAnticipatedProblems + '<br/>';
+
    window.plugin.email.open({
     to:      ['rogers@eyebytesolutions.com'],
     cc:      ['vehr@eyebytesolutions.com'],
     bcc:     [''],
     subject: 'SOAP Note: Test',
-    body:    '<h1>Test</h1><p>Data Here</p>',
+    body:    htmlbody,
     isHtml:  true
 });
+
+
 };
 // end email
 
@@ -324,106 +369,6 @@ $scope.shareSOAP = function() {
 
 
 
-// ang picture test
-$scope.myPictures = [];
-$scope.$watch('myPicture', function(value) {
-   if(value) {
-      myPictures.push(value);
-   }
-}, true);
-
-
-
-
-// Photo capture.
-
-//begin test
-var pictureSource; // picture source
-var destinationType; // sets the format of returned value
-
-// Wait for PhoneGap to connect with the device
-//
-document.addEventListener("deviceready",onDeviceReady,false);
-
-// PhoneGap is ready to be used!
-//
-function onDeviceReady() {
-pictureSource=navigator.camera.PictureSourceType;
-destinationType=navigator.camera.DestinationType;
-}
-
-// Called when a photo is successfully retrieved
-//
-function onPhotoDataSuccess(imageData) {
-// Get image handle
-//
-var smallImage = document.getElementById('smallImage');
-
-// Unhide image elements
-//
-smallImage.style.display = 'block';
-
-// Show the captured photo
-// The inline CSS rules are used to resize the image
-//
-smallImage.src = "data:image/jpeg;base64," + imageData;
-}
-// Called when a photo is successfully retrieved
-//
-function onPhotoFileSuccess(imageData) {
-// Get image handle
-console.log(JSON.stringify(imageData));
-// Get image handle
-//
-var smallImage = document.getElementById('smallImage');
-
-// Unhide image elements
-//
-smallImage.style.display = 'block';
-
-// Show the captured photo
-// The inline CSS rules are used to resize the image
-//
-smallImage.src = imageData;
-}
-
-// Called when a photo is successfully retrieved
-//
-function onPhotoURISuccess(imageURI) {
-// Uncomment to view the image file URI
-// console.log(imageURI);
-
-// Get image handle
-//
-var largeImage = document.getElementById('largeImage');
-
-// Unhide image elements
-//
-largeImage.style.display = 'block';
-
-// Show the captured photo
-// The inline CSS rules are used to resize the image
-//
-largeImage.src = imageURI;
-}
-
-function capturePhotoWithFile() {
-navigator.camera.getPicture(onPhotoFileSuccess, onFail, { quality: 50, destinationType: Camera.DestinationType.FILE_URI });
-}
-// A button will call this function
-//
-function getPhoto(source) {
-// Retrieve image file location from specified source
-navigator.camera.getPicture(onPhotoURISuccess, onFail, { quality: 50,
-destinationType: destinationType.FILE_URI,
-sourceType: source });
-}
-
-// Called if something bad happens.
-//
-function onFail(message) {
-alert('Failed because: ' + message);
-}
 
 
 
