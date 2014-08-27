@@ -56,7 +56,7 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
          "responderFirstName": {"type": "TEXT", "null": "NOT NULL"},
          "responderLastName": {"type": "TEXT", "null": "NOT NULL"},
          "responderUid": {"type": "TEXT", "null": "NOT NULL"},
-         "incidentDate": {"type": "DATE","null": "NOT NULL"},
+         "incidentDate": {"type": "DATE", "null": "NOT NULL"},
          "incidentLocation": {"type": "TEXT","null": "NOT NULL"},
          "incidentLat": {"type": "TEXT","null": "NOT NULL"},
          "incidentLon": {"type": "TEXT","null": "NOT NULL"},
@@ -90,38 +90,38 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
      saveSoap: function(soapAttr, responderAttr, callback) {
        var soap = {};
        self.db.insert('Soap', {
-         "responderFirstName": responderAttr.firstName,
-         "responderLastName": responderAttr.lastName,
-         "responderUid": responderAttr.id,
-         "incidentDate": soapAttr.incidentDate,
-         "incidentLocation": soapAttr.incidentLocation,
-         "incidentLat": soapAttr.incidentLat,
-         "incidentLon": soapAttr.incidentLon,
-         "patientInitials": soapAttr.patientInitials,
-         "patientGender": soapAttr.patientGender,
-         "patientDob": soapAttr.patientDob,
-         "patientAge": soapAttr.patientAge,
-         "patientLOR": soapAttr.patientLOR,
-         "patientComplaint": soapAttr.patientComplaint,
-         "patientOnset": soapAttr.patientOnset,
-         "patientPPalliates": soapAttr.patientPPalliates,
-         "patientQuality": soapAttr.patientQuality,
-         "patientRadiates": soapAttr.patientRadiates,
-         "patientSeverity": soapAttr.patientSeverity,
-         "patientTime": soapAttr.patientTime,
-         "patientHPI": soapAttr.patientHPI,
-         "patientSpinal": soapAttr.patientSpinal,
-         "patientFound": soapAttr.patientFound,
-         "patientExamReveals": soapAttr.patientExamReveals,
-         "patientSymptoms": soapAttr.patientSymptoms,
-         "patientAllergies": soapAttr.patientAllergies,
-         "patientMedications": soapAttr.patientMedications,
-         "patientMedicalHistory": soapAttr.MedicalHistory,
-         "patientLastIntake": soapAttr.LastIntake,
-         "patientEventsForCause": soapAttr.patientEventsForCause,
-         "patientAssessment": soapAttr.patientAssessment,
-         "patientPlan": soapAttr.patientPlan,
-         "patientAnticipatedProblems": soapAttr.patientAnticipatedProblems
+         "responderFirstName": responderAttr.firstName || '',
+         "responderLastName": responderAttr.lastName || '',
+         "responderUid": responderAttr.id || '',
+         "incidentDate": soapAttr.incidentDate || '',
+         "incidentLocation": soapAttr.incidentLocation || '',
+         "incidentLat": soapAttr.incidentLat || '',
+         "incidentLon": soapAttr.incidentLon || '',
+         "patientInitials": soapAttr.patientInitials || '',
+         "patientGender": soapAttr.patientGender || '',
+         "patientDob": soapAttr.patientDob || '',
+         "patientAge": soapAttr.patientAge || '',
+         "patientLOR": soapAttr.patientLOR || '',
+         "patientComplaint": soapAttr.patientComplaint || '',
+         "patientOnset": soapAttr.patientOnset || '',
+         "patientPPalliates": soapAttr.patientPPalliates || '',
+         "patientQuality": soapAttr.patientQuality || '',
+         "patientRadiates": soapAttr.patientRadiates || '',
+         "patientSeverity": soapAttr.patientSeverity || '',
+         "patientTime": soapAttr.patientTime || '',
+         "patientHPI": soapAttr.patientHPI || '',
+         "patientSpinal": soapAttr.patientSpinal || '',
+         "patientFound": soapAttr.patientFound || '',
+         "patientExamReveals": soapAttr.patientExamReveals || '',
+         "patientSymptoms": soapAttr.patientSymptoms || '',
+         "patientAllergies": soapAttr.patientAllergies || '',
+         "patientMedications": soapAttr.patientMedications || '',
+         "patientMedicalHistory": soapAttr.MedicalHistory || '',
+         "patientLastIntake": soapAttr.LastIntake || '',
+         "patientEventsForCause": soapAttr.patientEventsForCause || '',
+         "patientAssessment": soapAttr.patientAssessment || '',
+         "patientPlan": soapAttr.patientPlan || '',
+         "patientAnticipatedProblems": soapAttr.patientAnticipatedProblems || ''
        }).then(function(results) {
          self.db.select("Soap", {
            "id": results.insertId
@@ -132,6 +132,7 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
            }
          })
        })
+
 
      },
      soaps: function(callback) {
@@ -178,12 +179,26 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
        self.db.createTable('Vital', {
          "id": {"type": "INTEGER", "null": "NOT NULL", "primary": true, "auto_increment": true},
          "created": {"type": "TIMESTAMP", "null": "NOT NULL", "default": "CURRENT_TIMESTAMP" },
-         "lor": {"type": "TEXT", "null": "NOT NULL"}
+         "lor": {"type": "TEXT", "null": "NOT NULL"},
+         "rate": {"type": "INTEGER", "null": "NOT NULL"},
+         "quality": {"type": "TEXT", "null": "NOT NULL"},
+         "rrhythm": {"type": "TEXT", "null": "NOT NULL"},
+         "rquality": {"type": "TEXT", "null": "NOT NULL"},
+         "sctmcolor": {"type": "TEXT", "null": "NOT NULL"},
+         "sctmtemp": {"type": "TEXT", "null": "NOT NULL"},
+         "sctmmoisture": {"type": "TEXT", "null": "NOT NULL"}
        })
      },
      saveVital: function(vitalAttr) {
        self.db.insert('Vital', {
-         "lor": vitalAttr.lor
+         "lor": vitalAttr.lor || '',
+         "rate": vitalAttr.rate || '',
+         "quality": vitalAttr.quality || '',
+         "rrhythm": vitalAttr.rrhythm || '',
+         "rquality": vitalAttr.rquality || '',
+         "sctmcolor": vitalAttr.sctmcolor || '',
+         "sctmtemp": vitalAttr.sctmtemp || '',
+         "sctmmoisture": vitalAttr.sctmmoisture || ''
        }).then(function(results) {
          console.log(results.insertId);
        })
@@ -214,10 +229,11 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
   var vitals = [];
 
   return {
-    createNewVital: function(vitalData) {
+    createVitalTable: function() {
       nolsDB.createVitalTable();
-      var vitalAttr = angular.fromJson(vitalData);
-      nolsDB.saveVital(vitalAttr);
+    },
+    saveNewVital: function(vitalAttr, soapAttr, callback) {
+      return nolsDB.saveVital(vitalAttr,soapAttr,callback);
     },
     all: function() {
       return vitals;
