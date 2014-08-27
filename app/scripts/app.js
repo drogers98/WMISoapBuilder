@@ -9,41 +9,6 @@
 angular.module('WMISoapBuilder', ['ionic', 'WMISoapBuilder.controllers', 'WMISoapBuilder.services', 'angular-websql', 'debounce'])
 
 
-
-.directive('camera', function() {
-   return {
-      restrict: 'A',
-      require: 'ngModel',
-      link: function(scope, elm, attrs, ctrl) {
-
-
-         elm.on('click', function() {
-            navigator.camera.getPicture(function (imageURI) {
-               scope.$apply(function() {
-                  ctrl.$setViewValue(imageURI);
-               });
-            }, function (err) {
-               ctrl.$setValidity('error', false);
-            }, {
-                quality : 50,
-                destinationType : Camera.DestinationType.DATA_URL,
-                sourceType : Camera.PictureSourceType.PHOTOLIBRARY,
-                allowEdit : true,
-                encodingType: Camera.EncodingType.JPEG,
-                targetWidth: 1000,
-                targetHeight: 1000,
-                popoverOptions: CameraPopoverOptions,
-                saveToPhotoAlbum: false
-            })
-         });
-      }
-   };
-})
-
-
-
-
-
 .run(function($ionicPlatform, nolsDB) {
   nolsDB.init();
   $ionicPlatform.ready(function() {
@@ -231,3 +196,96 @@ else {
 	document.getElementById("Diastolic").placeholder = "N/A";
 	}
 };
+
+
+
+// Photo capture.
+
+//begin test
+var pictureSource; // picture source
+var destinationType; // sets the format of returned value
+
+// Wait for PhoneGap to connect with the device
+//
+document.addEventListener("deviceready",onDeviceReady,false);
+
+// PhoneGap is ready to be used!
+//
+function onDeviceReady() {
+pictureSource=navigator.camera.PictureSourceType;
+destinationType=navigator.camera.DestinationType;
+}
+
+// Called when a photo is successfully retrieved
+//
+function onPhotoDataSuccess(imageData) {
+// Get image handle
+//
+var smallImage = document.getElementById('smallImage');
+
+// Unhide image elements
+//
+smallImage.style.display = 'block';
+
+// Show the captured photo
+// The inline CSS rules are used to resize the image
+//
+smallImage.src = "data:image/jpeg;base64," + imageData;
+}
+// Called when a photo is successfully retrieved
+//
+function onPhotoFileSuccess(imageData) {
+// Get image handle
+console.log(JSON.stringify(imageData));
+// Get image handle
+//
+var smallImage = document.getElementById('smallImage');
+
+// Unhide image elements
+//
+smallImage.style.display = 'block';
+
+// Show the captured photo
+// The inline CSS rules are used to resize the image
+//
+smallImage.src = imageData;
+}
+
+// Called when a photo is successfully retrieved
+//
+function onPhotoURISuccess(imageURI) {
+// Uncomment to view the image file URI
+// console.log(imageURI);
+
+// Get image handle
+//
+var largeImage = document.getElementById('largeImage');
+
+// Unhide image elements
+//
+largeImage.style.display = 'block';
+
+// Show the captured photo
+// The inline CSS rules are used to resize the image
+//
+largeImage.src = imageURI;
+}
+
+function capturePhotoWithFile() {
+navigator.camera.getPicture(onPhotoFileSuccess, onFail, { quality: 50, destinationType: Camera.DestinationType.FILE_URI });
+}
+// A button will call this function
+//
+function getPhoto(source) {
+// Retrieve image file location from specified source
+navigator.camera.getPicture(onPhotoURISuccess, onFail, { quality: 50,
+destinationType: destinationType.FILE_URI,
+sourceType: source });
+}
+
+// Called if something bad happens.
+//
+function onFail(message) {
+alert('Failed because: ' + message);
+}
+// end photo
