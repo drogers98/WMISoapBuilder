@@ -45,7 +45,9 @@ $scope.toggleSideMenu = function() {
 
 .controller('SoapCtrl', function($scope, $state, $stateParams, Soaps, Responders, $ionicModal, $timeout) {
 "use strict";
-  /* leave drop commented out unless soap table is being altered */
+  /* leave drop commented out unless soap table is being altered
+    un comment and run will drop responder,soap and vital table
+   */
   //Soaps.drop();
 
 
@@ -448,14 +450,14 @@ alert('Failed because: ' + message);
     Vitals.createVitalTable();
 
     Soaps.getLast(function(err,soap){
-      console.log(soap);
+      Vitals.saveNewVital(vital,soap,function(err,callback){
+        $scope.vital = vital;
+      })
+      $state.go('tab.newvital')
     })
+  }
 
-    /*Vitals.saveNewVital(vital,soap,function(err,callback){
-      $scope.vital = vital;
-      console.log(vital);
-    })*/
-  };
+
 
   $scope.timeValue = 0;
 

@@ -136,13 +136,18 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
 
 
      },
-     soaps: function(callback) {
+     /*soaps: function(callback) {
        var soaps = []
        self.db.selectAll("Soap").then(function(results) {
           for(var i=0; i < results.rows.length; i++){
             soaps.push(results.rows.item(i));
             callback(null, soaps);
           }
+       })
+     },*/
+     soaps: function(object,callback){
+       self.db.selectAll('Soap').then(function(results){
+         callback(null,results.rows);
        })
      },
      soap: function(object, query, callback) {
@@ -176,10 +181,14 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
      dropRes: function(){
        self.db.dropTable("Responder");
      },
+     dropVit: function(){
+       self.db.dropTable("Vital");
+     },
      createVitalTable: function() {
        self.db.createTable('Vital', {
          "id": {"type": "INTEGER", "null": "NOT NULL", "primary": true, "auto_increment": true},
          "created": {"type": "TIMESTAMP", "null": "NOT NULL", "default": "CURRENT_TIMESTAMP" },
+         "soapId": {"type": "INTEGER", "null": "NOT NULL"},
          "lor": {"type": "TEXT", "null": "NOT NULL"},
          "rate": {"type": "INTEGER", "null": "NOT NULL"},
          "quality": {"type": "TEXT", "null": "NOT NULL"},
@@ -190,8 +199,9 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
          "sctmmoisture": {"type": "TEXT", "null": "NOT NULL"}
        })
      },
-     saveVital: function(vitalAttr) {
+     saveVital: function(vitalAttr, soapAttr) {
        self.db.insert('Vital', {
+         "soapId": soapAttr,
          "lor": vitalAttr.lor || '',
          "rate": vitalAttr.rate || '',
          "quality": vitalAttr.quality || '',
@@ -201,7 +211,11 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
          "sctmtemp": vitalAttr.sctmtemp || '',
          "sctmmoisture": vitalAttr.sctmmoisture || ''
        }).then(function(results) {
-         console.log(results.insertId);
+         self.db.select('Vital', {
+           "id": results.insertId
+         }).then(function(results){
+           console.log(results);
+         })
        })
      }
 
@@ -255,7 +269,13 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
       nolsDB.soapUpdate(newSoapParam);
     },
     all: function(callback) {
-    return nolsDB.soaps(callback)
+    return nolsDB.soaps('Soap', function(err,data){
+      var soaps = [];
+      for(var i=0;i < data.length;i++){
+        soaps.push(data.item(i));
+        callback(null,soaps)
+      }
+    })
     },
     getLast: function(callback) {
       return nolsDB.soaps('Soap', function(err, data){
@@ -277,51 +297,10 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
     drop: function(){
       nolsDB.dropSoap();
       nolsDB.dropRes();
+      nolsDB.dropVit();
     }
 
   }
-
-
-
-
-  /*var soaps = [
-    {
-    	id: 0,
-    	created: '02/24/2014',
-    	responderFirstName: 'Dan',
-    	responderLastName: 'Rogers',
-    	responderLevelOfTraining: 'WEMT',
-    	incidentDate: '02/24/2014',
-    	incidentLocation: 'Mt Moran',
-    	incidentLat: '12345678',
-    	incidentLon: '12345678',
-    	patientInitials: 'RC',
-    	patientSex: 'Male',
-		  patientDob: '01/02/1989',
-   		patientAge: 24,
-   		patientLOR: 'Awake & Oriented x 3',
-   		patientComplaint: 'Neck Pain',
-   		patientOnset: 'rapid',
-        patientPPalliates: 'Moving around makes it hurt. Staying still seems fine',
-        patientQuality: 'Sharp',
-        patientRadiates: 'To the right shoulder',
-        patientSeverity: '8',
-        patientTime: '1 hour',
-        patientHPI: 'Was scrambling down the CMC route on Mt. Moran, and slipped. Patient fell aprox 30 feet onto a ledge.',
-        patientSpinal: 'Yes',
-        patientFound: 'Sitting upright, complaining of neck pain',
-        patientExamReveals: 'Bruise to the forehead',
-        patientSymptoms: 'Dizzy, lightheaded, nautious.',
-        patientAllergies: 'Bee stings',
-        patientMedications: 'Has epinepherine',
-        patientMedicalHistory: 'Previous concussion',
-        patientLastIntake: 'glass of water this morning, PB & J sandwich an hour ago.',
-        patientEventsForCause: 'Be was buzzing around, tried to swat it and fell.',
-        patientAssessment: 'Patient likely incured spinal injury on fall. Check for bee stings negligible.',
-        patientPlan: 'Have group help remove PX from camp, get them to medical facility.',
-        patientAnticipatedProblems: 'Exfil from the backcountry could prove problematic.' }
-  ]
-  */
 
 
 });
