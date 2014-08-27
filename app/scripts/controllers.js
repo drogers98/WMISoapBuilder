@@ -441,32 +441,21 @@ alert('Failed because: ' + message);
 })
 
 // coundown controls.
-.controller('VitalCtrl', function($scope, $state, $stateParams, Vitals) {
+.controller('VitalCtrl', function($scope, $state, $stateParams, Vitals, Soaps) {
 "use strict";
-  //$scope.vitals = Vitals.all();
-  $scope.lors = ["one", "two"];
 
-  $scope.saveVital = function(vital) {
-    //pass in current soapId
+  $scope.initiateVital = function(vital) {
+    var vital = {};
+    Vitals.createVitalTable();
 
-    var attributes = {
-      vital: {
-        lor: vital.lor,
-        rate: vital.rate,
-        quality: vital.quality,
-        rrhythm: vital.rrhythm,
-        rquality: vital.rquality,
-        sctmcolor: vital.sctmcolor,
-        sctmtemp: vital.sctmtemp,
-        sctmmoisture: vital.sctmmoisture,
-        brradialpulse: vital.brradialpulse,
-        pulils: vital.pulils,
-        tempDegrees: vital.tempDegrees
-      }
-    };
-    var vitalData = angular.toJson(attributes);
-    Vitals.createNewVital(vitalData);
+    Soaps.getLast(function(err,soap){
+      console.log(soap);
+    })
 
+    /*Vitals.saveNewVital(vital,soap,function(err,callback){
+      $scope.vital = vital;
+      console.log(vital);
+    })*/
   };
 
   $scope.timeValue = 0;
