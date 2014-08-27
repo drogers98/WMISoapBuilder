@@ -148,7 +148,8 @@ $scope.toggleSideMenu = function() {
 // Geolocation Stuff
 $scope.latLng = "Please click the button below, if GPS is available.";
 	   $scope.showPosition = function (position) {
-            $scope.latLng = position.coords.latitude + ", " + position.coords.longitude;
+            $scope.incidentLat = position.coords.latitude;
+            $scope.incidentLon = position.coords.longitude;
             $scope.$apply();
         }
 
