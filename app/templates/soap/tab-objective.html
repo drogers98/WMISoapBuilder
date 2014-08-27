@@ -25,7 +25,7 @@
       </div>
       <h5>Vital Signs<a ng-click="openModal(3)"><span>i</span></a></h5>
       <div class="list">
-      <a class="button button-block button-light margin" ng-controller="VitalCtrl" ng-click="initiateVital(vital)"><icon class="icon icon-right ion-plus-circled"></icon> Add Vitals</a>
+      <a class="button button-block button-light margin" ng-controller="VitalCtrl" ng-click="initiateVital(vital,soap)"><icon class="icon icon-right ion-plus-circled"></icon> Add Vitals</a>
 
 
 	  <table class="VitalsTable">
@@ -81,9 +81,7 @@
 
 
 
-        <ion-list ng-repeat="vital in vitals">
-         {{vital}}
-       </ion-list>
+
 
       <a class="button button-block button-calm margin" href="#/tab/vitals">View All Vitals</a>
       </div>
