@@ -56,6 +56,7 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
          "responderFirstName": {"type": "TEXT", "null": "NOT NULL"},
          "responderLastName": {"type": "TEXT", "null": "NOT NULL"},
          "responderUid": {"type": "TEXT", "null": "NOT NULL"},
+<<<<<<< HEAD
          "incidentDate": {"type": "DATE", "null": "NOT NULL"},
          "incidentLocation": {"type": "TEXT","null": "NOT NULL"},
          "incidentLat": {"type": "TEXT","null": "NOT NULL"},
@@ -85,6 +86,37 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
          "patientAssessment": {"type": "TEXT","null": "NOT NULL"},
          "patientPlan": {"type": "TEXT","null": "NOT NULL"},
          "patientAnticipatedProblems": {"type": "TEXT","null": "NOT NULL"}
+=======
+         "incidentDate": {"type": "DATE"},
+         "incidentLocation": {"type": "TEXT"},
+         "incidentLat": {"type": "TEXT"},
+         "incidentLon": {"type": "TEXT"},
+         "patientInitials": {"type": "TEXT"},
+         "patientGender": {"type": "TEXT"},
+         "patientDob": {"type": "DATE"},
+         "patientAge": {"type": "INTEGER"},
+         "patientLOR": {"type": "TEXT"},
+         "patientComplaint": {"type": "TEXT"},
+         "patientOnset": {"type": "TEXT"},
+         "patientPPalliates": {"type": "TEXT"},
+         "patientQuality": {"type": "TEXT"},
+         "patientRadiates": {"type": "TEXT"},
+         "patientSeverity": {"type": "TEXT"},
+         "patientTime": {"type": "TEXT"},
+         "patientHPI": {"type": "TEXT"},
+         "patientSpinal": {"type": "TEXT"},
+         "patientFound": {"type": "TEXT"},
+         "patientExamReveals": {"type": "TEXT"},
+         "patientSymptoms": {"type": "TEXT"},
+         "patientAllergies": {"type": "TEXT"},
+         "patientMedications": {"type": "TEXT"},
+         "patientMedicalHistory": {"type": "TEXT"},
+         "patientLastIntake": {"type": "TEXT"},
+         "patientEventsForCause": {"type": "TEXT"},
+         "patientAssessment": {"type": "TEXT"},
+         "patientPlan": {"type": "TEXT"},
+         "patientAnticipatedProblems": {"type": "TEXT"}
+>>>>>>> e80e83639985ec35788d5d4f8447b6aba69b59c3
        })
      },
      saveSoap: function(soapAttr, responderAttr, callback) {
