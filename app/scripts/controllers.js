@@ -13,10 +13,10 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce'])
   //get ready for JS transfer from beta
   //$scope.responder = Responders.all();
   $scope.trainingLevels = ['WFA','WAFA','WFR', 'WEMT', 'Other'];
-  $scope.responder = null;
+  $scope.responder;
 
   Responders.get(function(err,responders) {
-    if(responders){
+    if(responders !== null){
       $scope.responders = responders;
       $state.go('soaps');
     }else {
@@ -46,7 +46,8 @@ $scope.toggleSideMenu = function() {
 .controller('SoapCtrl', function($scope, $state, $stateParams, Soaps, Responders, $ionicModal, $timeout) {
 "use strict";
   /* leave drop commented out unless soap table is being altered */
-  //Soaps.drop();
+  Soaps.drop();
+
 
   Responders.get(function(err,responder) {
     $scope.responder = responder;
@@ -104,7 +105,7 @@ $scope.toggleSideMenu = function() {
 
   //there has got to be a cleaner way of doing this but time is of the essence
   $scope.$watch('responder.firstName', debounceSaveUpdates);
-  
+
   $scope.$watch('soap.incidentDate', debounceSaveUpdates);
   $scope.$watch('soap.incidentLocation', debounceSaveUpdates);
   $scope.$watch('soap.incidentLat', debounceSaveUpdates);

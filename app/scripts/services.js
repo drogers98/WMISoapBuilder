@@ -38,13 +38,15 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
        })
      },
      getResponder: function(callback) {
-       var responders = {}
+       var responder;
        self.db.selectAll("Responder").then(function(results) {
           var len = results.rows.length - 1;
           for(var i=len; i < results.rows.length; i++){
             responders = results.rows.item(i);
             callback(null, responders);
           }
+       }, function(){
+         callback(null,null);
        })
      },
      createSoapTable: function() {
@@ -169,6 +171,9 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
      dropSoap: function() {
        self.db.dropTable("Soap");
      },
+     dropRes: function(){
+       self.db.dropTable("Responder");
+     },
      createVitalTable: function() {
        self.db.createTable('Vital', {
          "id": {"type": "INTEGER", "null": "NOT NULL", "primary": true, "auto_increment": true},
@@ -254,6 +259,7 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
     },
     drop: function(){
       nolsDB.dropSoap();
+      nolsDB.dropRes();
     }
 
   }
