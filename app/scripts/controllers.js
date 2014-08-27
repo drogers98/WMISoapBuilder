@@ -46,7 +46,7 @@ $scope.toggleSideMenu = function() {
 .controller('SoapCtrl', function($scope, $state, $stateParams, Soaps, Responders, $ionicModal, $timeout) {
 "use strict";
   /* leave drop commented out unless soap table is being altered */
-  Soaps.drop();
+  //Soaps.drop();
 
 
   Responders.get(function(err,responder) {
