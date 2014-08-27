@@ -193,12 +193,19 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
          "soapId": {"type": "INTEGER", "null": "NOT NULL"},
          "lor": {"type": "TEXT", "null": "NOT NULL"},
          "rate": {"type": "INTEGER", "null": "NOT NULL"},
-         "quality": {"type": "TEXT", "null": "NOT NULL"},
-         "rrhythm": {"type": "TEXT", "null": "NOT NULL"},
-         "rquality": {"type": "TEXT", "null": "NOT NULL"},
+         "heartRythm": {"type": "TEXT", "null": "NOT NULL"},
+         "heartQuality": {"type": "TEXT", "null": "NOT NULL"},
+         "respRate": {"type": "INTEGER", "null": "NOT NULL"},
+         "respRhythm": {"type": "TEXT", "null": "NOT NULL"},
+         "respQuality": {"type": "TEXT", "null": "NOT NULL"},
          "sctmcolor": {"type": "TEXT", "null": "NOT NULL"},
          "sctmtemp": {"type": "TEXT", "null": "NOT NULL"},
-         "sctmmoisture": {"type": "TEXT", "null": "NOT NULL"}
+         "sctmmoisture": {"type": "TEXT", "null": "NOT NULL"},
+         "brradialpulse": {"type": "TEXT", "null": "NOT NULL"},
+         "brradialtaken": {"type": "TEXT", "null": "NOT NULL"},
+         "pupils": {"type": "TEXT", "null": "NOT NULL"},
+         "tempDegrees": {"type": "TEXT", "null": "NOT NULL"}
+
        })
      },
      saveVital: function(vitalAttr, soapAttr, callback) {
@@ -207,12 +214,18 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
          "soapId": soapAttr,
          "lor": vitalAttr.lor || '',
          "rate": vitalAttr.rate || '',
-         "quality": vitalAttr.quality || '',
-         "rrhythm": vitalAttr.rrhythm || '',
-         "rquality": vitalAttr.rquality || '',
+         "heartRythm": vitalAttr.heartRythm || '',
+         "heartQuality": vitalAttr.heartQuality || '',
+         "respRate": vitalAttr.respRate || '',
+         "respRhythm": vitalAttr.rrhythm || '',
+         "respQuality": vitalAttr.rquality || '',
          "sctmcolor": vitalAttr.sctmcolor || '',
          "sctmtemp": vitalAttr.sctmtemp || '',
-         "sctmmoisture": vitalAttr.sctmmoisture || ''
+         "sctmmoisture": vitalAttr.sctmmoisture || '',
+         "brradialpulse": vitalAttr.brradialpulse || '',
+         "brradialtaken": vitalAttr.brradialtaken || '',
+         "pupils": vitalAttr.pupils || '',
+         "tempDegrees": vitalAttr.tempDegrees || ''
        }).then(function(results) {
          self.db.select('Vital', {
            "id": results.insertId

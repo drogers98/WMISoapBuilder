@@ -493,6 +493,19 @@ alert('Failed because: ' + message);
     }
   }
   $scope.$watch('vital.lor', debounceSaveUpdates);
+  $scope.$watch('vital.rate', debounceSaveUpdates);
+  $scope.$watch('vital.heartRythm', debounceSaveUpdates);
+  $scope.$watch('vital.heartQuality', debounceSaveUpdates);
+  $scope.$watch('vital.respRate', debounceSaveUpdates);
+  $scope.$watch('vital.restRhythm', debounceSaveUpdates);
+  $scope.$watch('vital.restQuality', debounceSaveUpdates);
+  $scope.$watch('vital.sctmcolor', debounceSaveUpdates);
+  $scope.$watch('vital.sctmtemp', debounceSaveUpdates);
+  $scope.$watch('vital.sctmmoisture', debounceSaveUpdates);
+  $scope.$watch('vital.brradialpulse', debounceSaveUpdates);
+  $scope.$watch('vital.brradialtaken', debounceSaveUpdates);
+  $scope.$watch('vital.pupils', debounceSaveUpdates);
+  $scope.$watch('vital.tempDegrees', debounceSaveUpdates);
 
   $scope.updateVitalParam = function(newParam) {
     Vitals.updateVital(newParam);
