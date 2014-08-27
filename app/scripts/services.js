@@ -172,7 +172,7 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
            })
          })
        }
-       grabLastId()
+       grabLastId();
 
      },
      dropSoap: function() {
@@ -199,7 +199,8 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
          "sctmmoisture": {"type": "TEXT", "null": "NOT NULL"}
        })
      },
-     saveVital: function(vitalAttr, soapAttr) {
+     saveVital: function(vitalAttr, soapAttr, callback) {
+       var vital = {};
        self.db.insert('Vital', {
          "soapId": soapAttr,
          "lor": vitalAttr.lor || '',
@@ -214,8 +215,34 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
          self.db.select('Vital', {
            "id": results.insertId
          }).then(function(results){
-           console.log(results);
+           for(var i=0;i < results.rows.length;i++){
+             vital = results.rows.item(i);
+             callback(null, vital)
+           }
          })
+       })
+     },
+     vitalUpdate: function(newVitalParam){
+       var objectForUpdate = function(newVitalParam){
+         var buildKeyValue = {};
+         buildKeyValue[newVitalParam.key] = newVitalParam.val;
+         return buildKeyValue;
+       }
+       var grabLastId = function(){
+         self.db.selectAll('Vital').then(function(results){
+           for(var i = results.rows.length - 1;i < results.rows.length;i++){
+             var vitalID = results.rows.item(i).id;
+           }
+           self.db.update('Vital', objectForUpdate(newVitalParam), {
+             "id": vitalID
+           })
+         })
+       }
+       grabLastId();
+     },
+     vitals: function(object,callback){
+       self.db.selectAll('Vital').then(function(results){
+         callback(null,results.rows);
        })
      }
 
@@ -239,21 +266,6 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
     }
   }
 
-})
-.factory('Vitals', function(nolsDB) {
-  var vitals = [];
-
-  return {
-    createVitalTable: function() {
-      nolsDB.createVitalTable();
-    },
-    saveNewVital: function(vitalAttr, soapAttr, callback) {
-      return nolsDB.saveVital(vitalAttr,soapAttr,callback);
-    },
-    all: function() {
-      return vitals;
-    }
-  }
 })
 
 .factory('Soaps', function(nolsDB) {
@@ -302,5 +314,29 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
 
   }
 
+})
 
+.factory('Vitals', function(nolsDB) {
+  var vitals = [];
+
+  return {
+    createVitalTable: function() {
+      nolsDB.createVitalTable();
+    },
+    saveNewVital: function(vitalAttr, soapAttr, callback) {
+      return nolsDB.saveVital(vitalAttr,soapAttr,callback);
+    },
+    updateVital: function(newVitalParam) {
+      nolsDB.vitalUpdate(newVitalParam);
+    },
+    all: function(callback) {
+      return nolsDB.vitals('Vital', function(err,data){
+        var vitals = [];
+        for(var i=0;i < data.length;i++){
+          vitals.push(data.item(i));
+          callback(null,vitals)
+        }
+      })
+    }
+  }
 });

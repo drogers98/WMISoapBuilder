@@ -3,7 +3,7 @@
     <a class="button button" href="#/tab/objective">Cancel</a>
   </ion-nav-buttons>
 
-  <ion-content has-header="true" padding="false" has-bouncing="false">
+  <ion-content ng-controller="VitalCtrl" has-header="true" padding="false" has-bouncing="false">
 
   <div class="SOAP VITALS">
     <div class="list">
@@ -11,10 +11,8 @@
         <!-- Time Taken -->
         <h6>Time Taken<a>i</a></h6>
       <div class="item item-input">
-       add time field here. adjustable.
+       <input type="number" ng-model="vital.id">
       </div>
-
-
 
     <!-- LOR -->
     <h6>Level of Responsiveness</h6>
@@ -22,8 +20,8 @@
         <div class="input-label">
           LOR
         </div>
-        <select id="test" ng-model="vital.lor" ng-options="lor for lor in lors" onchange="changeClass(this.id)">
-	        <option value="" default selected>Please Choose</option>
+        <select id="test" ng-model="vital.lor" ng-options="lor for lor in LORs" onchange="changeClass(this.id)">
+	         <option style="display:none;" value="" selected>Please Choose</option>
         </select>
       </div>
 

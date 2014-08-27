@@ -62,12 +62,10 @@ $scope.toggleSideMenu = function() {
     $scope.soaps = soaps;
   });
 
-
-
   $scope.initiateSoap = function(soap, responder) {
     var soap = {};
     Soaps.createSoapTable();
-    Soaps.saveNewSoap(soap,responder,function(err, callback){
+    Soaps.saveNewSoap(soap,responder,function(err, soap){
       $scope.soap = soap;
       $state.go('tab.overview');
     });
@@ -105,6 +103,10 @@ $scope.toggleSideMenu = function() {
     }
   }
 
+  $scope.updateSoapParam = function(newParam) {
+    Soaps.updateSoap(newParam);
+  }
+
   //there has got to be a cleaner way of doing this but time is of the essence
   $scope.$watch('responder.firstName', debounceSaveUpdates);
   $scope.$watch('soap.incidentDate', debounceSaveUpdates);
@@ -136,14 +138,6 @@ $scope.toggleSideMenu = function() {
   $scope.$watch('soap.patientAssessment', debounceSaveUpdates);
   $scope.$watch('soap.patientPlan', debounceSaveUpdates);
   $scope.$watch('soap.patientAnticipatedProblems', debounceSaveUpdates);
-
-
-
-
-
-  $scope.updateSoapParam = function(newParam) {
-    Soaps.updateSoap(newParam);
-  }
 
 
 // Geolocation Stuff
@@ -442,22 +436,67 @@ alert('Failed because: ' + message);
 })
 
 // coundown controls.
-.controller('VitalCtrl', function($scope, $state, $stateParams, Vitals, Soaps) {
+.controller('VitalCtrl', function($scope, $state, $stateParams, $timeout, Vitals, Soaps) {
 "use strict";
 
-  $scope.initiateVital = function(vital) {
+  $scope.vitals;
+  $scope.vital;
+
+  Vitals.all(function(err,vitals){
+    $scope.vitals = vitals;
+  })
+  $scope.soap;
+  Soaps.getLast(function(err,soap){
+    $scope.soap = soap;
+  })
+
+  $scope.initiateVital = function(vital,soap) {
     var vital = {};
     Vitals.createVitalTable();
-
-    Soaps.getLast(function(err,soap){
-      Vitals.saveNewVital(vital,soap,function(err,callback){
+    //Soaps.getLast(function(err,soap){
+      Vitals.saveNewVital(vital,soap,function(err,vital){
         $scope.vital = vital;
+        $state.go('tab.newvital');
       })
-      $state.go('tab.newvital')
-    })
+    //})
   }
 
+  var timeout = null;
+  var debounceSaveUpdates = function(newVal, oldVal) {
+    if(newVal != oldVal) {
+      if(timeout) {
+        $timeout.cancel(timeout)
+      }
 
+      var newVitalParamForUpdate = function() {
+         $scope.vital.getVitalKeyByValue = function (value) {
+          for(var prop in this) {
+            if(this.hasOwnProperty(prop)) {
+              if( this[ prop ] === value)
+                return prop;
+            }
+          }
+        }
+
+        var vitalValue = $scope.vital.getVitalKeyByValue(newVal);
+
+        var buildVitalParamObject = function(vitalVal,newVal) {
+          var updateParams = {};
+          updateParams["key"] = vitalVal;
+          updateParams["val"] = newVal;
+          return updateParams;
+        }
+        return buildVitalParamObject(vitalValue, newVal);
+      }
+      timeout = $timeout($scope.updateVitalParam(newVitalParamForUpdate()), 1000);
+      $scope.updateVitalParam(newVal)
+    }
+  }
+  $scope.$watch('vital.lor', debounceSaveUpdates);
+
+  $scope.updateVitalParam = function(newParam) {
+    Vitals.updateVital(newParam);
+  }
 
   $scope.timeValue = 0;
 
