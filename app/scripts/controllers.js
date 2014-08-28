@@ -493,8 +493,8 @@ var htmlbody = '<h2>Location</h2>'+
 })
 
 .controller('VitalDetailCtrl', function($scope, $stateParams, Vitals) {
-  $scope.vital;
-  Vitals.get($stateParams.vitalId, function(err, vital) {
-    $scope.vital = vital;
+  $scope.vitalDetail;
+  Vitals.get($stateParams.vitalId, function(err, vitalDetail) {
+    $scope.vitalDetail = vitalDetail;
   })
 });
