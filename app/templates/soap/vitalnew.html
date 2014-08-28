@@ -9,30 +9,30 @@
     <div class="list">
 
         <!-- Time Taken -->
-        <h6>Time Taken<a ng-click="openModal(5)"><span>i</span></a></h6>
+        <h5>Time Taken<a ng-click="openModal(5)"><span>i</span></a></h5>
       <div class="item item-input">
        <input type="time" ng-model="vital.timeTaken">
       </div>
 
     <!-- LOR -->
-    <h6>Level of Responsiveness</h6>
+    <h5>Level of Responsiveness</h5>
       <div class="item item-select">
         <div class="input-label">
           LOR
         </div>
-        <select id="test" ng-model="vital.lor" ng-options="lor for lor in LORs" onchange="changeClass(this.id)">
+        <select id="test" ng-model="vital.lor" ng-options="lor.value as lor.name for lor in LORs" onchange="changeClass(this.id)">
 	         <option style="display:none;" value="" selected>Please Choose</option>
         </select>
       </div>
 
       <!-- Heart -->
 
-     <h6>Heart<a ng-click="openModal(5)"><span>i</span></a></h6>
-<h7>Rate (Beats Per Minute)</h7>
+     <h5>Heart<a ng-click="openModal(5)"><span>i</span></a></h5>
+<h6>Rate (Beats Per Minute)</h6>
 	  <label class="item item-input">
         <input type="number" placeholder="Rate (BPM)" ng-model="vital.rate">
       </label>
-      <h7>Rythm</h7>
+      <h6>Rythm</h6>
       <div class="item item-select">
         <div class="input-label">
           Rhythm
@@ -42,7 +42,7 @@
 	        <option style="display:none;" value="" selected>Please Choose</option>
         </select>
       </div>
-      <h7>Quality</h7>
+      <h6>Quality</h6>
       <div class="item item-select">
         <div class="input-label">
           Quality
@@ -62,7 +62,7 @@
 	  <label class="item item-input">
         <input type="number" placeholder="Rate (BPM)" ng-model="vital.respRate">
       </label>
-      <h7>Rhythm</h7>
+      <h6>Rhythm</h6>
       <div class="item item-select">
         <div class="input-label">
           Rhythm
@@ -72,7 +72,7 @@
 	        <option style="display:none;" value="" selected>Please Choose</option>
         </select>
       </div>
-      <h7>Quality</h7>
+      <h6>Quality</h6>
       <div class="item item-select">
         <div class="input-label">
           Quality
@@ -87,8 +87,8 @@
 
 
       <!-- Skin -->
-      <h6>Skin<a ng-click="openModal(5)"><span>i</span></a></h6>
-      <h7>Color</h7>
+      <h5>Skin<a ng-click="openModal(5)"><span>i</span></a></h5>
+      <h6>Color</h6>
 	   <div class="item item-select">
         <div class="input-label">
           Color
@@ -98,7 +98,7 @@
 	        <option style="display:none;" value="" selected>Please Choose</option>
         </select>
       </div>
-      <h7>Temperature</h7>
+      <h6>Temperature</h6>
       <div class="item item-select">
         <div class="input-label">
           Temperature
@@ -107,7 +107,7 @@
 	        <option style="display:none;" value="" selected>Please Choose</option>
         </select>
       </div>
-      <h7>Moisture</h7>
+      <h6>Moisture</h6>
       <div class="item item-select">
         <div class="input-label">
           Moisture
@@ -119,8 +119,8 @@
 
 
  <!-- Blood Pressure -->
- <h6>Blood Pressure<a ng-click="openModal(5)"><span>i</span></a></h6>
- <h7>Radial Pulse</h7>
+ <h5>Blood Pressure<a ng-click="openModal(5)"><span>i</span></a></h5>
+ <h6>Radial Pulse</h6>
     <div class="item item-select">
         <div class="input-label">
           Radial Pulse
@@ -130,11 +130,11 @@
 	        <option style="display:none;" value="" selected>Please Choose</option>
         </select>
       </div>
-      <h7>Systolic</h7>
+      <h6>Systolic</h6>
 	  <label class="item item-input">
         <input type="number" placeholder="Reading" ng-model="vital.brsystolic">
       </label>
-      <h7>Diastolic</h7>
+      <h6>Diastolic</h6>
 
 
       <div class="row">
@@ -157,7 +157,7 @@
   </div>
 
 
- <h6>Pupils<a ng-click="openModal(5)"><span>i</span></a></h6>
+ <h5>Pupils<a ng-click="openModal(5)"><span>i</span></a></h5>
       <div class="item item-select">
         <div class="input-label">
           Pupils
@@ -168,7 +168,7 @@
       </div>
 
 
-    <h6>Temperature<a ng-click="openModal(5)"><span>i</span></a></h6>
+    <h5>Temperature<a ng-click="openModal(5)"><span>i</span></a></h5>
     <div class="row">
   <div class="col">
 	  <label class="item item-input">
@@ -180,7 +180,7 @@
 	   <div class="input-label">
           Degrees
         </div>
-        <select id="Degrees" ng-model="vital.tempDegrees" ng-options="tempDegree for tempDegree in tempDegrees" onchange="changeClass(this.id)">
+        <select id="Degrees" ng-model="vital.tempDegrees" ng-options="tempDegree.value as tempDegree.name for tempDegree in tempDegrees" onchange="changeClass(this.id)">
 	        <option style="display:none;" value="" selected>Please Choose</option>
         </select>
       </div>

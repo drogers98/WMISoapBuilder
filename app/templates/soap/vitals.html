@@ -11,7 +11,7 @@
     <ion-list show-delete="data.showDelete">
       <ion-item class="item-icon-right" ng-repeat="vital in vitals" type="item-text-wrap" href="#/tab/vitals/{{vital.id}}">
         <div class="row">
-          <div class="col">{{vital.created}}</div>
+          <div class="col">{{vital.timeTaken}} | {{vital.lor}}</div>
           <div class="col col-25 col-offset-25">
           </div>
         </div>
