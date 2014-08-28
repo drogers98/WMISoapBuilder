@@ -193,6 +193,7 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
          "id": {"type": "INTEGER", "null": "NOT NULL", "primary": true, "auto_increment": true},
          "created": {"type": "TIMESTAMP", "null": "NOT NULL", "default": "CURRENT_TIMESTAMP" },
          "soapId": {"type": "INTEGER", "null": "NOT NULL"},
+         "timeTaken": {"type": "TEXT", "null": "NOT NULL"},
          "lor": {"type": "TEXT", "null": "NOT NULL"},
          "rate": {"type": "INTEGER", "null": "NOT NULL"},
          "heartRythm": {"type": "TEXT", "null": "NOT NULL"},
@@ -204,11 +205,11 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
          "sctmtemp": {"type": "TEXT", "null": "NOT NULL"},
          "sctmmoisture": {"type": "TEXT", "null": "NOT NULL"},
          "brradialpulse": {"type": "TEXT", "null": "NOT NULL"},
-         "brsystolic": {"type": "TEXT", "null": "NOT NULL"},
+         "brsystolic": {"type": "INTEGER", "null": "NOT NULL"},
          "brradialtaken": {"type": "TEXT", "null": "NOT NULL"},
-         "brradialReading": {"type": "TEXT", "null": "NOT NULL"},
+         "brradialReading": {"type": "INTEGER", "null": "NOT NULL"},
          "pupils": {"type": "TEXT", "null": "NOT NULL"},
-         "tempDegreesReading": {"type": "TEXT", "null": "NOT NULL"},
+         "tempDegreesReading": {"type": "INTEGER", "null": "NOT NULL"},
          "tempDegrees": {"type": "TEXT", "null": "NOT NULL"}
 
        })
@@ -218,6 +219,7 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
        self.db.insert('Vital', {
          "soapId": soapAttr,
          "lor": vitalAttr.lor || '',
+         "timeTaken": vitalAttr.timeTaken || '',
          "rate": vitalAttr.rate || '',
          "heartRythm": vitalAttr.heartRythm || '',
          "heartQuality": vitalAttr.heartQuality || '',

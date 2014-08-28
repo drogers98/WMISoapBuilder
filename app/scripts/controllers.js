@@ -457,7 +457,7 @@ var htmlbody = '<h2>Location</h2>'+
       $scope.updateVitalParam(newVal)
     }
   }
-  $scope.$watch('vital.id', debounceSaveUpdates);
+  $scope.$watch('vital.timeTaken', debounceSaveUpdates);
   $scope.$watch('vital.lor', debounceSaveUpdates);
   $scope.$watch('vital.rate', debounceSaveUpdates);
   $scope.$watch('vital.heartRythm', debounceSaveUpdates);
