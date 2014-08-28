@@ -208,7 +208,11 @@ $scope.findAge = function (date) {
 
 
   //$scope.dt = new Date();
-  $scope.genders = ['Male', 'Female', 'Transgender'];
+  $scope.genders = [
+  			{name:'Male', value:'M'},
+  			{name:'Female', value:'F'},
+  			{name:'Transgender', value:'T'}
+  		];
   $scope.severities = [0,1,2,3,4,5,6,7,8,9,10];
   $scope.onsets = ['Sudden', 'Gradual'];
   $scope.qualities = ['Aching', 'Burning', 'Cramping', 'Crushing', 'Dull Pressure', 'Sharp', 'Squeezing', 'Stabbing', 'Tearing', 'Tight', 'Other'];
@@ -223,8 +227,20 @@ $scope.findAge = function (date) {
   $scope.RESPqualities = ['Easy', 'Shallow', 'Labored'];
   $scope.HEARTqualities = ['Strong', 'Weak', 'Bounding'];
   $scope.HEARTrythms = ['Regular', 'Irregular'];
-  $scope.tempDegrees = ['°Fahrenheit', '°Celsius'];
-  $scope.LORs = ['Awake & Oriented x 4', 'Awake & Oriented x 3', 'Awake & Oriented x 2', 'Awake & Oriented x 1', 'Awake & Oriented x 0', 'Verbal Stimulus', 'Painful Stimulus', 'Unresponsive'];
+  $scope.tempDegrees = [
+  			{name:'°Fahrenheit', value:'°F'},
+  			{name:'°Celsius', value:'°C'}
+  		];
+  $scope.LORs = [
+  			{name:'Awake & Oriented x 4', value:'AOx4'},
+  			{name:'Awake & Oriented x 3', value:'AOx3'},
+  			{name:'Awake & Oriented x 2', value:'AOx2'},
+  			{name:'Awake & Oriented x 1', value:'AOx1'},
+  			{name:'Awake & Oriented x 0', value:'AOxO'},
+  			{name:'Verbal Stimulus', value:'V'},
+  			{name:'Painful Stimulus', value:'P'},
+  			{name:'Unresponsive', value:'U'}
+  		];
 
   $scope.trainingLevels = ['WFA','WAFA','WFR', 'WEMT', 'Other'];
 

@@ -35,7 +35,7 @@
       <div class="input-label">
           Sex
        </div>
-        <select id="Sex" ng-model="soap.patientGender" ng-options="gender for gender in genders"  onchange="changeClass(this.id)">
+        <select id="Sex" ng-model="soap.patientGender" ng-options="gender.value as gender.name for gender in genders"  onchange="changeClass(this.id)">
 	        <option style="display:none;" value="" selected>Please Choose</option>
         </select>
       </div>
