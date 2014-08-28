@@ -330,7 +330,7 @@ var htmlbody = '<h2>Location</h2>'+
     }).then(function(modal) {
       $scope.oModal4 = modal;
     });
-    
+
                 // Modal 5
     $ionicModal.fromTemplateUrl('modal-5.html', {
       id: '5', // We need to use and ID to identify the modal that is firing the event!
@@ -475,7 +475,7 @@ var htmlbody = '<h2>Location</h2>'+
   $scope.$watch('vital.pupils', debounceSaveUpdates);
   $scope.$watch('vital.tempDegreesReading', debounceSaveUpdates);
   $scope.$watch('vital.tempDegrees', debounceSaveUpdates);
-  
+
 
   $scope.updateVitalParam = function(newParam) {
     Vitals.updateVital(newParam);
