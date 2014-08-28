@@ -204,8 +204,11 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
          "sctmtemp": {"type": "TEXT", "null": "NOT NULL"},
          "sctmmoisture": {"type": "TEXT", "null": "NOT NULL"},
          "brradialpulse": {"type": "TEXT", "null": "NOT NULL"},
+         "brsystolic": {"type": "TEXT", "null": "NOT NULL"},
          "brradialtaken": {"type": "TEXT", "null": "NOT NULL"},
+         "brradialReading": {"type": "TEXT", "null": "NOT NULL"},
          "pupils": {"type": "TEXT", "null": "NOT NULL"},
+         "tempDegreesReading": {"type": "TEXT", "null": "NOT NULL"},
          "tempDegrees": {"type": "TEXT", "null": "NOT NULL"}
 
        })
@@ -225,8 +228,11 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
          "sctmtemp": vitalAttr.sctmtemp || '',
          "sctmmoisture": vitalAttr.sctmmoisture || '',
          "brradialpulse": vitalAttr.brradialpulse || '',
+         "brsystolic": vitalAttr.brsystolic|| '',
          "brradialtaken": vitalAttr.brradialtaken || '',
+         "brradialReading": vitalAttr.brradialReading || '',
          "pupils": vitalAttr.pupils || '',
+         "tempDegreesReading": vitalAttr.tempDegreesReading || '',
          "tempDegrees": vitalAttr.tempDegrees || ''
        }).then(function(results) {
          self.db.select('Vital', {

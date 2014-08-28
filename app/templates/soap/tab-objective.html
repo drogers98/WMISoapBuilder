@@ -30,50 +30,35 @@
 	  <table class="VitalsTable" ng-controller="VitalCtrl">
             <tr>
               <th>Time</th>
-            <tr ng-repeat="sv in recentSoapVitals">
-              <td>{{sv.created}}</td>
+            <td ng-repeat="sv in recentSoapVitals">{{sv.id}}</td>
             </tr>
             <tr>
                 <th>LOR</th>
-                <td>data</td>
-                <td>data</td>
-                <td>data</td>
+                <td ng-repeat="sv in recentSoapVitals">{{sv.lor}}</td>
             </tr>
             <tr>
                 <th>HR</th>
-                <td>data</td>
-                <td>data</td>
-                <td>data</td>
+                <td ng-repeat="sv in recentSoapVitals">{{sv.rate}} {{sv.heartRythm}} {{sv.heartQuality}}</td>
             </tr>
             <tr>
                 <th>RR</th>
-                <td>data</td>
-                <td>data</td>
-                <td>data</td>
+                <td ng-repeat="sv in recentSoapVitals">{{sv.respRate}} {{sv.respRythm}} {{sv.respQuality}}</td>
             </tr>
             <tr>
                 <th>Skin</th>
-                <td>data</td>
-                <td>data</td>
-                <td>data</td>
+                <td ng-repeat="sv in recentSoapVitals">{{sv.sctmcolor}} {{sv.sctmtemp}} {{sv.sctmmoisture}}</td>
             </tr>
             <tr>
                 <th>BP</th>
-                <td>data</td>
-                <td>data</td>
-                <td>data</td>
+                <td ng-repeat="sv in recentSoapVitals">{{sv.brradialpulse}} {{sv.brsystolic}}/{{sv.brradialReading}} {{sv.brradialtaken}}</td>
             </tr>
             <tr>
                 <th>Pupils</th>
-                <td>data</td>
-                <td>data</td>
-                <td>data</td>
+                <td ng-repeat="sv in recentSoapVitals">{{sv.pupils}}</td>
             </tr>
             <tr>
                 <th>Temp</th>
-                <td>data</td>
-                <td>data</td>
-                <td>data</td>
+                <td ng-repeat="sv in recentSoapVitals">{{sv.tempDegreesReading}}{{sv.tempDegrees}}</td>
             </tr>
         </table>
 
