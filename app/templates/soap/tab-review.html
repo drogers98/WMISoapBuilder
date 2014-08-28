@@ -74,12 +74,12 @@
       <h6>Vital Signs</h6>
       <div class="list">
 
-      <table class="VitalsTable">
+      <table class="VitalsTable" ng-controller="VitalCtrl">
             <tr>
                 <th>Time Taken</th>
-                <td>data</td>
-                <td>data</td>
-                <td>data</td>
+                <tr ng-repeat="sv in recentSoapVitals">
+                <td>{{sv.created}}</td>
+                </tr>
             </tr>
             <tr>
                 <th>LOR</th>

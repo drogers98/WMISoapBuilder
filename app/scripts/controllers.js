@@ -203,7 +203,7 @@ $scope.findAge = function (date) {
   $scope.imagePage = function(){$state.go('tab.image');}
   $scope.overviewPage = function(){
   $state.go('tab.overview');}
-  $scope.reviewSoapPage = function(){$state.go('soap-review');}
+  $scope.goReview= function(){$state.go('tab.review');}
 
 
 
