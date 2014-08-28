@@ -126,6 +126,15 @@ $scope.toggleSideMenu = function() {
   $scope.$watch('soap.patientPlan', debounceSaveUpdates);
   $scope.$watch('soap.patientAnticipatedProblems', debounceSaveUpdates);
 
+// Age calculation based on DOB
+$scope.findAge = function (date) {
+        var birthDay = $scope.soap.patientDob;
+        var DOB = new Date(birthDay);
+        var today = new Date();
+        var age = today.getTime() - DOB.getTime();
+        age = Math.floor(age / (1000 * 60 * 60 * 24 * 365.25));
+        $scope.soap.patientAge = age;
+        }
 
 
 // Geolocation Stuff
