@@ -244,10 +244,12 @@ console.log(JSON.stringify(imageData));
 // Get image handle
 //
 var smallImage = document.getElementById('smallImage');
+var smallImageText = document.getElementById('smallImageText');
 
 // Unhide image elements
 //
 smallImage.style.display = 'block';
+smallImageText.style.display = 'block';
 
 // Show the captured photo
 // The inline CSS rules are used to resize the image
@@ -264,10 +266,12 @@ function onPhotoURISuccess(imageURI) {
 // Get image handle
 //
 var largeImage = document.getElementById('largeImage');
+var largeImageText = document.getElementById('largeImageText');
 
 // Unhide image elements
 //
 largeImage.style.display = 'block';
+largeImageText.style.display = 'block';
 
 // Show the captured photo
 // The inline CSS rules are used to resize the image

@@ -282,7 +282,6 @@ var htmlbody = '<h2>Location</h2>'+
 '<strong>Patient Exam</strong>: ' + soap.patientExamReveals + '<br/>' +
 '<h3>Vital Signs</h3>'+
 '<p>Vital Signs table to go here</p>'+
-'<p ng-repeat="sv in SoapVitals">' + sv.created + '</p>' +
 '<h3>Patient History</h3>'+
 '<strong>Symptoms</strong>: ' + soap.patientSymptoms + '<br/>' +
 '<strong>Allergies</strong>: ' + soap.patientAllergies + '<br/>' +
