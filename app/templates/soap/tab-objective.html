@@ -31,9 +31,9 @@
             <tr>
               <th>Time</th>
             <td ng-repeat="sv in recentSoapVitals">{{sv.timeTaken}}</td>
-            <td ng-hide="recentSoapVitals.length">0:00</td>
-            <td ng-hide="recentSoapVitals.length">0:00</td>
-            <td ng-hide="recentSoapVitals.length">0:00</td>
+            <td ng-hide="recentSoapVitals.length" >0:00</td>
+            <td ng-hide="recentSoapVitals.length >= 2">0:00</td>
+            <td ng-hide="recentSoapVitals.length >= 3">0:00</td>
             </tr>
             <tr>
                 <th>LOR</th>
