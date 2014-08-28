@@ -7,7 +7,7 @@
     <button class="button icon ion-ios7-compose-outline" ng-click="data.showDelete = !data.showDelete"></button>
   </ion-nav-buttons>
   <ion-content class="has-header" padding="true">
-  <a class="button button-block button-light icon icon-right ion-plus-circled" href="#/tab/vitals/new"> Add Vitals</a>
+  <a class="button button-block button-light icon icon-right ion-plus-circled" ng-click="initiateVital(vital,soap)"> Add Vitals</a>
     <ion-list show-delete="data.showDelete">
       <ion-item class="item-icon-right" ng-repeat="vital in vitals" type="item-text-wrap" href="#/tab/vitals/{{vital.id}}">
         <div class="row">
