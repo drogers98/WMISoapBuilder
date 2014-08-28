@@ -531,9 +531,10 @@ var htmlbody = '<h2>Location</h2>'+
   };
 })
 
-.controller('VitalDetailCtrl', function($scope, $stateParams, Vitals) {
+.controller('VitalDetailCtrl', function($scope, $state, $stateParams, Vitals) {
   $scope.vitalDetail;
   Vitals.get($stateParams.vitalId, function(err, vitalDetail) {
     $scope.vitalDetail = vitalDetail;
+    $state.reload();
   })
 });
