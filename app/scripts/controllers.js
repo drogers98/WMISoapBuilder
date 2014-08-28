@@ -252,8 +252,9 @@ $scope.findAge = function (date) {
 
 
 // Email Share Function
-$scope.shareSOAP = function(recentSoapVitals,soap) {
+$scope.shareSOAP = function(soap) {
 // add hooks for soap id in order for vitals?
+  /* come back and address
   console.log(typeof recentSoapVitals);
   var vitalLoop = function() {
     for(var i=0;i < soapVitals.length;i++){
@@ -261,8 +262,7 @@ $scope.shareSOAP = function(recentSoapVitals,soap) {
       vitals.push(soapVitals[i].created)
     }
     return vitals;
-  }
-//  console.log(vitalLoop());
+  }*/
 
 var htmlbody = '<h2>Location</h2>'+
 '<strong>Date of Incident</strong>: ' + soap.incidentDate + '<br/>' +
