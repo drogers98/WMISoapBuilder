@@ -175,6 +175,9 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
        }
        grabLastId();
      },
+     deleteSoap: function(soapId){
+       self.db.del('Soap',{"id": soapId});
+     },
      dropSoap: function() {
        self.db.dropTable("Soap");
      },
@@ -323,6 +326,9 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
           callback(null,data.item(i));
         }
       })
+    },
+    deleteSoap: function(soapId){
+      return nolsDB.deleteSoap(soapId);
     }
 
   }
