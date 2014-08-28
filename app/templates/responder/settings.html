@@ -3,16 +3,18 @@
 <ion-nav-buttons side="left">
     <a class="button icon ion-ios7-arrow-back" href="#/about">About</a>
   </ion-nav-buttons>
-
+  <ion-nav-buttons side="right">
+    <button class="button button-icon ion-navicon" ng-controller="MenuCtrl" ng-click="toggleSideMenu()"></button>
+  </ion-nav-buttons>
   <ion-content has-header="true" padding="false" has-bouncing="false">
   <div class="SOAP">
   <h6>First Name</h6>
     <label class="item item-input">
-      <input type="text" placeholder="First Name">
+      <input type="text" placeholder="First Name" ng-model="responder.firstName">
     </label>
     <h6>Last Name</h6>
     <label class="item item-input">
-      <input type="text" placeholder="Last Name">
+      <input type="text" placeholder="Last Name" ng-model="responder.firstName">
     </label>
       <!-- select will need some good style refactoring -->
       <h6>Current Certification</h6>

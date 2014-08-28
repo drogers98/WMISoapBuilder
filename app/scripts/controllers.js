@@ -322,12 +322,22 @@ var htmlbody = '<h2>Location</h2>'+
     }).then(function(modal) {
       $scope.oModal4 = modal;
     });
+    
+                // Modal 5
+    $ionicModal.fromTemplateUrl('modal-5.html', {
+      id: '5', // We need to use and ID to identify the modal that is firing the event!
+      scope: $scope,
+      animation: 'slide-in-up'
+    }).then(function(modal) {
+      $scope.oModal5 = modal;
+    });
 
     $scope.openModal = function(index) {
       if(index == 1) $scope.oModal1.show();
       if(index == 2) $scope.oModal2.show();
       if(index == 3) $scope.oModal3.show();
       if(index == 4) $scope.oModal4.show();
+      if(index == 5) $scope.oModal5.show();
 
     };
 
@@ -336,6 +346,7 @@ var htmlbody = '<h2>Location</h2>'+
       if(index == 2) $scope.oModal2.hide();
       if(index == 3) $scope.oModal3.hide();
       if(index == 4) $scope.oModal4.hide();
+      if(index == 5) $scope.oModal5.hide();
 
     };
 
@@ -360,6 +371,7 @@ var htmlbody = '<h2>Location</h2>'+
       $scope.oModal2.remove();
       $scope.oModal3.remove();
       $scope.oModal4.remove();
+      $scope.oModal5.remove();
     });
 // end modals
 

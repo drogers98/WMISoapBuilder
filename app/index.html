@@ -34,10 +34,12 @@
         </ion-side-menu-content>
         <!-- Left menu -->
         <ion-side-menu side="right">
-        <a class="button button-block button-calm margin" href="#/">About WMI</a>
-           <a class="button button-block button-calm margin">My SOAPs</a>
-           <a class="button button-block button-calm margin">More nav to follow</a>
-           <a class="button button-block button-calm margin">Add Photos</a>
+        <div class="WMIsideMenu">
+        <a class="button button-block button-calm margin menu-first" href="#/about" ng-controller="MenuCtrl" ng-click="toggleSideMenu()">About WMI</a>
+           <a class="button button-block button-calm margin" href="#/responder/soaps" ng-controller="MenuCtrl" ng-click="toggleSideMenu()">My SOAPs</a>
+           <a class="button button-block button-calm margin" href="#/terms" ng-controller="MenuCtrl" ng-click="toggleSideMenu()">Terms of Service</a>
+           <a class="button button-block button-calm margin" href="#/settings" ng-controller="MenuCtrl" ng-click="toggleSideMenu()">Settings</a>
+        </div>
         </ion-side-menu>
     </ion-side-menus>
 
@@ -52,7 +54,7 @@
     <button class="button button-icon ion-close" ng-click="closeModal(1)"></button>
         </header>
         <ion-content has-header="true">
-
+<div class="WMImodalWrapper">
 			<div class="card">
 			  <div class="item item-divider">
 			  Date & Location
@@ -70,6 +72,7 @@
 					<p>Defaults to the user defined in the settings. If another user is completing the SOAP Note this field may be edited.</p>
 			  </div>
 			</div>
+</div>
         </ion-content>
 		</div>
 </script>
@@ -82,7 +85,7 @@
     <button class="button button-icon ion-close" ng-click="closeModal(2)"></button>
         </header>
         <ion-content has-header="true">
-
+<div class="WMImodalWrapper">
 			<div class="card">
 			  <div class="item item-divider">
 			  Patient Information
@@ -115,6 +118,7 @@
 					<p>Describe in detail the mechanism of injury or the history of the illness.</p>
 			  </div>
 			</div>
+</div>
         </ion-content>
 		</div>
 </script>
@@ -127,7 +131,7 @@
     <button class="button button-icon ion-close" ng-click="closeModal(3)"></button>
         </header>
         <ion-content has-header="true">
-
+<div class="WMImodalWrapper">
 			<div class="card">
 			  <div class="item item-divider">
 			  Patient Position When Found
@@ -168,7 +172,7 @@
 					</ul>
 			  </div>
 			</div>
-
+</div>
 
         </ion-content>
 		</div>
@@ -182,7 +186,7 @@
     <button class="button button-icon ion-close" ng-click="closeModal(4)"></button>
         </header>
         <ion-content has-header="true">
-
+<div class="WMImodalWrapper">
 			<div class="card">
 			  <div class="item item-divider">
 			  Assessment
@@ -207,9 +211,88 @@
 					<p>Consider anticipated problems and possible impact on evacuation needs.</p>
 			  </div>
 			</div>
-
+</div>
         </ion-content>
 		</div>
+        </script>
+		
+		<!-- Vitals -->
+        <script id="modal-5.html" type="text/ng-template">
+	<div class="modal">
+        <header class="bar bar-header bar-light">
+          <h1 class="title">Vital Signs help</h1>
+    <button class="button button-icon ion-close" ng-click="closeModal(5)"></button>
+        </header>
+        <ion-content has-header="true">
+<div class="WMImodalWrapper">
+			<div class="card">
+			  <div class="item item-divider">
+			  Time Taken
+			  </div>
+			  <div class="item item-text-wrap">
+					<p>vitals info here</p>
+			  </div>
+			</div>
+			<div class="card">
+			  <div class="item item-divider">
+			  Level of Responsiveness
+			  </div>
+			  <div class="item item-text-wrap">
+					<p>vitals info here</p>
+			  </div>
+			</div>
+						<div class="card">
+			  <div class="item item-divider">
+			  Heart
+			  </div>
+			  <div class="item item-text-wrap">
+					<p>vitals info here</p>
+			  </div>
+			</div>
+						<div class="card">
+			  <div class="item item-divider">
+			  Respiratory
+			  </div>
+			  <div class="item item-text-wrap">
+					<p>vitals info here</p>
+			  </div>
+			</div>
+						<div class="card">
+			  <div class="item item-divider">
+			  Skin
+			  </div>
+			  <div class="item item-text-wrap">
+					<p>vitals info here</p>
+			  </div>
+			</div>
+						<div class="card">
+			  <div class="item item-divider">
+			  Blood Pressure
+			  </div>
+			  <div class="item item-text-wrap">
+					<p>vitals info here</p>
+			  </div>
+			</div>
+						<div class="card">
+			  <div class="item item-divider">
+			  Pupils
+			  </div>
+			  <div class="item item-text-wrap">
+					<p>vitals info here</p>
+			  </div>
+			</div>
+						<div class="card">
+			  <div class="item item-divider">
+			  Temperature
+			  </div>
+			  <div class="item item-text-wrap">
+					<p>vitals info here</p>
+			  </div>
+			</div>
+</div>
+        </ion-content>
+		</div>
+
 </script>
 
 
