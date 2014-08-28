@@ -12,21 +12,21 @@
 
   <ion-content has-header="true" padding="false" has-bouncing="false">
     <div class="SOAP">
-      <h5>Assessment<a><span>i</span></a></h5>
+      <h5>Assessment<a ng-click="openModal(4)"><span>i</span></a></h5>
       <div class="list">
         <label class="item item-input">
           <textarea id="Assessment" type="text" placeholder="List all possible problems." ng-model="soap.patientAssessment" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
         </label>
       </div>
 
-        <h5>Plan<a><span>i</span></a></h5>
+        <h5>Plan<a ng-click="openModal(4)"><span>i</span></a></h5>
         <div class="list">
         <label class="item item-input">
           <textarea id="Plan" type="text" placeholder="Describe actions taken for each problem and plans for further care." ng-model="soap.patientPlan" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
         </label>
         </div>
 
-        <h6>Anticipated Problems<a><span>i</span></a></h6>
+        <h6>Anticipated Problems<a ng-click="openModal(4)"><span>i</span></a></h6>
         <div class="list">
         <label class="item item-input">
           <textarea id="AP" type="text" placeholder="Consider anticipated problems and possible impact on evacuation needs." ng-model="soap.patientAnticipatedProblems" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>

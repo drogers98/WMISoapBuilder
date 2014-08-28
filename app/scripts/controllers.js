@@ -330,12 +330,22 @@ var htmlbody = '<h2>Location</h2>'+
     }).then(function(modal) {
       $scope.oModal4 = modal;
     });
+    
+                // Modal 5
+    $ionicModal.fromTemplateUrl('modal-5.html', {
+      id: '5', // We need to use and ID to identify the modal that is firing the event!
+      scope: $scope,
+      animation: 'slide-in-up'
+    }).then(function(modal) {
+      $scope.oModal5 = modal;
+    });
 
     $scope.openModal = function(index) {
       if(index == 1) $scope.oModal1.show();
       if(index == 2) $scope.oModal2.show();
       if(index == 3) $scope.oModal3.show();
       if(index == 4) $scope.oModal4.show();
+      if(index == 5) $scope.oModal5.show();
 
     };
 
@@ -344,6 +354,7 @@ var htmlbody = '<h2>Location</h2>'+
       if(index == 2) $scope.oModal2.hide();
       if(index == 3) $scope.oModal3.hide();
       if(index == 4) $scope.oModal4.hide();
+      if(index == 5) $scope.oModal5.hide();
 
     };
 
@@ -368,6 +379,7 @@ var htmlbody = '<h2>Location</h2>'+
       $scope.oModal2.remove();
       $scope.oModal3.remove();
       $scope.oModal4.remove();
+      $scope.oModal5.remove();
     });
 // end modals
 
@@ -445,20 +457,25 @@ var htmlbody = '<h2>Location</h2>'+
       $scope.updateVitalParam(newVal)
     }
   }
+  $scope.$watch('vital.timeTaken', debounceSaveUpdates);
   $scope.$watch('vital.lor', debounceSaveUpdates);
   $scope.$watch('vital.rate', debounceSaveUpdates);
   $scope.$watch('vital.heartRythm', debounceSaveUpdates);
   $scope.$watch('vital.heartQuality', debounceSaveUpdates);
   $scope.$watch('vital.respRate', debounceSaveUpdates);
-  $scope.$watch('vital.restRhythm', debounceSaveUpdates);
-  $scope.$watch('vital.restQuality', debounceSaveUpdates);
+  $scope.$watch('vital.respRhythm', debounceSaveUpdates);
+  $scope.$watch('vital.respQuality', debounceSaveUpdates);
   $scope.$watch('vital.sctmcolor', debounceSaveUpdates);
   $scope.$watch('vital.sctmtemp', debounceSaveUpdates);
   $scope.$watch('vital.sctmmoisture', debounceSaveUpdates);
   $scope.$watch('vital.brradialpulse', debounceSaveUpdates);
+  $scope.$watch('vital.brsystolic', debounceSaveUpdates);
   $scope.$watch('vital.brradialtaken', debounceSaveUpdates);
+  $scope.$watch('vital.brradialReading', debounceSaveUpdates);
   $scope.$watch('vital.pupils', debounceSaveUpdates);
+  $scope.$watch('vital.tempDegreesReading', debounceSaveUpdates);
   $scope.$watch('vital.tempDegrees', debounceSaveUpdates);
+  
 
   $scope.updateVitalParam = function(newParam) {
     Vitals.updateVital(newParam);
