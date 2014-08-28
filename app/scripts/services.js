@@ -364,8 +364,6 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
         for(var i=0;i < data.length;i++){
           vitals.push(data.item(i));
         }
-
-
         var len = function() {
           if(data.length <= 0) {return;}
           else if (data.length <= 1){return 0;}
