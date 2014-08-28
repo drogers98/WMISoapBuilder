@@ -177,6 +177,7 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
      },
      deleteSoap: function(soapId){
        self.db.del('Soap',{"id": soapId});
+       self.db.del('Vital',{"soapId":soapId});
      },
      dropSoap: function() {
        self.db.dropTable("Soap");
