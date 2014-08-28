@@ -1,10 +1,55 @@
-<ion-view title="Vital">
+<ion-view title="Vital Set">
   <ion-nav-buttons side="left">
     <a class="button button" href="#/tab/vitals">Back</a>
   </ion-nav-buttons>
 
   <ion-content class="has-header" padding="false">
-    <ion-list>
-      <ion-item>{{vitalDetail}}
-    </ion-list>
+   <div class="card">
+  <div class="item item-divider">
+  Vital Set Taken at {{vitalDetail.timeTaken}}
+  </div>
+  <div class="item item-text-wrap">
+<table class="VitalsTable">
+            <tr>
+              <th>Time</th>
+            <td>{{vitalDetail.timeTaken}}</td>
+            </tr>
+            <tr>
+                <th>LOR</th>
+                <td>{{vitalDetail.lor}}</td>
+                
+            </tr>
+            <tr>
+                <th>HR</th>
+                <td>{{vitalDetail.rate}} {{vitalDetail.heartRythm}} {{vitalDetail.heartQuality}}</td>
+                           </tr>
+            <tr>
+                <th>RR</th>
+                <td>{{vitalDetail.respRate}} {{vitalDetail.respRythm}} {{vitalDetail.respQuality}}</td>
+            </tr>
+            <tr>
+                <th>Skin</th>
+                <td>{{vitalDetail.sctmcolor}} {{vitalDetail.sctmtemp}} {{vitalDetail.sctmmoisture}}</td>
+            </tr>
+            <tr>
+                <th>BP</th>
+                <td>{{vitalDetail.brradialpulse}} {{vitalDetail.brsystolic}}/{{vitalDetail.brradialReading}} {{vitalDetail.brradialtaken}}</td>
+               
+            </tr>
+            <tr>
+                <th>Pupils</th>
+                <td>{{vitalDetail.pupils}}</td>
+                
+            </tr>
+            <tr>
+                <th>Temp</th>
+                <td>{{vitalDetail.tempDegreesReading}}{{vitalDetail.tempDegrees}}</td>
+
+            </tr>
+        </table>
+  </div>
+  </div>
+
+         </table>
+
   </ion-content>
