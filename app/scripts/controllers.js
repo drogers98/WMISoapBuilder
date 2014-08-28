@@ -94,7 +94,7 @@ $scope.toggleSideMenu = function() {
 
   //there has got to be a cleaner way of doing this but time is of the essence
 
-
+  $scope.$watch('responder.firstName', debounceSaveUpdates);
   $scope.$watch('soap.incidentDate', debounceSaveUpdates);
   $scope.$watch('soap.incidentLocation', debounceSaveUpdates);
   $scope.$watch('soap.incidentLat', debounceSaveUpdates);
