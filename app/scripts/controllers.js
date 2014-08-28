@@ -1,7 +1,7 @@
 'use strict';
 angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce'])
 
-.controller('WMICtrl', function($scope,$state) {
+.controller('WMICtrl', function($scope,$state, Nols) {
 
 })
 
@@ -43,12 +43,12 @@ $scope.toggleSideMenu = function() {
 })
 
 
-.controller('SoapCtrl', function($scope, $state, $stateParams, Soaps, Responders, $ionicModal, $timeout) {
+.controller('SoapCtrl', function($scope, $state, $stateParams, Soaps, Responders, $ionicModal, $timeout,Nols) {
 "use strict";
-  /* leave drop commented out unless soap table is being altered
-    un comment and run will drop responder,soap and vital table
-   */
-  //Soaps.drop();
+/* leave cutLifeLine commented out unless soap table is being altered
+  un comment and run will drop responder,soap and vital table
+ */
+ //Nols.cutLifeLine();
 
 
   Responders.get(function(err,responder) {
@@ -72,44 +72,29 @@ $scope.toggleSideMenu = function() {
   }
 
   var timeout = null;
+
+    $scope.updateSoapParam = function() {
+      var updateObject = $scope.soap;
+      for(var k in updateObject){
+        if(updateObject.hasOwnProperty(k)){
+          Soaps.updateSoap(k,updateObject[k])
+        }
+      }
+    }
+
+
   var debounceSaveUpdates = function(newVal, oldVal) {
     if(newVal != oldVal) {
       if(timeout) {
         $timeout.cancel(timeout)
       }
-
-      var newSoapParamForUpdate = function() {
-         $scope.soap.getSoapKeyByValue = function (value) {
-          for(var prop in this) {
-            if(this.hasOwnProperty(prop)) {
-              if( this[ prop ] === value)
-                return prop;
-            }
-          }
-        }
-
-        var soapValue = $scope.soap.getSoapKeyByValue(newVal);
-
-        var buildSoapParamObject = function(soapVal,newVal) {
-          var updateParams = {};
-          updateParams["key"] = soapVal;
-          updateParams["val"] = newVal;
-          return updateParams;
-        }
-        return buildSoapParamObject(soapValue, newVal);
-      }
-      timeout = $timeout($scope.updateSoapParam(newSoapParamForUpdate()), 1000);
-      $scope.updateSoapParam(newVal)
+    timeout = $timeout($scope.updateSoapParam(), 1000);
     }
-  }
-
-  $scope.updateSoapParam = function(newParam) {
-    //console.log(newParam);
-    Soaps.updateSoap(newParam);
-  }
+  };
 
   //there has got to be a cleaner way of doing this but time is of the essence
-  $scope.$watch('responder.firstName', debounceSaveUpdates);
+
+
   $scope.$watch('soap.incidentDate', debounceSaveUpdates);
   $scope.$watch('soap.incidentLocation', debounceSaveUpdates);
   $scope.$watch('soap.incidentLat', debounceSaveUpdates);
@@ -140,6 +125,8 @@ $scope.toggleSideMenu = function() {
   $scope.$watch('soap.patientAssessment', debounceSaveUpdates);
   $scope.$watch('soap.patientPlan', debounceSaveUpdates);
   $scope.$watch('soap.patientAnticipatedProblems', debounceSaveUpdates);
+
+
 
 // Geolocation Stuff
 
