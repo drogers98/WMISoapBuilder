@@ -75,55 +75,63 @@
       <div class="list">
 
       <table class="VitalsTable" ng-controller="VitalCtrl">
-            <tr>
-                <th>Time Taken</th>
-                <tr ng-repeat="sv in recentSoapVitals">
-                <td>{{sv.created}}</td>
-                </tr>
-            </tr>
-            <tr>
-                <th>LOR</th>
-                <td>data</td>
-                <td>data</td>
-                <td>data</td>
-            </tr>
-            <tr>
-                <th>HR</th>
-                <td>data</td>
-                <td>data</td>
-                <td>data</td>
-            </tr>
-            <tr>
-                <th>RR</th>
-                <td>data</td>
-                <td>data</td>
-                <td>data</td>
-            </tr>
-            <tr>
-                <th>Skin</th>
-                <td>data</td>
-                <td>data</td>
-                <td>data</td>
-            </tr>
-            <tr>
-                <th>BP</th>
-                <td>data</td>
-                <td>data</td>
-                <td>data</td>
-            </tr>
-            <tr>
-                <th>Pupils</th>
-                <td>data</td>
-                <td>data</td>
-                <td>data</td>
-            </tr>
-            <tr>
-                <th>Temp</th>
-                <td>data</td>
-                <td>data</td>
-                <td>data</td>
-            </tr>
-        </table>
+          <tr>
+            <th>Time</th>
+          <td ng-repeat="sv in recentSoapVitals">{{sv.timeTaken}}</td>
+          <td ng-hide="recentSoapVitals.length" >--</td>
+          <td ng-hide="recentSoapVitals.length >= 2">--</td>
+          <td ng-hide="recentSoapVitals.length >= 3">--</td>
+          </tr>
+          <tr>
+              <th>LOR</th>
+              <td ng-repeat="sv in recentSoapVitals">{{sv.lor}}</td>
+              <td ng-hide="recentSoapVitals.length" >--</td>
+          <td ng-hide="recentSoapVitals.length >= 2">--</td>
+          <td ng-hide="recentSoapVitals.length >= 3">--</td>
+          </tr>
+          <tr>
+              <th>HR</th>
+              <td ng-repeat="sv in recentSoapVitals">{{sv.rate}} {{sv.heartRythm}} {{sv.heartQuality}}</td>
+              <td ng-hide="recentSoapVitals.length" >--</td>
+          <td ng-hide="recentSoapVitals.length >= 2">--</td>
+          <td ng-hide="recentSoapVitals.length >= 3">--</td>
+          </tr>
+          <tr>
+              <th>RR</th>
+              <td ng-repeat="sv in recentSoapVitals">{{sv.respRate}} {{sv.respRythm}} {{sv.respQuality}}</td>
+              <td ng-hide="recentSoapVitals.length" >--</td>
+          <td ng-hide="recentSoapVitals.length >= 2">--</td>
+          <td ng-hide="recentSoapVitals.length >= 3">--</td>
+          </tr>
+          <tr>
+              <th>Skin</th>
+              <td ng-repeat="sv in recentSoapVitals">{{sv.sctmcolor}} {{sv.sctmtemp}} {{sv.sctmmoisture}}</td>
+              <td ng-hide="recentSoapVitals.length" >--</td>
+          <td ng-hide="recentSoapVitals.length >= 2">--</td>
+          <td ng-hide="recentSoapVitals.length >= 3">--</td>
+          </tr>
+          <tr>
+              <th>BP</th>
+              <td ng-repeat="sv in recentSoapVitals">{{sv.brradialpulse}} {{sv.brsystolic}}/{{sv.brradialReading}} {{sv.brradialtaken}}</td>
+              <td ng-hide="recentSoapVitals.length" >--</td>
+          <td ng-hide="recentSoapVitals.length >= 2">--</td>
+          <td ng-hide="recentSoapVitals.length >= 3">--</td>
+          </tr>
+          <tr>
+              <th>Pupils</th>
+              <td ng-repeat="sv in recentSoapVitals">{{sv.pupils}}</td>
+              <td ng-hide="recentSoapVitals.length" >--</td>
+          <td ng-hide="recentSoapVitals.length >= 2">--</td>
+          <td ng-hide="recentSoapVitals.length >= 3">--</td>
+          </tr>
+          <tr>
+              <th>Temp</th>
+              <td ng-repeat="sv in recentSoapVitals">{{sv.tempDegreesReading}}{{sv.tempDegrees}}</td>
+              <td ng-hide="recentSoapVitals.length" >--</td>
+          <td ng-hide="recentSoapVitals.length >= 2">--</td>
+          <td ng-hide="recentSoapVitals.length >= 3">--</td>
+          </tr>
+      </table>
       </div>
 
       <h6>Patient History</h6>
@@ -154,7 +162,7 @@
         </ion-list>
       </div>
 
-<a class="button button-block button-light icon icon-right ion-app-share margin" ng-controller="SoapCtrl" ng-click="shareSOAP(recentSoapVitals,soap)">Share This SOAP</a>
+<a class="button button-block button-light icon icon-right ion-app-share margin" ng-controller="SoapCtrl" ng-click="shareSOAP(soap)">Share This SOAP</a>
 
       </div>
   </ion-content>

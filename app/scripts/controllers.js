@@ -252,8 +252,17 @@ $scope.findAge = function (date) {
 
 
 // Email Share Function
-$scope.shareSOAP = function(soapVitals,soap) {
+$scope.shareSOAP = function(soap) {
 // add hooks for soap id in order for vitals?
+  /* come back and address
+  console.log(typeof recentSoapVitals);
+  var vitalLoop = function() {
+    for(var i=0;i < soapVitals.length;i++){
+      var vitals = [];
+      vitals.push(soapVitals[i].created)
+    }
+    return vitals;
+  }*/
 
 var htmlbody = '<h2>Location</h2>'+
 '<strong>Date of Incident</strong>: ' + soap.incidentDate + '<br/>' +
@@ -303,8 +312,6 @@ var htmlbody = '<h2>Location</h2>'+
     body:    htmlbody,
     isHtml:  true
 });
-
-console.log(htmlbody);
 };
 // end email
 
