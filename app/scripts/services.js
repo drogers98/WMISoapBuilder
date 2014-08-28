@@ -175,6 +175,10 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
        }
        grabLastId();
      },
+     deleteSoap: function(soapId){
+       self.db.del('Soap',{"id": soapId});
+       self.db.del('Vital',{"soapId":soapId});
+     },
      dropSoap: function() {
        self.db.dropTable("Soap");
      },
@@ -323,6 +327,9 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
           callback(null,data.item(i));
         }
       })
+    },
+    deleteSoap: function(soapId){
+      return nolsDB.deleteSoap(soapId);
     }
 
   }
@@ -350,7 +357,7 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
           vitals.push(data.item(i));
         }
         var len = function() {
-          if(data.length <= 1) {return;}
+          if(data.length <= 0) {return;}
           else if (data.length <= 2){return data.length - 1;}
           else {return data.length - 3;}
         }

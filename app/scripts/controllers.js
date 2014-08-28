@@ -137,6 +137,21 @@ $scope.findAge = function (date) {
         }
 
 
+        $scope.moveItem = function(soap,fromIndex,toIndex){
+          $scope.soaps.splice(fromIndex, 1);
+          $scope.soaps.splice(toIndex, 0, item);
+        };
+
+        $scope.onItemDelete = function(soapId) {
+          Soaps.deleteSoap(soapId);
+          $scope.soaps.splice($scope.soaps.indexOf(soapId), 1)
+        }
+
+        $scope.data = {
+          showDelete: false
+        };
+
+
 // Geolocation Stuff
 
 	   $scope.showPosition = function (position) {
@@ -188,14 +203,8 @@ $scope.findAge = function (date) {
   $scope.imagePage = function(){$state.go('tab.image');}
   $scope.overviewPage = function(){
   $state.go('tab.overview');}
-  $scope.reviewSoapPage = function(){$state.go('soap-review');}
+  $scope.goReview= function(){$state.go('tab.review');}
 
-
-  //edit button to delete specific soap
-  $scope.data = {
-    showDelete: false
-  };
-  //$scope.edit = function(soap);
 
 
   //$scope.dt = new Date();

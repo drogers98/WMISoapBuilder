@@ -30,9 +30,8 @@
 	  <table class="VitalsTable" ng-controller="VitalCtrl">
             <tr>
               <th>Time</th>
-              <td>data</td>
-              <td>data</td>
-              <td>data</td>
+            <tr ng-repeat="sv in recentSoapVitals">
+              <td>{{sv.created}}</td>
             </tr>
             <tr>
                 <th>LOR</th>
