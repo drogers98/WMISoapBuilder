@@ -104,6 +104,7 @@ $scope.toggleSideMenu = function() {
   }
 
   $scope.updateSoapParam = function(newParam) {
+    //console.log(newParam);
     Soaps.updateSoap(newParam);
   }
 
@@ -112,6 +113,7 @@ $scope.toggleSideMenu = function() {
   $scope.$watch('soap.incidentDate', debounceSaveUpdates);
   $scope.$watch('soap.incidentLocation', debounceSaveUpdates);
   $scope.$watch('soap.incidentLat', debounceSaveUpdates);
+  $scope.$watch('soap.incidentLon', debounceSaveUpdates);
   $scope.$watch('soap.incidentLon', debounceSaveUpdates);
   $scope.$watch('soap.patientInitials', debounceSaveUpdates);
   $scope.$watch('soap.patientGender', debounceSaveUpdates);
@@ -149,6 +151,7 @@ $scope.findAge = function (event) {
         age = Math.floor(age / (1000 * 60 * 60 * 24 * 365.25));
         $scope.soap.patientAge = age;
         }
+
 
 // Geolocation Stuff
 
@@ -384,9 +387,10 @@ var htmlbody = '<h2>Location</h2>'+
 })
 
 .controller('SoapDetailCtrl', function($scope, $stateParams, Soaps) {
-  $scope.soap;
-  Soaps.get($stateParams.soapId, function(err, soap) {
-    $scope.soap = soap;
+  //$scope.soap;
+  Soaps.get($stateParams.soapId, function(err, soapDetail) {
+    $scope.soapDetail = soapDetail;
+    console.log(soapDetail);
   })
 })
 
@@ -397,9 +401,12 @@ var htmlbody = '<h2>Location</h2>'+
   $scope.vitals;
   $scope.vital;
 
-  Vitals.all(function(err,vitals){
+  Vitals.all(function(err,vitals,recentSoapVitals){
     $scope.vitals = vitals;
+    $scope.recentSoapVitals = recentSoapVitals;
+    console.log(recentSoapVitals);
   })
+
   $scope.soap;
   Soaps.getLast(function(err,soap){
     $scope.soap = soap;
@@ -408,12 +415,10 @@ var htmlbody = '<h2>Location</h2>'+
   $scope.initiateVital = function(vital,soap) {
     var vital = {};
     Vitals.createVitalTable();
-    //Soaps.getLast(function(err,soap){
       Vitals.saveNewVital(vital,soap,function(err,vital){
         $scope.vital = vital;
         $state.go('tab.newvital');
       })
-    //})
   }
 
   var timeout = null;
@@ -492,4 +497,11 @@ var htmlbody = '<h2>Location</h2>'+
     $scope.pause = true;
 
   };
+})
+
+.controller('VitalDetailCtrl', function($scope, $stateParams, Vitals) {
+  $scope.vital;
+  Vitals.get($stateParams.vitalId, function(err, vital) {
+    $scope.vital = vital;
+  })
 });

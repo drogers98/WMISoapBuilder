@@ -128,7 +128,8 @@ angular.module('WMISoapBuilder', ['ionic', 'WMISoapBuilder.controllers', 'WMISoa
       url: '/vitals/:vitalId',
       views: {
         'tab-objective': {
-          templateUrl: 'templates/soap/vital.html'
+          templateUrl: 'templates/soap/vital.html',
+          controller: 'VitalDetailCtrl'
         }
       }
     })

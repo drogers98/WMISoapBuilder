@@ -96,7 +96,7 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
          "responderLastName": responderAttr.lastName || '',
          "responderUid": responderAttr.id || '',
          "responderTrainingLevel": responderAttr.trainingLevel || '',
-         "incidentDate": soapAttr.incidentDate || '',
+         "incidentDate": soapAttr.incidentDate,
          "incidentLocation": soapAttr.incidentLocation || '',
          "incidentLat": soapAttr.incidentLat || '',
          "incidentLon": soapAttr.incidentLon || '',
@@ -158,12 +158,15 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
       })
      },
      soapUpdate: function(newSoapParam) {
+       console.log(newSoapParam);
+
+       /*
        var objectForUpdate = function(newSoapParam) {
          var  buildKeyValue = {};
          buildKeyValue[newSoapParam.key] = newSoapParam.val;
          return buildKeyValue;
        }
-
+       console.log(objectForUpdate(newSoapParam))
        var grabLastId = function(){
          self.db.selectAll('Soap').then(function(results){
            for(var i = results.rows.length - 1;i < results.rows.length;i++){
@@ -175,7 +178,7 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
          })
        }
        grabLastId();
-
+*/
      },
      dropSoap: function() {
        self.db.dropTable("Soap");
@@ -259,6 +262,11 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
        self.db.selectAll('Vital').then(function(results){
          callback(null,results.rows);
        })
+     },
+     vital: function(object, query, callback) {
+      self.db.select(object,query).then(function(results){
+        callback(null, results.rows);
+      })
      }
 
    };
@@ -293,7 +301,7 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
       return nolsDB.saveSoap(soapAttr, responderAttr, callback);
     },
     updateSoap: function(newSoapParam) {
-      nolsDB.soapUpdate(newSoapParam);
+      return nolsDB.soapUpdate(newSoapParam);
     },
     all: function(callback) {
     return nolsDB.soaps('Soap', function(err,data){
@@ -347,9 +355,21 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
     all: function(callback) {
       return nolsDB.vitals('Vital', function(err,data){
         var vitals = [];
+        var recentSoapVitals = [];
         for(var i=0;i < data.length;i++){
           vitals.push(data.item(i));
-          callback(null,vitals)
+          //callback(null,vitals,respA)
+        }
+        for(var i= data.length - 3;i<data.length;i++){
+          recentSoapVitals.push(data.item(i));
+        }
+        callback(null,vitals,recentSoapVitals);
+      })
+    },
+    get: function(vitalId, callback) {
+      return nolsDB.vital('Vital', {id: vitalId}, function(err, data){
+        for(var i=0;i < data.length;i++){
+          callback(null,data.item(i));
         }
       })
     }
