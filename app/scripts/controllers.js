@@ -363,11 +363,6 @@ var htmlbody = '<h2>Location</h2>'+
     });
 // end modals
 
-
-
-
-
-
 })
 
 .controller('SoapDetailCtrl', function($scope, $stateParams, Soaps) {
@@ -385,17 +380,23 @@ var htmlbody = '<h2>Location</h2>'+
   $scope.vitals;
   $scope.vital;
 
-  Vitals.all(function(err,vitals,recentSoapVitals){
+  $scope.soap;
+  Soaps.getLast(function(err,soap){
+    $scope.soap = soap;
+    Vitals.all(soap,function(err,vitals,recentSoapVitals){
+      $scope.vitals = vitals;
+      $scope.recentSoapVitals = recentSoapVitals;
+      console.log(recentSoapVitals);
+    })
+  })
+
+/*
+  Vitals.all($scope.soap,function(err,vitals,recentSoapVitals){
     $scope.vitals = vitals;
     $scope.recentSoapVitals = recentSoapVitals;
     console.log(recentSoapVitals);
   })
-
-  $scope.soap;
-  Soaps.getLast(function(err,soap){
-    $scope.soap = soap;
-  })
-
+*/
   $scope.initiateVital = function(vital,soap) {
     var vital = {};
     Vitals.createVitalTable();
