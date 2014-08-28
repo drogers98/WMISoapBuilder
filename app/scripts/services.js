@@ -96,7 +96,7 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
          "responderLastName": responderAttr.lastName || '',
          "responderUid": responderAttr.id || '',
          "responderTrainingLevel": responderAttr.trainingLevel || '',
-         "incidentDate": soapAttr.incidentDate,
+         "incidentDate": soapAttr.incidentDate || '',
          "incidentLocation": soapAttr.incidentLocation || '',
          "incidentLat": soapAttr.incidentLat || '',
          "incidentLon": soapAttr.incidentLon || '',

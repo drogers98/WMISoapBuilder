@@ -143,7 +143,7 @@ $scope.toggleSideMenu = function() {
 
 
 // Age calculation based on DOB
-$scope.findAge = function (event) {
+$scope.findAge = function (date) {
         var birthDay = $scope.soap.patientDob;
         var DOB = new Date(birthDay);
         var today = new Date();
