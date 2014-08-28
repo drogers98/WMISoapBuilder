@@ -94,7 +94,7 @@ $scope.toggleSideMenu = function() {
 
   //there has got to be a cleaner way of doing this but time is of the essence
 
-
+  $scope.$watch('responder.firstName', debounceSaveUpdates);
   $scope.$watch('soap.incidentDate', debounceSaveUpdates);
   $scope.$watch('soap.incidentLocation', debounceSaveUpdates);
   $scope.$watch('soap.incidentLat', debounceSaveUpdates);
@@ -252,7 +252,7 @@ $scope.findAge = function (date) {
 
 
 // Email Share Function
-$scope.shareSOAP = function(soap) {
+$scope.shareSOAP = function(soapVitals,soap) {
 // add hooks for soap id in order for vitals?
 
 var htmlbody = '<h2>Location</h2>'+
@@ -282,6 +282,7 @@ var htmlbody = '<h2>Location</h2>'+
 '<strong>Patient Exam</strong>: ' + soap.patientExamReveals + '<br/>' +
 '<h3>Vital Signs</h3>'+
 '<p>Vital Signs table to go here</p>'+
+'<p ng-repeat="sv in SoapVitals">' + sv.created + '</p>' +
 '<h3>Patient History</h3>'+
 '<strong>Symptoms</strong>: ' + soap.patientSymptoms + '<br/>' +
 '<strong>Allergies</strong>: ' + soap.patientAllergies + '<br/>' +
@@ -304,7 +305,7 @@ var htmlbody = '<h2>Location</h2>'+
     isHtml:  true
 });
 
-
+console.log(htmlbody);
 };
 // end email
 

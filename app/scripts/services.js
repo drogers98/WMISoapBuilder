@@ -193,7 +193,7 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
          "id": {"type": "INTEGER", "null": "NOT NULL", "primary": true, "auto_increment": true},
          "created": {"type": "TIMESTAMP", "null": "NOT NULL", "default": "CURRENT_TIMESTAMP" },
          "soapId": {"type": "INTEGER", "null": "NOT NULL"},
-         "timeTaken": {"type": "TEXT", "null": "NOT NULL"},
+         "timeTaken": {"type": "TEXT", "null": "NOT NULL", "default": "CURRENT_TIMESTAMP"},
          "lor": {"type": "TEXT", "null": "NOT NULL"},
          "rate": {"type": "INTEGER", "null": "NOT NULL"},
          "heartRythm": {"type": "TEXT", "null": "NOT NULL"},
