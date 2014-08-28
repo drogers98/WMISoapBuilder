@@ -236,49 +236,48 @@ $scope.findAge = function (date) {
 
 
 // Email Share Function
-$scope.shareSOAP = function() {
-
+$scope.shareSOAP = function(soap) {
 // add hooks for soap id in order for vitals?
 
 var htmlbody = '<h2>Location</h2>'+
-'<strong>Date of Incident</strong>: ' + $scope.soap.incidentDate + '<br/>' +
-'<strong>Location</strong>: ' + $scope.soap.incidentLocation + '<br/>' +
-'<strong>Coordinates</strong>: ' + $scope.soap.incidentLat + ', ' + $scope.soap.incidentLon + '<br/>' +
-'<strong>Responder</strong>: ' + $scope.soap.responderFirstName + ' ' + $scope.soap.responderLastName + ', ' + $scope.soap.responderTrainingLevel + '<br/>' +
+'<strong>Date of Incident</strong>: ' + soap.incidentDate + '<br/>' +
+'<strong>Location</strong>: ' + soap.incidentLocation + '<br/>' +
+'<strong>Coordinates</strong>: ' + soap.incidentLat + ', ' + soap.incidentLon + '<br/>' +
+'<strong>Responder</strong>: ' + soap.responderFirstName + ' ' + soap.responderLastName + ', ' + soap.responderTrainingLevel + '<br/>' +
 '<h2>Subjective</h2>'+
-'<strong>Initials</strong>: ' + $scope.soap.patientInitials + '<br/>' +
-'<strong>DOB</strong>: ' + $scope.soap.patientDob + '<br/>' +
-'<strong>Age</strong>: ' + $scope.soap.patientAge + '<br/>' +
-'<strong>Sex</strong>: ' + $scope.soap.patientGender + '<br/>' +
+'<strong>Initials</strong>: ' + soap.patientInitials + '<br/>' +
+'<strong>DOB</strong>: ' + soap.patientDob + '<br/>' +
+'<strong>Age</strong>: ' + soap.patientAge + '<br/>' +
+'<strong>Sex</strong>: ' + soap.patientGender + '<br/>' +
 '<h3>Chief Complaint</h3>'+
-'<p>' + $scope.soap.patientComplaint + '</p>' +
-'<strong>Onset</strong>: ' + $scope.soap.patientOnset + '<br/>' +
-'<strong>Provokes/Palliates</strong>: ' + $scope.soap.patientPPalliates + '<br/>' +
-'<strong>Quality</strong>: ' + $scope.soap.patientQuality + '<br/>' +
-'<strong>Radiation/Region/Referred</strong>: ' + $scope.soap.patientRadiates + '<br/>' +
-'<strong>Severity</strong>: ' + $scope.soap.patientSeverity + ' out of 10<br/>' +
-'<strong>Time of Onset</strong>: ' + $scope.soap.patientTime + '<br/>' +
+'<p>' + soap.patientComplaint + '</p>' +
+'<strong>Onset</strong>: ' + soap.patientOnset + '<br/>' +
+'<strong>Provokes/Palliates</strong>: ' + soap.patientPPalliates + '<br/>' +
+'<strong>Quality</strong>: ' + soap.patientQuality + '<br/>' +
+'<strong>Radiation/Region/Referred</strong>: ' + soap.patientRadiates + '<br/>' +
+'<strong>Severity</strong>: ' + soap.patientSeverity + ' out of 10<br/>' +
+'<strong>Time of Onset</strong>: ' + soap.patientTime + '<br/>' +
 '<h3>MOI/HPI</h3>'+
-'<p>' + $scope.soap.patientHPI + '</p>' +
-'<strong>Suspected Spinal MOI</strong>: ' + $scope.soap.patientSpinal + '<br/>' +
+'<p>' + soap.patientHPI + '</p>' +
+'<strong>Suspected Spinal MOI</strong>: ' + soap.patientSpinal + '<br/>' +
 '<h2>Objective</h2>'+
 '<h3>General</h3>'+
-'<strong>Patient Position When Found</strong>: ' + $scope.soap.patientFound + '<br/>' +
-'<strong>Patient Exam</strong>: ' + $scope.soap.patientExamReveals + '<br/>' +
+'<strong>Patient Position When Found</strong>: ' + soap.patientFound + '<br/>' +
+'<strong>Patient Exam</strong>: ' + soap.patientExamReveals + '<br/>' +
 '<h3>Vital Signs</h3>'+
 '<p>Vital Signs table to go here</p>'+
 '<h3>Patient History</h3>'+
-'<strong>Symptoms</strong>: ' + $scope.soap.patientSymptoms + '<br/>' +
-'<strong>Allergies</strong>: ' + $scope.soap.patientAllergies + '<br/>' +
-'<strong>Medications</strong>: ' + $scope.soap.patientMedications + '<br/>' +
-'<strong>Pertinent Medical History</strong>: ' + $scope.soap.patientMedicalHistory + '<br/>' +
-'<strong>Last Intake/Output</strong>: ' + $scope.soap.patientLastIntake + '<br/>' +
-'<strong>Events Leading up to Injury/Illness</strong>: ' + $scope.soap.patientEventsForCause + '<br/>' +
+'<strong>Symptoms</strong>: ' + soap.patientSymptoms + '<br/>' +
+'<strong>Allergies</strong>: ' + soap.patientAllergies + '<br/>' +
+'<strong>Medications</strong>: ' + soap.patientMedications + '<br/>' +
+'<strong>Pertinent Medical History</strong>: ' + soap.patientMedicalHistory + '<br/>' +
+'<strong>Last Intake/Output</strong>: ' + soap.patientLastIntake + '<br/>' +
+'<strong>Events Leading up to Injury/Illness</strong>: ' + soap.patientEventsForCause + '<br/>' +
 '<h2>Assessment</h2>'+
-'<p>' + $scope.soap.patientAssessment + '</p>' +
+'<p>' + soap.patientAssessment + '</p>' +
 '<h2>Plan</h2>'+
-'<p>' + $scope.soap.patientPlan + '</p>' +
-'<strong>Anticipated Problems</strong>: ' + $scope.soap.patientAnticipatedProblems + '<br/>';
+'<p>' + soap.patientPlan + '</p>' +
+'<strong>Anticipated Problems</strong>: ' + soap.patientAnticipatedProblems + '<br/>';
 
    window.plugin.email.open({
     to:      ['rogers@eyebytesolutions.com'],
