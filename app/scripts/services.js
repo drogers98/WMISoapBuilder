@@ -1,11 +1,16 @@
 'use strict';
 angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
 
-/**
- * A simple example service that returns some data.
+/*
+Services For NOLS (National Outdoor Leadership School)
+Specified from top down:
+Global websql db to support factories,
+Responder factory,
+Soaps factory,
+Vitals factory
+
  */
 
- //a websql factory for nols-wmi database
  .factory('nolsDB', function($webSql, $rootScope) {
    var self = this;
    self.db = null;
@@ -278,13 +283,15 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
        })
      },
      vital: function(object, query, callback) {
-      self.db.select(object,query).then(function(results){
+       self.db.select(object,query).then(function(results){
         callback(null, results.rows);
-      })
+       })
+     },
+     deleteVital: function(vitalId){
+       self.db.del('Vital',{"id": vitalId});
      }
 
    };
-
 
  })
 
@@ -390,6 +397,9 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
           callback(null,data.item(i));
         }
       })
+    },
+    deleteVital: function(vitalId){
+      return nolsDB.deleteVital(vitalId);
     }
   }
 })

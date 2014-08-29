@@ -126,11 +126,11 @@ $scope.toggleSideMenu = function() {
   $scope.$watch('soap.patientAnticipatedProblems', debounceSaveUpdates);
 
 // Age calculation based on DOB
-$scope.findAge = function (date) {
-        var birthDay = $scope.soap.patientDob;
-        var DOB = new Date(birthDay);
-        var today = new Date();
-        var age = today.getTime() - DOB.getTime();
+        $scope.findAge = function (date) {
+        var birthDay = $scope.soap.patientDob,
+            DOB = new Date(birthDay),
+            today = new Date(),
+            age = today.getTime() - DOB.getTime();
         age = Math.floor(age / (1000 * 60 * 60 * 24 * 365.25));
         $scope.soap.patientAge = age;
         }
@@ -502,6 +502,19 @@ var htmlbody = '<h2>Location</h2>'+
   $scope.updateVitalParam = function(newParam) {
     Vitals.updateVital(newParam);
   }
+  $scope.moveItem = function(vital,fromIndex,toIndex){
+    $scope.vitals.splice(fromIndex, 1);
+    $scope.vitals.splice(toIndex, 0, item);
+  };
+
+  $scope.onItemDelete = function(vitalId) {
+    Vitals.deleteVital(vitalId);
+    $scope.vitals.splice($scope.vitals.indexOf(vitalId), 1)
+  }
+
+  $scope.data = {
+    showDelete: false
+  };
 
   $scope.timeValue = 0;
 

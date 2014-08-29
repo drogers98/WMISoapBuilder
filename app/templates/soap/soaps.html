@@ -20,6 +20,9 @@
       </ion-delete-button>{{soap.patientAge}}, {{soap.patientGender}} | {{soap.patientInitials}} | {{soap.incidentDate}}
         <i class="icon ion-ios7-arrow-forward"></i>
       </ion-item>
+      <div ng-hide="soaps.length" class="row responsive-sm">
+        <div class="col">No New SOAP Notes</div>
+      </div>
     </ion-list>
   </div>
   </ion-content>

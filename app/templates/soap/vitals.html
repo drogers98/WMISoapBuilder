@@ -6,19 +6,20 @@
   <ion-nav-buttons side="right">
     <button class="button icon ion-ios7-compose-outline" ng-click="data.showDelete = !data.showDelete"></button>
   </ion-nav-buttons>
-  <ion-content class="has-header" padding="true">
-  <a class="button button-block button-light icon icon-right ion-plus-circled" ng-click="initiateVital(vital,soap)"> Add Vitals</a>
+
+  <ion-content has-header="true" padding="false" has-bouncing="false">
+  <div class="SOAP">
+  <a class="button button-block button-light margin" ng-click="initiateVital(vital,soap)"><icon class="icon ion-plus-circled "></icon>Add Vitals</a>
     <ion-list show-delete="data.showDelete">
       <ion-item class="item-icon-right" ng-repeat="vital in vitals" type="item-text-wrap" href="#/tab/vitals/{{vital.id}}">
-        <div class="row">
-          <div class="col">{{vital.timeTaken}} | {{vital.lor}}</div>
-          <div class="col col-25 col-offset-25">
-          </div>
-        </div>
-        <ion-delete-button class="ion-minus-circled" ng-click="onItemDelete(item)">
-        </ion-delete-button>
+        <ion-delete-button class="ion-minus-circled" ng-click="onItemDelete({{vital.id}})">
+        </ion-delete-button>{{vital.timeTaken}} | {{vital.lor}}
         <i class="icon ion-chevron-right icon-accessory"></i>
       </ion-item>
+      <div ng-hide="vitals.length" class="row responsive-sm">
+        <div class="col">No Added Vitals</div>
+      </div>
     </ion-list>
+    </div>
   </ion-content>
 </ion-view>
