@@ -1,0 +1,173 @@
+<ion-view title="{{soapDetail.patientGender}}, {{soapDetail.patientAge}} | {{soapDetail.patientInitials}}">
+<ion-nav-buttons side="left">
+
+    <a class="button icon ion-ios7-arrow-back" href="#/responder/soaps">My SOAPs</a>
+  </ion-nav-buttons>
+
+
+  <ion-nav-buttons side="right">
+  <button class="button icon ion-edit" ng-click="data.showDelete = !data.showDelete"></button>
+    <button class="button icon ion-app-share" ng-controller="SoapCtrl" ng-click="shareSOAP(soapDetail)"></button>
+  </ion-nav-buttons>
+
+
+  <ion-content class="has-header" padding="false" has-bouncing="false">
+    <div class="SOAP">
+
+      <h5>Location</h5>
+      <div class="list">
+        <ion-list>
+          <ion-item class="item-text-wrap"><input type="date" ng-model="soapDetail.incidentDate" value="{{dt | date:'yyyy-MM-dd'}}"></ion-item>
+          <ion-item class="item-text-wrap"><strong>Location: </strong> {{soapDetail.incidentLocation}}</ion-item>
+          <ion-item class="item-text-wrap"><strong>Coordinates: </strong> {{soapDetail.incidentLat}}, {{soapDetail.incidentLon}}</ion-item>
+           <ion-item class="item-text-wrap"><strong>Responder: </strong> {{soapDetail.responderFirstName}} {{soapDetail.responderLastName}}, {{soapDetail.responderTrainingLevel}}</ion-item>
+        </ion-list>
+      </div>
+
+
+
+     <h5>Subjective</h5>
+
+
+
+      <div class="list">
+        <ion-list>
+        <ion-item class="item-text-wrap"><strong>Patient Initials:</strong> {{soapDetail.patientInitials}}</ion-item>
+        <ion-item class="item-text-wrap"><strong>DOB: </strong> {{soapDetail.patientDob}}</ion-item>
+          <ion-item class="item-text-wrap"><strong>Age:</strong> {{soapDetail.patientAge}}</ion-item>
+          <ion-item class="item-text-wrap"><strong>Sex: </strong> {{soapDetail.patientGender}}</ion-item>
+
+
+        </ion-list>
+      </div>
+
+      <h6>Chief Complaint:</h6>
+      <div class="list">
+        <ion-list>
+          <ion-item class="item-text-wrap">{{soapDetail.patientComplaint}}</ion-item>
+
+          <ion-item><strong>Onset:</strong> {{soapDetail.patientOnset}}</ion-item>
+          <ion-item class="item-text-wrap"><strong>Provokes/Palliates:</strong> {{soapDetail.patientPPalliates}}</ion-item>
+          <ion-item class="item-text-wrap"><strong>Quality:</strong> {{soapDetail.patientQuality}}</ion-item>
+          <ion-item class="item-text-wrap"><strong>Radiation/Region/Referred:</strong> {{soapDetail.patientRadiates}}</ion-item>
+          <ion-item class="item-text-wrap"><strong>Severity:</strong> {{soapDetail.patientSeverity}} out of 10</ion-item>
+          <ion-item class="item-text-wrap"><strong>Time of Onset:</strong> {{soapDetail.patientTime}}</ion-item>
+
+        </ion-list>
+      </div>
+
+      <h6>MOI/HPI</h6>
+      <div class="list">
+        <ion-list>
+          <ion-item class="item-text-wrap">{{soap.patientHPI}}</ion-item>
+          <ion-item class="item-text-wrap"><strong>Suspected Spinal MOI:</strong> {{soapDetail.patientSpinal}}</ion-item>
+        </ion-list>
+      </div>
+
+      <h5>Objective</h5>
+      <h6>General</h6>
+      <div class="list">
+        <ion-list>
+          <ion-item class="item-text-wrap"><strong>Patient Position When Found:</strong> {{soapDetail.patientFound}}</ion-item>
+          <ion-item class="item-text-wrap"><strong>Patient Exam:</strong> {{soapDetail.patientExamReveals}}</ion-item>
+        </ion-list>
+      </div>
+
+      <h6>Vital Signs</h6>
+      <div class="list">
+
+      	  <table class="VitalsTable" ng-controller="VitalCtrl">
+            <tr>
+              <th>Time</th>
+            <td ng-repeat="sv in recentSoapVitals">{{sv.timeTaken}}</td>
+            <td ng-hide="recentSoapVitals.length" >--</td>
+            <td ng-hide="recentSoapVitals.length >= 2">--</td>
+            <td ng-hide="recentSoapVitals.length >= 3">--</td>
+            </tr>
+            <tr>
+                <th>LOR</th>
+                <td ng-repeat="sv in recentSoapVitals">{{sv.lor}}</td>
+                <td ng-hide="recentSoapVitals.length" >--</td>
+            <td ng-hide="recentSoapVitals.length >= 2">--</td>
+            <td ng-hide="recentSoapVitals.length >= 3">--</td>
+            </tr>
+            <tr>
+                <th>HR</th>
+                <td ng-repeat="sv in recentSoapVitals">{{sv.rate}} {{sv.heartRythm}} {{sv.heartQuality}}</td>
+                <td ng-hide="recentSoapVitals.length" >--</td>
+            <td ng-hide="recentSoapVitals.length >= 2">--</td>
+            <td ng-hide="recentSoapVitals.length >= 3">--</td>
+            </tr>
+            <tr>
+                <th>RR</th>
+                <td ng-repeat="sv in recentSoapVitals">{{sv.respRate}} {{sv.respRythm}} {{sv.respQuality}}</td>
+                <td ng-hide="recentSoapVitals.length" >--</td>
+            <td ng-hide="recentSoapVitals.length >= 2">--</td>
+            <td ng-hide="recentSoapVitals.length >= 3">--</td>
+            </tr>
+            <tr>
+                <th>Skin</th>
+                <td ng-repeat="sv in recentSoapVitals">{{sv.sctmcolor}} {{sv.sctmtemp}} {{sv.sctmmoisture}}</td>
+                <td ng-hide="recentSoapVitals.length" >--</td>
+            <td ng-hide="recentSoapVitals.length >= 2">--</td>
+            <td ng-hide="recentSoapVitals.length >= 3">--</td>
+            </tr>
+            <tr>
+                <th>BP</th>
+                <td ng-repeat="sv in recentSoapVitals">{{sv.brradialpulse}} {{sv.brsystolic}}/{{sv.brradialReading}} {{sv.brradialtaken}}</td>
+                <td ng-hide="recentSoapVitals.length" >--</td>
+            <td ng-hide="recentSoapVitals.length >= 2">--</td>
+            <td ng-hide="recentSoapVitals.length >= 3">--</td>
+            </tr>
+            <tr>
+                <th>Pupils</th>
+                <td ng-repeat="sv in recentSoapVitals">{{sv.pupils}}</td>
+                <td ng-hide="recentSoapVitals.length" >--</td>
+            <td ng-hide="recentSoapVitals.length >= 2">--</td>
+            <td ng-hide="recentSoapVitals.length >= 3">--</td>
+            </tr>
+            <tr>
+                <th>Temp</th>
+                <td ng-repeat="sv in recentSoapVitals">{{sv.tempDegreesReading}}{{sv.tempDegrees}}</td>
+                <td ng-hide="recentSoapVitals.length" >--</td>
+            <td ng-hide="recentSoapVitals.length >= 2">--</td>
+            <td ng-hide="recentSoapVitals.length >= 3">--</td>
+            </tr>
+        </table>
+
+        </div>
+
+      <h6>Patient History</h6>
+      <div class="list">
+        <ion-list>
+          <ion-item class="item-text-wrap"><strong>Symptoms:</strong> {{soapDetail.patientSymptoms}}</ion-item>
+          <ion-item class="item-text-wrap"><strong>Allergies:</strong> {{soapDetail.patientAllergies}}</ion-item>
+          <ion-item class="item-text-wrap"><strong>Medications:</strong> {{soapDetail.patientMedications}}</ion-item>
+          <ion-item class="item-text-wrap"><strong>Pertinent Medical History:</strong> {{soapDetail.patientMedicalHistory}}</ion-item>
+          <ion-item class="item-text-wrap"><strong>Last Intake/Output:</strong> {{soapDetail.patientLastIntake}}</ion-item>
+          <ion-item class="item-text-wrap"><strong>Events Leading up to Injury/Illness:</strong> {{soapDetail.patientEventsForCause}}</ion-item>
+        </ion-list>
+      </div>
+
+	  <h5>Assessment</h5>
+      <div class="list">
+        <ion-list>
+          <ion-item class="item-text-wrap">{{soapDetail.patientAssessment}}</ion-item>
+        </ion-list>
+      </div>
+
+      <h5>Plan</h5>
+      <div class="list">
+        <ion-list>
+          <ion-item class="item-text-wrap">{{soapDetail.patientPlan}}</ion-item>
+        </ion-list>
+          <ion-item class="item-text-wrap"><strong>Anticipated Problems:</strong> {{soapDetail.patientAnticipatedProblems}}</ion-item>
+        </ion-list>
+      </div>
+
+<a class="button button-block button-light icon icon-right ion-app-share margin" ng-controller="SoapCtrl" ng-click="shareSOAP(soapDetail)">Share This SOAP</a>
+
+      </div>
+  </ion-content>
+
+</ion-view>
