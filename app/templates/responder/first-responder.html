@@ -9,6 +9,7 @@
 
 <h1>SOAP Notes</h1>
   <div class="list list-inset">
+    <form>
     <h6>First Name</h6>
       <label class="item item-input">
         <input type="text" placeholder="First Name" ng-model="responder.firstName">
@@ -32,7 +33,8 @@
         </select>
       </div>
       <p>By using this application, you agree to the <br /><a ng-click="termsPage()">Terms of Service.</a></p>
-      <button type="submit" class="button button-block button-light icon-right ion-ios7-arrow-right" ng-click="newResponder(responder)">Accept and Continue</button>
+      <button type="submit" class="button button-block button-light icon-right ion-ios7-arrow-right" ng-click="initiateResponder(responder)">Accept and Continue</button>
+    </form>
   </div>
 </div>
 </ion-content>

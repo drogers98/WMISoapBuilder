@@ -28,7 +28,6 @@ Vitals factory
        });
      },
      saveResponder: function(responder, callback) {
-       var responder = {};
        self.db.insert('Responder', {
          "firstName": responder.firstName,
          "lastName": responder.lastName,
@@ -38,15 +37,13 @@ Vitals factory
            "id": results.insertId
          }).then(function(results) {
            for(var i=0; i < results.rows.length;i++){
-             responder = results.rows.item(i);
-              callback(null, responder);
+              callback(null, angular.copy(results.rows.item(i)));
            }
          })
-       })
+       });
      },
      getResponder: function(object,callback) {
        self.db.selectAll("Responder").then(function(results) {
-         console.log('calledBack')
         callback(null,results.rows);
       }, function(){
          callback(null,null);
@@ -294,7 +291,6 @@ Vitals factory
  })
 
 .factory('Responders', function(nolsDB, uiState, $rootScope) {
-  var responder = {};
 
   return {
     add: function(key,interaction) {
@@ -310,12 +306,12 @@ Vitals factory
       return nolsDB.getResponder('Responder', function(err,data){
         var responder = {};
         if(data === null) {
-          callback(null,null)
+          console.log(callback(null,null))
         }else{
           var len = data.length - 1;
           for(var i=len;i < data.length;i++){
-            responder = data.item(i);
-            callback(null,responder);
+            responder = angular.copy(data.item(i));
+            console.log(callback(null,responder));
           }
         }
       });

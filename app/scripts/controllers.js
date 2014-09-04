@@ -15,19 +15,17 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce'])
   //$scope.responder = Responders.all();
   $scope.trainingLevels = ['WFA','WAFA','WFR', 'WEMT', 'Other'];
   $scope.responders;
-  $scope.responder = {};
+  $scope.responder;
   $scope.$location = $location;
 
-  Responders.get(function(err,responder) {
-    if(responder.firstName !== 'undefined'){
-      $scope.responder = responder;
+  Responders.get(function(err,responders) {
+    if(responders !== null){
+      $scope.responders = responders;
       if($location.path() === '/') {
         $state.go('soaps');
       }
-    }else if(responder.firstName === 'undefined'){
-      return $scope.responder = responder;
     }else {
-      $scope.initiateResponder();
+      return;
     }
   })
 
@@ -41,15 +39,16 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce'])
 
   if($location.path() === '/settings') {
     $scope.$watch('responder.firstName', updateResponderWatch);
+    $scope.$watch('responder.lastName', updateResonderWatch);
+    $scope.$watch('responder.trainingLevel', updateResponderWatch);
   }
 
-  $scope.initiateResponder = function() {
-    var responder = {};
+  $scope.initiateResponder = function(responder) {
     Responders.createResponderTable();
     Responders.saveResponder(responder, function (err, responder){
         $scope.responder = responder;
     });
-    //$state.go('soaps');
+    $state.go('soaps');
   };
 
 })
@@ -62,20 +61,21 @@ $scope.toggleSideMenu = function() {
 })
 
 
-.controller('SoapCtrl', function($scope, $state, $stateParams, Soaps, Responders, $ionicModal, $timeout) {
+.controller('SoapCtrl', function($scope, $state, $stateParams, $ionicPopup,
+                                 $ionicModal, $timeout, $location,
+                                 Soaps, Responders, Nols ) {
 "use strict";
 /* leave cutLifeLine commented out unless soap table is being altered
   un comment and run will drop responder,soap and vital table
  */
-
-
+ //Nols.cutLifeLine();
+ $scope.$location = $location;
+ $scope.soap;
+ $scope.soaps;
 
   Responders.get(function(err,responder) {
     $scope.responder = responder;
   })
-
-  $scope.soaps;
-  $scope.soap;
 
   Soaps.all(function(err, soaps) {
     $scope.soaps = soaps;
@@ -91,6 +91,11 @@ $scope.toggleSideMenu = function() {
     });
   }
 
+  //if($scope.$location.path() === '/responder/soaps') {
+  //  $ionicPopup.alert({
+  //    title: "Whoa there"
+  //  });
+  //}
   var timeout = null;
 
     $scope.updateSoapParam = function() {
