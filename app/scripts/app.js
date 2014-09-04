@@ -42,7 +42,7 @@ angular.module('WMISoapBuilder', ['ionic', 'WMISoapBuilder.controllers', 'WMISoa
     .state('settings', {
         url: '/settings',
         templateUrl: 'templates/responder/settings.html',
-        controller: 'SoapCtrl'
+        controller: 'FirstResponderCtrl'
     })
 
     .state('terms', {
@@ -69,7 +69,11 @@ angular.module('WMISoapBuilder', ['ionic', 'WMISoapBuilder.controllers', 'WMISoa
       controller: 'SoapDetailCtrl'
     })
 
-
+    .state('soap-edit', {
+      url: '/soaps/edit/:soapId',
+      templateUrl: 'templates/soap/soap-edit.html',
+      controller: 'SoapDetailCtrl'
+    })
 
     // setup an abstract state for the tabs directive
     .state('tab', {

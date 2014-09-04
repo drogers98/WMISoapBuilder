@@ -37,20 +37,15 @@ Vitals factory
            "id": results.insertId
          }).then(function(results) {
            for(var i=0; i < results.rows.length;i++){
-              callback(null, results.rows.item(i));
+              callback(null, angular.copy(results.rows.item(i)));
            }
          })
-       })
+       });
      },
-     getResponder: function(callback) {
-       var responder;
+     getResponder: function(object,callback) {
        self.db.selectAll("Responder").then(function(results) {
-          var len = results.rows.length - 1;
-          for(var i=len; i < results.rows.length; i++){
-            responder = results.rows.item(i);
-            callback(null, responder);
-          }
-       }, function(){
+        callback(null,results.rows);
+      }, function(){
          callback(null,null);
        })
      },
@@ -295,10 +290,12 @@ Vitals factory
 
  })
 
-.factory('Responders', function(nolsDB) {
-  var responder = [];
+.factory('Responders', function(nolsDB, uiState, $rootScope) {
 
   return {
+    add: function(key,interaction) {
+      responder[key] = interaction;
+    },
     createResponderTable: function(){
       nolsDB.createResponderTable();
     },
@@ -306,10 +303,37 @@ Vitals factory
       return nolsDB.saveResponder(responder, callback);
     },
     get: function(callback) {
-      return nolsDB.getResponder(callback);
+      return nolsDB.getResponder('Responder', function(err,data){
+        var responder = {};
+        if(data === null) {
+          console.log(callback(null,null))
+        }else{
+          var len = data.length - 1;
+          for(var i=len;i < data.length;i++){
+            responder = angular.copy(data.item(i));
+            console.log(callback(null,responder));
+          }
+        }
+      });
+    },
+    executeCallbacks: function() {
+      _.forEach(responder, function(value,key,myMap){
+        if(value){
+          value(key);
+        }
+      })
+      responder = {};
     }
   }
 
+  $rootScope.$watch(function() {
+    return uiState.active.current;
+  }, function(newValuem, oldValue){
+    if(oldValue != newValue) {
+      Responders.executeCallbacks();
+    }
+
+  })
 })
 
 .factory('Soaps', function(nolsDB) {
@@ -412,4 +436,28 @@ Vitals factory
       nolsDB.dropVit();
     }
   }
+})
+
+.factory('Camera', function(nolsDB) {
+  return {
+
+  }
+})
+
+.factory('uiState', function() {
+  var activeElement = {
+    current: null,
+    previous: null
+  };
+
+  return {
+    blur: function(element) {
+      activeElement.current = '';
+      activeElement.previous = $(element).attr('id');
+    },
+    focus: function(element) {
+      activeElement.current = $(element).attr('id');
+    },
+    active: activeElement
+  };
 });

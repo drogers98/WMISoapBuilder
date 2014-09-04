@@ -7,27 +7,45 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce'])
 
 
 
-.controller('FirstResponderCtrl', function($scope, $state, $stateParams, Responders, Soaps) {
+.controller('FirstResponderCtrl', function($scope, $state, $location, $stateParams, Responders, Soaps,Nols) {
+  //Nols.cutLifeLine();
   $scope.termsPage = function(){$state.go('terms');};
   $scope.responderSoapsPage = function(){$state.go('soaps');};
   //get ready for JS transfer from beta
   //$scope.responder = Responders.all();
   $scope.trainingLevels = ['WFA','WAFA','WFR', 'WEMT', 'Other'];
+  $scope.responders;
   $scope.responder;
+  $scope.$location = $location;
 
   Responders.get(function(err,responders) {
     if(responders !== null){
       $scope.responders = responders;
-      $state.go('soaps');
+      if($location.path() === '/') {
+        $state.go('soaps');
+      }
     }else {
       return;
     }
   })
 
-  $scope.newResponder = function(responder) {
+  var updateResponderWatch = function(newVal, oldVal) {
+    if(newVal !== oldVal) {
+      Responders.add('responder', function() {
+        console.log('saving' + JSON.stringify(newVal))
+      })
+    }
+  }
+
+  if($location.path() === '/settings') {
+    $scope.$watch('responder.firstName', updateResponderWatch);
+    $scope.$watch('responder.lastName', updateResonderWatch);
+    $scope.$watch('responder.trainingLevel', updateResponderWatch);
+  }
+
+  $scope.initiateResponder = function(responder) {
     Responders.createResponderTable();
     Responders.saveResponder(responder, function (err, responder){
-      if(err) throw err;
         $scope.responder = responder;
     });
     $state.go('soaps');
@@ -43,20 +61,21 @@ $scope.toggleSideMenu = function() {
 })
 
 
-.controller('SoapCtrl', function($scope, $state, $stateParams, Soaps, Responders, $ionicModal, $timeout,Nols) {
+.controller('SoapCtrl', function($scope, $state, $stateParams, $ionicPopup,
+                                 $ionicModal, $timeout, $location,
+                                 Soaps, Responders, Nols ) {
 "use strict";
 /* leave cutLifeLine commented out unless soap table is being altered
   un comment and run will drop responder,soap and vital table
  */
  //Nols.cutLifeLine();
-
+ $scope.$location = $location;
+ $scope.soap;
+ $scope.soaps;
 
   Responders.get(function(err,responder) {
     $scope.responder = responder;
   })
-
-  $scope.soaps;
-  $scope.soap;
 
   Soaps.all(function(err, soaps) {
     $scope.soaps = soaps;
@@ -67,33 +86,41 @@ $scope.toggleSideMenu = function() {
     Soaps.createSoapTable();
     Soaps.saveNewSoap(soap,responder,function(err, soap){
       $scope.soap = soap;
+      //console.log(soap.responderFirstName);
       $state.go('tab.overview');
     });
   }
 
+  //if($scope.$location.path() === '/responder/soaps') {
+  //  $ionicPopup.alert({
+  //    title: "Whoa there"
+  //  });
+  //}
   var timeout = null;
 
     $scope.updateSoapParam = function() {
       var updateObject = $scope.soap;
       for(var k in updateObject){
         if(updateObject.hasOwnProperty(k)){
-          Soaps.updateSoap(k,updateObject[k])
+          console.log(k,updateObject[k])
+          //Soaps.updateSoap(k,updateObject[k])
         }
       }
     }
 
 
   var debounceSaveUpdates = function(newVal, oldVal) {
-    if(newVal != oldVal) {
+    if(newVal !== oldVal) {
       if(timeout) {
         $timeout.cancel(timeout)
       }
-    timeout = $timeout($scope.updateSoapParam(), 1000);
+      console.log(newVal,oldVal)
+    //timeout = $timeout($scope.updateSoapParam(), 1000);
     }
   };
 
   //there has got to be a cleaner way of doing this but time is of the essence
-
+  $scope.$watch('soap.responderFirstName', debounceSaveUpdates)
   $scope.$watch('soap.incidentDate', debounceSaveUpdates);
   $scope.$watch('soap.incidentLocation', debounceSaveUpdates);
   $scope.$watch('soap.incidentLat', debounceSaveUpdates);
@@ -252,6 +279,7 @@ $scope.toggleSideMenu = function() {
 
 // Email Share Function
 $scope.shareSOAP = function(soap) {
+  console.log(soap)
 // add hooks for soap id in order for vitals?
   /* come back and address
   console.log(typeof recentSoapVitals);
@@ -302,7 +330,7 @@ var htmlbody = '<h2>Location</h2>'+
 '<h2>Plan</h2>'+
 '<p>' + soap.patientPlan + '</p>' +
 '<strong>Anticipated Problems</strong>: ' + soap.patientAnticipatedProblems + '<br/>';
-
+/*
    window.plugin.email.open({
     to:      ['rogers@eyebytesolutions.com'],
     cc:      ['vehr@eyebytesolutions.com'],
@@ -310,7 +338,7 @@ var htmlbody = '<h2>Location</h2>'+
     subject: 'SOAP Note: Test',
     body:    htmlbody,
     isHtml:  true
-});
+});*/
 };
 // end email
 
@@ -379,9 +407,6 @@ var htmlbody = '<h2>Location</h2>'+
       if(index == 5) $scope.oModal5.hide();
 
     };
-
-
-
     /* Listen for broadcasted messages */
 
     $scope.$on('modal.shown', function(event, modal) {
@@ -428,7 +453,6 @@ var htmlbody = '<h2>Location</h2>'+
     Vitals.all(soap,function(err,vitals,recentSoapVitals){
       $scope.vitals = vitals;
       $scope.recentSoapVitals = recentSoapVitals;
-      console.log(recentSoapVitals);
     })
   })
 
@@ -479,6 +503,7 @@ var htmlbody = '<h2>Location</h2>'+
       $scope.updateVitalParam(newVal)
     }
   }
+
   $scope.$watch('vital.timeTaken', debounceSaveUpdates);
   $scope.$watch('vital.lor', debounceSaveUpdates);
   $scope.$watch('vital.rate', debounceSaveUpdates);
@@ -540,7 +565,6 @@ var htmlbody = '<h2>Location</h2>'+
     $timeout.cancel($scope.timeout);
     $scope.play = false;
     $scope.pause = true;
-
   };
 })
 
@@ -550,4 +574,28 @@ var htmlbody = '<h2>Location</h2>'+
     $scope.vitalDetail = vitalDetail;
     $state.reload();
   })
-});
+})
+
+.controller('CameraCtrl', function($scope, $state, Camera) {
+
+  $scope.initiateCamera = function() {
+    $state.go('tab.image');
+  }
+
+  $scope.capturePhotoWithFile = function() {
+    navigator.camera.getPicture(
+      onPhotoFileSuccess,
+      onFail,
+      { quality: 50,
+        destinationType: Camera.DestinationType.FILE_URI }
+      );
+  }
+
+  $scope.getPhoto = function(source) {
+    navigator.camera.getPicture(onPhotoURISuccess, onFail, { quality: 50,
+    destinationType: destinationType.FILE_URI,
+    sourceType: source });
+  }
+
+  //pictureSource.PHOTOLIBRARY
+})
