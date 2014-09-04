@@ -577,24 +577,73 @@ var htmlbody = '<h2>Location</h2>'+
 })
 
 .controller('CameraCtrl', function($scope, $state, Camera) {
+  $scope.imgs;
+  $scope.img;
+  $scope.pictureSource;
+  $scope.destinationType;
 
-  $scope.initiateCamera = function() {
-    $state.go('tab.image');
+  Camera.all(function(err,imgs){
+    $scope.imgs = imgs;
+  })
+
+  $scope.takeNewImg = function() {
+    Camera.getNewImg(function(err,imgAttr){
+      if(imgAttr !== null){
+        $scope.saveImg(imgAttr);
+      }
+    })
+
+  $scope.saveImg = function(imgAttr) {
+    Camera.saveNewImg(imgAttr,function(err,imgURI){
+      $scope.img = imgURI;
+    })
+  }
+    /*navigator.camera.getPicture(onPhotoURISuccess, onFail, { quality: 50,
+    destinationType: destinationType.FILE_URI,
+    sourceType: source });*/
+  }
+  //if('device fig this out'){
+  //  $scope.pictureSource = navigator.camera.PictureSourceType;
+  //  $scope.destinationType = navigator.camera.DestinationType;
+  //}
+
+  function onPhotoDataSuccess(imageData){
+    var smallImage = document.getElementById('smallImage');
+    smallImage.style.display = 'block';
+    smallImage.src = "data:image/jpeg;base64," + imageData;
+  }
+
+  function onPhotoFileSuccess(imageData) {
+    console.log(JSON.stringify(imageData));
+    var smallImage = document.getElementById('smallImage');
+    var smallImageText = document.getElementById('smallImageText');
+    smallImage.style.display = 'block';
+    smallImageText.style.display = 'block';
+    //smallImage.src = imageData;
+    $scope.image = imageURI;
+  }
+
+  function onPhotoURISuccess(imageURI){
+    var largeImage = document.getElementById('largeImage');
+    var largeImageText = document.getElementById('largeImageText');
+    largeImage.style.display = 'block';
+    largeImageText.style.display = 'block';
+    //largeImage.src = imageURI;
+    $scope.img = imageURI;
   }
 
   $scope.capturePhotoWithFile = function() {
-    navigator.camera.getPicture(
+    /*navigator.camera.getPicture(
       onPhotoFileSuccess,
       onFail,
       { quality: 50,
         destinationType: Camera.DestinationType.FILE_URI }
-      );
+      );*/
   }
 
-  $scope.getPhoto = function(source) {
-    navigator.camera.getPicture(onPhotoURISuccess, onFail, { quality: 50,
-    destinationType: destinationType.FILE_URI,
-    sourceType: source });
+
+  function onFail(message){
+    alert('Failed because' + message)
   }
 
   //pictureSource.PHOTOLIBRARY

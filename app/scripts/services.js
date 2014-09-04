@@ -281,9 +281,39 @@ Vitals factory
        self.db.select(object,query).then(function(results){
         callback(null, results.rows);
        })
-     },
+
+   },
      deleteVital: function(vitalId){
        self.db.del('Vital',{"id": vitalId});
+     },
+     createImageTable: function() {
+       self.db.createTable('Camera', {
+         "id": {"type": "INTEGER", "null": "NOT NULL", "primary": true, "auto_increment":true},
+         "created": {"type": "TIMESTAMP", "null": "NOT NULL", "default": "CURRENT_TIMESTAMP"},
+         "soapId": {"type": "INTEGER", "null": "NOT NULL"},
+         "imageURI": {"type": "STRING", "null": "NOT NULL"}
+       })
+     },
+     saveNewImage: function(cameraAttr,callback) {
+       var img = {};
+       self.db.insert('Camera', {
+         "soapId": soapAttr,
+         "imageURI": cameraAttr.image
+       }).then(function(results){
+         self.db.select('Camera', {
+           "id": results.insertId
+         }).then(function(results){
+           for(var i=0;i < results.rows.length;i++){
+             img = results.rows.item(i);
+             callback(null,img)
+           }
+         })
+       })
+     },
+     imgs: function(object,callback){
+       self.db.selectAll('Camera').then(function(results){
+         callback(null,results.rows);
+       })
      }
 
    };
@@ -428,19 +458,40 @@ Vitals factory
   }
 })
 
+.factory('Camera', function(nolsDB) {
+  var imgs = [];
+  return {
+    createImgTable: function(){
+      return nolsDB.createImgTable();
+    },
+    getNewImg: function(callback){
+      navigator.camera.getPicture(function(result){
+        callback(null,result);
+      })
+    },
+    saveNewImg: function(soapAttr,callback){
+    return nolsDB.saveImg(imgAttr,soapAttr,callback);
+    },
+    all: function(soap,callback){
+      return nolsDB.imgs('Camera', {'soapId': soap}, function(err,data){
+        for(var i=0;i<data.length;i++){
+          imgs.push(data.item(i));
+        }
+        callback(null,imgs);
+      })
+    }
+  }
+})
+
+
 .factory('Nols', function(nolsDB) {
   return {
     cutLifeLine: function(){
       nolsDB.dropSoap();
       nolsDB.dropRes();
       nolsDB.dropVit();
+      nolsDB.dropImg();
     }
-  }
-})
-
-.factory('Camera', function(nolsDB) {
-  return {
-
   }
 })
 

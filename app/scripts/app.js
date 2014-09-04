@@ -210,6 +210,7 @@ else {
 // Photo capture.
 
 //begin test
+/*
 var pictureSource; // picture source
 var destinationType; // sets the format of returned value
 
@@ -300,4 +301,5 @@ sourceType: source });
 function onFail(message) {
 alert('Failed because: ' + message);
 }
+*/
 // end photo

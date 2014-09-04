@@ -12,6 +12,11 @@
   <div class="SOAP">
 
 <div id="camera">
+<ion-list ng-controller="CameraCtrl">
+  <ion-item >
+    <img ng-src="image">
+  </ion-item>
+</ion-list>
 
 <img id="smallImage" src="" />
 <textarea id="smallImageText">Caption Here</textarea>
@@ -20,8 +25,8 @@
 </div>
 
 
-<a class="button button-block button-light margin" onclick="capturePhotoWithFile();"><i class="icon ion-app-photos margin"></i>Capture Photo</a>
-<a class="button button-block button-light margin" onclick="getPhoto(pictureSource.PHOTOLIBRARY);">Add From Library</a>
+<a class="button button-block button-light margin" ng-controller="CameraCtrl" ng-click="capturePhotoWithFile();"><i class="icon ion-app-photos margin"></i>Capture Photo</a>
+<a class="button button-block button-light margin" ng-controller="CameraCtrl" ng-click="takeNewImg">Add From Library</a>
 <a class="button button-block button-calm margin" href="#/tab/review">Review SOAP Note</a>
 
     </div>
