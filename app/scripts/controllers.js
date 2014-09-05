@@ -7,11 +7,13 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce'])
 
 
 
-.controller('FirstResponderCtrl', function($scope, $state, $stateParams, Responders, Soaps) {
+.controller('FirstResponderCtrl', function($scope,$rootScope, $state, $stateParams, Responders, Soaps) {
   $scope.termsPage = function(){$state.go('terms');};
   $scope.responderSoapsPage = function(){$state.go('soaps');};
   //get ready for JS transfer from beta
   //$scope.responder = Responders.all();
+
+
   $scope.trainingLevels = ['WFA','WAFA','WFR', 'WEMT', 'Other'];
   $scope.responder;
 
@@ -550,4 +552,10 @@ var htmlbody = '<h2>Location</h2>'+
     $scope.vitalDetail = vitalDetail;
     $state.reload();
   })
-});
+})
+
+.controller('CameraCtrl', function($scope,$state,Camera){
+  $scope.initiateCamera = function() {
+    $state.go('tab.image');
+  }
+})

@@ -404,6 +404,14 @@ Vitals factory
   }
 })
 
+.factory('Camera', function(nolsDB) {
+  return {
+    addImage: function() {
+      console.log('image added');
+    }
+  }
+})
+
 .factory('Nols', function(nolsDB) {
   return {
     cutLifeLine: function(){
