@@ -25,8 +25,8 @@ angular.module('WMISoapBuilder', ['ionic', 'WMISoapBuilder.controllers', 'WMISoa
   });
 })
 
-.config(function($stateProvider, $urlRouterProvider) {
-
+.config(function($stateProvider, $urlRouterProvider, $compileProvider) {
+  $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|tel):/);
   // Ionic uses AngularUI Router which uses the concept of states
   // Learn more here: https://github.com/angular-ui/ui-router
   // Set up the various states which the app can be in.
@@ -42,7 +42,7 @@ angular.module('WMISoapBuilder', ['ionic', 'WMISoapBuilder.controllers', 'WMISoa
     .state('settings', {
         url: '/settings',
         templateUrl: 'templates/responder/settings.html',
-        controller: 'SoapCtrl'
+        controller: 'FirstResponderCtrl'
     })
 
     .state('terms', {
@@ -70,7 +70,11 @@ angular.module('WMISoapBuilder', ['ionic', 'WMISoapBuilder.controllers', 'WMISoa
       controller: 'SoapDetailCtrl'
     })
 
-
+    .state('soap-edit', {
+      url: '/soaps/edit/:soapId',
+      templateUrl: 'templates/soap/soap-edit.html',
+      controller: 'SoapDetailCtrl'
+    })
 
     // setup an abstract state for the tabs directive
     .state('tab', {
@@ -207,6 +211,7 @@ else {
 // Photo capture.
 
 //begin test
+/*
 var pictureSource; // picture source
 var destinationType; // sets the format of returned value
 
@@ -297,4 +302,5 @@ sourceType: source });
 function onFail(message) {
 alert('Failed because: ' + message);
 }
+*/
 // end photo

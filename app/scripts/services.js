@@ -37,20 +37,15 @@ Vitals factory
            "id": results.insertId
          }).then(function(results) {
            for(var i=0; i < results.rows.length;i++){
-              callback(null, results.rows.item(i));
+              callback(null, angular.copy(results.rows.item(i)));
            }
          })
-       })
+       });
      },
-     getResponder: function(callback) {
-       var responder;
+     getResponder: function(object,callback) {
        self.db.selectAll("Responder").then(function(results) {
-          var len = results.rows.length - 1;
-          for(var i=len; i < results.rows.length; i++){
-            responder = results.rows.item(i);
-            callback(null, responder);
-          }
-       }, function(){
+        callback(null,results.rows);
+      }, function(){
          callback(null,null);
        })
      },
@@ -286,19 +281,49 @@ Vitals factory
        self.db.select(object,query).then(function(results){
         callback(null, results.rows);
        })
-     },
+
+   },
      deleteVital: function(vitalId){
        self.db.del('Vital',{"id": vitalId});
+     },
+     createImageTable: function() {
+       self.db.createTable('Camera', {
+         "id": {"type": "INTEGER", "null": "NOT NULL", "primary": true, "auto_increment":true},
+         "created": {"type": "TIMESTAMP", "null": "NOT NULL", "default": "CURRENT_TIMESTAMP"},
+         "imageURI": {"type": "STRING", "null": "NOT NULL"}
+       })
+     },
+     saveNewImage: function(cameraAttr,callback) {
+       var img = {};
+       self.db.insert('Camera', {
+         "imageURI": cameraAttr.image
+       }).then(function(results){
+         self.db.select('Camera', {
+           "id": results.insertId
+         }).then(function(results){
+           for(var i=0;i < results.rows.length;i++){
+             img = results.rows.item(i);
+             callback(null,img)
+           }
+         })
+       })
+     },
+     imgs: function(object,callback){
+       self.db.selectAll('Camera').then(function(results){
+         callback(null,results.rows);
+       })
      }
 
    };
 
  })
 
-.factory('Responders', function(nolsDB) {
-  var responder = [];
+.factory('Responders', function(nolsDB, uiState, $rootScope) {
 
   return {
+    add: function(key,interaction) {
+      responder[key] = interaction;
+    },
     createResponderTable: function(){
       nolsDB.createResponderTable();
     },
@@ -306,10 +331,37 @@ Vitals factory
       return nolsDB.saveResponder(responder, callback);
     },
     get: function(callback) {
-      return nolsDB.getResponder(callback);
+      return nolsDB.getResponder('Responder', function(err,data){
+        var responder = {};
+        if(data === null) {
+          console.log(callback(null,null))
+        }else{
+          var len = data.length - 1;
+          for(var i=len;i < data.length;i++){
+            responder = angular.copy(data.item(i));
+            console.log(callback(null,responder));
+          }
+        }
+      });
+    },
+    executeCallbacks: function() {
+      _.forEach(responder, function(value,key,myMap){
+        if(value){
+          value(key);
+        }
+      })
+      responder = {};
     }
   }
 
+  $rootScope.$watch(function() {
+    return uiState.active.current;
+  }, function(newValuem, oldValue){
+    if(oldValue != newValue) {
+      Responders.executeCallbacks();
+    }
+
+  })
 })
 
 .factory('Soaps', function(nolsDB) {
@@ -405,9 +457,28 @@ Vitals factory
 })
 
 .factory('Camera', function(nolsDB) {
+
+  var imgs = [];
   return {
-    addImage: function() {
-      console.log('image added');
+    createImgTable: function(){
+      return nolsDB.createImgTable();
+    },
+    getNewImg: function(callback){
+      return navigator.camera.getPicture(function(result){
+        callback(null,result);
+      });
+    },
+    saveNewImg: function(callback){
+    return nolsDB.saveImg(callback);
+    },
+    all: function(callback){
+      //{'soapId': soap}, put this back when ready
+      return nolsDB.imgs('Camera', function(err,data){
+        for(var i=0;i<data.length;i++){
+          imgs.push(data.item(i));
+        }
+        callback(null,imgs);
+      })
     }
   }
 })
@@ -418,6 +489,25 @@ Vitals factory
       nolsDB.dropSoap();
       nolsDB.dropRes();
       nolsDB.dropVit();
+      nolsDB.dropImg();
     }
   }
+})
+
+.factory('uiState', function() {
+  var activeElement = {
+    current: null,
+    previous: null
+  };
+
+  return {
+    blur: function(element) {
+      activeElement.current = '';
+      activeElement.previous = $(element).attr('id');
+    },
+    focus: function(element) {
+      activeElement.current = $(element).attr('id');
+    },
+    active: activeElement
+  };
 });
