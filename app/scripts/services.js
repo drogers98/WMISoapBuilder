@@ -49,6 +49,37 @@ Vitals factory
          callback(null,null);
        })
      },
+     updateResponder: function(object, kind) {
+      var updateP = function() {
+        for(var k in object){
+          if(object.hasOwnProperty(k)){
+            var newKey = k,
+                newVal = object[k];
+          }
+          kindForUpdate(newKey,newVal);
+        }
+      }
+
+      var kindForUpdate = function(kindKey,kindVal){
+         var  buildKeyValue = {};
+         buildKeyValue[kindKey] = kindVal;
+         console.log(buildKeyValue);
+       }
+
+      var updateKind = function() {
+       self.db.selectAll(kind).then(function(results){
+         for(var i = results.rows.length - 1;i<
+           results.rows.length;i++){
+           var kindId = results.rows.item(i).id;
+         }
+         self.db.update(kind, updateP(), {
+           "id": kindId
+         })
+       })
+     }
+     updateKind();
+
+     },
      createSoapTable: function() {
        self.db.createTable('Soap', {
          "id": {"type": "INTEGER","null": "NOT NULL","primary": true,"auto_increment": true},
@@ -86,7 +117,6 @@ Vitals factory
          "patientAssessment": {"type": "TEXT","null": "NOT NULL"},
          "patientPlan": {"type": "TEXT","null": "NOT NULL"},
          "patientAnticipatedProblems": {"type": "TEXT","null": "NOT NULL"}
-
        })
      },
      saveSoap: function(soapAttr, responderAttr, callback) {
@@ -161,7 +191,7 @@ Vitals factory
        var objectForUpdate = function(newKey,newVal) {
          var  buildKeyValue = {};
          buildKeyValue[newKey] = newVal;
-         return buildKeyValue;
+         console.log(buildKeyValue);
        }
        var grabLastId = function(){
          self.db.selectAll('Soap').then(function(results){
@@ -319,10 +349,13 @@ Vitals factory
  })
 
 .factory('Responders', function(nolsDB, uiState, $rootScope) {
+  var responder = {};
+  var responderNewParams = [];
+  var responderKind = 'Responder';
 
   return {
-    add: function(key,interaction) {
-      responder[key] = interaction;
+    updateResponder: function(responder) {
+      nolsDB.updateResponder(responder, responderKind);
     },
     createResponderTable: function(){
       nolsDB.createResponderTable();
@@ -347,7 +380,7 @@ Vitals factory
     executeCallbacks: function() {
       _.forEach(responder, function(value,key,myMap){
         if(value){
-          value(key);
+          console.log(value(key));
         }
       })
       responder = {};
@@ -494,6 +527,7 @@ Vitals factory
   }
 })
 
+
 .factory('uiState', function() {
   var activeElement = {
     current: null,
@@ -503,10 +537,10 @@ Vitals factory
   return {
     blur: function(element) {
       activeElement.current = '';
-      activeElement.previous = $(element).attr('id');
+      activeElement.previous = angular.element(element).attr("id");
     },
     focus: function(element) {
-      activeElement.current = $(element).attr('id');
+      activeElement.current = angular.element(element).attr("id");
     },
     active: activeElement
   };

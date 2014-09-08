@@ -5,10 +5,9 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce'])
 
 })
 
-
-
-
-.controller('FirstResponderCtrl', function($scope, $state, $location, $stateParams, Responders, Soaps,Nols) {
+.controller('FirstResponderCtrl', function($scope, $state, $location,
+                                           $stateParams, $timeout,
+                                           Responders, Soaps, Nols) {
   //Nols.cutLifeLine();
   $scope.termsPage = function(){$state.go('terms');};
   $scope.responderSoapsPage = function(){$state.go('soaps');};
@@ -21,9 +20,9 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce'])
   $scope.responder;
   $scope.$location = $location;
 
-  Responders.get(function(err,responders) {
-    if(responders !== null){
-      $scope.responders = responders;
+  Responders.get(function(err,responder) {
+    if(responder !== null){
+      $scope.responder = responder;
       if($location.path() === '/') {
         $state.go('soaps');
       }
@@ -32,17 +31,19 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce'])
     }
   })
 
+  var timeout = null;
   var updateResponderWatch = function(newVal, oldVal) {
     if(newVal !== oldVal) {
-      Responders.add('responder', function() {
-        console.log('saving' + JSON.stringify(newVal))
-      })
+      //console.log(JSON.stringify($scope.responder));
+      //Todo figure out best option below
+      //update entire object or individ field - which sounds good but could have performance issues..
+      Responders.updateResponder($scope.responder);
     }
   }
 
   if($location.path() === '/settings') {
     $scope.$watch('responder.firstName', updateResponderWatch);
-    $scope.$watch('responder.lastName', updateResonderWatch);
+    $scope.$watch('responder.lastName', updateResponderWatch);
     $scope.$watch('responder.trainingLevel', updateResponderWatch);
   }
 
@@ -106,7 +107,7 @@ $scope.toggleSideMenu = function() {
       for(var k in updateObject){
         if(updateObject.hasOwnProperty(k)){
           console.log(k,updateObject[k])
-          //Soaps.updateSoap(k,updateObject[k])
+          Soaps.updateSoap(k,updateObject[k])
         }
       }
     }
@@ -123,38 +124,45 @@ $scope.toggleSideMenu = function() {
   };
 
   //there has got to be a cleaner way of doing this but time is of the essence
-  $scope.$watch('soap.responderFirstName', debounceSaveUpdates)
-  $scope.$watch('soap.incidentDate', debounceSaveUpdates);
-  $scope.$watch('soap.incidentLocation', debounceSaveUpdates);
-  $scope.$watch('soap.incidentLat', debounceSaveUpdates);
-  $scope.$watch('soap.incidentLon', debounceSaveUpdates);
-  $scope.$watch('soap.incidentLon', debounceSaveUpdates);
-  $scope.$watch('soap.patientInitials', debounceSaveUpdates);
-  $scope.$watch('soap.patientGender', debounceSaveUpdates);
-  $scope.$watch('soap.patientDob', debounceSaveUpdates);
-  $scope.$watch('soap.patientAge', debounceSaveUpdates);
-  $scope.$watch('soap.patientLOR', debounceSaveUpdates);
-  $scope.$watch('soap.patientComplaint', debounceSaveUpdates);
-  $scope.$watch('soap.patientOnset', debounceSaveUpdates);
-  $scope.$watch('soap.patientPPalliates', debounceSaveUpdates);
-  $scope.$watch('soap.patientQuality', debounceSaveUpdates);
-  $scope.$watch('soap.patientRadiates', debounceSaveUpdates);
-  $scope.$watch('soap.patientSeverity', debounceSaveUpdates);
-  $scope.$watch('soap.patientTime', debounceSaveUpdates);
-  $scope.$watch('soap.patientHPI', debounceSaveUpdates);
-  $scope.$watch('soap.patientSpinal', debounceSaveUpdates);
-  $scope.$watch('soap.patientFound', debounceSaveUpdates);
-  $scope.$watch('soap.patientExamReveals', debounceSaveUpdates);
-  $scope.$watch('soap.patientSymptoms', debounceSaveUpdates);
-  $scope.$watch('soap.patientAllergies', debounceSaveUpdates);
-  $scope.$watch('soap.patientMedications', debounceSaveUpdates);
-  $scope.$watch('soap.patientMedicalHistory', debounceSaveUpdates);
-  $scope.$watch('soap.patientLastIntake', debounceSaveUpdates);
-  $scope.$watch('soap.patientEventsForCause', debounceSaveUpdates);
-  $scope.$watch('soap.patientAssessment', debounceSaveUpdates);
-  $scope.$watch('soap.patientPlan', debounceSaveUpdates);
-  $scope.$watch('soap.patientAnticipatedProblems', debounceSaveUpdates);
+  if($scope.$location.path() === '/tab/overview') {
+    //$scope.$watch('soap.responderFirstName', debounceSaveUpdates)
+    $scope.$watch('soap.incidentDate', debounceSaveUpdates);
+    $scope.$watch('soap.incidentLocation', debounceSaveUpdates);
+    $scope.$watch('soap.incidentLat', debounceSaveUpdates);
+    $scope.$watch('soap.incidentLon', debounceSaveUpdates);
+    $scope.$watch('soap.incidentLon', debounceSaveUpdates);
+  }
 
+  if($scope.$location.path() === '/tab/subjective') {
+    $scope.$watch('soap.patientInitials', debounceSaveUpdates);
+    $scope.$watch('soap.patientGender', debounceSaveUpdates);
+    $scope.$watch('soap.patientDob', debounceSaveUpdates);
+    $scope.$watch('soap.patientAge', debounceSaveUpdates);
+    $scope.$watch('soap.patientLOR', debounceSaveUpdates);
+    $scope.$watch('soap.patientComplaint', debounceSaveUpdates);
+    $scope.$watch('soap.patientOnset', debounceSaveUpdates);
+    $scope.$watch('soap.patientPPalliates', debounceSaveUpdates);
+    $scope.$watch('soap.patientQuality', debounceSaveUpdates);
+    $scope.$watch('soap.patientRadiates', debounceSaveUpdates);
+    $scope.$watch('soap.patientSeverity', debounceSaveUpdates);
+    $scope.$watch('soap.patientTime', debounceSaveUpdates);
+    $scope.$watch('soap.patientHPI', debounceSaveUpdates);
+    $scope.$watch('soap.patientSpinal', debounceSaveUpdates);
+  }
+
+  if($scope.$location.path() === '/tab/objective') {
+    $scope.$watch('soap.patientFound', debounceSaveUpdates);
+    $scope.$watch('soap.patientExamReveals', debounceSaveUpdates);
+    $scope.$watch('soap.patientSymptoms', debounceSaveUpdates);
+    $scope.$watch('soap.patientAllergies', debounceSaveUpdates);
+    $scope.$watch('soap.patientMedications', debounceSaveUpdates);
+    $scope.$watch('soap.patientMedicalHistory', debounceSaveUpdates);
+    $scope.$watch('soap.patientLastIntake', debounceSaveUpdates);
+    $scope.$watch('soap.patientEventsForCause', debounceSaveUpdates);
+    $scope.$watch('soap.patientAssessment', debounceSaveUpdates);
+    $scope.$watch('soap.patientPlan', debounceSaveUpdates);
+    $scope.$watch('soap.patientAnticipatedProblems', debounceSaveUpdates);
+  }
 // Age calculation based on DOB
         $scope.findAge = function (date) {
         var birthDay = $scope.soap.patientDob,
