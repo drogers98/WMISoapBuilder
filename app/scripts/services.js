@@ -49,21 +49,23 @@ Vitals factory
          callback(null,null);
        })
      },
-     updateResponder: function(object, kind) {
-      var updateP = function() {
+     updateKind: function(object, kind) {
+      var updateP = function(kId) {
         for(var k in object){
           if(object.hasOwnProperty(k)){
             var newKey = k,
                 newVal = object[k];
           }
-          kindForUpdate(newKey,newVal);
+          self.db.update(kind,kindForUpdate(newKey,newVal),{
+            'id': kId
+          })
         }
       }
 
       var kindForUpdate = function(kindKey,kindVal){
          var  buildKeyValue = {};
          buildKeyValue[kindKey] = kindVal;
-         console.log(buildKeyValue);
+         return buildKeyValue;
        }
 
       var updateKind = function() {
@@ -72,9 +74,7 @@ Vitals factory
            results.rows.length;i++){
            var kindId = results.rows.item(i).id;
          }
-         self.db.update(kind, updateP(), {
-           "id": kindId
-         })
+         updateP(kindId);
        })
      }
      updateKind();
@@ -355,7 +355,7 @@ Vitals factory
 
   return {
     updateResponder: function(responder) {
-      nolsDB.updateResponder(responder, responderKind);
+      nolsDB.updateKind(responder, responderKind);
     },
     createResponderTable: function(){
       nolsDB.createResponderTable();
@@ -398,6 +398,8 @@ Vitals factory
 })
 
 .factory('Soaps', function(nolsDB) {
+  var soap = {};
+  var soapKind = 'Soap';
 
   return {
     createSoapTable: function() {
@@ -406,8 +408,8 @@ Vitals factory
     saveNewSoap: function(soapAttr, responderAttr, callback) {
       return nolsDB.saveSoap(soapAttr, responderAttr, callback);
     },
-    updateSoap: function(newKey,newVal) {
-      return nolsDB.soapUpdate(newKey,newVal);
+    updateSoap: function(soap) {
+      return nolsDB.updateKind(soap,soapKind);
     },
     all: function(callback) {
     return nolsDB.soaps('Soap', function(err,data){

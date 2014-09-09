@@ -95,6 +95,12 @@ $scope.toggleSideMenu = function() {
     });
   }
 
+  var updateSoapWatch = function(newVal, oldVal) {
+    if(newVal !== oldVal) {
+      Soaps.updateSoap($scope.soap);
+    }
+  }
+
   //if($scope.$location.path() === '/responder/soaps') {
   //  $ionicPopup.alert({
   //    title: "Whoa there"
@@ -126,11 +132,11 @@ $scope.toggleSideMenu = function() {
   //there has got to be a cleaner way of doing this but time is of the essence
   if($scope.$location.path() === '/tab/overview') {
     //$scope.$watch('soap.responderFirstName', debounceSaveUpdates)
-    $scope.$watch('soap.incidentDate', debounceSaveUpdates);
-    $scope.$watch('soap.incidentLocation', debounceSaveUpdates);
-    $scope.$watch('soap.incidentLat', debounceSaveUpdates);
-    $scope.$watch('soap.incidentLon', debounceSaveUpdates);
-    $scope.$watch('soap.incidentLon', debounceSaveUpdates);
+    $scope.$watch('soap.incidentDate', updateSoapWatch);
+    $scope.$watch('soap.incidentLocation', updateSoapWatch);
+    $scope.$watch('soap.incidentLat', updateSoapWatch);
+    $scope.$watch('soap.incidentLon', updateSoapWatch);
+    $scope.$watch('soap.incidentLon', updateSoapWatch);
   }
 
   if($scope.$location.path() === '/tab/subjective') {
