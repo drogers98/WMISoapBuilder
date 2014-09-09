@@ -17,10 +17,10 @@
       <h5>Location</h5>
       <div class="list">
         <ion-list>
-          <ion-item class="item-text-wrap"><input type="date" ng-model="soapDetail.incidentDate" value="{{dt | date:'yyyy-MM-dd'}}"></ion-item>
-          <ion-item class="item-text-wrap"><strong>Location: </strong> {{soapDetail.incidentLocation}}</ion-item>
+          <ion-item class="item-text-wrap"><label class="item-input"><span class="input-label">Incident Date</span><input type="date" ng-model="soapDetail.incidentDate" value="{{dt | date:'yyyy-MM-dd'}}"></label></ion-item>
+          <ion-item class="item-text-wrap"><label class="item-input"><span class="input-label">Incident Location</span><input type="text" ng-model="soapDetail.incidentLocation"></label></ion-item>
           <ion-item class="item-text-wrap"><strong>Coordinates: </strong> {{soapDetail.incidentLat}}, {{soapDetail.incidentLon}}</ion-item>
-           <ion-item class="item-text-wrap"><strong>Responder: </strong> {{soapDetail.responderFirstName}} {{soapDetail.responderLastName}}, {{soapDetail.responderTrainingLevel}}</ion-item>
+          <ion-item class="item-text-wrap"><strong>Responder: </strong> {{soapDetail.responderFirstName}} {{soapDetail.responderLastName}}, {{soapDetail.responderTrainingLevel}}</ion-item>
         </ion-list>
       </div>
 
@@ -32,12 +32,10 @@
 
       <div class="list">
         <ion-list>
-        <ion-item class="item-text-wrap"><strong>Patient Initials:</strong> {{soapDetail.patientInitials}}</ion-item>
-        <ion-item class="item-text-wrap"><strong>DOB: </strong> {{soapDetail.patientDob}}</ion-item>
-          <ion-item class="item-text-wrap"><strong>Age:</strong> {{soapDetail.patientAge}}</ion-item>
-          <ion-item class="item-text-wrap"><strong>Sex: </strong> {{soapDetail.patientGender}}</ion-item>
-
-
+        <ion-item class="item-text-wrap"><label class="item-input"><span class="input-label">Patient Initials:</span><input type="text" ng-model="soapDetail.patientInitials"></label></ion-item>
+        <ion-item class="item-text-wrap"><label class="item-input"><span class="input-label">DOB: </span><input type="text" ng-model="soapDetail.patientDob"></label></ion-item>
+        <ion-item class="item-text-wrap"><label class="item-input"><span class="input-label">Age: </span><input type="text" ng-model="soapDetail.patientAge"></label></ion-item>
+        <ion-item class="item-text-wrap"><label class="item-input"><span class="input-label">Sex: </span><input type="text" ng-model="soapDetail.patientGender"></label></ion-item>
         </ion-list>
       </div>
 
@@ -46,12 +44,12 @@
         <ion-list>
           <ion-item class="item-text-wrap">{{soapDetail.patientComplaint}}</ion-item>
 
-          <ion-item><strong>Onset:</strong> {{soapDetail.patientOnset}}</ion-item>
-          <ion-item class="item-text-wrap"><strong>Provokes/Palliates:</strong> {{soapDetail.patientPPalliates}}</ion-item>
-          <ion-item class="item-text-wrap"><strong>Quality:</strong> {{soapDetail.patientQuality}}</ion-item>
-          <ion-item class="item-text-wrap"><strong>Radiation/Region/Referred:</strong> {{soapDetail.patientRadiates}}</ion-item>
-          <ion-item class="item-text-wrap"><strong>Severity:</strong> {{soapDetail.patientSeverity}} out of 10</ion-item>
-          <ion-item class="item-text-wrap"><strong>Time of Onset:</strong> {{soapDetail.patientTime}}</ion-item>
+          <ion-item><label class="item-input"><span class="input-label">Onset:</span><input type="text" ng-model="soapDetail.patientOnset"></label></ion-item>
+          <ion-item class="item-text-wrap"><label class="item-input"><span class="input-label">Provokes/Palliates:</span><input type="text" ng-model="soapDetail.patientPPalliates"></label></ion-item>
+          <ion-item class="item-text-wrap"><label class="item-input"><span class="input-label">Quality:</span><input type="text" ng-model="soapDetail.patientQuality"></label></ion-item>
+          <ion-item class="item-text-wrap"><label class="item-input"><span class="input-label">Radiation/Region/Referred:</span><input type="text" ng-model="soapDetail.patientRadiates"></label></ion-item>
+          <ion-item class="item-text-wrap"><label class="item-input"><span class="input-label">Severity:</span><input type="text" ng-model="soapDetail.patientSeverity"></label>out of 10</ion-item>
+          <ion-item class="item-text-wrap"><label class="item-input"><span class="input-label">Time of Onset:</span><input type="text" ng-model="soapDetail.patientTime"></label></ion-item>
 
         </ion-list>
       </div>

@@ -11,10 +11,6 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce'])
   //Nols.cutLifeLine();
   $scope.termsPage = function(){$state.go('terms');};
   $scope.responderSoapsPage = function(){$state.go('soaps');};
-  //get ready for JS transfer from beta
-  //$scope.responder = Responders.all();
-
-
   $scope.trainingLevels = ['WFA','WAFA','WFR', 'WEMT', 'Other'];
   $scope.responders;
   $scope.responder;
@@ -31,6 +27,14 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce'])
     }
   })
 
+  $scope.initiateResponder = function(responder) {
+    Responders.createResponderTable();
+    Responders.saveResponder(responder, function (err, responder){
+        $scope.responder = responder;
+    });
+    $state.go('soaps');
+  };
+
   var timeout = null;
   var updateResponderWatch = function(newVal, oldVal) {
     if(newVal !== oldVal) {
@@ -46,14 +50,6 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce'])
     $scope.$watch('responder.lastName', updateResponderWatch);
     $scope.$watch('responder.trainingLevel', updateResponderWatch);
   }
-
-  $scope.initiateResponder = function(responder) {
-    Responders.createResponderTable();
-    Responders.saveResponder(responder, function (err, responder){
-        $scope.responder = responder;
-    });
-    $state.go('soaps');
-  };
 
 })
 
@@ -73,9 +69,9 @@ $scope.toggleSideMenu = function() {
   un comment and run will drop responder,soap and vital table
  */
  //Nols.cutLifeLine();
- $scope.$location = $location;
- $scope.soap;
- $scope.soaps;
+  $scope.$location = $location;
+  $scope.soap;
+  $scope.soaps;
 
   Responders.get(function(err,responder) {
     $scope.responder = responder;
@@ -90,6 +86,7 @@ $scope.toggleSideMenu = function() {
     Soaps.createSoapTable();
     Soaps.saveNewSoap(soap,responder,function(err, soap){
       $scope.soap = soap;
+      
       //console.log(soap.responderFirstName);
       $state.go('tab.overview');
     });
@@ -106,32 +103,10 @@ $scope.toggleSideMenu = function() {
   //    title: "Whoa there"
   //  });
   //}
-  var timeout = null;
-
-    $scope.updateSoapParam = function() {
-      var updateObject = $scope.soap;
-      for(var k in updateObject){
-        if(updateObject.hasOwnProperty(k)){
-          console.log(k,updateObject[k])
-          Soaps.updateSoap(k,updateObject[k])
-        }
-      }
-    }
-
-
-  var debounceSaveUpdates = function(newVal, oldVal) {
-    if(newVal !== oldVal) {
-      if(timeout) {
-        $timeout.cancel(timeout)
-      }
-      console.log(newVal,oldVal)
-    //timeout = $timeout($scope.updateSoapParam(), 1000);
-    }
-  };
 
   //there has got to be a cleaner way of doing this but time is of the essence
-  if($scope.$location.path() === '/tab/overview') {
-    //$scope.$watch('soap.responderFirstName', debounceSaveUpdates)
+  var scopePath = $scope.$location.path();
+  if(scopePath == '/tab/overview' || scopePath == '/soaps/edit' ) {
     $scope.$watch('soap.incidentDate', updateSoapWatch);
     $scope.$watch('soap.incidentLocation', updateSoapWatch);
     $scope.$watch('soap.incidentLat', updateSoapWatch);
@@ -139,35 +114,35 @@ $scope.toggleSideMenu = function() {
     $scope.$watch('soap.incidentLon', updateSoapWatch);
   }
 
-  if($scope.$location.path() === '/tab/subjective') {
-    $scope.$watch('soap.patientInitials', debounceSaveUpdates);
-    $scope.$watch('soap.patientGender', debounceSaveUpdates);
-    $scope.$watch('soap.patientDob', debounceSaveUpdates);
-    $scope.$watch('soap.patientAge', debounceSaveUpdates);
-    $scope.$watch('soap.patientLOR', debounceSaveUpdates);
-    $scope.$watch('soap.patientComplaint', debounceSaveUpdates);
-    $scope.$watch('soap.patientOnset', debounceSaveUpdates);
-    $scope.$watch('soap.patientPPalliates', debounceSaveUpdates);
-    $scope.$watch('soap.patientQuality', debounceSaveUpdates);
-    $scope.$watch('soap.patientRadiates', debounceSaveUpdates);
-    $scope.$watch('soap.patientSeverity', debounceSaveUpdates);
-    $scope.$watch('soap.patientTime', debounceSaveUpdates);
-    $scope.$watch('soap.patientHPI', debounceSaveUpdates);
-    $scope.$watch('soap.patientSpinal', debounceSaveUpdates);
+  if(scopePath == '/tab/subjective' || scopePath == '/soaps/edit') {
+    $scope.$watch('soap.patientInitials', updateSoapWatch);
+    $scope.$watch('soap.patientGender', updateSoapWatch);
+    $scope.$watch('soap.patientDob', updateSoapWatch);
+    $scope.$watch('soap.patientAge', updateSoapWatch);
+    $scope.$watch('soap.patientLOR', updateSoapWatch);
+    $scope.$watch('soap.patientComplaint', updateSoapWatch);
+    $scope.$watch('soap.patientOnset', updateSoapWatch);
+    $scope.$watch('soap.patientPPalliates', updateSoapWatch);
+    $scope.$watch('soap.patientQuality', updateSoapWatch);
+    $scope.$watch('soap.patientRadiates', updateSoapWatch);
+    $scope.$watch('soap.patientSeverity', updateSoapWatch);
+    $scope.$watch('soap.patientTime', updateSoapWatch);
+    $scope.$watch('soap.patientHPI', updateSoapWatch);
+    $scope.$watch('soap.patientSpinal', updateSoapWatch);
   }
 
-  if($scope.$location.path() === '/tab/objective') {
-    $scope.$watch('soap.patientFound', debounceSaveUpdates);
-    $scope.$watch('soap.patientExamReveals', debounceSaveUpdates);
-    $scope.$watch('soap.patientSymptoms', debounceSaveUpdates);
-    $scope.$watch('soap.patientAllergies', debounceSaveUpdates);
-    $scope.$watch('soap.patientMedications', debounceSaveUpdates);
-    $scope.$watch('soap.patientMedicalHistory', debounceSaveUpdates);
-    $scope.$watch('soap.patientLastIntake', debounceSaveUpdates);
-    $scope.$watch('soap.patientEventsForCause', debounceSaveUpdates);
-    $scope.$watch('soap.patientAssessment', debounceSaveUpdates);
-    $scope.$watch('soap.patientPlan', debounceSaveUpdates);
-    $scope.$watch('soap.patientAnticipatedProblems', debounceSaveUpdates);
+  if($scope.$location.path() == '/tab/objective' || scopePath == '/soaps/edit') {
+    $scope.$watch('soap.patientFound', updateSoapWatch);
+    $scope.$watch('soap.patientExamReveals', updateSoapWatch);
+    $scope.$watch('soap.patientSymptoms', updateSoapWatch);
+    $scope.$watch('soap.patientAllergies', updateSoapWatch);
+    $scope.$watch('soap.patientMedications', updateSoapWatch);
+    $scope.$watch('soap.patientMedicalHistory', updateSoapWatch);
+    $scope.$watch('soap.patientLastIntake', updateSoapWatch);
+    $scope.$watch('soap.patientEventsForCause', updateSoapWatch);
+    $scope.$watch('soap.patientAssessment', updateSoapWatch);
+    $scope.$watch('soap.patientPlan', updateSoapWatch);
+    $scope.$watch('soap.patientAnticipatedProblems', updateSoapWatch);
   }
 // Age calculation based on DOB
         $scope.findAge = function (date) {
@@ -295,8 +270,8 @@ $scope.toggleSideMenu = function() {
 
 
 // Email Share Function
-$scope.shareSOAP = function(soap) {
-  console.log(soap)
+$scope.shareSOAP = function(soap,recentSoapVitals) {
+  console.log(soap + ',' + recentSoapVitals);
 // add hooks for soap id in order for vitals?
   /* come back and address
   console.log(typeof recentSoapVitals);
@@ -473,13 +448,12 @@ var htmlbody = '<h2>Location</h2>'+
     })
   })
 
-/*
+
   Vitals.all($scope.soap,function(err,vitals,recentSoapVitals){
     $scope.vitals = vitals;
     $scope.recentSoapVitals = recentSoapVitals;
-    console.log(recentSoapVitals);
   })
-*/
+
   $scope.initiateVital = function(vital,soap) {
     var vital = {};
     Vitals.createVitalTable();
@@ -490,55 +464,30 @@ var htmlbody = '<h2>Location</h2>'+
   }
 
   var timeout = null;
-  var debounceSaveUpdates = function(newVal, oldVal) {
-    if(newVal != oldVal) {
-      if(timeout) {
-        $timeout.cancel(timeout)
-      }
-
-      var newVitalParamForUpdate = function() {
-         $scope.vital.getVitalKeyByValue = function (value) {
-          for(var prop in this) {
-            if(this.hasOwnProperty(prop)) {
-              if( this[ prop ] === value)
-                return prop;
-            }
-          }
-        }
-
-        var vitalValue = $scope.vital.getVitalKeyByValue(newVal);
-
-        var buildVitalParamObject = function(vitalVal,newVal) {
-          var updateParams = {};
-          updateParams["key"] = vitalVal;
-          updateParams["val"] = newVal;
-          return updateParams;
-        }
-        return buildVitalParamObject(vitalValue, newVal);
-      }
-      timeout = $timeout($scope.updateVitalParam(newVitalParamForUpdate()), 1000);
-      $scope.updateVitalParam(newVal)
+  var updateVitalWatch = function(newVal, oldVal) {
+    if(newVal !== oldVal) {
+      Vitals.updateVital($scope.vital);
     }
   }
 
-  $scope.$watch('vital.timeTaken', debounceSaveUpdates);
-  $scope.$watch('vital.lor', debounceSaveUpdates);
-  $scope.$watch('vital.rate', debounceSaveUpdates);
-  $scope.$watch('vital.heartRythm', debounceSaveUpdates);
-  $scope.$watch('vital.heartQuality', debounceSaveUpdates);
-  $scope.$watch('vital.respRate', debounceSaveUpdates);
-  $scope.$watch('vital.respRhythm', debounceSaveUpdates);
-  $scope.$watch('vital.respQuality', debounceSaveUpdates);
-  $scope.$watch('vital.sctmcolor', debounceSaveUpdates);
-  $scope.$watch('vital.sctmtemp', debounceSaveUpdates);
-  $scope.$watch('vital.sctmmoisture', debounceSaveUpdates);
-  $scope.$watch('vital.brradialpulse', debounceSaveUpdates);
-  $scope.$watch('vital.brsystolic', debounceSaveUpdates);
-  $scope.$watch('vital.brradialtaken', debounceSaveUpdates);
-  $scope.$watch('vital.brradialReading', debounceSaveUpdates);
-  $scope.$watch('vital.pupils', debounceSaveUpdates);
-  $scope.$watch('vital.tempDegreesReading', debounceSaveUpdates);
-  $scope.$watch('vital.tempDegrees', debounceSaveUpdates);
+  $scope.$watch('vital.timeTaken', updateVitalWatch);
+  $scope.$watch('vital.lor', updateVitalWatch);
+  $scope.$watch('vital.rate', updateVitalWatch);
+  $scope.$watch('vital.heartRythm', updateVitalWatch);
+  $scope.$watch('vital.heartQuality', updateVitalWatch);
+  $scope.$watch('vital.respRate', updateVitalWatch);
+  $scope.$watch('vital.respRhythm', updateVitalWatch);
+  $scope.$watch('vital.respQuality', updateVitalWatch);
+  $scope.$watch('vital.sctmcolor', updateVitalWatch);
+  $scope.$watch('vital.sctmtemp', updateVitalWatch);
+  $scope.$watch('vital.sctmmoisture', updateVitalWatch);
+  $scope.$watch('vital.brradialpulse', updateVitalWatch);
+  $scope.$watch('vital.brsystolic', updateVitalWatch);
+  $scope.$watch('vital.brradialtaken', updateVitalWatch);
+  $scope.$watch('vital.brradialReading', updateVitalWatch);
+  $scope.$watch('vital.pupils', updateVitalWatch);
+  $scope.$watch('vital.tempDegreesReading', updateVitalWatch);
+  $scope.$watch('vital.tempDegrees', updateVitalWatch);
 
 
   $scope.updateVitalParam = function(newParam) {

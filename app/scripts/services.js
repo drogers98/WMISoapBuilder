@@ -1,15 +1,12 @@
 'use strict';
 angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
 
-/*
-Services For NOLS (National Outdoor Leadership School)
-Specified from top down:
-Global websql db to support factories,
-Responder factory,
-Soaps factory,
-Vitals factory
-
- */
+/* Named global db methods as kind */
+//getKind (GET)
+//updateKind (POST)
+//Kind (GET)
+//allKind (GET)
+//deleteKind (DELETE)
 
  .factory('nolsDB', function($webSql, $rootScope) {
    var self = this;
@@ -41,44 +38,6 @@ Vitals factory
            }
          })
        });
-     },
-     getResponder: function(object,callback) {
-       self.db.selectAll("Responder").then(function(results) {
-        callback(null,results.rows);
-      }, function(){
-         callback(null,null);
-       })
-     },
-     updateKind: function(object, kind) {
-      var updateP = function(kId) {
-        for(var k in object){
-          if(object.hasOwnProperty(k)){
-            var newKey = k,
-                newVal = object[k];
-          }
-          self.db.update(kind,kindForUpdate(newKey,newVal),{
-            'id': kId
-          })
-        }
-      }
-
-      var kindForUpdate = function(kindKey,kindVal){
-         var  buildKeyValue = {};
-         buildKeyValue[kindKey] = kindVal;
-         return buildKeyValue;
-       }
-
-      var updateKind = function() {
-       self.db.selectAll(kind).then(function(results){
-         for(var i = results.rows.length - 1;i<
-           results.rows.length;i++){
-           var kindId = results.rows.item(i).id;
-         }
-         updateP(kindId);
-       })
-     }
-     updateKind();
-
      },
      createSoapTable: function() {
        self.db.createTable('Soap', {
@@ -130,10 +89,10 @@ Vitals factory
          "incidentLocation": soapAttr.incidentLocation || '',
          "incidentLat": soapAttr.incidentLat || '',
          "incidentLon": soapAttr.incidentLon || '',
-         "patientInitials": soapAttr.patientInitials || '',
-         "patientGender": soapAttr.patientGender || '',
+         "patientInitials": soapAttr.patientInitials || 'NO INITIALS',
+         "patientGender": soapAttr.patientGender || 'NO SEX',
          "patientDob": soapAttr.patientDob || '',
-         "patientAge": soapAttr.patientAge || '',
+         "patientAge": soapAttr.patientAge || 'NO AGE',
          "patientLOR": soapAttr.patientLOR || '',
          "patientComplaint": soapAttr.patientComplaint || '',
          "patientOnset": soapAttr.patientOnset || '',
@@ -160,63 +119,10 @@ Vitals factory
            "id": results.insertId
          }).then(function(results) {
            for(var i = 0;i < results.rows.length;i++){
-             soap = results.rows.item(i);
-             callback(null, soap);
+             callback(null, angular.copy(results.rows.item(i)));
            }
          })
        })
-
-
-     },
-     /*soaps: function(callback) {
-       var soaps = []
-       self.db.selectAll("Soap").then(function(results) {
-          for(var i=0; i < results.rows.length; i++){
-            soaps.push(results.rows.item(i));
-            callback(null, soaps);
-          }
-       })
-     },*/
-     soaps: function(object,callback){
-       self.db.selectAll('Soap').then(function(results){
-         callback(null,results.rows);
-       })
-     },
-     soap: function(object, query, callback) {
-      self.db.select(object,query).then(function(results){
-        callback(null, results.rows);
-      })
-     },
-     soapUpdate: function(newKey,newVal) {
-       var objectForUpdate = function(newKey,newVal) {
-         var  buildKeyValue = {};
-         buildKeyValue[newKey] = newVal;
-         console.log(buildKeyValue);
-       }
-       var grabLastId = function(){
-         self.db.selectAll('Soap').then(function(results){
-           for(var i = results.rows.length - 1;i < results.rows.length;i++){
-             var soapID = results.rows.item(i).id;
-           }
-           self.db.update('Soap', objectForUpdate(newKey,newVal),{
-             "id": soapID
-           })
-         })
-       }
-       grabLastId();
-     },
-     deleteSoap: function(soapId){
-       self.db.del('Soap',{"id": soapId});
-       self.db.del('Vital',{"soapId":soapId});
-     },
-     dropSoap: function() {
-       self.db.dropTable("Soap");
-     },
-     dropRes: function(){
-       self.db.dropTable("Responder");
-     },
-     dropVit: function(){
-       self.db.dropTable("Vital");
      },
      createVitalTable: function() {
        self.db.createTable('Vital', {
@@ -284,6 +190,110 @@ Vitals factory
          })
        })
      },
+     createImageTable: function() {
+       self.db.createTable('Camera', {
+         "id": {"type": "INTEGER", "null": "NOT NULL", "primary": true, "auto_increment":true},
+         "created": {"type": "TIMESTAMP", "null": "NOT NULL", "default": "CURRENT_TIMESTAMP"},
+         "imageURI": {"type": "STRING", "null": "NOT NULL"}
+       })
+     },
+     saveNewImage: function(cameraAttr,callback) {
+       var img = {};
+       self.db.insert('Camera', {
+         "imageURI": cameraAttr.image
+       }).then(function(results){
+         self.db.select('Camera', {
+           "id": results.insertId
+         }).then(function(results){
+           for(var i=0;i < results.rows.length;i++){
+             img = results.rows.item(i);
+             callback(null,img)
+           }
+         })
+       })
+     },
+     getKind: function(object,callback) {
+       self.db.selectAll(object).then(function(results) {
+        callback(null,results.rows);
+      }, function(){
+         callback(null,null);
+       })
+     },
+     updateKind: function(object, kind) {
+       var updateP = function(kId) {
+          for(var k in object){
+            if(object.hasOwnProperty(k)){
+              var newKey = k,
+                  newVal = object[k];
+              }
+            self.db.update(kind,kindForUpdate(newKey,newVal),{
+              'id': kId
+            })
+          }
+        }
+
+        var kindForUpdate = function(kindKey,kindVal){
+           var  buildKeyValue = {};
+           buildKeyValue[kindKey] = kindVal;
+           return buildKeyValue;
+         }
+
+        var updateKind = function() {
+        self.db.selectAll(kind).then(function(results){
+           for(var i = results.rows.length - 1;i<
+             results.rows.length;i++){
+             var kindId = results.rows.item(i).id;
+           }
+           updateP(kindId);
+         })
+       }
+       updateKind();
+
+     },
+     allKind: function(object,callback){
+       self.db.selectAll('Soap').then(function(results){
+         callback(null,results.rows);
+       })
+     },
+     kind: function(object, query, callback) {
+      self.db.select(object,query).then(function(results){
+        callback(null, results.rows);
+      })
+     },
+     soapUpdate: function(newKey,newVal) {
+       var objectForUpdate = function(newKey,newVal) {
+         var  buildKeyValue = {};
+         buildKeyValue[newKey] = newVal;
+         console.log(buildKeyValue);
+       }
+       var grabLastId = function(){
+         self.db.selectAll('Soap').then(function(results){
+           for(var i = results.rows.length - 1;i < results.rows.length;i++){
+             var soapID = results.rows.item(i).id;
+           }
+           self.db.update('Soap', objectForUpdate(newKey,newVal),{
+             "id": soapID
+           })
+         })
+       }
+       grabLastId();
+     },
+     deleteKind: function(kind,id){
+       self.db.del(kind,{"id": id});
+       if(kind == 'Soap') {
+         self.db.del('Vital',{"soapId":id});
+       }
+     },
+     dropSoap: function() {
+       self.db.dropTable("Soap");
+     },
+     dropRes: function(){
+       self.db.dropTable("Responder");
+     },
+     dropVit: function(){
+       self.db.dropTable("Vital");
+     },
+
      vitalUpdate: function(newVitalParam){
        var objectForUpdate = function(newVitalParam){
          var buildKeyValue = {};
@@ -316,28 +326,7 @@ Vitals factory
      deleteVital: function(vitalId){
        self.db.del('Vital',{"id": vitalId});
      },
-     createImageTable: function() {
-       self.db.createTable('Camera', {
-         "id": {"type": "INTEGER", "null": "NOT NULL", "primary": true, "auto_increment":true},
-         "created": {"type": "TIMESTAMP", "null": "NOT NULL", "default": "CURRENT_TIMESTAMP"},
-         "imageURI": {"type": "STRING", "null": "NOT NULL"}
-       })
-     },
-     saveNewImage: function(cameraAttr,callback) {
-       var img = {};
-       self.db.insert('Camera', {
-         "imageURI": cameraAttr.image
-       }).then(function(results){
-         self.db.select('Camera', {
-           "id": results.insertId
-         }).then(function(results){
-           for(var i=0;i < results.rows.length;i++){
-             img = results.rows.item(i);
-             callback(null,img)
-           }
-         })
-       })
-     },
+
      imgs: function(object,callback){
        self.db.selectAll('Camera').then(function(results){
          callback(null,results.rows);
@@ -364,7 +353,7 @@ Vitals factory
       return nolsDB.saveResponder(responder, callback);
     },
     get: function(callback) {
-      return nolsDB.getResponder('Responder', function(err,data){
+      return nolsDB.getKind('Responder', function(err,data){
         var responder = {};
         if(data === null) {
           console.log(callback(null,null))
@@ -412,7 +401,7 @@ Vitals factory
       return nolsDB.updateKind(soap,soapKind);
     },
     all: function(callback) {
-    return nolsDB.soaps('Soap', function(err,data){
+    return nolsDB.allKind('Soap', function(err,data){
       var soaps = [];
       for(var i=0;i < data.length;i++){
         soaps.push(data.item(i));
@@ -421,7 +410,7 @@ Vitals factory
     })
     },
     getLast: function(callback) {
-      return nolsDB.soaps('Soap', function(err, data){
+      return nolsDB.allKind('Soap', function(err, data){
         var soap = {};
         var len = data.length - 1;
         for(var i=len;i < data.length;i++){
@@ -431,14 +420,14 @@ Vitals factory
       })
     },
     get: function(soapId, callback) {
-      return nolsDB.soap('Soap', {id: soapId}, function(err, data){
+      return nolsDB.kind('Soap', {id: soapId}, function(err, data){
         for(var i=0;i < data.length;i++){
-          callback(null,data.item(i));
+          callback(null,angular.copy(data.item(i)));
         }
       })
     },
     deleteSoap: function(soapId){
-      return nolsDB.deleteSoap(soapId);
+      return nolsDB.deleteKind(soapKind,soapId);
     }
 
   }
