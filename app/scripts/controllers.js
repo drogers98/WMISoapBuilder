@@ -86,9 +86,9 @@ $scope.toggleSideMenu = function() {
     Soaps.createSoapTable();
     Soaps.saveNewSoap(soap,responder,function(err, soap){
       $scope.soap = soap;
-      $state.go('tab.overview');
     });
   }
+
 
   var updateSoapWatch = function(newVal, oldVal) {
     if(newVal !== oldVal) {
@@ -112,10 +112,10 @@ $scope.toggleSideMenu = function() {
   }
 
   if(scopePath in soapRouteConverter([overview,subjective,objective,soapEdit])) {
-    Soaps.getLast(function(err,soap){
+    /*Soaps.getLast(function(err,soap){
       $scope.soap = soap;
       console.log(soap);
-    })
+    })*/
 
     $scope.$watch('soap.responderFirstName', updateSoapWatch);
     $scope.$watch('soap.responderLastName', updateSoapWatch);
@@ -278,23 +278,15 @@ $scope.toggleSideMenu = function() {
 // Email Share Function
 $scope.shareSOAP = function(soap) {
   console.log("called");
-  Vitals.all(soap.id,function(err,vitals,recentSoapVitals){
-    $scope.vitals = vitals;
-    $scope.recentSoapVitals = recentSoapVitals;
-    console.log(recentSoapVitals);
 
-  })
-
-// add hooks for soap id in order for vitals?
-  /* come back and address
-  console.log(typeof recentSoapVitals);
-  var vitalLoop = function() {
-    for(var i=0;i < soapVitals.length;i++){
-      var vitals = [];
-      vitals.push(soapVitals[i].created)
-    }
-    return vitals;
-  }*/
+  var retrieveVitals = function() {
+    Vitals.all(soap.id,function(err,vitals,recentSoapVitals){
+      for(var i=0;i<recentSoapVitals.length;i++){
+        console.log(recentSoapVitals[i].created);
+      }
+    })
+  }
+  retrieveVitals();
 
 var htmlbody = '<h2>Location</h2>'+
 '<strong>Date of Incident</strong>: ' + soap.incidentDate + '<br/>' +
@@ -442,6 +434,7 @@ var htmlbody = '<h2>Location</h2>'+
   Soaps.get($stateParams.soapId, function(err, soapDetail) {
     $scope.soapDetail = soapDetail;
     Vitals.all(soapDetail.id,function(err,vitals,recentSoapVitals){
+      $scope.vitals = vitals;
       $scope.recentSoapVitals = recentSoapVitals;
     })
   })

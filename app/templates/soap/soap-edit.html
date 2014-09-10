@@ -1,107 +1,305 @@
-<ion-view title="{{soapDetail.patientGender}}, {{soapDetail.patientAge}} | {{soapDetail.patientInitials}}">
+<ion-view>
+
 <ion-nav-buttons side="left">
-
-    <a class="button icon ion-ios7-arrow-back" href="#/responder/soaps">My SOAPs</a>
+    <a class="button icon ion-ios7-arrow-back" href="#/responder/soapDetails">My soapDetails</a>
   </ion-nav-buttons>
-
 
   <ion-nav-buttons side="right">
-  <button class="button icon ion-edit" ng-click="data.showDelete = !data.showDelete"></button>
-    <button class="button icon ion-app-share" ng-controller="SoapCtrl" ng-click="shareSOAP(soapDetail)"></button>
+    <button class="button button-icon ion-navicon" ng-controller="MenuCtrl" ng-click="toggleSideMenu()"></button>
   </ion-nav-buttons>
 
+  <ion-content has-header="true" padding="false"has-bouncing="false">
+  <div class="soapDetail">
 
-  <ion-content class="has-header" padding="false" has-bouncing="false">
-    <div class="SOAP">
-
-      <h5>Location</h5>
+  <h5>Date & Location<a ng-click="openModal(1)"><span>i</span></a></h5>
       <div class="list">
-        <ion-list>
-          <ion-item class="item-text-wrap"><label class="item-input strong-item"><span class="input-label strong">Incident Date</span><input type="date" ng-model="soapDetail.incidentDate" value="{{dt | date:'yyyy-MM-dd'}}"></label></ion-item>
-          <ion-item class="item-text-wrap"><label class="item-input"><span class="input-label strong">Incident Location:</span><input type="text" ng-model="soapDetail.incidentLocation"></label></ion-item>
-          <ion-item class="item-text-wrap"><strong>Coordinates: </strong> {{soapDetail.incidentLat}}, {{soapDetail.incidentLon}}</ion-item>
-          <ion-item class="item-text-wrap"><strong>Responder: </strong> {{soapDetail.responderFirstName}} {{soapDetail.responderLastName}}, {{soapDetail.responderTrainingLevel}}</ion-item>
-        </ion-list>
+      <h6>Date of Incident</h6>
+      <div class="item item-input" >
+       <input type="date" ng-model="soapDetail.incidentDate" value="{{dt | date:'yyyy-MM-dd'}}"/>
+     </div>
+
+      <h6>Location</h6>
+           <label class="item item-input">
+        <textarea id="Location" type="text" placeholder="Describe where it happened." ng-model="soapDetail.incidentLocation"
+  ng-keyup="expandText($event)"
+  ng-keydown="expandText($event)"></textarea>
+
+</textarea>
+      </label>
+      <h6>Coordinates</h6>
+
+
+
+      <label class="item">
+      {{soapDetail.incidentLat}} {{soapDetail.incidentLon}}
+      </label>
+
+      <a id="coordsBtn" class="button button-block button-light margin" ng-click="getLocation()"><icon class="ion-pinpoint"></icon><span id="GeoLocationBtnInner">Get Coordinates</span></a>
+
+
+
       </div>
 
 
-
-     <h5>Subjective</h5>
-
-
-
+    <h5>Responder Information<a ng-click="openModal(1)"><span>i</span></a></h5>
       <div class="list">
-        <ion-list>
-        <ion-item class="item-text-wrap"><label class="item-input"><span class="input-label strong">Patient Initials:</span><input type="text" ng-model="soapDetail.patientInitials"></label></ion-item>
-        <ion-item class="item-text-wrap"><label class="item-input"><span class="input-label strong">DOB: </span><input type="text" ng-model="soapDetail.patientDob"></label></ion-item>
-        <ion-item class="item-text-wrap"><label class="item-input"><span class="input-label strong">Age: </span><input type="text" ng-model="soapDetail.patientAge"></label></ion-item>
-        <ion-item class="item-text-wrap"><label class="item-input"><span class="input-label strong">Sex: </span><input type="text" ng-model="soapDetail.patientGender"></label></ion-item>
-        </ion-list>
-      </div>
+      <h6>First Name</h6>
+      <label class="item item-input">
+        <input type="text" placeholder="First Name" ng-model="soapDetail.responderFirstName" >
+      </label>
+      <h6>Last Name</h6>
+      <label class="item item-input">
+        <input type="text" placeholder="Last Name" ng-model="soapDetail.responderLastName">
+      </label>
 
-      <h6>Chief Complaint:</h6>
+
+      <h6>Current Training Level</h6>
+      <div class="item item-select">
+       <div class="input-label">
+          Training Level
+       </div>
+        <select id="TrainingLevelsoapDetail" ng-model="soapDetail.responderTrainingLevel" ng-options="trainingLevel for trainingLevel in trainingLevels"  onchange="changeClass(this.id)">
+          <option style="display:none;" value="" selected>Please Choose</option>
+        </select>
+
+      </div>
+      </div>
+      <!-- subjective section 1 -->
+      <div class="soapDetail">
+        <h5>Patient Information<a ng-click="openModal(2)"><span>i</span></a></h5>
+        <div class="list">
+        <!-- initials -->
+        <h6>Patient Initials</h6>
+        <label class="item item-input">
+          <input type="text" placeholder="Enter up to three characters." ng-model="soapDetail.patientInitials">
+        </label>
+        <!-- DOB -->
+        <h6>Date of Birth</h6>
+        <label class="item item-input">
+          <input type="date" placeholder="Patient DOB"  ng-change='findAge()' ng-model="soapDetail.patientDob">
+        </label>
+        <!-- Age. Auto populate from DOB if filled -->
+        <h6>Age</h6>
+        <label class="item item-input">
+          <input type="number" placeholder="Patient Age" ng-model="soapDetail.patientAge">
+        </label>
+        <!-- Sex -->
+        <h6>Sex</h6>
+        <div class="item item-select">
+        <div class="input-label">
+            Sex
+         </div>
+          <select id="Sex" ng-model="soapDetail.patientGender" ng-options="gender.value as gender.name for gender in genders"  onchange="changeClass(this.id)">
+            <option style="display:none;" value="" selected>Please Choose</option>
+          </select>
+        </div>
+
+
+      </div>
+      <!-- subjective section 2 -->
+      <h5>Chief Complaint<a ng-click="openModal(2)"><span>i</span></a></h5>
       <div class="list">
-        <ion-list>
-          <ion-item class="item-text-wrap">{{soapDetail.patientComplaint}}</ion-item>
+        <label class="item item-input">
+          <textarea id ="ChiefComplaint" type="text" placeholder="Describe the patient's chief complaint." ng-model="soapDetail.patientComplaint" ng-model="soapDetail.patientComplaint"
+    ng-keyup="expandText($event)"
+    ng-keydown="expandText($event)"></textarea>
+        </label>
 
-          <ion-item><label class="item-input"><span class="input-label strong">Onset:</span><input type="text" ng-model="soapDetail.patientOnset"></label></ion-item>
-          <ion-item class="item-text-wrap"><label class="item-input"><span class="input-label strong">Provokes/Palliates:</span><input type="text" ng-model="soapDetail.patientPPalliates"></label></ion-item>
-          <ion-item class="item-text-wrap"><label class="item-input"><span class="input-label strong">Quality:</span><input type="text" ng-model="soapDetail.patientQuality"></label></ion-item>
-          <ion-item class="item-text-wrap"><label class="item-input"><span class="input-label strong">Radiation/Region/Referred:</span><input type="text" ng-model="soapDetail.patientRadiates"></label></ion-item>
-          <ion-item class="item-text-wrap"><label class="item-input"><span class="input-label strong">Severity:</span><input type="text" ng-model="soapDetail.patientSeverity"></label>out of 10</ion-item>
-          <ion-item class="item-text-wrap"><label class="item-input"><span class="input-label strong">Time of Onset:</span><input type="text" ng-model="soapDetail.patientTime"></label></ion-item>
-
-        </ion-list>
+      <!-- subjective section 3 -->
+     <h6>Onset</h6>
+        <div class="item item-select">
+        <div class="input-label">
+            Onset
+         </div>
+          <select id="Onset" ng-model="soapDetail.patientOnset" ng-options="onset for onset in onsets"  onchange="changeClass(this.id)">
+            <option style="display:none;" value="" selected>Please Choose</option>
+          </select>
+        </div>
+        <h6>Provokes/Palliates</h6>
+        <label class="item item-input">
+          <textarea id="PP" type="text" placeholder="What makes the pain better or worse?" ng-model="soapDetail.patientPPalliates" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
+        </label>
+      <h6>Quality</h6>
+        <div class="item item-select">
+        <div class="input-label">
+            Quality
+         </div>
+          <select id="Quality" ng-model="soapDetail.patientQuality" ng-options="quality for quality in qualities"  onchange="changeClass(this.id)">
+            <option style="display:none;" value="" selected>Please Choose</option>
+          </select>
+        </div>
+      <h6>Radiation/Region/Referred</h6>
+        <label class="item item-input">
+          <textarea id="RRR" type="text" placeholder="Does the feeling move anywhere? Where is it located?" ng-model="soapDetail.patientRadiates" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
+        </label>
+      <h6>Severity</h6>
+        <div class="item item-select">
+        <div class="input-label">
+            Severity
+         </div>
+          <select id="Severity" ng-options="severity for severity in severities"  ng-model="soapDetail.patientSeverity" onchange="changeClass(this.id)">
+            <option style="display:none;" value="" selected>Please Choose</option>
+          </select>
+        </div>
+      <h6>Time of Onset</h6>
+        <label class="item item-input">
+          <input type="time" placeholder="" ng-model="soapDetail.patientTime">
+        </label>
       </div>
-
-      <h6>MOI/HPI</h6>
+      <h5>MOI/HPI<a ng-click="openModal(2)"><span>i</span></a></h5>
       <div class="list">
-        <ion-list>
-          <ion-item class="item-text-wrap">{{soap.patientHPI}}</ion-item>
-          <ion-item class="item-text-wrap"><strong>Suspected Spinal MOI:</strong> {{soapDetail.patientSpinal}}</ion-item>
-        </ion-list>
-      </div>
 
-      <h5>Objective</h5>
-      <h6>General</h6>
-      <div class="list">
-        <ion-list>
-          <ion-item class="item-text-wrap"><strong>Patient Position When Found:</strong> {{soapDetail.patientFound}}</ion-item>
-          <ion-item class="item-text-wrap"><strong>Patient Exam:</strong> {{soapDetail.patientExamReveals}}</ion-item>
-        </ion-list>
-      </div>
+       <label class="item item-input">
+          <textarea id="MOI" type="text" placeholder="Describe in detail the mechanism of injury or the history of the illness." ng-model="soapDetail.patientHPI" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
+        </label>
+      <h6>Suspected Spinal MOI</h6>
+        <div class="item item-select">
+        <div class="input-label">
+            Suspected Spinal MOI
+         </div>
+          <select id="SMOI" ng-model="soapDetail.patientSpinal" ng-options="spinal for spinal in spinals"  onchange="changeClass(this.id)">
+            <option style="display:none;" value="" selected>Please Choose</option>
+          </select>
+        </div>
 
-      <h6>Patient History</h6>
-      <div class="list">
-        <ion-list>
-          <ion-item class="item-text-wrap"><strong>Symptoms:</strong> {{soapDetail.patientSymptoms}}</ion-item>
-          <ion-item class="item-text-wrap"><strong>Allergies:</strong> {{soapDetail.patientAllergies}}</ion-item>
-          <ion-item class="item-text-wrap"><strong>Medications:</strong> {{soapDetail.patientMedications}}</ion-item>
-          <ion-item class="item-text-wrap"><strong>Pertinent Medical History:</strong> {{soapDetail.patientMedicalHistory}}</ion-item>
-          <ion-item class="item-text-wrap"><strong>Last Intake/Output:</strong> {{soapDetail.patientLastIntake}}</ion-item>
-          <ion-item class="item-text-wrap"><strong>Events Leading up to Injury/Illness:</strong> {{soapDetail.patientEventsForCause}}</ion-item>
-        </ion-list>
-      </div>
+        <div class="soapDetail">
+          <!-- subjective section 1 -->
+          <h5>Patient Position When Found<a ng-click="openModal(3)"><span>i</span></a></h5>
+          <div class="list">
+            <label class="item item-input">
+              <textarea id="Position" type="text" placeholder="Describe the physical position of your patient." ng-model="soapDetail.patientFound" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
+            </label>
+          </div>
+          <h5>Patient Exam<a ng-click="openModal(3)"><span>i</span></a></h5>
+          <div class="list">
+            <label class="item item-input">
+              <textarea id="PatientExam" type="text" placeholder="Describe in detail the injuries observed in the head-to-toe examination. Include pertinent negatives. Assess CSM's." ng-model="soapDetail.patientExamReveals" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
+            </label>
+          </div>
+          <h5>Vital Signs<a ng-click="openModal(3)"><span>i</span></a></h5>
+          <div class="list">
 
-	  <h5>Assessment</h5>
-      <div class="list">
-        <ion-list>
-          <ion-item class="item-text-wrap">{{soapDetail.patientAssessment}}</ion-item>
-        </ion-list>
-      </div>
+        <table class="VitalsTable">
+                <tr>
+                  <th>Time</th>
+                <td ng-repeat="sv in recentSoapVitals">{{sv.timeTaken}}</td>
+                <td ng-hide="recentSoapVitals.length" >--</td>
+                <td ng-hide="recentSoapVitals.length >= 2">--</td>
+                <td ng-hide="recentSoapVitals.length >= 3">--</td>
+                </tr>
+                <tr>
+                    <th>LOR</th>
+                    <td ng-repeat="sv in recentSoapVitals">{{sv.lor}}</td>
+                    <td ng-hide="recentSoapVitals.length" >--</td>
+                <td ng-hide="recentSoapVitals.length >= 2">--</td>
+                <td ng-hide="recentSoapVitals.length >= 3">--</td>
+                </tr>
+                <tr>
+                    <th>HR</th>
+                    <td ng-repeat="sv in recentSoapVitals">{{sv.rate}} {{sv.heartRythm}} {{sv.heartQuality}}</td>
+                    <td ng-hide="recentSoapVitals.length" >--</td>
+                <td ng-hide="recentSoapVitals.length >= 2">--</td>
+                <td ng-hide="recentSoapVitals.length >= 3">--</td>
+                </tr>
+                <tr>
+                    <th>RR</th>
+                    <td ng-repeat="sv in recentSoapVitals">{{sv.respRate}} {{sv.respRythm}} {{sv.respQuality}}</td>
+                    <td ng-hide="recentSoapVitals.length" >--</td>
+                <td ng-hide="recentSoapVitals.length >= 2">--</td>
+                <td ng-hide="recentSoapVitals.length >= 3">--</td>
+                </tr>
+                <tr>
+                    <th>Skin</th>
+                    <td ng-repeat="sv in recentSoapVitals">{{sv.sctmcolor}} {{sv.sctmtemp}} {{sv.sctmmoisture}}</td>
+                    <td ng-hide="recentSoapVitals.length" >--</td>
+                <td ng-hide="recentSoapVitals.length >= 2">--</td>
+                <td ng-hide="recentSoapVitals.length >= 3">--</td>
+                </tr>
+                <tr>
+                    <th>BP</th>
+                    <td ng-repeat="sv in recentSoapVitals">{{sv.brradialpulse}} {{sv.brsystolic}}/{{sv.brradialReading}} {{sv.brradialtaken}}</td>
+                    <td ng-hide="recentSoapVitals.length" >--</td>
+                <td ng-hide="recentSoapVitals.length >= 2">--</td>
+                <td ng-hide="recentSoapVitals.length >= 3">--</td>
+                </tr>
+                <tr>
+                    <th>Pupils</th>
+                    <td ng-repeat="sv in recentSoapVitals">{{sv.pupils}}</td>
+                    <td ng-hide="recentSoapVitals.length" >--</td>
+                <td ng-hide="recentSoapVitals.length >= 2">--</td>
+                <td ng-hide="recentSoapVitals.length >= 3">--</td>
+                </tr>
+                <tr>
+                    <th>Temp</th>
+                    <td ng-repeat="sv in recentSoapVitals">{{sv.tempDegreesReading}}{{sv.tempDegrees}}</td>
+                    <td ng-hide="recentSoapVitals.length" >--</td>
+                <td ng-hide="recentSoapVitals.length >= 2">--</td>
+                <td ng-hide="recentSoapVitals.length >= 3">--</td>
+                </tr>
+            </table>
 
-      <h5>Plan</h5>
-      <div class="list">
-        <ion-list>
-          <ion-item class="item-text-wrap">{{soapDetail.patientPlan}}</ion-item>
-        </ion-list>
-          <ion-item class="item-text-wrap"><strong>Anticipated Problems:</strong> {{soapDetail.patientAnticipatedProblems}}</ion-item>
-        </ion-list>
-      </div>
+          <a class="button button-block button-calm margin" href="#/tab/vitals">View All Vitals</a>
+          </div>
+          <h5>Patient History<a ng-click="openModal(3)"><span>i</span></a></h5>
+          <h6>Symptoms</h6>
+          <div class="list">
+            <label class="item item-input">
+              <textarea id="Symptoms" type="text" placeholder="Headache? Dizziness? Nausea? Cold? Hot?" ng-model="soapDetail.patientSymptoms" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
+            </label>
+          </div>
+          <h6>Allergies</h6>
+            <div class="list">
+            <label class="item item-input">
+              <textarea id="Allergies" type="text" placeholder="Allergies to Medications? Foods? Insects? Pollens? Exposure? What happens with exposure?" ng-model="soapDetail.patientAllergies" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
+            </label>
+            </div>
+            <h6>Medications</h6>
+            <div class="list">
+            <label class="item item-input">
+              <textarea id="Medications" type="text" placeholder="Over the Counter? Prescription? Alcohol or Recreational?" ng-model="soapDetail.patientMedications" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
+            </label>
+            </div>
+            <h6>Pertinent Medical History</h6>
+            <div class="list">
+            <label class="item item-input">
+              <textarea id="History" type="text" placeholder="Felt this way before? Problems with Heart? Breathing? Digestion? History of Seizures? Diabetes?" ng-model="soapDetail.patientMedicalHistory" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
+            </label>
+            </div>
+            <h6>Last Intake/Output</h6>
+            <div class="list">
+            <label class="item item-input">
+              <textarea id="LIO" type="text" placeholder="Food? Water? Urination? Defecation? Vomiting?" ng-model="soapDetail.patientLastIntake" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
+            </label>
+            </div>
+            <h6>Events Leading up to Incident/Illness</h6>
+            <div class="list">
+            <label class="item item-input">
+              <textarea id="ELUT" type="text" placeholder="Events leading up to or causing the incident/illness." ng-model="soapDetail.patientEventsForCause" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
+            </label>
+          </div>
 
-<a class="button button-block button-light icon icon-right ion-app-share margin" ng-click="saveSOAPEdits(soapDetail)">Save SOAP Edits</a>
+          <div class="soapDetail">
+            <h5>Assessment<a ng-click="openModal(4)"><span>i</span></a></h5>
+            <div class="list">
+              <label class="item item-input">
+                <textarea id="Assessment" type="text" placeholder="List all possible problems." ng-model="soapDetail.patientAssessment" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
+              </label>
+            </div>
 
-      </div>
-  </ion-content>
+              <h5>Plan<a ng-click="openModal(4)"><span>i</span></a></h5>
+              <div class="list">
+              <label class="item item-input">
+                <textarea id="Plan" type="text" placeholder="Describe actions taken for each problem and plans for further care." ng-model="soapDetail.patientPlan" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
+              </label>
+              </div>
 
-</ion-view>
+              <h6>Anticipated Problems<a ng-click="openModal(4)"><span>i</span></a></h6>
+              <div class="list">
+              <label class="item item-input">
+                <textarea id="AP" type="text" placeholder="Consider anticipated problems and possible impact on evacuation needs." ng-model="soapDetail.patientAnticipatedProblems" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
+              </label>
+            </div>
+
+          </div>
+<button class="button button-block button-light icon-right ion-ios7-arrow-right margin" ng-click="saveSOAPEdits(soapDetail)">Save SOAP Edits</button>
+    </div>
