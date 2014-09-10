@@ -63,7 +63,7 @@ $scope.toggleSideMenu = function() {
 
 .controller('SoapCtrl', function($scope, $state, $stateParams, $ionicPopup,
                                  $ionicModal, $timeout, $location,
-                                 Soaps, Responders, Nols ) {
+                                 Soaps, Responders, Nols,Vitals ) {
 "use strict";
 /* leave cutLifeLine commented out unless soap table is being altered
   un comment and run will drop responder,soap and vital table
@@ -276,8 +276,15 @@ $scope.toggleSideMenu = function() {
 
 
 // Email Share Function
-$scope.shareSOAP = function(soap,recentSoapVitals) {
-  console.log(soap + ',' + recentSoapVitals);
+$scope.shareSOAP = function(soap) {
+  console.log("called");
+  Vitals.all(soap.id,function(err,vitals,recentSoapVitals){
+    $scope.vitals = vitals;
+    $scope.recentSoapVitals = recentSoapVitals;
+    console.log(recentSoapVitals);
+
+  })
+
 // add hooks for soap id in order for vitals?
   /* come back and address
   console.log(typeof recentSoapVitals);
@@ -430,25 +437,35 @@ var htmlbody = '<h2>Location</h2>'+
 
 })
 
-.controller('SoapDetailCtrl', function($scope, $stateParams, Soaps) {
+.controller('SoapDetailCtrl', function($scope, $state, $stateParams, Soaps, Vitals) {
   //$scope.soap;
   Soaps.get($stateParams.soapId, function(err, soapDetail) {
     $scope.soapDetail = soapDetail;
-    console.log(soapDetail);
+    Vitals.all(soapDetail.id,function(err,vitals,recentSoapVitals){
+      $scope.recentSoapVitals = recentSoapVitals;
+    })
   })
+
+  $scope.saveSOAPEdits = function(soapEdits) {
+    Soaps.updateSoap(soapEdits);
+    $state.go('soaps');
+  }
 })
 
 // coundown controls.
-.controller('VitalCtrl', function($scope, $state, $stateParams, $timeout, Vitals, Soaps) {
+.controller('VitalCtrl', function($scope, $state, $stateParams,
+                                  $timeout, $location,
+                                  Vitals, Soaps) {
 "use strict";
 
   $scope.vitals;
   $scope.vital;
+  $scope.$location = $location;
 
   $scope.soap;
   Soaps.getLast(function(err,soap){
-    $scope.soap = soap;
-    Vitals.all(soap,function(err,vitals,recentSoapVitals){
+    var soapId = soap.id;
+    Vitals.all(soapId,function(err,vitals,recentSoapVitals){
       $scope.vitals = vitals;
       $scope.recentSoapVitals = recentSoapVitals;
     })
@@ -463,7 +480,7 @@ var htmlbody = '<h2>Location</h2>'+
   $scope.initiateVital = function(vital,soap) {
     var vital = {};
     Vitals.createVitalTable();
-      Vitals.saveNewVital(vital,soap,function(err,vital){
+      Vitals.saveNewVital(vital,soap.id,function(err,vital){
         $scope.vital = vital;
         $state.go('tab.newvital');
       })
@@ -476,28 +493,25 @@ var htmlbody = '<h2>Location</h2>'+
     }
   }
 
-  $scope.$watch('vital.timeTaken', updateVitalWatch);
-  $scope.$watch('vital.lor', updateVitalWatch);
-  $scope.$watch('vital.rate', updateVitalWatch);
-  $scope.$watch('vital.heartRythm', updateVitalWatch);
-  $scope.$watch('vital.heartQuality', updateVitalWatch);
-  $scope.$watch('vital.respRate', updateVitalWatch);
-  $scope.$watch('vital.respRhythm', updateVitalWatch);
-  $scope.$watch('vital.respQuality', updateVitalWatch);
-  $scope.$watch('vital.sctmcolor', updateVitalWatch);
-  $scope.$watch('vital.sctmtemp', updateVitalWatch);
-  $scope.$watch('vital.sctmmoisture', updateVitalWatch);
-  $scope.$watch('vital.brradialpulse', updateVitalWatch);
-  $scope.$watch('vital.brsystolic', updateVitalWatch);
-  $scope.$watch('vital.brradialtaken', updateVitalWatch);
-  $scope.$watch('vital.brradialReading', updateVitalWatch);
-  $scope.$watch('vital.pupils', updateVitalWatch);
-  $scope.$watch('vital.tempDegreesReading', updateVitalWatch);
-  $scope.$watch('vital.tempDegrees', updateVitalWatch);
-
-
-  $scope.updateVitalParam = function(newParam) {
-    Vitals.updateVital(newParam);
+  if($scope.$location.path() === '/tab/vitals/new'){
+    $scope.$watch('vital.timeTaken', updateVitalWatch);
+    $scope.$watch('vital.lor', updateVitalWatch);
+    $scope.$watch('vital.rate', updateVitalWatch);
+    $scope.$watch('vital.heartRythm', updateVitalWatch);
+    $scope.$watch('vital.heartQuality', updateVitalWatch);
+    $scope.$watch('vital.respRate', updateVitalWatch);
+    $scope.$watch('vital.respRhythm', updateVitalWatch);
+    $scope.$watch('vital.respQuality', updateVitalWatch);
+    $scope.$watch('vital.sctmcolor', updateVitalWatch);
+    $scope.$watch('vital.sctmtemp', updateVitalWatch);
+    $scope.$watch('vital.sctmmoisture', updateVitalWatch);
+    $scope.$watch('vital.brradialpulse', updateVitalWatch);
+    $scope.$watch('vital.brsystolic', updateVitalWatch);
+    $scope.$watch('vital.brradialtaken', updateVitalWatch);
+    $scope.$watch('vital.brradialReading', updateVitalWatch);
+    $scope.$watch('vital.pupils', updateVitalWatch);
+    $scope.$watch('vital.tempDegreesReading', updateVitalWatch);
+    $scope.$watch('vital.tempDegrees', updateVitalWatch);
   }
   $scope.moveItem = function(vital,fromIndex,toIndex){
     $scope.vitals.splice(fromIndex, 1);

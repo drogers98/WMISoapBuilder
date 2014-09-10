@@ -17,8 +17,8 @@
       <h5>Location</h5>
       <div class="list">
         <ion-list>
-          <ion-item class="item-text-wrap"><label class="item-input"><span class="input-label">Incident Date</span><input type="date" ng-model="soapDetail.incidentDate" value="{{dt | date:'yyyy-MM-dd'}}"></label></ion-item>
-          <ion-item class="item-text-wrap"><label class="item-input"><span class="input-label">Incident Location</span><input type="text" ng-model="soapDetail.incidentLocation"></label></ion-item>
+          <ion-item class="item-text-wrap"><label class="item-input strong-item"><span class="input-label strong">Incident Date</span><input type="date" ng-model="soapDetail.incidentDate" value="{{dt | date:'yyyy-MM-dd'}}"></label></ion-item>
+          <ion-item class="item-text-wrap"><label class="item-input"><span class="input-label strong">Incident Location:</span><input type="text" ng-model="soapDetail.incidentLocation"></label></ion-item>
           <ion-item class="item-text-wrap"><strong>Coordinates: </strong> {{soapDetail.incidentLat}}, {{soapDetail.incidentLon}}</ion-item>
           <ion-item class="item-text-wrap"><strong>Responder: </strong> {{soapDetail.responderFirstName}} {{soapDetail.responderLastName}}, {{soapDetail.responderTrainingLevel}}</ion-item>
         </ion-list>
@@ -32,10 +32,10 @@
 
       <div class="list">
         <ion-list>
-        <ion-item class="item-text-wrap"><label class="item-input"><span class="input-label">Patient Initials:</span><input type="text" ng-model="soapDetail.patientInitials"></label></ion-item>
-        <ion-item class="item-text-wrap"><label class="item-input"><span class="input-label">DOB: </span><input type="text" ng-model="soapDetail.patientDob"></label></ion-item>
-        <ion-item class="item-text-wrap"><label class="item-input"><span class="input-label">Age: </span><input type="text" ng-model="soapDetail.patientAge"></label></ion-item>
-        <ion-item class="item-text-wrap"><label class="item-input"><span class="input-label">Sex: </span><input type="text" ng-model="soapDetail.patientGender"></label></ion-item>
+        <ion-item class="item-text-wrap"><label class="item-input"><span class="input-label strong">Patient Initials:</span><input type="text" ng-model="soapDetail.patientInitials"></label></ion-item>
+        <ion-item class="item-text-wrap"><label class="item-input"><span class="input-label strong">DOB: </span><input type="text" ng-model="soapDetail.patientDob"></label></ion-item>
+        <ion-item class="item-text-wrap"><label class="item-input"><span class="input-label strong">Age: </span><input type="text" ng-model="soapDetail.patientAge"></label></ion-item>
+        <ion-item class="item-text-wrap"><label class="item-input"><span class="input-label strong">Sex: </span><input type="text" ng-model="soapDetail.patientGender"></label></ion-item>
         </ion-list>
       </div>
 
@@ -44,12 +44,12 @@
         <ion-list>
           <ion-item class="item-text-wrap">{{soapDetail.patientComplaint}}</ion-item>
 
-          <ion-item><label class="item-input"><span class="input-label">Onset:</span><input type="text" ng-model="soapDetail.patientOnset"></label></ion-item>
-          <ion-item class="item-text-wrap"><label class="item-input"><span class="input-label">Provokes/Palliates:</span><input type="text" ng-model="soapDetail.patientPPalliates"></label></ion-item>
-          <ion-item class="item-text-wrap"><label class="item-input"><span class="input-label">Quality:</span><input type="text" ng-model="soapDetail.patientQuality"></label></ion-item>
-          <ion-item class="item-text-wrap"><label class="item-input"><span class="input-label">Radiation/Region/Referred:</span><input type="text" ng-model="soapDetail.patientRadiates"></label></ion-item>
-          <ion-item class="item-text-wrap"><label class="item-input"><span class="input-label">Severity:</span><input type="text" ng-model="soapDetail.patientSeverity"></label>out of 10</ion-item>
-          <ion-item class="item-text-wrap"><label class="item-input"><span class="input-label">Time of Onset:</span><input type="text" ng-model="soapDetail.patientTime"></label></ion-item>
+          <ion-item><label class="item-input"><span class="input-label strong">Onset:</span><input type="text" ng-model="soapDetail.patientOnset"></label></ion-item>
+          <ion-item class="item-text-wrap"><label class="item-input"><span class="input-label strong">Provokes/Palliates:</span><input type="text" ng-model="soapDetail.patientPPalliates"></label></ion-item>
+          <ion-item class="item-text-wrap"><label class="item-input"><span class="input-label strong">Quality:</span><input type="text" ng-model="soapDetail.patientQuality"></label></ion-item>
+          <ion-item class="item-text-wrap"><label class="item-input"><span class="input-label strong">Radiation/Region/Referred:</span><input type="text" ng-model="soapDetail.patientRadiates"></label></ion-item>
+          <ion-item class="item-text-wrap"><label class="item-input"><span class="input-label strong">Severity:</span><input type="text" ng-model="soapDetail.patientSeverity"></label>out of 10</ion-item>
+          <ion-item class="item-text-wrap"><label class="item-input"><span class="input-label strong">Time of Onset:</span><input type="text" ng-model="soapDetail.patientTime"></label></ion-item>
 
         </ion-list>
       </div>
@@ -70,70 +70,6 @@
           <ion-item class="item-text-wrap"><strong>Patient Exam:</strong> {{soapDetail.patientExamReveals}}</ion-item>
         </ion-list>
       </div>
-
-      <h6>Vital Signs</h6>
-      <div class="list">
-
-      	  <table class="VitalsTable" ng-controller="VitalCtrl">
-            <tr>
-              <th>Time</th>
-            <td ng-repeat="sv in recentSoapVitals">{{sv.timeTaken}}</td>
-            <td ng-hide="recentSoapVitals.length" >--</td>
-            <td ng-hide="recentSoapVitals.length >= 2">--</td>
-            <td ng-hide="recentSoapVitals.length >= 3">--</td>
-            </tr>
-            <tr>
-                <th>LOR</th>
-                <td ng-repeat="sv in recentSoapVitals">{{sv.lor}}</td>
-                <td ng-hide="recentSoapVitals.length" >--</td>
-            <td ng-hide="recentSoapVitals.length >= 2">--</td>
-            <td ng-hide="recentSoapVitals.length >= 3">--</td>
-            </tr>
-            <tr>
-                <th>HR</th>
-                <td ng-repeat="sv in recentSoapVitals">{{sv.rate}} {{sv.heartRythm}} {{sv.heartQuality}}</td>
-                <td ng-hide="recentSoapVitals.length" >--</td>
-            <td ng-hide="recentSoapVitals.length >= 2">--</td>
-            <td ng-hide="recentSoapVitals.length >= 3">--</td>
-            </tr>
-            <tr>
-                <th>RR</th>
-                <td ng-repeat="sv in recentSoapVitals">{{sv.respRate}} {{sv.respRythm}} {{sv.respQuality}}</td>
-                <td ng-hide="recentSoapVitals.length" >--</td>
-            <td ng-hide="recentSoapVitals.length >= 2">--</td>
-            <td ng-hide="recentSoapVitals.length >= 3">--</td>
-            </tr>
-            <tr>
-                <th>Skin</th>
-                <td ng-repeat="sv in recentSoapVitals">{{sv.sctmcolor}} {{sv.sctmtemp}} {{sv.sctmmoisture}}</td>
-                <td ng-hide="recentSoapVitals.length" >--</td>
-            <td ng-hide="recentSoapVitals.length >= 2">--</td>
-            <td ng-hide="recentSoapVitals.length >= 3">--</td>
-            </tr>
-            <tr>
-                <th>BP</th>
-                <td ng-repeat="sv in recentSoapVitals">{{sv.brradialpulse}} {{sv.brsystolic}}/{{sv.brradialReading}} {{sv.brradialtaken}}</td>
-                <td ng-hide="recentSoapVitals.length" >--</td>
-            <td ng-hide="recentSoapVitals.length >= 2">--</td>
-            <td ng-hide="recentSoapVitals.length >= 3">--</td>
-            </tr>
-            <tr>
-                <th>Pupils</th>
-                <td ng-repeat="sv in recentSoapVitals">{{sv.pupils}}</td>
-                <td ng-hide="recentSoapVitals.length" >--</td>
-            <td ng-hide="recentSoapVitals.length >= 2">--</td>
-            <td ng-hide="recentSoapVitals.length >= 3">--</td>
-            </tr>
-            <tr>
-                <th>Temp</th>
-                <td ng-repeat="sv in recentSoapVitals">{{sv.tempDegreesReading}}{{sv.tempDegrees}}</td>
-                <td ng-hide="recentSoapVitals.length" >--</td>
-            <td ng-hide="recentSoapVitals.length >= 2">--</td>
-            <td ng-hide="recentSoapVitals.length >= 3">--</td>
-            </tr>
-        </table>
-
-        </div>
 
       <h6>Patient History</h6>
       <div class="list">
@@ -163,7 +99,7 @@
         </ion-list>
       </div>
 
-<a class="button button-block button-light icon icon-right ion-app-share margin" ng-controller="SoapCtrl" ng-click="shareSOAP(soapDetail)">Share This SOAP</a>
+<a class="button button-block button-light icon icon-right ion-app-share margin" ng-click="saveSOAPEdits(soapDetail)">Save SOAP Edits</a>
 
       </div>
   </ion-content>

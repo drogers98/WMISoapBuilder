@@ -441,6 +441,7 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
 
 .factory('Vitals', function(nolsDB) {
   var vitals = [];
+  var vitalKind = 'Vital';
 
   return {
     createVitalTable: function() {
@@ -449,8 +450,8 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
     saveNewVital: function(vitalAttr, soapAttr, callback) {
       return nolsDB.saveVital(vitalAttr,soapAttr,callback);
     },
-    updateVital: function(newVitalParam) {
-      nolsDB.vitalUpdate(newVitalParam);
+    updateVital: function(vital) {
+      nolsDB.updateKind(vital,vitalKind);
     },
     all: function(soap,callback) {
       return nolsDB.vitals('Vital', {'soapId': soap}, function(err,data){
