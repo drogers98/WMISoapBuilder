@@ -45,11 +45,11 @@
       <div class="list">
       <h6>First Name</h6>
       <label class="item item-input">
-        <input type="text" placeholder="First Name" ng-model="responder.FirstName" >
+        <input type="text" placeholder="First Name" ng-model="soap.responderFirstName" >
       </label>
       <h6>Last Name</h6>
       <label class="item item-input">
-        <input type="text" placeholder="Last Name" ng-model="responder.lastName">
+        <input type="text" placeholder="Last Name" ng-model="soap.responderLastName">
       </label>
 
 
@@ -58,7 +58,7 @@
        <div class="input-label">
           Training Level
        </div>
-        <select id="TrainingLevelSOAP" ng-model="responder.trainingLevel" ng-options="trainingLevel for trainingLevel in trainingLevels"  onchange="changeClass(this.id)">
+        <select id="TrainingLevelSOAP" ng-model="soap.responderTrainingLevel" ng-options="trainingLevel for trainingLevel in trainingLevels"  onchange="changeClass(this.id)">
 	        <option style="display:none;" value="" selected>Please Choose</option>
         </select>
 

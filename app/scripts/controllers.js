@@ -86,8 +86,6 @@ $scope.toggleSideMenu = function() {
     Soaps.createSoapTable();
     Soaps.saveNewSoap(soap,responder,function(err, soap){
       $scope.soap = soap;
-
-      //console.log(soap.responderFirstName);
       $state.go('tab.overview');
     });
   }
@@ -120,6 +118,12 @@ $scope.toggleSideMenu = function() {
   }
 
   if(scopePath in soapRouteConverter([overview,subjective,objective,soapEdit])) {
+    Soaps.getLast(function(err,soap){
+      $scope.soap = soap;
+      console.log(soap);
+    })
+    $scope.$watch('soap.responderFirstName', updateSoapWatch);
+    $scope.$watch('soap.responderLastName', updateSoapWatch);
     $scope.$watch('soap.incidentDate', updateSoapWatch);
     $scope.$watch('soap.incidentLocation', updateSoapWatch);
     $scope.$watch('soap.incidentLat', updateSoapWatch);

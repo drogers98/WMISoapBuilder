@@ -49,7 +49,6 @@ angular.module('WMISoapBuilder', ['ionic', 'WMISoapBuilder.controllers', 'WMISoa
       url: '/terms',
       templateUrl: 'templates/wmi/terms.html',
       controller: 'SoapCtrl'
-
     })
 
     .state('about', {

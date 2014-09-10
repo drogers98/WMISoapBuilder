@@ -415,7 +415,12 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
         var len = data.length - 1;
         for(var i=len;i < data.length;i++){
           soap = data.item(i);
-          callback(null, soap.id);
+          var neededParams = {};
+          neededParams['id'] = soap.id;
+          neededParams['responderFirstName'] = soap.responderFirstName;
+          neededParams['responderLastName'] = soap.responderLastName;
+          neededParams['responderTrainingLevel'] = soap.responderTrainingLevel;
+          callback(null, neededParams);
         }
       })
     },
