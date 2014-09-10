@@ -86,7 +86,7 @@ $scope.toggleSideMenu = function() {
     Soaps.createSoapTable();
     Soaps.saveNewSoap(soap,responder,function(err, soap){
       $scope.soap = soap;
-      
+
       //console.log(soap.responderFirstName);
       $state.go('tab.overview');
     });
@@ -104,17 +104,27 @@ $scope.toggleSideMenu = function() {
   //  });
   //}
 
-  //there has got to be a cleaner way of doing this but time is of the essence
-  var scopePath = $scope.$location.path();
-  if(scopePath == '/tab/overview' || scopePath == '/soaps/edit' ) {
+  var scopePath = $scope.$location.path(),
+      overview = '/tab/overview',
+      subjective = '/tab/subjective',
+      objective = '/tab/objective',
+      soapEdit = '/soaps/edit/',
+      soapRoutes = [overview,subjective,objective,soapEdit];
+
+  function soapRouteConverter(route) {
+    var soapRoute = {};
+    for(var i=0;i<route.length;i++){
+      soapRoute[route[i]]='';
+    }
+    return soapRoute;
+  }
+
+  if(scopePath in soapRouteConverter([overview,subjective,objective,soapEdit])) {
     $scope.$watch('soap.incidentDate', updateSoapWatch);
     $scope.$watch('soap.incidentLocation', updateSoapWatch);
     $scope.$watch('soap.incidentLat', updateSoapWatch);
     $scope.$watch('soap.incidentLon', updateSoapWatch);
     $scope.$watch('soap.incidentLon', updateSoapWatch);
-  }
-
-  if(scopePath == '/tab/subjective' || scopePath == '/soaps/edit') {
     $scope.$watch('soap.patientInitials', updateSoapWatch);
     $scope.$watch('soap.patientGender', updateSoapWatch);
     $scope.$watch('soap.patientDob', updateSoapWatch);
@@ -129,9 +139,6 @@ $scope.toggleSideMenu = function() {
     $scope.$watch('soap.patientTime', updateSoapWatch);
     $scope.$watch('soap.patientHPI', updateSoapWatch);
     $scope.$watch('soap.patientSpinal', updateSoapWatch);
-  }
-
-  if($scope.$location.path() == '/tab/objective' || scopePath == '/soaps/edit') {
     $scope.$watch('soap.patientFound', updateSoapWatch);
     $scope.$watch('soap.patientExamReveals', updateSoapWatch);
     $scope.$watch('soap.patientSymptoms', updateSoapWatch);
