@@ -96,12 +96,6 @@ $scope.toggleSideMenu = function() {
     }
   }
 
-  //if($scope.$location.path() === '/responder/soaps') {
-  //  $ionicPopup.alert({
-  //    title: "Whoa there"
-  //  });
-  //}
-
   var scopePath = $scope.$location.path(),
       overview = '/tab/overview',
       subjective = '/tab/subjective',
@@ -122,6 +116,7 @@ $scope.toggleSideMenu = function() {
       $scope.soap = soap;
       console.log(soap);
     })
+
     $scope.$watch('soap.responderFirstName', updateSoapWatch);
     $scope.$watch('soap.responderLastName', updateSoapWatch);
     $scope.$watch('soap.incidentDate', updateSoapWatch);
