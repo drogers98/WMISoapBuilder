@@ -438,7 +438,7 @@ var htmlbody = '<h2>Location</h2>'+
     $scope.soapDetail = soapDetail;
   })
   $scope.$location = $location;
-
+  $scope.$state = $state;
   var editWatch = function(newVal, oldVal) {
     if(newVal !== oldVal) {
       //console.log(JSON.stringify($scope.responder));
@@ -448,39 +448,46 @@ var htmlbody = '<h2>Location</h2>'+
     }
   }
 
-  $scope.$watch('soapDetail.responderFirstName', editWatch);
-  $scope.$watch('soapDetail.responderLastName', editWatch);
-  $scope.$watch('soapDetail.incidentDate', editWatch);
-  $scope.$watch('soapDetail.incidentLocation', editWatch);
-  $scope.$watch('soapDetail.incidentLat', editWatch);
-  $scope.$watch('soapDetail.incidentLon', editWatch);
-  $scope.$watch('soapDetail.incidentLon', editWatch);
-  $scope.$watch('soapDetail.patientInitials', editWatch);
-  $scope.$watch('soapDetail.patientGender', editWatch);
-  $scope.$watch('soapDetail.patientDob', editWatch);
-  $scope.$watch('soapDetail.patientAge', editWatch);
-  $scope.$watch('soapDetail.patientLOR', editWatch);
-  $scope.$watch('soapDetail.patientComplaint', editWatch);
-  $scope.$watch('soapDetail.patientOnset', editWatch);
-  $scope.$watch('soapDetail.patientPPalliates', editWatch);
-  $scope.$watch('soapDetail.patientQuality', editWatch);
-  $scope.$watch('soapDetail.patientRadiates', editWatch);
-  $scope.$watch('soapDetail.patientSeverity', editWatch);
-  $scope.$watch('soapDetail.patientTime', editWatch);
-  $scope.$watch('soapDetail.patientHPI', editWatch);
-  $scope.$watch('soapDetail.patientSpinal', editWatch);
-  $scope.$watch('soapDetail.patientFound', editWatch);
-  $scope.$watch('soapDetail.patientExamReveals', editWatch);
-  $scope.$watch('soapDetail.patientSymptoms', editWatch);
-  $scope.$watch('soapDetail.patientAllergies', editWatch);
-  $scope.$watch('soapDetail.patientMedications', editWatch);
-  $scope.$watch('soapDetail.patientMedicalHistory', editWatch);
-  $scope.$watch('soapDetail.patientLastIntake', editWatch);
-  $scope.$watch('soapDetail.patientEventsForCause', editWatch);
-  $scope.$watch('soapDetail.patientAssessment', editWatch);
-  $scope.$watch('soapDetail.patientPlan', editWatch);
-  $scope.$watch('soapDetail.patientAnticipatedProblems', editWatch);
-
+  if($state.includes('soap-edit')){
+    $scope.$watch('soapDetail.responderFirstName', editWatch);
+    $scope.$watch('soapDetail.responderLastName', editWatch);
+    $scope.$watch('soapDetail.incidentDate', editWatch);
+    $scope.$watch('soapDetail.incidentLocation', editWatch);
+    $scope.$watch('soapDetail.incidentLat', editWatch);
+    $scope.$watch('soapDetail.incidentLon', editWatch);
+    $scope.$watch('soapDetail.incidentLon', editWatch);
+    }
+    if($state.includes('soap-edit-sub')){
+    $scope.$watch('soapDetail.patientInitials', editWatch);
+    $scope.$watch('soapDetail.patientGender', editWatch);
+    $scope.$watch('soapDetail.patientDob', editWatch);
+    $scope.$watch('soapDetail.patientAge', editWatch);
+    $scope.$watch('soapDetail.patientLOR', editWatch);
+    $scope.$watch('soapDetail.patientComplaint', editWatch);
+    $scope.$watch('soapDetail.patientOnset', editWatch);
+    $scope.$watch('soapDetail.patientPPalliates', editWatch);
+    $scope.$watch('soapDetail.patientQuality', editWatch);
+    $scope.$watch('soapDetail.patientRadiates', editWatch);
+    $scope.$watch('soapDetail.patientSeverity', editWatch);
+    $scope.$watch('soapDetail.patientTime', editWatch);
+    $scope.$watch('soapDetail.patientHPI', editWatch);
+    $scope.$watch('soapDetail.patientSpinal', editWatch);
+    }
+    if($state.includes('soap-edit-obj')){
+    $scope.$watch('soapDetail.patientFound', editWatch);
+    $scope.$watch('soapDetail.patientExamReveals', editWatch);
+    $scope.$watch('soapDetail.patientSymptoms', editWatch);
+    $scope.$watch('soapDetail.patientAllergies', editWatch);
+    $scope.$watch('soapDetail.patientMedications', editWatch);
+    $scope.$watch('soapDetail.patientMedicalHistory', editWatch);
+    $scope.$watch('soapDetail.patientLastIntake', editWatch);
+    $scope.$watch('soapDetail.patientEventsForCause', editWatch);
+    }
+    if($state.includes('soap-edit-ap')){
+    $scope.$watch('soapDetail.patientAssessment', editWatch);
+    $scope.$watch('soapDetail.patientPlan', editWatch);
+    $scope.$watch('soapDetail.patientAnticipatedProblems', editWatch);
+    }
   $scope.genders = [
         {name:'Male', value:'M'},
         {name:'Female', value:'F'},
