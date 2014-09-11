@@ -261,7 +261,22 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
       })
      },
      soapUpdate: function(soap) {
-      console.log(soap);
+       var kindForUpdate = function(kindKey,kindVal){
+          var  buildKeyValue = {};
+          buildKeyValue[kindKey] = kindVal;
+          return buildKeyValue;
+        }
+
+       for(var k in soap){
+         if(soap.hasOwnProperty(k)){
+           var newKey = k,
+               newVal = soap[k];
+           }
+         self.db.update('Soap',kindForUpdate(newKey,newVal),{
+           'id': soap.id
+         })
+       }
+
      },
      deleteKind: function(kind,id){
        self.db.del(kind,{"id": id});
@@ -385,6 +400,9 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
     updateSoap: function(soap) {
       //console.log(soap);
       return nolsDB.updateKind(soap,soapKind);
+    },
+    updateEditSoap: function(soap){
+      return nolsDB.soapUpdate(soap);
     },
     all: function(callback) {
     return nolsDB.allKind('Soap', function(err,data){

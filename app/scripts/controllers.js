@@ -445,11 +445,42 @@ var htmlbody = '<h2>Location</h2>'+
       //console.log(JSON.stringify($scope.responder));
       //Todo figure out best option below
       //update entire object or individ field - which sounds good but could have performance issues..
-      Soaps.updateSoap($scope.soapDetail);
+      Soaps.updateEditSoap($scope.soapDetail);
     }
   }
 
   $scope.$watch('soapDetail.responderFirstName', editWatch);
+  $scope.$watch('soapDetail.responderLastName', editWatch);
+  $scope.$watch('soapDetail.incidentDate', editWatch);
+  $scope.$watch('soapDetail.incidentLocation', editWatch);
+  $scope.$watch('soapDetail.incidentLat', editWatch);
+  $scope.$watch('soapDetail.incidentLon', editWatch);
+  $scope.$watch('soapDetail.incidentLon', editWatch);
+  $scope.$watch('soapDetail.patientInitials', editWatch);
+  $scope.$watch('soapDetail.patientGender', editWatch);
+  $scope.$watch('soapDetail.patientDob', editWatch);
+  $scope.$watch('soapDetail.patientAge', editWatch);
+  $scope.$watch('soapDetail.patientLOR', editWatch);
+  $scope.$watch('soapDetail.patientComplaint', editWatch);
+  $scope.$watch('soapDetail.patientOnset', editWatch);
+  $scope.$watch('soapDetail.patientPPalliates', editWatch);
+  $scope.$watch('soapDetail.patientQuality', editWatch);
+  $scope.$watch('soapDetail.patientRadiates', editWatch);
+  $scope.$watch('soapDetail.patientSeverity', editWatch);
+  $scope.$watch('soapDetail.patientTime', editWatch);
+  $scope.$watch('soapDetail.patientHPI', editWatch);
+  $scope.$watch('soapDetail.patientSpinal', editWatch);
+  $scope.$watch('soapDetail.patientFound', editWatch);
+  $scope.$watch('soapDetail.patientExamReveals', editWatch);
+  $scope.$watch('soapDetail.patientSymptoms', editWatch);
+  $scope.$watch('soapDetail.patientAllergies', editWatch);
+  $scope.$watch('soapDetail.patientMedications', editWatch);
+  $scope.$watch('soapDetail.patientMedicalHistory', editWatch);
+  $scope.$watch('soapDetail.patientLastIntake', editWatch);
+  $scope.$watch('soapDetail.patientEventsForCause', editWatch);
+  $scope.$watch('soapDetail.patientAssessment', editWatch);
+  $scope.$watch('soapDetail.patientPlan', editWatch);
+  $scope.$watch('soapDetail.patientAnticipatedProblems', editWatch);
 })
 
 // coundown controls.
