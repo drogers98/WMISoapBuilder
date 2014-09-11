@@ -280,8 +280,7 @@ $scope.initiateSoap = function(soap, responder) {
 
 
 // Email Share Function
-$scope.shareSOAP = function(soap,recentSoapVitals) {
-  console.log(soap)
+$scope.shareSOAP = function(soap) {
 // add hooks for soap id in order for vitals?
   /* come back and address
   console.log(typeof recentSoapVitals);
@@ -332,7 +331,7 @@ var htmlbody = '<h2>Location</h2>'+
 '<h2>Plan</h2>'+
 '<p>' + soap.patientPlan + '</p>' +
 '<strong>Anticipated Problems</strong>: ' + soap.patientAnticipatedProblems + '<br/>';
-/*
+
    window.plugin.email.open({
     to:      ['rogers@eyebytesolutions.com'],
     cc:      ['vehr@eyebytesolutions.com'],
@@ -340,7 +339,7 @@ var htmlbody = '<h2>Location</h2>'+
     subject: 'SOAP Note: Test',
     body:    htmlbody,
     isHtml:  true
-});*/
+});
 };
 // end email
 
