@@ -105,8 +105,7 @@ $scope.initiateSoap = function(soap, responder) {
       overview = '/tab/overview',
       subjective = '/tab/subjective',
       objective = '/tab/objective',
-      soapDetail = '/soaps/2',
-      soapRoutes = [overview,subjective,objective,soapDetail];
+      soapRoutes = [overview,subjective,objective];
 
   function soapRouteConverter(route) {
     var soapRoute = {};
@@ -116,7 +115,7 @@ $scope.initiateSoap = function(soap, responder) {
     return soapRoute;
   }
 
-  if(scopePath in soapRouteConverter([overview,subjective,objective,soapDetail])) {
+  if(scopePath in soapRouteConverter([overview,subjective,objective])) {
     Soaps.getLast(function(err,soap){
       $scope.soap = soap;
     })
@@ -433,11 +432,12 @@ var htmlbody = '<h2>Location</h2>'+
 
 })
 
-.controller('SoapDetailCtrl', function($scope, $stateParams, Soaps) {
+.controller('SoapDetailCtrl', function($scope,$state, $stateParams,$location, Soaps) {
   //$scope.soap;
   Soaps.get($stateParams.soapId, function(err, soapDetail) {
     $scope.soapDetail = soapDetail;
   })
+  $scope.$location = $location;
 
   var editWatch = function(newVal, oldVal) {
     if(newVal !== oldVal) {
@@ -480,6 +480,42 @@ var htmlbody = '<h2>Location</h2>'+
   $scope.$watch('soapDetail.patientAssessment', editWatch);
   $scope.$watch('soapDetail.patientPlan', editWatch);
   $scope.$watch('soapDetail.patientAnticipatedProblems', editWatch);
+
+  $scope.genders = [
+        {name:'Male', value:'M'},
+        {name:'Female', value:'F'},
+        {name:'Transgender', value:'T'}
+      ];
+  $scope.severities = [0,1,2,3,4,5,6,7,8,9,10];
+  $scope.onsets = ['Sudden', 'Gradual'];
+  $scope.qualities = ['Aching', 'Burning', 'Cramping', 'Crushing', 'Dull Pressure', 'Sharp', 'Squeezing', 'Stabbing', 'Tearing', 'Tight', 'Other'];
+  $scope.spinals = ['Yes', 'No'];
+  $scope.pupils = ['PERRL', 'Not PERRL'];
+  $scope.BPtakens = ['Taken', 'Palpated'];
+  $scope.BPpulses = ['Present', 'Weak', 'Absent'];
+  $scope.SKINmoists = ['Dry', 'Moist', 'Wet'];
+  $scope.SKINtemps = ['Warm', 'Cool', 'Hot'];
+  $scope.SKINcolors = ['Pink', 'Pale', 'Red'];
+  $scope.RESPrythms = ['Regular', 'Irregular'];
+  $scope.RESPqualities = ['Easy', 'Shallow', 'Labored'];
+  $scope.HEARTqualities = ['Strong', 'Weak', 'Bounding'];
+  $scope.HEARTrythms = ['Regular', 'Irregular'];
+  $scope.tempDegrees = [
+        {name:'°Fahrenheit', value:'°F'},
+        {name:'°Celsius', value:'°C'}
+      ];
+  $scope.LORs = [
+        {name:'Awake & Oriented x 4', value:'AOx4'},
+        {name:'Awake & Oriented x 3', value:'AOx3'},
+        {name:'Awake & Oriented x 2', value:'AOx2'},
+        {name:'Awake & Oriented x 1', value:'AOx1'},
+        {name:'Awake & Oriented x 0', value:'AOxO'},
+        {name:'Verbal Stimulus', value:'V'},
+        {name:'Painful Stimulus', value:'P'},
+        {name:'Unresponsive', value:'U'}
+      ];
+
+  $scope.trainingLevels = ['WFA','WAFA','WFR', 'WEMT', 'Other'];
 })
 
 // coundown controls.
@@ -492,7 +528,7 @@ var htmlbody = '<h2>Location</h2>'+
   $scope.soap;
   Soaps.getLast(function(err,soap){
     $scope.soap = soap;
-    Vitals.all(soap,function(err,vitals,recentSoapVitals){
+    Vitals.all(soap.id,function(err,vitals,recentSoapVitals){
       $scope.vitals = vitals;
       $scope.recentSoapVitals = recentSoapVitals;
     })
@@ -508,7 +544,7 @@ var htmlbody = '<h2>Location</h2>'+
   $scope.initiateVital = function(vital,soap) {
     var vital = {};
     Vitals.createVitalTable();
-      Vitals.saveNewVital(vital,soap,function(err,vital){
+      Vitals.saveNewVital(vital,soap.id,function(err,vital){
         $scope.vital = vital;
         $state.go('tab.newvital');
       })
