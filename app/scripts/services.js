@@ -260,23 +260,8 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
         callback(null, results.rows);
       })
      },
-     soapUpdate: function(newKey,newVal) {
-       var objectForUpdate = function(newKey,newVal) {
-         var  buildKeyValue = {};
-         buildKeyValue[newKey] = newVal;
-         console.log(buildKeyValue);
-       }
-       var grabLastId = function(){
-         self.db.selectAll('Soap').then(function(results){
-           for(var i = results.rows.length - 1;i < results.rows.length;i++){
-             var soapID = results.rows.item(i).id;
-           }
-           self.db.update('Soap', objectForUpdate(newKey,newVal),{
-             "id": soapID
-           })
-         })
-       }
-       grabLastId();
+     soapUpdate: function(soap) {
+      console.log(soap);
      },
      deleteKind: function(kind,id){
        self.db.del(kind,{"id": id});
@@ -398,6 +383,7 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
       return nolsDB.saveSoap(soapAttr, responderAttr, callback);
     },
     updateSoap: function(soap) {
+      //console.log(soap);
       return nolsDB.updateKind(soap,soapKind);
     },
     all: function(callback) {
@@ -431,6 +417,11 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
         }
       })
     },
+    getIT: function(soap, callback) {
+      if(soap) {
+      return nolsDB.soapUpdate(soap)
+      }
+    },
     deleteSoap: function(soapId){
       return nolsDB.deleteKind(soapKind,soapId);
     }
@@ -441,7 +432,6 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
 
 .factory('Vitals', function(nolsDB) {
   var vitals = [];
-  var vitalKind = 'Vital';
 
   return {
     createVitalTable: function() {
@@ -450,8 +440,8 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
     saveNewVital: function(vitalAttr, soapAttr, callback) {
       return nolsDB.saveVital(vitalAttr,soapAttr,callback);
     },
-    updateVital: function(vital) {
-      nolsDB.updateKind(vital,vitalKind);
+    updateVital: function(newVitalParam) {
+      nolsDB.vitalUpdate(newVitalParam);
     },
     all: function(soap,callback) {
       return nolsDB.vitals('Vital', {'soapId': soap}, function(err,data){
