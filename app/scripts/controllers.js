@@ -280,6 +280,7 @@ $scope.initiateSoap = function(soap, responder) {
 
 // Email Share Function
 $scope.shareSOAP = function(soap) {
+
 // add hooks for soap id in order for vitals?
   /* come back and address
   console.log(typeof recentSoapVitals);
