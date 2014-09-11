@@ -1,8 +1,8 @@
 <ion-view title="Edit Objective">
 
 <ion-nav-buttons side="left">
-    <a class="button icon ion-ios7-arrow-back" href="#/soaps/edit/{{soapDetail.id}}/subjective">Subjective</a>
-</ion-nav-buttons>
+    <a class="button icon ion-ios7-arrow-back" href="#/soaps/{{soapDetail.id}}">Soap Detail</a>
+  </ion-nav-buttons>
 
   <ion-nav-buttons side="right">
     <button class="button button-icon ion-navicon" ng-controller="MenuCtrl" ng-click="toggleSideMenu()"></button>
@@ -25,7 +25,7 @@
       </div>
       <h5>Vital Signs<a ng-click="openModal(3)"><span>i</span></a></h5>
       <div class="list">
-      <a class="button button-block button-light margin" ng-controller="VitalCtrl" ng-click="initiateVital(vital,soapDetail)"><icon class="icon icon-right ion-plus-circled"></icon> Add Vitals</a>
+      <!-- <a class="button button-block button-light margin" ng-controller="VitalCtrl" ng-click="initiateVital(vital,soapDetail)"><icon class="icon icon-right ion-plus-circled"></icon> Add Vitals</a> -->
 
     <table class="VitalsTable" ng-controller="VitalCtrl">
             <tr>
@@ -86,7 +86,7 @@
             </tr>
         </table>
 
-      <a class="button button-block button-calm margin" href="#/tab/vitals">View All Vitals</a>
+      <!-- <a class="button button-block button-calm margin" href="#/tab/vitals">View All Vitals</a> -->
       </div>
       <h5>Patient History<a ng-click="openModal(3)"><span>i</span></a></h5>
       <h6>Symptoms</h6>
