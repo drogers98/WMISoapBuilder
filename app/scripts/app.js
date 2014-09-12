@@ -70,8 +70,23 @@ angular.module('WMISoapBuilder', ['ionic', 'WMISoapBuilder.controllers', 'WMISoa
     })
 
     .state('soap-edit', {
-      url: '/soaps/edit/:soapId',
-      templateUrl: 'templates/soap/soap-edit.html',
+      url: '/soaps/edit/:soapId/overview',
+      templateUrl: 'templates/soap/soap-edit-overview.html',
+      controller: 'SoapDetailCtrl'
+    })
+    .state('soap-edit-sub', {
+      url: '/soaps/edit/:soapId/subjective',
+      templateUrl: 'templates/soap/soap-edit-subjective.html',
+      controller: 'SoapDetailCtrl'
+    })
+    .state('soap-edit-obj', {
+      url: '/soaps/edit/:soapId/objective',
+      templateUrl: 'templates/soap/soap-edit-objective.html',
+      controller: 'SoapDetailCtrl'
+    })
+    .state('soap-edit-ap', {
+      url: '/soaps/edit/:soapId/ap',
+      templateUrl: 'templates/soap/soap-edit-ap.html',
       controller: 'SoapDetailCtrl'
     })
 

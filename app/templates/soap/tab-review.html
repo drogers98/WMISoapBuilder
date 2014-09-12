@@ -1,11 +1,11 @@
 <ion-view title="{{soap.patientSex}}, {{soap.patientAge}} | {{soap.patientInitials}}">
 <ion-nav-buttons side="left">
-    <button class="button icon ion-ios7-arrow-back" ng-click="mySoapsPage()">My SOAPs</button>
+    <button class="button icon ion-ios7-arrow-back" ng-click="apPage()">Back</button>
   </ion-nav-buttons>
 
   <ion-nav-buttons side="right">
   <button class="button icon ion-edit" ng-click="data.showDelete = !data.showDelete"></button>
-    <button class="button icon ion-app-share" ng-controller="SoapCtrl" ng-click="shareSOAP($event)"></button>
+    <button class="button icon ion-app-share" ng-controller="SoapCtrl" ng-click="shareSOAP(soap)"></button>
   </ion-nav-buttons>
 
 
@@ -16,9 +16,9 @@
       <div class="list">
         <ion-list>
           <ion-item class="item-text-wrap"><strong>Date of Incident: </strong> {{soap.incidentDate}}</ion-item>
-          <ion-item class="item-text-wrap"><strong>Location: </strong>{{soap.incidentLocation}}</ion-item>
+          <ion-item class="item-text-wrap"><strong>Location: </strong> {{soap.incidentLocation}}</ion-item>
           <ion-item class="item-text-wrap"><strong>Coordinates: </strong> {{soap.incidentLat}}, {{soap.incidentLon}}</ion-item>
-           <ion-item class="item-text-wrap"><strong>Responder: </strong>{{soap.responderFirstName}} {{soap.responderLastName}}, {{soap.responderLevelOfTraining}}</ion-item>
+           <ion-item class="item-text-wrap"><strong>Responder: </strong> {{soap.responderFirstName}} {{soap.responderLastName}}, {{soap.responderTrainingLevel}}</ion-item>
         </ion-list>
       </div>
 
@@ -33,7 +33,7 @@
         <ion-item class="item-text-wrap"><strong>Patient Initials:</strong> {{soap.patientInitials}}</ion-item>
         <ion-item class="item-text-wrap"><strong>DOB: </strong> {{soap.patientDob}}</ion-item>
           <ion-item class="item-text-wrap"><strong>Age:</strong> {{soap.patientAge}}</ion-item>
-          <ion-item class="item-text-wrap"><strong>Sex: </strong> {{soap.patientSex}}</ion-item>
+          <ion-item class="item-text-wrap"><strong>Sex: </strong> {{soap.patientGender}}</ion-item>
 
 
         </ion-list>

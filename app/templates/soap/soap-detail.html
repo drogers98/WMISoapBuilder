@@ -6,8 +6,8 @@
 
 
   <ion-nav-buttons side="right">
-  <a class="button icon ion-edit" href="#/soaps/edit/{{soapDetail.id}}"></a>
-
+  <a class="button icon ion-edit" href="#/soaps/edit/{{soapDetail.id}}/overview"></a>
+  <button class="button icon ion-app-share" ng-controller="SoapCtrl" ng-click="shareSOAP(soapDetail)"></button>
   </ion-nav-buttons>
 
 
@@ -76,7 +76,7 @@
       <h6>Vital Signs</h6>
       <div class="list">
 
-      	  <table class="VitalsTable">
+      	  <table class="VitalsTable" ng-controller="VitalCtrl">
             <tr>
               <th>Time</th>
             <td ng-repeat="sv in recentSoapVitals">{{sv.timeTaken}}</td>
