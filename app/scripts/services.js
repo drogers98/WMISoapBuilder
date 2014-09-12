@@ -219,6 +219,11 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
          callback(null,null);
        })
      },
+    updateResp: function(kind,objId,obj){
+       self.db.update(kind,obj,{
+         'id': objId
+       })
+    },
      updateKind: function(object, kind) {
        var updateP = function(kId) {
           for(var k in object){
@@ -343,8 +348,10 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
   var responderKind = 'Responder';
 
   return {
-    updateResponder: function(responder) {
-      nolsDB.updateKind(responder, responderKind);
+    updateResponder: function(responderEl,responderId,responderVal) {
+      var responderAttr = {};
+      responderAttr[responderEl] = responderVal;
+      nolsDB.updateResp(responderKind,responderId,responderAttr);
     },
     createResponderTable: function(){
       nolsDB.createResponderTable();
@@ -525,16 +532,22 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
 })
 
 
-.factory('uiState', function() {
+.factory('uiState', function(nolsDB) {
   var activeElement = {
     current: null,
-    previous: null
+    previous: null,
+    post_val: null
   };
 
   return {
     blur: function(element) {
       activeElement.current = '';
       activeElement.previous = angular.element(element).attr("id");
+      activeElement.post_val = angular.element(element).val();
+
+      var kind = activeElement.previous;
+      var kindProp = kind.substr(kind.indexOf('.') + 1);
+      var kindType = kind.substr(0, kind.indexOf('.'));
     },
     focus: function(element) {
       activeElement.current = angular.element(element).attr("id");

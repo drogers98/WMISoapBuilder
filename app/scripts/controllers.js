@@ -1,19 +1,21 @@
 'use strict';
 angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce'])
 
+.controller('MenuCtrl', function($scope, $ionicSideMenuDelegate) {
+  $scope.toggleSideMenu = function() {
+    $ionicSideMenuDelegate.toggleRight();
+  };
+})
+
 .controller('WMICtrl', function($scope,$state, Nols) {
 
 })
 
 .controller('FirstResponderCtrl', function($scope, $state, $location,
-                                           $stateParams, $timeout,
-                                           Responders, Soaps, Nols) {
+                                           $stateParams,$timeout,
+                                           Responders, Soaps, Nols,uiState) {
   //Nols.cutLifeLine();
-  $scope.termsPage = function(){$state.go('terms');};
-  $scope.responderSoapsPage = function(){$state.go('soaps');};
   $scope.trainingLevels = ['WFA','WAFA','WFR', 'WEMT', 'Other'];
-  $scope.responders;
-  $scope.responder;
   $scope.$location = $location;
 
   Responders.get(function(err,responder) {
@@ -31,35 +33,20 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce'])
     Responders.createResponderTable();
     Responders.saveResponder(responder, function (err, responder){
         $scope.responder = responder;
+        alwaysRun(responder);
     });
     $state.go('soaps');
   };
 
-  var timeout = null;
-  var updateResponderWatch = function(newVal, oldVal) {
-    if(newVal !== oldVal) {
-      //console.log(JSON.stringify($scope.responder));
-      //Todo figure out best option below
-      //update entire object or individ field - which sounds good but could have performance issues..
-      Responders.updateResponder($scope.responder);
-    }
+  $scope.monitorChange = function(responder, responderVal, attrElem) {
+    var kindEl = attrElem;
+    var kindId = responder.id;
+    var kindVal = responderVal;
+    Responders.updateResponder(kindEl,kindId,kindVal);
   }
 
-  if($location.path() === '/settings') {
-    $scope.$watch('responder.firstName', updateResponderWatch);
-    $scope.$watch('responder.lastName', updateResponderWatch);
-    $scope.$watch('responder.trainingLevel', updateResponderWatch);
-  }
 
 })
-
-// Controller for slide menu. could prolly be reworked a bit. DR
-.controller('MenuCtrl', function($scope, $ionicSideMenuDelegate) {
-$scope.toggleSideMenu = function() {
-            $ionicSideMenuDelegate.toggleRight();
-        };
-})
-
 
 .controller('SoapCtrl', function($scope, $state, $stateParams, $ionicPopup,
                                  $ionicModal, $timeout, $location,
@@ -116,6 +103,7 @@ $scope.toggleSideMenu = function() {
       $scope.soap = soap;
       console.log(soap);
     })*/
+
 
     $scope.$watch('soap.responderFirstName', updateSoapWatch);
     $scope.$watch('soap.responderLastName', updateSoapWatch);
