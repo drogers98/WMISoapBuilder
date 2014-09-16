@@ -15,73 +15,40 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce'])
                                            $stateParams,$timeout,
                                            Responders, Soaps, Nols,uiState) {
   //Nols.cutLifeLine();
-<<<<<<< HEAD
-=======
-  $scope.termsPage = function(){$state.go('terms');};
-  $scope.responderSoapsPage = function(){$state.go('soaps');};
-  //get ready for JS transfer from beta
-  //$scope.responder = Responders.all();
-
-
->>>>>>> c9e2f19c3386e89f7b8fdc0d7a552e924b703b2e
   $scope.trainingLevels = ['WFA','WAFA','WFR', 'WEMT', 'Other'];
   $scope.$location = $location;
 
-  Responders.get(function(err,responder) {
-    if(responder !== null){
+  Responders.all(function(err,responders){
+  if(!responders) {
+    Responders.saveResponder({},function(err,responder){
       $scope.responder = responder;
-      if($location.path() === '/') {
-        $state.go('soaps');
+      console.log(responder.firstName)
+    });
+  }else{
+    Responders.get(function(err,responder) {
+      if(responder !== null){
+        $scope.responder = responder;
+        console.log(responder.firstName)
+        if($location.path() === '/' && responder.acceptedTerms === true) {
+          $state.go('soaps');
+        }
+      }else {
+        return;
       }
-    }else {
-      return;
-    }
+    })
+  }
   })
 
-<<<<<<< HEAD
-  $scope.initiateResponder = function(responder) {
-    Responders.createResponderTable();
-    Responders.saveResponder(responder, function (err, responder){
-        $scope.responder = responder;
-        alwaysRun(responder);
-    });
+  Responders.createResponderTable();
+  $scope.acceptAndSave = function(responder) {
+    Responders.updateResponder('acceptedTerms',responder.id,true);
     $state.go('soaps');
   };
 
-  $scope.monitorChange = function(responder, responderVal, attrElem) {
-    var kindEl = attrElem;
-    var kindId = responder.id;
-    var kindVal = responderVal;
-    Responders.updateResponder(kindEl,kindId,kindVal);
+  $scope.monitorResponderChange = function(responder, responderVal, attrElem) {
+    var kindElem = attrElem,kindId = responder.id,kindVal = responderVal;
+    Responders.updateResponder(kindElem,kindId,kindVal);
   }
-
-=======
-  var timeout = null;
-  var updateResponderWatch = function(newVal, oldVal) {
-    if(newVal !== oldVal) {
-      //console.log(JSON.stringify($scope.responder));
-      //Todo figure out best option below
-      //update entire object or individ field - which sounds good but could have performance issues..
-      Responders.updateResponder($scope.responder);
-    }
-  }
-
-  if($location.path() === '/settings') {
-    $scope.$watch('responder.firstName', updateResponderWatch);
-    $scope.$watch('responder.lastName', updateResponderWatch);
-    $scope.$watch('responder.trainingLevel', updateResponderWatch);
-  }
-
-  $scope.initiateResponder = function(responder) {
-    Responders.createResponderTable();
-    Responders.saveResponder(responder, function (err, responder){
-        $scope.responder = responder;
-    });
-    $state.go('soaps');
-  };
-
-})
->>>>>>> c9e2f19c3386e89f7b8fdc0d7a552e924b703b2e
 
 })
 
@@ -89,9 +56,6 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce'])
                                  $ionicModal, $timeout, $location,
                                  Soaps, Responders, Nols ) {
 "use strict";
-/* leave cutLifeLine commented out unless soap table is being altered
-  un comment and run will drop responder,soap and vital table
- */
  //Nols.cutLifeLine();
  $scope.$location = $location;
  $scope.soap;
@@ -105,7 +69,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce'])
     $scope.soaps = soaps;
   });
 
-$scope.initiateSoap = function(soap, responder) {
+  $scope.initiateSoap = function(soap, responder) {
     var soap = {};
     Soaps.createSoapTable();
     Soaps.saveNewSoap(soap,responder,function(err, soap){
@@ -114,90 +78,33 @@ $scope.initiateSoap = function(soap, responder) {
     $state.go('tab.overview');
   }
 
-
-  var updateSoapWatch = function(newVal, oldVal) {
-    if(newVal !== oldVal) {
-      Soaps.updateSoap($scope.soap);
-    }
+  $scope.monitorSoapChange = function(soap,soapVal,attrElem){
+    var kindElem = attrElem,kindId = soap.id,kindVal = soapVal;
+    Soaps.updateSoap(kindElem,kindId,kindVal);
   }
 
-  var scopePath = $scope.$location.path(),
-      overview = '/tab/overview',
-      subjective = '/tab/subjective',
-      objective = '/tab/objective',
-      soapRoutes = [overview,subjective,objective];
-
-  function soapRouteConverter(route) {
-    var soapRoute = {};
-    for(var i=0;i<route.length;i++){
-      soapRoute[route[i]]='';
-    }
-    return soapRoute;
+  $scope.findAge = function (date) {
+    var birthDay = $scope.soap.patientDob,
+      DOB = new Date(birthDay),
+      today = new Date(),
+      age = today.getTime() - DOB.getTime();
+      age = Math.floor(age / (1000 * 60 * 60 * 24 * 365.25));
+      $scope.soap.patientAge = age;
   }
 
-  if(scopePath in soapRouteConverter([overview,subjective,objective])) {
-    Soaps.getLast(function(err,soap){
-      $scope.soap = soap;
-    })
+  $scope.moveItem = function(soap,fromIndex,toIndex){
+    $scope.soaps.splice(fromIndex, 1);
+    $scope.soaps.splice(toIndex, 0, item);
+  };
 
-
-    $scope.$watch('soap.responderFirstName', updateSoapWatch);
-    $scope.$watch('soap.responderLastName', updateSoapWatch);
-    $scope.$watch('soap.incidentDate', updateSoapWatch);
-    $scope.$watch('soap.incidentLocation', updateSoapWatch);
-    $scope.$watch('soap.incidentLat', updateSoapWatch);
-    $scope.$watch('soap.incidentLon', updateSoapWatch);
-    $scope.$watch('soap.incidentLon', updateSoapWatch);
-    $scope.$watch('soap.patientInitials', updateSoapWatch);
-    $scope.$watch('soap.patientGender', updateSoapWatch);
-    $scope.$watch('soap.patientDob', updateSoapWatch);
-    $scope.$watch('soap.patientAge', updateSoapWatch);
-    $scope.$watch('soap.patientLOR', updateSoapWatch);
-    $scope.$watch('soap.patientComplaint', updateSoapWatch);
-    $scope.$watch('soap.patientOnset', updateSoapWatch);
-    $scope.$watch('soap.patientPPalliates', updateSoapWatch);
-    $scope.$watch('soap.patientQuality', updateSoapWatch);
-    $scope.$watch('soap.patientRadiates', updateSoapWatch);
-    $scope.$watch('soap.patientSeverity', updateSoapWatch);
-    $scope.$watch('soap.patientTime', updateSoapWatch);
-    $scope.$watch('soap.patientHPI', updateSoapWatch);
-    $scope.$watch('soap.patientSpinal', updateSoapWatch);
-    $scope.$watch('soap.patientFound', updateSoapWatch);
-    $scope.$watch('soap.patientExamReveals', updateSoapWatch);
-    $scope.$watch('soap.patientSymptoms', updateSoapWatch);
-    $scope.$watch('soap.patientAllergies', updateSoapWatch);
-    $scope.$watch('soap.patientMedications', updateSoapWatch);
-    $scope.$watch('soap.patientMedicalHistory', updateSoapWatch);
-    $scope.$watch('soap.patientLastIntake', updateSoapWatch);
-    $scope.$watch('soap.patientEventsForCause', updateSoapWatch);
-    $scope.$watch('soap.patientAssessment', updateSoapWatch);
-    $scope.$watch('soap.patientPlan', updateSoapWatch);
-    $scope.$watch('soap.patientAnticipatedProblems', updateSoapWatch);
+  $scope.onItemDelete = function(soapId) {
+    Soaps.deleteSoap(soapId);
+    $scope.soaps.splice($scope.soaps.indexOf(soapId), 1)
   }
-// Age calculation based on DOB
-        $scope.findAge = function (date) {
-        var birthDay = $scope.soap.patientDob,
-            DOB = new Date(birthDay),
-            today = new Date(),
-            age = today.getTime() - DOB.getTime();
-        age = Math.floor(age / (1000 * 60 * 60 * 24 * 365.25));
-        $scope.soap.patientAge = age;
-        }
 
-
-        $scope.moveItem = function(soap,fromIndex,toIndex){
-          $scope.soaps.splice(fromIndex, 1);
-          $scope.soaps.splice(toIndex, 0, item);
-        };
-
-        $scope.onItemDelete = function(soapId) {
-          Soaps.deleteSoap(soapId);
-          $scope.soaps.splice($scope.soaps.indexOf(soapId), 1)
-        }
-
-        $scope.data = {
-          showDelete: false
-        };
+  $scope.data = {
+    showDelete: false
+  };
 
 
 // Geolocation Stuff

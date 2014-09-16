@@ -9,11 +9,11 @@
   <div class="SOAP">
   <h6>First Name</h6>
     <label class="item item-input">
-      <input id="Responder.firstName" type="text" placeholder="First Name" ng-model="responder.firstName" ng-model-onblur ng-change="monitorChange(responder,responder.firstName,'firstName')">
+      <input id="Responder.firstName" type="text" placeholder="First Name" ng-model="responder.firstName" ng-model-onblur ng-change="monitorResponderChange(responder,responder.firstName,'firstName')">
     </label>
     <h6>Last Name</h6>
     <label class="item item-input">
-      <input id="Responder.lastName" type="text" placeholder="Last Name" ng-model="responder.lastName" ng-model-onblur ng-change="monitorChange(responder,responder.lastName, 'lastName')">
+      <input id="Responder.lastName" type="text" placeholder="Last Name" ng-model="responder.lastName" ng-model-onblur ng-change="monitorResponderChange(responder,responder.lastName, 'lastName')">
     </label>
       <!-- select will need some good style refactoring -->
       <h6>Current Certification</h6>
@@ -21,7 +21,7 @@
         <div class="input-label">
           Current Certification
         </div>
-        <select ng-model="responder.trainingLevel" ng-change="monitorChange(responder,responder.trainingLevel,'trainingLevel')" ng-options="trainingLevel for trainingLevel in trainingLevels"></select>
+        <select ng-model="responder.trainingLevel" ng-change="monitorResponderChange(responder,responder.trainingLevel,'trainingLevel')" ng-options="trainingLevel for trainingLevel in trainingLevels"></select>
       </div>
     </div>
   </ion-content>

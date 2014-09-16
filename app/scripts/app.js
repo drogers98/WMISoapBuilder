@@ -6,7 +6,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('WMISoapBuilder', ['ionic', 'WMISoapBuilder.controllers', 'WMISoapBuilder.services', 'WMISoapBuilder.directives', 'angular-websql', 'debounce'])
+angular.module('WMISoapBuilder', ['ionic', 'WMISoapBuilder.controllers', 'WMISoapBuilder.services','WMISoapBuilder.directives', 'angular-websql', 'debounce'])
 
 
 .run(function($ionicPlatform, nolsDB) {
@@ -40,15 +40,15 @@ angular.module('WMISoapBuilder', ['ionic', 'WMISoapBuilder.controllers', 'WMISoa
     })
 
     .state('settings', {
-        url: '/settings',
+        url: '/responder/settings',
         templateUrl: 'templates/responder/settings.html',
         controller: 'FirstResponderCtrl'
     })
 
     .state('terms', {
       url: '/terms',
-      templateUrl: 'templates/wmi/terms.html',
-      controller: 'SoapCtrl'
+      templateUrl: 'templates/responder/terms.html',
+      controller: 'FirstResponderCtrl'
     })
 
     .state('about', {
@@ -58,7 +58,7 @@ angular.module('WMISoapBuilder', ['ionic', 'WMISoapBuilder.controllers', 'WMISoa
     })
 
     .state('soaps', {
-      url: '/responder/soaps',
+      url: '/soaps',
       templateUrl: 'templates/soap/soaps.html',
       controller: 'SoapCtrl'
     })

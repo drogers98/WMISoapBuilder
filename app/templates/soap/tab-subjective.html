@@ -17,17 +17,17 @@
       <!-- initials -->
       <h6>Patient Initials</h6>
       <label class="item item-input">
-        <input type="text" placeholder="Enter up to three characters." ng-model="soap.patientInitials">
+        <input type="text" id="Soap.patientInitials" placeholder="Enter up to three characters." ng-model="soap.patientInitials" ng-model-onblur ng-change="monitorSoapChange(soap,soap.patientInitials,'patientInitials')">
       </label>
       <!-- DOB -->
       <h6>Date of Birth</h6>
       <label class="item item-input">
-        <input type="date" placeholder="Patient DOB"  ng-change='findAge()' ng-model="soap.patientDob">
+        <input type="date" id="Soap.patientDob" placeholder="Patient DOB" ng-model="soap.patientDob" ng-model-onblur ng-change="monitorSoapChange(soap,soap.patientDob,'patientDob')">
       </label>
       <!-- Age. Auto populate from DOB if filled -->
       <h6>Age</h6>
       <label class="item item-input">
-        <input type="number" placeholder="Patient Age" ng-model="soap.patientAge">
+        <input type="number" id="Soap.patientAge" placeholder="Patient Age" ng-model="soap.patientAge" ng-model-onblur ng-change="monitorSoapChange(soap,soap.patientAge,'patientAge')">
       </label>
       <!-- Sex -->
       <h6>Sex</h6>

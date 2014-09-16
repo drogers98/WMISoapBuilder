@@ -12,13 +12,13 @@
     <form>
     <h6>First Name</h6>
       <label class="item item-input">
-        <input id="Responder.firstName" type="text" placeholder="First Name" ng-model="responder.firstName">
+        <input id="Responder.firstName" type="text" placeholder="First Name" ng-model="responder.firstName" ng-model-onblur ng-change="monitorResponderChange(responder,responder.firstName,'firstName')" ng-minlength="2">
       </label>
     </div>
     <div class="list list-inset">
       <h6>Last Name</h6>
       <label class="item item-input">
-        <input id="Responder.lastName" type="text" placeholder="Last Name" ng-model="responder.lastName">
+        <input id="Responder.lastName" type="text" placeholder="Last Name" ng-model="responder.lastName" ng-model-onblur ng-change="monitorRespondeerChange(responder,responder.lastName,'lastName')" ng-minlength="2">
       </label>
     </div>
     <div class="list list-inset">
@@ -28,13 +28,13 @@
       <div class="input-label">
           Training Level
        </div>
-        <select id="TrainingLevel" ng-model="responder.trainingLevel" ng-options="trainingLevel for trainingLevel in trainingLevels" onchange="changeClass(this.id)">
+        <select id="Responder.trainingLevel" ng-model="responder.trainingLevel" ng-change="monitorResponderChange(responder,responder.trainingLevel,'trainingLevel')" ng-options="trainingLevel for trainingLevel in trainingLevels" onchange="changeClass(this.id)">
 	        <option style="display:none;" value="" selected>Please Choose</option>
         </select>
       </div>
 
       <p>By using this application, you agree to the <br /><a ng-click="termsPage()">Terms of Service.</a></p>
-      <button type="submit" class="button button-block button-light icon-right ion-ios7-arrow-right" ng-click="initiateResponder(responder)">Accept and Continue</button>
+      <button type="submit" class="button button-block button-light icon-right ion-ios7-arrow-right" ng-click="acceptAndSave(responder)">Accept and Continue</button>
 
     </form>
   </div>

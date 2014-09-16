@@ -21,14 +21,16 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
          "created": {"type": "TIMESTAMP","null": "NOT NULL","default": "CURRENT_TIMESTAMP"},
          "firstName": {"type": "TEXT","null": "NOT NULL"},
          "lastName": {"type": "TEXT","null": "NOT NULL"},
-         "trainingLevel": {"type": "TEXT","null": "NOT NULL"}
+         "trainingLevel": {"type": "TEXT","null": "NOT NULL"},
+         "acceptedTerms": {"type": "BOOLEAN", "null": "NOT NULL"}
        });
      },
      saveResponder: function(responder, callback) {
        self.db.insert('Responder', {
          "firstName": responder.firstName,
          "lastName": responder.lastName,
-         "trainingLevel": responder.trainingLevel
+         "trainingLevel": responder.trainingLevel,
+         "acceptedTerms": responder.acceptedTerms || false
        }).then(function(results){
          self.db.select("Responder", {
            "id": results.insertId
@@ -256,7 +258,7 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
 
      },
      allKind: function(object,callback){
-       self.db.selectAll('Soap').then(function(results){
+       self.db.selectAll(object).then(function(results){
          callback(null,results.rows);
        })
      },
@@ -342,6 +344,11 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
 
  })
 
+
+//MODEL////////////
+///////FACTORIES///
+/////BY////////////
+///////EBS/////////
 .factory('Responders', function(nolsDB, uiState, $rootScope) {
   var responder = {};
   var responderNewParams = [];
@@ -358,6 +365,19 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
     },
     saveResponder: function(responder, callback){
       return nolsDB.saveResponder(responder, callback);
+    },
+    all: function(callback){
+      return nolsDB.allKind('Responder', function(err,data){
+        if(data.length <= 0){
+          callback(null,null)
+        }else{
+          for(var i=0;i<data.length;i++){
+            var responders = [];
+            responders.push(data.item(i));
+            callback(null,responders);
+          }
+        }
+      })
     },
     get: function(callback) {
       return nolsDB.getKind('Responder', function(err,data){

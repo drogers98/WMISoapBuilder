@@ -15,12 +15,12 @@
       <div class="list">
       <h6>Date of Incident</h6>
       <div class="item item-input" >
-       <input type="date" ng-model="soap.incidentDate" value="{{dt | date:'yyyy-MM-dd'}}"/>
+       <input type="date" id="Soap.incidentDate" ng-model="soap.incidentDate" ng-model-onblur ng-change="monitorSoapChange(soap,soap.incidentDate,'incidentDate')" value="{{dt | date:'yyyy-MM-dd'}}"/>
      </div>
 
       <h6>Location</h6>
            <label class="item item-input">
-        <textarea id="Location" type="text" placeholder="Describe where it happened." ng-model="soap.incidentLocation"
+        <textarea id="Location" id="Soap.incidentLocation" type="text" placeholder="Describe where it happened." ng-model="soap.incidentLocation" ng-model-onblur ng-change="monitorSoapChange(soap,soap.incidentLocation,'incidentLocation')"
 	ng-keyup="expandText($event)"
 	ng-keydown="expandText($event)"></textarea>
 
@@ -45,11 +45,11 @@
       <div class="list">
       <h6>First Name</h6>
       <label class="item item-input">
-        <input type="text" placeholder="First Name" ng-model="soap.responderFirstName" >
+        <input type="text" id="Soap.responderFirstName" placeholder="First Name" ng-model="soap.responderFirstName" ng-model-onblur ng-change="monitorSoapChange(soap,soap.responderFirstName,'responderFirstName')" >
       </label>
       <h6>Last Name</h6>
       <label class="item item-input">
-        <input type="text" placeholder="Last Name" ng-model="soap.responderLastName">
+        <input type="text" id="Soap.responderLastName" placeholder="Last Name" ng-model="soap.responderLastName" ng-model-onblur ng-change="monitorSoapChange(soap,soap.responderLastName,'responderLastName')">
       </label>
 
 
@@ -58,7 +58,7 @@
        <div class="input-label">
           Training Level
        </div>
-        <select id="TrainingLevelSOAP" ng-model="soap.responderTrainingLevel" ng-options="trainingLevel for trainingLevel in trainingLevels"  onchange="changeClass(this.id)">
+        <select id="TrainingLevelSOAP" ng-model="soap.responderTrainingLevel" ng-model-onblur ng-change="monitorSoapChange(soap,soap.trainingLevel,'trainingLevel')" ng-options="trainingLevel for trainingLevel in trainingLevels"  onchange="changeClass(this.id)">
 	        <option style="display:none;" value="" selected>Please Choose</option>
         </select>
 
