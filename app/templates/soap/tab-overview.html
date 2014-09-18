@@ -1,7 +1,7 @@
 <ion-view title="Overview">
 
 <ion-nav-buttons side="left">
-    <a class="button icon ion-ios7-arrow-back" href="#/responder/soaps">My SOAPs</a>
+    <a class="button icon ion-ios7-arrow-back" href="#/responder/soaps">My soaps</a>
   </ion-nav-buttons>
 
   <ion-nav-buttons side="right">
@@ -15,12 +15,12 @@
       <div class="list">
       <h6>Date of Incident</h6>
       <div class="item item-input" >
-       <input type="date" id="Soap.incidentDate" ng-model="soap.incidentDate" ng-model-onblur ng-change="monitorSoapChange(soap,soap.incidentDate,'incidentDate')" value="{{dt | date:'yyyy-MM-dd'}}"/>
+       <input type="date" id="soapOverview.incidentDate" ng-model="soapOverview.incidentDate" ng-model-onblur ng-change="monitorsoapOverviewChange(soapOverview,soapOverview.incidentDate,'incidentDate')" value="{{dt | date:'yyyy-MM-dd'}}"/>
      </div>
 
       <h6>Location</h6>
            <label class="item item-input">
-        <textarea id="Location" id="Soap.incidentLocation" type="text" placeholder="Describe where it happened." ng-model="soap.incidentLocation" ng-model-onblur ng-change="monitorSoapChange(soap,soap.incidentLocation,'incidentLocation')"
+        <textarea id="Location" id="soapOverview.incidentLocation" type="text" placeholder="Describe where it happened." ng-model="soapOverview.incidentLocation" ng-model-onblur ng-change="monitorsoapOverviewChange(soapOverview,soapOverview.incidentLocation,'incidentLocation')"
 	ng-keyup="expandText($event)"
 	ng-keydown="expandText($event)"></textarea>
 
@@ -31,7 +31,7 @@
 
 
       <label class="item">
-      {{soap.incidentLat}} {{soap.incidentLon}}
+      {{soapOverview.incidentLat}} {{soapOverview.incidentLon}}
       </label>
 
       <a id="coordsBtn" class="button button-block button-light margin" ng-click="getLocation()"><icon class="ion-pinpoint"></icon><span id="GeoLocationBtnInner">Get Coordinates</span></a>
@@ -45,11 +45,11 @@
       <div class="list">
       <h6>First Name</h6>
       <label class="item item-input">
-        <input type="text" id="Soap.responderFirstName" placeholder="First Name" ng-model="soap.responderFirstName" ng-model-onblur ng-change="monitorSoapChange(soap,soap.responderFirstName,'responderFirstName')" >
+        <input type="text" id="soapOverviewOverview.responderFirstName" placeholder="First Name" ng-model="soapOverview.responderFirstName" ng-model-onblur ng-change="monitorsoapOverviewChange(soapOverview,soapOverview.responderFirstName,'responderFirstName')" >
       </label>
       <h6>Last Name</h6>
       <label class="item item-input">
-        <input type="text" id="Soap.responderLastName" placeholder="Last Name" ng-model="soap.responderLastName" ng-model-onblur ng-change="monitorSoapChange(soap,soap.responderLastName,'responderLastName')">
+        <input type="text" id="soapOverview.responderLastName" placeholder="Last Name" ng-model="soapOverview.responderLastName" ng-model-onblur ng-change="monitorsoapOverviewChange(soapOverview,soapOverview.responderLastName,'responderLastName')">
       </label>
 
 
@@ -58,7 +58,7 @@
        <div class="input-label">
           Training Level
        </div>
-        <select id="TrainingLevelSOAP" ng-model="soap.responderTrainingLevel" ng-model-onblur ng-change="monitorSoapChange(soap,soap.trainingLevel,'trainingLevel')" ng-options="trainingLevel for trainingLevel in trainingLevels"  onchange="changeClass(this.id)">
+        <select id="TrainingLevelsoapOverview" ng-model="soapOverview.responderTrainingLevel" ng-model-onblur ng-change="monitorsoapChange(soapOverview,soapOverview.trainingLevel,'trainingLevel')" ng-options="trainingLevel for trainingLevel in trainingLevels"  onchange="changeClass(this.id)">
 	        <option style="display:none;" value="" selected>Please Choose</option>
         </select>
 

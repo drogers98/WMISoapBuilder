@@ -54,23 +54,44 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce'])
 
 })
 
-.controller('SoapCtrl', function($scope, $state, $stateParams, $ionicPopup,
-                                 $ionicModal, $timeout, $location,
-                                 Soaps, Responders, Nols ) {
-"use strict";
- //Nols.cutLifeLine();
- $scope.$location = $location;
+.controller('SoapCtrl', function($scope,$state,Soaps,Responders,Nols){
+  "use strict";
 
   Soaps.createSoapTable();
 
-  Responders.get(function(err,responder) {
+  Responders.get(function(err,responder){
     $scope.responder = responder;
   })
 
-  Soaps.all(function(err, soaps) {
+  Soaps.all(function(err,soaps){
     $scope.soaps = soaps;
-  });
+  })
 
+  $scope.monitorSoapChange = function(soap,soapVal,attrElem){
+    //call this controller in view
+    var kindElem = attrElem,kindId = soap.id,kindVal = soapVal;
+    Soaps.updateSoap(kindElem,kindId,kindVal);
+  }
+
+})
+.controller('SoapOverviewCtrl', function($scope,$state,$stateParams,Soaps,Responders,Nols){
+  Soaps.get($stateParams.soapId, function(err, soapOverview){
+    $scope.soapOverview = soapOverview;
+  })
+})
+.controller('SoapSubjectiveCtrl', function($scope,$state,Soaps,Responders,Nols){
+
+})
+.controller('SoapObjectiveCtrl', function($scope,$state,Soaps,Responders,Nols){
+
+})
+.controller('SoapAPCtrl', function($scope,$state,Soaps,Responders, Nols){
+
+})
+
+.controller('SoapCtrl', function($scope, $state, $stateParams, $ionicPopup,
+                                 $ionicModal, $timeout, $location,
+                                 Soaps, Responders, Nols ) {
 
   //same logic specific to each tabed page
   $scope.handleSoap = function(soapId, responder){

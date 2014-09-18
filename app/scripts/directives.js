@@ -17,6 +17,7 @@ angular.module('WMISoapBuilder.directives', ['angular-websql', 'debounce'])
 })
 
 .directive('ngModelOnblur', function() {
+    console.log(model);
     return {
         restrict: 'A',
         require: 'ngModel',

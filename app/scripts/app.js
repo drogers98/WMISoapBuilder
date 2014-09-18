@@ -99,6 +99,16 @@ angular.module('WMISoapBuilder', ['ionic', 'WMISoapBuilder.controllers', 'WMISoa
 
     // Each tab has its own nav history stack:
 
+    .state('tab.overview', {
+      url: '/overview/:soapId',
+      views: {
+        'tab-overview': {
+         templateUrl: 'templates/soap/tab-overview.html',
+         controller: 'SoapOverviewCtrl'
+        }
+      }
+    })
+
     .state('tab.subjective', {
       url: '/subjective',
       views: {
@@ -170,15 +180,6 @@ angular.module('WMISoapBuilder', ['ionic', 'WMISoapBuilder.controllers', 'WMISoa
       views: {
         'tab-image': {
           templateUrl: 'templates/soap/tab-images.html'
-        }
-      }
-    })
-
-    .state('tab.overview', {
-      url: '/overview',
-      views: {
-        'tab-overview': {
-          templateUrl: 'templates/soap/tab-overview.html'
         }
       }
     })
