@@ -26,20 +26,9 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
        });
      },
      saveResponder: function(responder, callback) {
-       var nameFunc = function (name) {
-         var empString = '';
-         var nameUndef = 'undefined';
-         if(name === nameUndef){
-           return name = 'First Name'
-           console.log('Called FirstName');
-         }else{
-           return name = empString;
-           console.log('Called empString');
-         }
-       }
        self.db.insert('Responder', {
-         "firstName": responder.firstName || nameFunc(responder.firstName),
-         "lastName": responder.lastName || nameFunc(responder.lastName),
+         "firstName": responder.firstName || 'First Name',
+         "lastName": responder.lastName || 'Last Name',
          "trainingLevel": responder.trainingLevel,
          "acceptedTerms": responder.acceptedTerms || false
        }).then(function(results){
@@ -48,8 +37,7 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
          }).then(function(results) {
            for(var i=0; i < results.rows.length;i++){
               var responder = angular.copy(results.rows.item(i))
-              console.log(responder)
-              console.log(callback(null, responder));
+              callback(null,responder);
            }
          })
        });

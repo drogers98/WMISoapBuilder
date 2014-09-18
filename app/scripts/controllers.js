@@ -47,6 +47,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce'])
   };
 
   $scope.monitorResponderChange = function(responder, responderVal, attrElem) {
+    console.log(responderVal)
     var kindElem = attrElem,kindId = responder.id,kindVal = responderVal;
     Responders.updateResponder(kindElem,kindId,kindVal);
   }
@@ -59,8 +60,8 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce'])
 "use strict";
  //Nols.cutLifeLine();
  $scope.$location = $location;
- $scope.soap;
- $scope.soaps;
+
+  Soaps.createSoapTable();
 
   Responders.get(function(err,responder) {
     $scope.responder = responder;
@@ -70,13 +71,21 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce'])
     $scope.soaps = soaps;
   });
 
-  $scope.initiateSoap = function(soap, responder) {
+
+  //same logic specific to each tabed page
+  $scope.handleSoap = function(soapId, responder){
     var soap = {};
-    Soaps.createSoapTable();
-    Soaps.saveNewSoap(soap,responder,function(err, soap){
-      $scope.soap = soap;
-    });
-    $state.go('tab.overview');
+    if(!soapId){
+      Soaps.saveNewSoap(soap,responder, function(err,soap){
+        $state.go('tab.overview');
+        $scope.soap = soap;
+
+      });
+    }else {
+      Soaps.get(soapId, function(err, soap){
+        $scope.soap = soap;
+      })
+    }
   }
 
   $scope.monitorSoapChange = function(soap,soapVal,attrElem){
