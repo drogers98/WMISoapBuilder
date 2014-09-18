@@ -15,22 +15,23 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce'])
                                            $stateParams,$timeout,
                                            Responders, Soaps, Nols,uiState) {
   //Nols.cutLifeLine();
+  $scope.mySoaps = function() {$state.go('soaps');}
+  $scope.termsPage = function() {$state.go('terms');}
   $scope.trainingLevels = ['WFA','WAFA','WFR', 'WEMT', 'Other'];
   $scope.$location = $location;
 
+  //INTRO LOGIC
   Responders.all(function(err,responders){
   if(!responders) {
     Responders.saveResponder({},function(err,responder){
       $scope.responder = responder;
-      console.log(responder.firstName)
     });
   }else{
     Responders.get(function(err,responder) {
       if(responder !== null){
         $scope.responder = responder;
-        console.log(responder.firstName)
-        if($location.path() === '/' && responder.acceptedTerms === true) {
-          $state.go('soaps');
+        if($scope.$location.path() == '/' && responder.acceptedTerms === 'true') {
+          $scope.mySoaps();
         }
       }else {
         return;
@@ -42,7 +43,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce'])
   Responders.createResponderTable();
   $scope.acceptAndSave = function(responder) {
     Responders.updateResponder('acceptedTerms',responder.id,true);
-    $state.go('soaps');
+    $scope.mySoaps();
   };
 
   $scope.monitorResponderChange = function(responder, responderVal, attrElem) {
