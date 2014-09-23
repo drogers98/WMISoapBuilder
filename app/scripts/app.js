@@ -59,45 +59,21 @@ angular.module('WMISoapBuilder', ['ionic', 'WMISoapBuilder.controllers', 'WMISoa
 
     .state('soaps', {
       url: '/soaps',
-      templateUrl: 'templates/soap/soaps.html',
+      templateUrl: 'templates/soap/index.html',
       controller: 'SoapCtrl'
     })
 
     .state('soap-detail', {
       url: '/soaps/:soapId',
-      templateUrl: 'templates/soap/soap-detail.html',
+      templateUrl: 'templates/soap/show.html',
       controller: 'SoapDetailCtrl'
     })
 
-    .state('soap-edit', {
-      url: '/soaps/edit/:soapId/overview',
-      templateUrl: 'templates/soap/soap-edit-overview.html',
-      controller: 'SoapDetailCtrl'
-    })
-    .state('soap-edit-sub', {
-      url: '/soaps/edit/:soapId/subjective',
-      templateUrl: 'templates/soap/soap-edit-subjective.html',
-      controller: 'SoapDetailCtrl'
-    })
-    .state('soap-edit-obj', {
-      url: '/soaps/edit/:soapId/objective',
-      templateUrl: 'templates/soap/soap-edit-objective.html',
-      controller: 'SoapDetailCtrl'
-    })
-    .state('soap-edit-ap', {
-      url: '/soaps/edit/:soapId/ap',
-      templateUrl: 'templates/soap/soap-edit-ap.html',
-      controller: 'SoapDetailCtrl'
-    })
-
-    // setup an abstract state for the tabs directive
     .state('tab', {
       url: '/tab',
       abstract: true,
       templateUrl: 'templates/soap/tabs.html'
     })
-
-    // Each tab has its own nav history stack:
 
     .state('tab.overview', {
       url: '/overview/:soapId',
@@ -133,7 +109,7 @@ angular.module('WMISoapBuilder', ['ionic', 'WMISoapBuilder.controllers', 'WMISoa
       url: '/vitals',
       views: {
         'tab-objective': {
-          templateUrl: 'templates/soap/vitals.html',
+          templateUrl: 'templates/vital/index.html',
           controller: 'VitalCtrl'
         }
       }
@@ -143,7 +119,7 @@ angular.module('WMISoapBuilder', ['ionic', 'WMISoapBuilder.controllers', 'WMISoa
       url: '/vitals/new',
       views: {
         'tab-objective': {
-          templateUrl: 'templates/soap/vitalnew.html',
+          templateUrl: 'templates/vital/new.html',
           controller: 'VitalCtrl'
         }
       }
@@ -153,7 +129,7 @@ angular.module('WMISoapBuilder', ['ionic', 'WMISoapBuilder.controllers', 'WMISoa
       url: '/vitals/:vitalId',
       views: {
         'tab-objective': {
-          templateUrl: 'templates/soap/vital.html',
+          templateUrl: 'templates/vital/show.html',
           controller: 'VitalDetailCtrl'
         }
       }
@@ -184,16 +160,6 @@ angular.module('WMISoapBuilder', ['ionic', 'WMISoapBuilder.controllers', 'WMISoa
       views: {
         'tab-image': {
           templateUrl: 'templates/soap/tab-images.html'
-        }
-      }
-    })
-
-    .state('tab.account', {
-      url: '/account',
-      views: {
-        'tab-account': {
-          templateUrl: 'templates/tab-account.html',
-          controller: 'AccountCtrl'
         }
       }
     });

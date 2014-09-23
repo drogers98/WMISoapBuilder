@@ -97,6 +97,23 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce'])
     showDelete: false
   };
 
+  $scope.cancelSoap = function(soap){
+    var confirmPopup = $ionicPopup.confirm({
+      title: 'sure?',
+      template: 'Are you sure?'
+    });
+    confirmPopup.then(function(res){
+      if(res){
+        Soaps.deleteSoap(soap.id);
+        $state.go('soaps')
+      }else {
+        return;
+      }
+    })
+
+  }
+
+
   //Nols.cutLifeLine();
 
 })
@@ -183,21 +200,25 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce'])
 })
 
 //SOAP OBJECTIVE TAB
-.controller('SoapObjectiveCtrl', function($scope,$state,$stateParams,Soaps,Responders,Nols){
+.controller('SoapObjectiveCtrl', function($scope,$state,$stateParams,Soaps,Responders,Vitals,Nols){
   Soaps.get($stateParams.soapId, function(err,soapObjective){
-    $scope.soapObjective = soapObjective
+    $scope.soapObjective = soapObjective;
+    Vitals.all(soapObjective.id, function(err,soapVitals){
+      $scope.soapVitals = soapVitals;
+    })
   })
 
   $scope.monitorSoapObjectiveChange = function(soap,soapVal,attrElem){
     var kindElem = attrElem,kindId = soap.id,kindVal = soapVal;
     Soaps.updateSoap(kindElem,kindId,kindVal);
   }
+
 })
 
 //SOAP A-P TAB
 .controller('SoapAPCtrl', function($scope,$state,$stateParams,Soaps,Responders, Nols){
   Soaps.get($stateParams.soapId, function(err,soapAP){
-    $scope.soapAp = soapAP
+    $scope.soapAp = soapAP;
   })
 
   $scope.monitorSoapAPChange = function(soap,soapVal,attrElem){
@@ -213,13 +234,20 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce'])
   })
 })
 
+.controller('SoapDetailCtrl', function($scope,$state,$stateParams,Soaps,Responders,Vitals,Nols){
+  Soaps.get($stateParams.soapId, function(err,soapDetail){
+    $scope.soapDetail = soapDetail;
+  })
+})
+
 .controller('VitalCtrl', function($scope,$state,$stateParams,Vitals,Soaps,Nols){
   Vitals.createVitalTable();
-  Soaps.get($stateParams.vitalId, function(err,soapVital) {
-    Vitals.all(soapVital.id,function(err,vitals){
-      $scope.vitals = vitals;
+
+  $scope.addVital = function(soap,vital){
+    Vital.saveNewVital({},soap.id,function(err,newVital){
+      $scope.newVital = newVital;
     })
-  })
+  }
 
   $scope.monitorVitalChange = function(vital,vitalVal,attrElem){
     var kindElem = attrElem,kindId = vital.id,kindVal = vitalVal;
@@ -484,17 +512,7 @@ var htmlbody = '<h2>Location</h2>'+
 .controller('VitalCtrl', function($scope, $state, $stateParams, $timeout, Vitals, Soaps) {
 "use strict";
 
-  $scope.vitals;
-  $scope.vital;
-
-  $scope.soap;
-  Soaps.getLast(function(err,soap){
-    $scope.soap = soap;
-    Vitals.all(soap.id,function(err,vitals,recentSoapVitals){
-      $scope.vitals = vitals;
-      $scope.recentSoapVitals = recentSoapVitals;
-    })
-  })
+  Vitals.createVitalTable();
 
 /*
   Vitals.all($scope.soap,function(err,vitals,recentSoapVitals){
@@ -511,23 +529,6 @@ var htmlbody = '<h2>Location</h2>'+
         $state.go('tab.newvital');
       })
   }
-
-  $scope.updateVitalParam = function(newParam) {
-    Vitals.updateVital(newParam);
-  }
-  $scope.moveItem = function(vital,fromIndex,toIndex){
-    $scope.vitals.splice(fromIndex, 1);
-    $scope.vitals.splice(toIndex, 0, item);
-  };
-
-  $scope.onItemDelete = function(vitalId) {
-    Vitals.deleteVital(vitalId);
-    $scope.vitals.splice($scope.vitals.indexOf(vitalId), 1)
-  }
-
-  $scope.data = {
-    showDelete: false
-  };
 
   $scope.timeValue = 0;
 

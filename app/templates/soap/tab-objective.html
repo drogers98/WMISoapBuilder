@@ -14,13 +14,13 @@
       <h5>Patient Position When Found<a ng-click="openModal(3)"><span>i</span></a></h5>
       <div class="list">
         <label class="item item-input">
-          <textarea id="Position" type="text" placeholder="Describe the physical position of your patient." ng-model="soap.patientFound" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
+          <textarea id="Soap.patientFound" type="text" placeholder="Describe the physical position of your patient." ng-model="soapObjective.patientFound" ng-model-onblur ng-change="monitorSoapObjectiveChange(soapObjective,soapObjective.patientFound,'patientFound')" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
         </label>
       </div>
       <h5>Patient Exam<a ng-click="openModal(3)"><span>i</span></a></h5>
       <div class="list">
         <label class="item item-input">
-          <textarea id="PatientExam" type="text" placeholder="Describe in detail the injuries observed in the head-to-toe examination. Include pertinent negatives. Assess CSM's." ng-model="soap.patientExamReveals" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
+          <textarea id="Soap.patientExamReveals" type="text" placeholder="Describe in detail the injuries observed in the head-to-toe examination. Include pertinent negatives. Assess CSM's." ng-model="soap.patientExamReveals" ng-model-onblur ng-change="monitorSoapObjectiveChange(soapObjective,soapObjective.patientExamReveals,'patientReveals')" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
         </label>
       </div>
       <h5>Vital Signs<a ng-click="openModal(3)"><span>i</span></a></h5>
@@ -92,19 +92,19 @@
       <h6>Symptoms</h6>
       <div class="list">
         <label class="item item-input">
-          <textarea id="Symptoms" type="text" placeholder="Headache? Dizziness? Nausea? Cold? Hot?" ng-model="soap.patientSymptoms" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
+          <textarea id="Soap.patientSymptoms" type="text" placeholder="Headache? Dizziness? Nausea? Cold? Hot?" ng-model="soapObjective.patientSymptoms" ng-model-onblur ng-change="monitorSoapObjectiveChange(soapObjective,soapObjective.patientSymptoms,'patientSymptoms')" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
         </label>
       </div>
       <h6>Allergies</h6>
         <div class="list">
         <label class="item item-input">
-          <textarea id="Allergies" type="text" placeholder="Allergies to Medications? Foods? Insects? Pollens? Exposure? What happens with exposure?" ng-model="soap.patientAllergies" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
+          <textarea id="Allergies" type="text" placeholder="Allergies to Medications? Foods? Insects? Pollens? Exposure? What happens with exposure?" ng-model="soapObjective.patientAllergies" ng-model-onblur ng-change="monitorSoapObjective(soapObjective,soapObjective.patientAllergies,'patientAllergies')" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
         </label>
         </div>
         <h6>Medications</h6>
         <div class="list">
         <label class="item item-input">
-          <textarea id="Medications" type="text" placeholder="Over the Counter? Prescription? Alcohol or Recreational?" ng-model="soap.patientMedications" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
+          <textarea id="patientMedications" type="text" placeholder="Over the Counter? Prescription? Alcohol or Recreational?" ng-model="soapObjective.patientMedications" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
         </label>
         </div>
         <h6>Pertinent Medical History</h6>
@@ -125,7 +125,7 @@
           <textarea id="ELUT" type="text" placeholder="Events leading up to or causing the incident/illness." ng-model="soap.patientEventsForCause" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
         </label>
       </div>
-      <a class="button button-block button-light icon-right ion-ios7-arrow-right margin last" ng-click="apPage()">Continue to Assessment & Plan</a>
+      <a class="button button-block button-light icon-right ion-ios7-arrow-right margin last" href="#/tab/ap/{{soapObjective.id}}">Continue to Assessment & Plan</a>
     </div>
   </ion-content>
 </ion-view>

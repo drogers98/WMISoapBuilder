@@ -15,7 +15,7 @@
   <div class="SOAP">
   <a class="button button-block button-light margin" href="#/tab/overview/{{starterSoap}}"><icon class="icon ion-plus-circled "></icon>Create New SOAP Note</a>
     <ion-list show-delete="data.showDelete">
-      <ion-item class="item-icon-right" ng-repeat="soap in soaps" type="item-text-wrap" href="#/tab/overview/{{soap.id}}">
+      <ion-item class="item-icon-right" ng-repeat="soap in soaps" type="item-text-wrap" href="#/soaps/{{soap.id}}">
         <ion-delete-button class="ion-minus-circled" ng-click="onItemDelete({{soap.id}})">
       </ion-delete-button>{{soap.id}}, {{soap.patientAge}}, {{soap.patientGender}} | {{soap.patientInitials}} | {{soap.incidentDate}}
         <i class="icon ion-ios7-arrow-forward"></i>
