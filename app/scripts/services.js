@@ -50,6 +50,7 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
          "responderLastName": {"type": "TEXT", "null": "NOT NULL"},
          "responderUid": {"type": "TEXT", "null": "NOT NULL"},
          "responderTrainingLevel": {"type": "TEXT", "null": "NOT NULL"},
+         "starterFlag": {"type": "TEXT", "null": "NOT NULL"},
          "incidentDate": {"type": "DATE", "null": "NOT NULL"},
          "incidentLocation": {"type": "TEXT","null": "NOT NULL"},
          "incidentLat": {"type": "TEXT","null": "NOT NULL"},
@@ -81,13 +82,13 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
          "patientAnticipatedProblems": {"type": "TEXT","null": "NOT NULL"}
        })
      },
-     saveSoap: function(soapAttr, responderAttr, callback) {
-       var soap = {};
+     saveSoap: function(soapAttr,responderAttr, callback) {
        self.db.insert('Soap', {
          "responderFirstName": responderAttr.firstName || '',
          "responderLastName": responderAttr.lastName || '',
          "responderUid": responderAttr.id || '',
          "responderTrainingLevel": responderAttr.trainingLevel || '',
+         "starterFlag": soapAttr.starterFlag || false,
          "incidentDate": soapAttr.incidentDate || '',
          "incidentLocation": soapAttr.incidentLocation || '',
          "incidentLat": soapAttr.incidentLat || '',
@@ -122,7 +123,8 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
            "id": results.insertId
          }).then(function(results) {
            for(var i = 0;i < results.rows.length;i++){
-             callback(null, angular.copy(results.rows.item(i)));
+             var soap = angular.copy(results.rows.item(i))
+             callback(null, soap);
            }
          })
        })
@@ -263,28 +265,20 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
          callback(null,results.rows);
        })
      },
+     allKindQuery: function(object,query,callback){
+       self.db.select(object,query).then(function(results){
+         callback(null,results.rows);
+       })
+     },
      kind: function(object, query, callback) {
       self.db.select(object,query).then(function(results){
         callback(null, results.rows);
       })
      },
-     soapUpdate: function(soap) {
-       var kindForUpdate = function(kindKey,kindVal){
-          var  buildKeyValue = {};
-          buildKeyValue[kindKey] = kindVal;
-          return buildKeyValue;
-        }
-
-       for(var k in soap){
-         if(soap.hasOwnProperty(k)){
-           var newKey = k,
-               newVal = soap[k];
-           }
-         self.db.update('Soap',kindForUpdate(newKey,newVal),{
-           'id': soap.id
-         })
-       }
-
+     soapUpdate: function(kind,objId,obj) {
+       self.db.update(kind,obj,{
+         'id': objId
+       })
      },
      deleteKind: function(kind,id){
        self.db.del(kind,{"id": id});
@@ -385,7 +379,7 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
     get: function(callback) {
       return nolsDB.getKind('Responder', function(err,data){
         var responder = {};
-        if(data === null) {
+        if(data === null) {k
           console.log(callback(null,null))
         }else{
           var len = data.length - 1;
@@ -424,37 +418,49 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
     createSoapTable: function() {
       nolsDB.createSoapTable();
     },
-    saveNewSoap: function(soapAttr, responderAttr, callback) {
-      return nolsDB.saveSoap(soapAttr, responderAttr, callback);
+    saveNewSoap: function(soapAttr,responderAttr,callback) {
+      return nolsDB.saveSoap(soapAttr,responderAttr, callback);
     },
-    updateSoap: function(soap) {
-      //console.log(soap);
-      return nolsDB.updateKind(soap,soapKind);
+    updateSoap: function(soapEl,soapId,soapVal) {
+      var soapAttr = {};
+      soapAttr[soapEl] = soapVal;
+      return nolsDB.soapUpdate(soapKind,soapId,soapAttr);
     },
     updateEditSoap: function(soap){
       return nolsDB.soapUpdate(soap);
     },
-    all: function(callback) {
-    return nolsDB.allKind('Soap', function(err,data){
+    all: function(mySoaps,callback) {
       var soaps = [];
-      for(var i=0;i < data.length;i++){
-        soaps.push(data.item(i));
-        callback(null,soaps)
+      if(!mySoaps) {
+        return nolsDB.allKind('Soap', function(err,data){
+          for(var i=0;i < data.length;i++){
+            soaps.push(data.item(i));
+            callback(null,soaps)
+          }
+        })
+      }else {
+        return nolsDB.allKindQuery('Soap', {'starterFlag': 'true'}, function(err,data){
+          for(var i=0;i < data.length;i++){
+            soaps.push(data.item(i));
+            callback(null,soaps);
+          }
+        })
       }
-    })
     },
     getLast: function(callback) {
       return nolsDB.allKind('Soap', function(err, data){
         var soap = {};
-        var len = data.length - 1;
-        for(var i=len;i < data.length;i++){
-          soap = data.item(i);
-          var neededParams = {};
-          neededParams['id'] = soap.id;
-          neededParams['responderFirstName'] = soap.responderFirstName;
-          neededParams['responderLastName'] = soap.responderLastName;
-          neededParams['responderTrainingLevel'] = soap.responderTrainingLevel;
-          callback(null, neededParams);
+        if(data.length > 0){
+          var len = data.length - 1;
+          for(var i=len;i < data.length;i++){
+            soap = data.item(i);
+            var neededParams = {};
+            neededParams['id'] = soap.id;
+            neededParams['starterFlag'] = soap.starterFlag;
+            callback(null, neededParams);
+          }
+        }else {
+          callback(null, null);
         }
       })
     },

@@ -54,41 +54,238 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce'])
 
 })
 
-.controller('SoapCtrl', function($scope,$state,Soaps,Responders,Nols){
+.controller('SoapCtrl', function($scope, $state, $stateParams, $ionicPopup,
+                                 $ionicModal, $timeout, $location,
+                                 Soaps, Responders, Nols){
   "use strict";
 
   Soaps.createSoapTable();
 
   Responders.get(function(err,responder){
     $scope.responder = responder;
+    if(responder){
+      if($state.includes('soaps')){
+      Soaps.getLast(function(err,lastSoap){
+        if(lastSoap === null || lastSoap.starterFlag === 'true'){
+          Soaps.saveNewSoap({},responder,function(err,starterSoap){
+            $scope.starterSoap = starterSoap.id;
+          })
+        }else {
+          $scope.starterSoap = lastSoap.id;
+        }
+      })
+      }
+    }
   })
 
-  Soaps.all(function(err,soaps){
+  Soaps.all('mySoaps',function(err,soaps){
     $scope.soaps = soaps;
+    //display only soaps where starter flag === true
   })
 
-  $scope.monitorSoapChange = function(soap,soapVal,attrElem){
-    //call this controller in view
+  $scope.moveItem = function(soap,fromIndex,toIndex){
+    $scope.soaps.splice(fromIndex, 1);
+    $scope.soaps.splice(toIndex, 0, item);
+  };
+
+  $scope.onItemDelete = function(soapId) {
+    Soaps.deleteSoap(soapId);
+    $scope.soaps.splice($scope.soaps.indexOf(soapId), 1)
+  }
+
+  $scope.data = {
+    showDelete: false
+  };
+
+  //Nols.cutLifeLine();
+
+})
+
+//SOAP OVERVIEW TAB
+.controller('SoapOverviewCtrl', function($scope,$state,$stateParams,Soaps,Responders,Nols){
+  Soaps.get($stateParams.soapId, function(err, soapOverview){
+    if(soapOverview.starterFlag === 'false') {
+      Soaps.updateSoap('starterFlag',soapOverview.id,true);
+    }
+    $scope.soapOverview = soapOverview;
+  })
+
+  $scope.monitorSoapOverviewChange = function(soap,soapVal,attrElem){
     var kindElem = attrElem,kindId = soap.id,kindVal = soapVal;
     Soaps.updateSoap(kindElem,kindId,kindVal);
   }
 
+  $scope.trainingLevels = ['WFA','WAFA','WFR', 'WEMT', 'Other'];
+
+  //GEOLOCATION
+  $scope.showPosition = function(position){
+    $scope.soapOverview.incidentLat = position.coords.latitude;
+    $scooe.soapOverview.incidentLon = position.coords.longitude;
+    $scope.apply();
+  }
+  if(!navigator.geolocation){
+    document.getElementById('GeolocationBtnInner').innerHTML = "GPS Unavailable";
+    document.getElementById("coordsBtn").className = "";
+    document.getElementById("coordsBtn").className = "button button-block button-calm margin";
+  }
+  $scope.getLocation = function(){
+    if(navigator.geolocation){
+      navigator.geolocation.getCurrentPosition($scope.showPosition);
+      document.getElementById('GeoLocationBtnInnder').innerHTML = "Reset Coordinates";
+      document.getElementById("coordsBtn").className = "";
+      document.getElementById("coordsBtn").className = "button button-block button-calm margin";
+    }else {
+      alert('Sorry, this feature is currently unavailable');
+    }
+  }
+
 })
-.controller('SoapOverviewCtrl', function($scope,$state,$stateParams,Soaps,Responders,Nols){
-  Soaps.get($stateParams.soapId, function(err, soapOverview){
-    $scope.soapOverview = soapOverview;
+
+//SOAP SUBJECTIVE TAB
+.controller('SoapSubjectiveCtrl', function($scope,$state,$stateParams,Soaps,Responders,Nols){
+  Soaps.get($stateParams.soapId, function(err,soapSubjective){
+    $scope.soapSubjective = soapSubjective;
+  })
+
+  $scope.monitorSoapSubjectiveChange = function(soap,soapVal,attrElem){
+    var kindElem = attrElem,kindId = soap.id,kindVal = soapVal;
+    Soaps.updateSoap(kindElem,kindId,kindVal);
+  }
+
+  var range = function(i){
+    return i ? range(i-1).concat(i):[];
+  }
+
+  $scope.genders = [
+    {name:'Male',value:'M'},
+    {name:'Female',value:'F'},
+    {name:'Transgender',value:'T'}
+  ];
+  $scope.onsets = ['Sudden', 'Gradual'];
+  $scope.qualities = ['Aching', 'Burning',
+                      'Cramping', 'Crushing',
+                      'Dull Pressure', 'Sharp',
+                      'Squeezing', 'Stabbing',
+                      'Tearing', 'Tight', 'Other'];
+  $scope.severities = range(10);
+  $scope.spinals = ['Yes', 'No'];
+
+  $scope.findAge = function (date) {
+    //SIT THIS INSIDE MONITOR SOAP SUB CHANGE
+    var birthDay = $scope.soapSubjective.patientDob,
+      DOB = new Date(birthDay),
+      today = new Date(),
+      age = today.getTime() - DOB.getTime();
+      age = Math.floor(age / (1000 * 60 * 60 * 24 * 365.25));
+      $scope.soapSubjective.patientAge = age;
+  }
+
+})
+
+//SOAP OBJECTIVE TAB
+.controller('SoapObjectiveCtrl', function($scope,$state,$stateParams,Soaps,Responders,Nols){
+  Soaps.get($stateParams.soapId, function(err,soapObjective){
+    $scope.soapObjective = soapObjective
+  })
+
+  $scope.monitorSoapObjectiveChange = function(soap,soapVal,attrElem){
+    var kindElem = attrElem,kindId = soap.id,kindVal = soapVal;
+    Soaps.updateSoap(kindElem,kindId,kindVal);
+  }
+})
+
+//SOAP A-P TAB
+.controller('SoapAPCtrl', function($scope,$state,$stateParams,Soaps,Responders, Nols){
+  Soaps.get($stateParams.soapId, function(err,soapAP){
+    $scope.soapAp = soapAP
+  })
+
+  $scope.monitorSoapAPChange = function(soap,soapVal,attrElem){
+    var kindElem = attrElem,kindId = soap.id,kindVal = soapVal;
+    Soaps.updateSoap(kindElem,kindId,kindVal);
+  }
+})
+
+//SOAP REVIEW TAB
+.controller('SoapReviewCtrl', function($scope,$state,$stateParams,Soaps,Responders, Nols){
+  Soaps.get($stateParams.soapId, function(err,soapReview){
+    $scope.soapReview = soapReview;
   })
 })
-.controller('SoapSubjectiveCtrl', function($scope,$state,Soaps,Responders,Nols){
 
+.controller('VitalCtrl', function($scope,$state,$stateParams,Vitals,Soaps,Nols){
+  Vitals.createVitalTable();
+  Soaps.get($stateParams.vitalId, function(err,soapVital) {
+    Vitals.all(soapVital.id,function(err,vitals){
+      $scope.vitals = vitals;
+    })
+  })
+
+  $scope.monitorVitalChange = function(vital,vitalVal,attrElem){
+    var kindElem = attrElem,kindId = vital.id,kindVal = vitalVal;
+    Vitals.updateVital(kindElem,kindId,kindVal);
+  }
+
+  $scope.timeValue = 0;
+  function countdown(){
+    $scope.timeValue++;
+    $scope.timeout = $timeout(countdown,1000);
+  };
+  $scope.start = function(){
+    countdown();
+    $scope.play = true;
+    $scope.pause = false;
+  }
+  $scope.stop = function(){
+    $timeout.cancel($scope.timeout);
+    $scope.play = false;
+    $scope.pause = true;
+  }
+  $scope.reset = function(){
+    $scope.timeValue = 0;
+    $timeout.cancel($scope.timeout);
+    $scope.play = false;
+    $scope.pause = true;
+  }
 })
-.controller('SoapObjectiveCtrl', function($scope,$state,Soaps,Responders,Nols){
 
+.controller('VitalDetailCtrl', function($scope,$state,$stateParams,Vitals){
+  Vitals.get($stateParams.vitalId, function(err, vitalDetail){
+    $scope.vitalDetail = vitalDetail;
+  })
+
+  $scope.pupils = ['PERRL', 'Not PERRL'];
+  $scope.BPtakens = ['Taken', 'Palpated'];
+  $scope.BPpulses = ['Present', 'Weak', 'Absent'];
+  $scope.SKINmoists = ['Dry', 'Moist', 'Wet'];
+  $scope.SKINtemps = ['Warm', 'Cool', 'Hot'];
+  $scope.SKINcolors = ['Pink', 'Pale', 'Red'];
+  $scope.RESPrythms = ['Regular', 'Irregular'];
+  $scope.RESPqualities = ['Easy', 'Shallow', 'Labored'];
+  $scope.HEARTqualities = ['Strong', 'Weak', 'Bounding'];
+  $scope.HEARTrythms = ['Regular', 'Irregular'];
+  $scope.tempDegrees = [
+        {name:'°Fahrenheit', value:'°F'},
+        {name:'°Celsius', value:'°C'}
+      ];
+  $scope.LORs = [
+        {name:'Awake & Oriented x 4', value:'AOx4'},
+        {name:'Awake & Oriented x 3', value:'AOx3'},
+        {name:'Awake & Oriented x 2', value:'AOx2'},
+        {name:'Awake & Oriented x 1', value:'AOx1'},
+        {name:'Awake & Oriented x 0', value:'AOxO'},
+        {name:'Verbal Stimulus', value:'V'},
+        {name:'Painful Stimulus', value:'P'},
+        {name:'Unresponsive', value:'U'}
+      ];
 })
-.controller('SoapAPCtrl', function($scope,$state,Soaps,Responders, Nols){
 
-})
 
+
+
+
+
+/*
 .controller('SoapCtrl', function($scope, $state, $stateParams, $ionicPopup,
                                  $ionicModal, $timeout, $location,
                                  Soaps, Responders, Nols ) {
@@ -109,67 +306,6 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce'])
     }
   }
 
-  $scope.monitorSoapChange = function(soap,soapVal,attrElem){
-    var kindElem = attrElem,kindId = soap.id,kindVal = soapVal;
-    Soaps.updateSoap(kindElem,kindId,kindVal);
-  }
-
-  $scope.findAge = function (date) {
-    var birthDay = $scope.soap.patientDob,
-      DOB = new Date(birthDay),
-      today = new Date(),
-      age = today.getTime() - DOB.getTime();
-      age = Math.floor(age / (1000 * 60 * 60 * 24 * 365.25));
-      $scope.soap.patientAge = age;
-  }
-
-  $scope.moveItem = function(soap,fromIndex,toIndex){
-    $scope.soaps.splice(fromIndex, 1);
-    $scope.soaps.splice(toIndex, 0, item);
-  };
-
-  $scope.onItemDelete = function(soapId) {
-    Soaps.deleteSoap(soapId);
-    $scope.soaps.splice($scope.soaps.indexOf(soapId), 1)
-  }
-
-  $scope.data = {
-    showDelete: false
-  };
-
-
-// Geolocation Stuff
-
-	   $scope.showPosition = function (position) {
-            $scope.soap.incidentLat = position.coords.latitude;
-            $scope.soap.incidentLon = position.coords.longitude;
-            $scope.$apply();
-        }
-
-        // Change btn text if geo unavailable to device
-         if (navigator.geolocation) {
-
-           }
-            else {
-               document.getElementById('GeoLocationBtnInner').innerHTML = "GPS Unavailable";
-			   document.getElementById("coordsBtn").className = "";
-			   document.getElementById("coordsBtn").className = "button button-block button-calm margin";
-            }
-
-
-
-        $scope.getLocation = function () {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition($scope.showPosition);
-                document.getElementById('GeoLocationBtnInner').innerHTML = "Reset Coordinates";
-				document.getElementById("coordsBtn").className = "";
-				document.getElementById("coordsBtn").className = "button button-block button-calm margin";
-            }
-            else {
-               alert('Sorry, this feature currently unavailable')
-            }
-        }
- // end geo stuff
 
 
 
@@ -180,61 +316,14 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce'])
 	element.style.height =  element.scrollHeight + "px";}
   // end auto expand
 
-  $scope.settingsPage = function() {$state.go('settings');}
-  $scope.aboutPage = function(){$state.go('about');}
-  $scope.mySoapsPage = function(){$state.go('soaps');}
-  $scope.subjectivePage = function(){$state.go('tab.subjective');}
-  $scope.objectivePage = function(){$state.go('tab.objective');}
-  $scope.apPage = function(){$state.go('tab.ap');}
-  $scope.imagePage = function(){$state.go('tab.image');}
-  $scope.overviewPage = function(){
-  $state.go('tab.overview');}
-  $scope.goReview= function(){$state.go('tab.review');}
+
 
 
 
   //$scope.dt = new Date();
-  $scope.genders = [
-  			{name:'Male', value:'M'},
-  			{name:'Female', value:'F'},
-  			{name:'Transgender', value:'T'}
-  		];
-  $scope.severities = [0,1,2,3,4,5,6,7,8,9,10];
-  $scope.onsets = ['Sudden', 'Gradual'];
-  $scope.qualities = ['Aching', 'Burning', 'Cramping', 'Crushing', 'Dull Pressure', 'Sharp', 'Squeezing', 'Stabbing', 'Tearing', 'Tight', 'Other'];
-  $scope.spinals = ['Yes', 'No'];
-  $scope.pupils = ['PERRL', 'Not PERRL'];
-  $scope.BPtakens = ['Taken', 'Palpated'];
-  $scope.BPpulses = ['Present', 'Weak', 'Absent'];
-  $scope.SKINmoists = ['Dry', 'Moist', 'Wet'];
-  $scope.SKINtemps = ['Warm', 'Cool', 'Hot'];
-  $scope.SKINcolors = ['Pink', 'Pale', 'Red'];
-  $scope.RESPrythms = ['Regular', 'Irregular'];
-  $scope.RESPqualities = ['Easy', 'Shallow', 'Labored'];
-  $scope.HEARTqualities = ['Strong', 'Weak', 'Bounding'];
-  $scope.HEARTrythms = ['Regular', 'Irregular'];
-  $scope.tempDegrees = [
-  			{name:'°Fahrenheit', value:'°F'},
-  			{name:'°Celsius', value:'°C'}
-  		];
-  $scope.LORs = [
-  			{name:'Awake & Oriented x 4', value:'AOx4'},
-  			{name:'Awake & Oriented x 3', value:'AOx3'},
-  			{name:'Awake & Oriented x 2', value:'AOx2'},
-  			{name:'Awake & Oriented x 1', value:'AOx1'},
-  			{name:'Awake & Oriented x 0', value:'AOxO'},
-  			{name:'Verbal Stimulus', value:'V'},
-  			{name:'Painful Stimulus', value:'P'},
-  			{name:'Unresponsive', value:'U'}
-  		];
 
-  $scope.trainingLevels = ['WFA','WAFA','WFR', 'WEMT', 'Other'];
 
-  //SEED DATA, COMMENT OUT AFTER FRONT_END REVIEW
-  //$scope.soaps = Soaps.all();
-  //$scope.soap = Soaps.get($stateParams.soapId);
-  //$scope.soap.vitals = Vitals.all($stateParams.soapId)
-  //$scope.soap.vital = Vitals.get($stateParams.soapId);
+
 
 
 // Email Share Function
@@ -249,7 +338,7 @@ $scope.shareSOAP = function(soap) {
       vitals.push(soapVitals[i].created)
     }
     return vitals;
-  }*/
+  }
 
 var htmlbody = '<h2>Location</h2>'+
 '<strong>Date of Incident</strong>: ' + soap.incidentDate + '<br/>' +
@@ -367,7 +456,6 @@ var htmlbody = '<h2>Location</h2>'+
       if(index == 5) $scope.oModal5.hide();
 
     };
-    /* Listen for broadcasted messages */
 
     $scope.$on('modal.shown', function(event, modal) {
       console.log('Modal ' + modal.id + ' is shown!');
@@ -390,100 +478,7 @@ var htmlbody = '<h2>Location</h2>'+
     });
 // end modals
 
-})
-
-.controller('SoapDetailCtrl', function($scope,$state, $stateParams,$location, Soaps) {
-  //$scope.soap;
-  Soaps.get($stateParams.soapId, function(err, soapDetail) {
-    $scope.soapDetail = soapDetail;
-  })
-  $scope.$location = $location;
-  $scope.$state = $state;
-  var editWatch = function(newVal, oldVal) {
-    if(newVal !== oldVal) {
-      //console.log(JSON.stringify($scope.responder));
-      //Todo figure out best option below
-      //update entire object or individ field - which sounds good but could have performance issues..
-      Soaps.updateEditSoap($scope.soapDetail);
-    }
-  }
-
-  if($state.includes('soap-edit')){
-    $scope.$watch('soapDetail.responderFirstName', editWatch);
-    $scope.$watch('soapDetail.responderLastName', editWatch);
-    $scope.$watch('soapDetail.incidentDate', editWatch);
-    $scope.$watch('soapDetail.incidentLocation', editWatch);
-    $scope.$watch('soapDetail.incidentLat', editWatch);
-    $scope.$watch('soapDetail.incidentLon', editWatch);
-    $scope.$watch('soapDetail.incidentLon', editWatch);
-    }
-    if($state.includes('soap-edit-sub')){
-    $scope.$watch('soapDetail.patientInitials', editWatch);
-    $scope.$watch('soapDetail.patientGender', editWatch);
-    $scope.$watch('soapDetail.patientDob', editWatch);
-    $scope.$watch('soapDetail.patientAge', editWatch);
-    $scope.$watch('soapDetail.patientLOR', editWatch);
-    $scope.$watch('soapDetail.patientComplaint', editWatch);
-    $scope.$watch('soapDetail.patientOnset', editWatch);
-    $scope.$watch('soapDetail.patientPPalliates', editWatch);
-    $scope.$watch('soapDetail.patientQuality', editWatch);
-    $scope.$watch('soapDetail.patientRadiates', editWatch);
-    $scope.$watch('soapDetail.patientSeverity', editWatch);
-    $scope.$watch('soapDetail.patientTime', editWatch);
-    $scope.$watch('soapDetail.patientHPI', editWatch);
-    $scope.$watch('soapDetail.patientSpinal', editWatch);
-    }
-    if($state.includes('soap-edit-obj')){
-    $scope.$watch('soapDetail.patientFound', editWatch);
-    $scope.$watch('soapDetail.patientExamReveals', editWatch);
-    $scope.$watch('soapDetail.patientSymptoms', editWatch);
-    $scope.$watch('soapDetail.patientAllergies', editWatch);
-    $scope.$watch('soapDetail.patientMedications', editWatch);
-    $scope.$watch('soapDetail.patientMedicalHistory', editWatch);
-    $scope.$watch('soapDetail.patientLastIntake', editWatch);
-    $scope.$watch('soapDetail.patientEventsForCause', editWatch);
-    }
-    if($state.includes('soap-edit-ap')){
-    $scope.$watch('soapDetail.patientAssessment', editWatch);
-    $scope.$watch('soapDetail.patientPlan', editWatch);
-    $scope.$watch('soapDetail.patientAnticipatedProblems', editWatch);
-    }
-  $scope.genders = [
-        {name:'Male', value:'M'},
-        {name:'Female', value:'F'},
-        {name:'Transgender', value:'T'}
-      ];
-  $scope.severities = [0,1,2,3,4,5,6,7,8,9,10];
-  $scope.onsets = ['Sudden', 'Gradual'];
-  $scope.qualities = ['Aching', 'Burning', 'Cramping', 'Crushing', 'Dull Pressure', 'Sharp', 'Squeezing', 'Stabbing', 'Tearing', 'Tight', 'Other'];
-  $scope.spinals = ['Yes', 'No'];
-  $scope.pupils = ['PERRL', 'Not PERRL'];
-  $scope.BPtakens = ['Taken', 'Palpated'];
-  $scope.BPpulses = ['Present', 'Weak', 'Absent'];
-  $scope.SKINmoists = ['Dry', 'Moist', 'Wet'];
-  $scope.SKINtemps = ['Warm', 'Cool', 'Hot'];
-  $scope.SKINcolors = ['Pink', 'Pale', 'Red'];
-  $scope.RESPrythms = ['Regular', 'Irregular'];
-  $scope.RESPqualities = ['Easy', 'Shallow', 'Labored'];
-  $scope.HEARTqualities = ['Strong', 'Weak', 'Bounding'];
-  $scope.HEARTrythms = ['Regular', 'Irregular'];
-  $scope.tempDegrees = [
-        {name:'°Fahrenheit', value:'°F'},
-        {name:'°Celsius', value:'°C'}
-      ];
-  $scope.LORs = [
-        {name:'Awake & Oriented x 4', value:'AOx4'},
-        {name:'Awake & Oriented x 3', value:'AOx3'},
-        {name:'Awake & Oriented x 2', value:'AOx2'},
-        {name:'Awake & Oriented x 1', value:'AOx1'},
-        {name:'Awake & Oriented x 0', value:'AOxO'},
-        {name:'Verbal Stimulus', value:'V'},
-        {name:'Painful Stimulus', value:'P'},
-        {name:'Unresponsive', value:'U'}
-      ];
-
-  $scope.trainingLevels = ['WFA','WAFA','WFR', 'WEMT', 'Other'];
-})
+})*/
 
 // coundown controls.
 .controller('VitalCtrl', function($scope, $state, $stateParams, $timeout, Vitals, Soaps) {
@@ -510,64 +505,12 @@ var htmlbody = '<h2>Location</h2>'+
 */
   $scope.initiateVital = function(vital,soap) {
     var vital = {};
-    Vitals.createVitalTable();
+
       Vitals.saveNewVital(vital,soap.id,function(err,vital){
         $scope.vital = vital;
         $state.go('tab.newvital');
       })
   }
-
-  var timeout = null;
-  var debounceSaveUpdates = function(newVal, oldVal) {
-    if(newVal != oldVal) {
-      if(timeout) {
-        $timeout.cancel(timeout)
-      }
-
-      var newVitalParamForUpdate = function() {
-         $scope.vital.getVitalKeyByValue = function (value) {
-          for(var prop in this) {
-            if(this.hasOwnProperty(prop)) {
-              if( this[ prop ] === value)
-                return prop;
-            }
-          }
-        }
-
-        var vitalValue = $scope.vital.getVitalKeyByValue(newVal);
-
-        var buildVitalParamObject = function(vitalVal,newVal) {
-          var updateParams = {};
-          updateParams["key"] = vitalVal;
-          updateParams["val"] = newVal;
-          return updateParams;
-        }
-        return buildVitalParamObject(vitalValue, newVal);
-      }
-      timeout = $timeout($scope.updateVitalParam(newVitalParamForUpdate()), 1000);
-      $scope.updateVitalParam(newVal)
-    }
-  }
-
-  $scope.$watch('vital.timeTaken', debounceSaveUpdates);
-  $scope.$watch('vital.lor', debounceSaveUpdates);
-  $scope.$watch('vital.rate', debounceSaveUpdates);
-  $scope.$watch('vital.heartRythm', debounceSaveUpdates);
-  $scope.$watch('vital.heartQuality', debounceSaveUpdates);
-  $scope.$watch('vital.respRate', debounceSaveUpdates);
-  $scope.$watch('vital.respRhythm', debounceSaveUpdates);
-  $scope.$watch('vital.respQuality', debounceSaveUpdates);
-  $scope.$watch('vital.sctmcolor', debounceSaveUpdates);
-  $scope.$watch('vital.sctmtemp', debounceSaveUpdates);
-  $scope.$watch('vital.sctmmoisture', debounceSaveUpdates);
-  $scope.$watch('vital.brradialpulse', debounceSaveUpdates);
-  $scope.$watch('vital.brsystolic', debounceSaveUpdates);
-  $scope.$watch('vital.brradialtaken', debounceSaveUpdates);
-  $scope.$watch('vital.brradialReading', debounceSaveUpdates);
-  $scope.$watch('vital.pupils', debounceSaveUpdates);
-  $scope.$watch('vital.tempDegreesReading', debounceSaveUpdates);
-  $scope.$watch('vital.tempDegrees', debounceSaveUpdates);
-
 
   $scope.updateVitalParam = function(newParam) {
     Vitals.updateVital(newParam);

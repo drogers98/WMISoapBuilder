@@ -110,19 +110,21 @@ angular.module('WMISoapBuilder', ['ionic', 'WMISoapBuilder.controllers', 'WMISoa
     })
 
     .state('tab.subjective', {
-      url: '/subjective',
+      url: '/subjective/:soapId',
       views: {
         'tab-subjective': {
           templateUrl: 'templates/soap/tab-subjective.html',
+          controller: 'SoapSubjectiveCtrl'
         }
       }
     })
 
     .state('tab.objective', {
-      url: '/objective',
+      url: '/objective/:soapId',
       views: {
         'tab-objective': {
-          templateUrl: 'templates/soap/tab-objective.html'
+          templateUrl: 'templates/soap/tab-objective.html',
+          controller: 'SoapObjectiveCtrl'
         }
       }
     })
@@ -158,19 +160,21 @@ angular.module('WMISoapBuilder', ['ionic', 'WMISoapBuilder.controllers', 'WMISoa
     })
 
     .state('tab.ap', {
-      url: '/ap',
+      url: '/ap/:soapId',
       views: {
         'tab-ap': {
-          templateUrl: 'templates/soap/tab-ap.html'
+          templateUrl: 'templates/soap/tab-ap.html',
+          controller: 'SoapApCtrl'
         }
       }
     })
 
     .state('tab.review', {
-      url: '/review',
+      url: '/review/:soapId',
       views: {
         'tab-ap': {
-          templateUrl: 'templates/soap/tab-review.html'
+          templateUrl: 'templates/soap/tab-review.html',
+          controller: 'SoapReviewCtrl'
         }
       }
     })

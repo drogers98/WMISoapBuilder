@@ -1,7 +1,7 @@
 <ion-view title="Subjective">
 
 <ion-nav-buttons side="left">
-    <a class="button icon ion-ios7-arrow-back" href="#/tab/overview">Overview</a>
+    <a class="button icon ion-ios7-arrow-back" href="#/tab/overview/{{soapSubjective.id}}">Overview</a>
   </ion-nav-buttons>
 
   <ion-nav-buttons side="right">
@@ -17,17 +17,17 @@
       <!-- initials -->
       <h6>Patient Initials</h6>
       <label class="item item-input">
-        <input type="text" id="Soap.patientInitials" placeholder="Enter up to three characters." ng-model="soap.patientInitials" ng-model-onblur ng-change="monitorSoapChange(soap,soap.patientInitials,'patientInitials')">
+        <input type="text" id="Soap.patientInitials" placeholder="Enter up to three characters." ng-model="soapSubjective.patientInitials" ng-model-onblur ng-change="monitorSoapSubjectiveChange(soapSubjective,soapSubjective.patientInitials,'patientInitials')">
       </label>
       <!-- DOB -->
       <h6>Date of Birth</h6>
       <label class="item item-input">
-        <input type="date" id="Soap.patientDob" placeholder="Patient DOB" ng-model="soap.patientDob" ng-model-onblur ng-change="monitorSoapChange(soap,soap.patientDob,'patientDob')">
+        <input type="date" id="Soap.patientDob" placeholder="Patient DOB" ng-model="soapSubjective.patientDob" ng-model-onblur ng-change="monitorSoapSubjectiveChange(soapSubjective,soapSubjective.patientDob,'patientDob')">
       </label>
       <!-- Age. Auto populate from DOB if filled -->
       <h6>Age</h6>
       <label class="item item-input">
-        <input type="number" id="Soap.patientAge" placeholder="Patient Age" ng-model="soap.patientAge" ng-model-onblur ng-change="monitorSoapChange(soap,soap.patientAge,'patientAge')">
+        <input type="number" id="Soap.patientAge" placeholder="Patient Age" ng-model="soapSubjective.patientAge" ng-model-onblur ng-change="monitorSoapSubjectiveChange(soapSubjective,soapSubjective.patientAge,'patientAge')">
       </label>
       <!-- Sex -->
       <h6>Sex</h6>
@@ -35,7 +35,7 @@
       <div class="input-label">
           Sex
        </div>
-        <select id="Sex" ng-model="soap.patientGender" ng-options="gender.value as gender.name for gender in genders"  onchange="changeClass(this.id)">
+        <select id="Soap.patientGender" ng-model="soapSubjective.patientGender" ng-model-onblur ng-options="gender.value as gender.name for gender in genders" ng-change="monitorSoapSubjectiveChange(soapSubjective,soapSubjective.patientGender,'patientGender')"  onchange="changeClass(this.id)">
 	        <option style="display:none;" value="" selected>Please Choose</option>
         </select>
       </div>
@@ -46,9 +46,10 @@
     <h5>Chief Complaint<a ng-click="openModal(2)"><span>i</span></a></h5>
     <div class="list">
       <label class="item item-input">
-        <textarea id ="ChiefComplaint" type="text" placeholder="Describe the patient's chief complaint." ng-model="soap.patientComplaint" ng-model="soap.patientComplaint"
+        <textarea id ="Soap.patientComplaint" type="text" placeholder="Describe the patient's chief complaint." ng-model="soapSubjective.patientComplaint" ng-model-onblur
 	ng-keyup="expandText($event)"
-	ng-keydown="expandText($event)"></textarea>
+	ng-keydown="expandText($event)"
+  ng-change="monitorSoapSubjectiveChange(soapSubjective,soapSubjective.patientComplaint,'patientComplaint')"></textarea>
       </label>
 
     <!-- subjective section 3 -->
@@ -57,59 +58,59 @@
       <div class="input-label">
           Onset
        </div>
-        <select id="Onset" ng-model="soap.patientOnset" ng-options="onset for onset in onsets"  onchange="changeClass(this.id)">
+        <select id="Soap.patientOnset" ng-model="soapSubjective.patientOnset" ng-options="onset for onset in onsets" ng-model-onblur ng-change="monitorSoapSubjectiveChange(soapSubject,soapSubjective.patientOnset,'patientOnset')"  onchange="changeClass(this.id)">
 	        <option style="display:none;" value="" selected>Please Choose</option>
         </select>
       </div>
       <h6>Provokes/Palliates</h6>
       <label class="item item-input">
-        <textarea id="PP" type="text" placeholder="What makes the pain better or worse?" ng-model="soap.patientPPalliates" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
+        <textarea id="Soap.patientPPalliates" type="text" placeholder="What makes the pain better or worse?" ng-model="soapSubjective.patientPPalliates" ng-model-onblur ng-change="monitorSoapSubjectiveChange(soapSubjective,soapSubjective.patientPPalliates,'patientPPalliates')" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
       </label>
 	  <h6>Quality</h6>
       <div class="item item-select">
       <div class="input-label">
           Quality
        </div>
-        <select id="Quality" ng-model="soap.patientQuality" ng-options="quality for quality in qualities"  onchange="changeClass(this.id)">
+        <select id="Soap.patientQuality" ng-model="soapSubjective.patientQuality" ng-model-onblur ng-change="monitorSoapSubjectiveChange(soapSubjective,soapSubjective.patientQuality,'patientQuality')" ng-options="quality for quality in qualities"  onchange="changeClass(this.id)">
 	        <option style="display:none;" value="" selected>Please Choose</option>
         </select>
       </div>
 	  <h6>Radiation/Region/Referred</h6>
       <label class="item item-input">
-        <textarea id="RRR" type="text" placeholder="Does the feeling move anywhere? Where is it located?" ng-model="soap.patientRadiates" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
+        <textarea id="Soap.patientRadiates" type="text" placeholder="Does the feeling move anywhere? Where is it located?" ng-model="soapSubjective.patientRadiates" ng-model-onblur ng-change="monitorSoapSubjectiveChange(soapSubjective,soapSubjective.patientRadiates,'patientRadiates')" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
       </label>
 	  <h6>Severity</h6>
       <div class="item item-select">
       <div class="input-label">
           Severity
        </div>
-        <select id="Severity" ng-options="severity for severity in severities"  ng-model="soap.patientSeverity" onchange="changeClass(this.id)">
+        <select id="Soap.patientSeverity" ng-options="severity for severity in severities" ng-model="soapSubjective.patientSeverity" ng-model-onblur ng-change="monitorSoapSubjectiveChange(soapSubjective,soapSubjective.patientSeverity,'patientSeverity')" onchange="changeClass(this.id)">
 	        <option style="display:none;" value="" selected>Please Choose</option>
         </select>
       </div>
 	  <h6>Time of Onset</h6>
       <label class="item item-input">
-        <input type="time" placeholder="" ng-model="soap.patientTime">
+        <input type="time" id="Soap.patientTime" placeholder="" ng-model="soapSubjective.patientTime" ng-model-onblur ng-change="monitorSoapSubjectiveChange(soapSubjective,soapSubjective.patientTime,'patientTime')">
       </label>
     </div>
     <h5>MOI/HPI<a ng-click="openModal(2)"><span>i</span></a></h5>
     <div class="list">
 
      <label class="item item-input">
-        <textarea id="MOI" type="text" placeholder="Describe in detail the mechanism of injury or the history of the illness." ng-model="soap.patientHPI" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
+        <textarea id="Soap.patientHPI" type="text" placeholder="Describe in detail the mechanism of injury or the history of the illness." ng-model="soapSubjective.patientHPI" ng-model-onblur ng-change="monitorSoapSubjective(soapSubjective,soapSubjective.patientHPI,'patientHPI')" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
       </label>
 	  <h6>Suspected Spinal MOI</h6>
       <div class="item item-select">
       <div class="input-label">
           Suspected Spinal MOI
        </div>
-        <select id="SMOI" ng-model="soap.patientSpinal" ng-options="spinal for spinal in spinals"  onchange="changeClass(this.id)">
+        <select id="Soap.patientSpinal" ng-model="soapSubjective.patientSpinal" ng-model-onblur ng-change="monitorSoapSubjectiveChange(soapSubjective,soapSubjective.patientSpinal,'patientSpinal')" ng-options="spinal for spinal in spinals"  onchange="changeClass(this.id)">
 	        <option style="display:none;" value="" selected>Please Choose</option>
         </select>
       </div>
 
     </div>
-      <a class="button button-block button-light icon-right ion-ios7-arrow-right margin" href="#/tab/objective">Continue to Objective</a>
+      <a class="button button-block button-light icon-right ion-ios7-arrow-right margin" href="#/tab/objective/{{soapSubjective.id}}">Continue to Objective</a>
     </div>
   </ion-content>
 </ion-view>
