@@ -25,9 +25,9 @@
       </div>
       <h5>Vital Signs<a ng-click="openModal(3)"><span>i</span></a></h5>
       <div class="list">
-      <a class="button button-block button-light margin" ng-controller="VitalCtrl" ng-click="initiateVital(vital,soap)"><icon class="icon icon-right ion-plus-circled"></icon> Add Vitals</a>
+      <a class="button button-block button-light margin" ng-controller="VitalCtrl" ng-click="initiateVital(vital,soapObjective)"><icon class="icon icon-right ion-plus-circled"></icon> Add Vitals</a>
 
-	  <table class="VitalsTable" ng-controller="VitalCtrl">
+	  <table class="VitalsTable">
             <tr>
               <th>Time</th>
             <td ng-repeat="sv in recentSoapVitals">{{sv.timeTaken}}</td>

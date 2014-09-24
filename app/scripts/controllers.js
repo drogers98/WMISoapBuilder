@@ -219,8 +219,8 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce'])
 .controller('SoapObjectiveCtrl', function($scope,$state,$stateParams,Soaps,Responders,Vitals,Nols){
   Soaps.get($stateParams.soapId, function(err,soapObjective){
     $scope.soapObjective = soapObjective;
-    Vitals.all(soapObjective.id, function(err,soapVitals){
-      $scope.soapVitals = soapVitals;
+    Vitals.all(soapObjective.id, function(err,recentSoapVitals){
+      $scope.recentSoapVitals = recentSoapVitals
     })
   })
 
@@ -266,6 +266,9 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce'])
   $scope.addVital = function(soap,vital){
     Vital.saveNewVital({},soap.id,function(err,newVital){
       $scope.newVital = newVital;
+      if(newVital){
+        $state.go('tab.vitalnew');
+      }
     })
   }
 
