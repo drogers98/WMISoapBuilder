@@ -250,6 +250,10 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce'])
   })
 })
 
+.controller('SoapImageCtrl', function($scope,$state,$stateParams,Soaps,Responders,Nols){
+  //To do images
+})
+
 .controller('SoapDetailCtrl', function($scope,$state,$stateParams,Soaps,Responders,Vitals,Nols){
   Soaps.get($stateParams.soapId, function(err,soapDetail){
     $scope.soapDetail = soapDetail;

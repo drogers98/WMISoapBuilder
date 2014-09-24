@@ -3,28 +3,29 @@
   Each tab's child <ion-nav-view> directive will have its own
   navigation history that also transitions its views in and out.
 -->
-<ion-tabs class="tabs-icon-top" ng-controller="SoapCtrl as soap">
+<!-- ng-controller="SoopCtrl as soaps" -->
+<ion-tabs class="tabs-icon-top">
 
 
   <!-- Location Tab -->
-  <ion-tab title="Overview" icon="icon ion-app-overview" href="#/tab/overview">
+  <ion-tab title="Overview" icon="icon ion-app-overview" ng-controller="SoapOverviewCtrl" href="#/tab/overview/{{soapOverview.id}}">
     <ion-nav-view name="tab-overview"></ion-nav-view>
   </ion-tab>
 
   <!-- Subjective Tab -->
-  <ion-tab title="Subjective" icon="icon ion-app-subjective" href="#/tab/subjective">
+  <ion-tab title="Subjective" icon="icon ion-app-subjective" ng-controller="SoapSubjectiveCtrl" href="#/tab/subjective/{{soapSubjective.id}}">
     <ion-nav-view name="tab-subjective"></ion-nav-view>
   </ion-tab>
 
 
   <!-- Objective Tab -->
-  <ion-tab title="Objective" icon="icon ion-app-objective" href="#/tab/objective">
+  <ion-tab title="Objective" icon="icon ion-app-objective" ng-controller="SoapObjectiveCtrl" href="#/tab/objective/{{soapObjective.id}}">
     <ion-nav-view name="tab-objective"></ion-nav-view>
   </ion-tab>
 
 
   <!-- A-P Tab -->
-  <ion-tab title="A & P" icon="icon ion-app-assessment-plan" href="#/tab/ap">
+  <ion-tab title="A & P" icon="icon ion-app-assessment-plan" ng-controller="SoapApCtrl" href="#/tab/ap/{{soapAP.id}}">
     <ion-nav-view name="tab-ap"></ion-nav-view>
   </ion-tab>
 
