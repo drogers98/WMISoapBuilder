@@ -27,9 +27,9 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
      },
      saveResponder: function(responder, callback) {
        self.db.insert('Responder', {
-         "firstName": responder.firstName || 'First Name',
-         "lastName": responder.lastName || 'Last Name',
-         "trainingLevel": responder.trainingLevel,
+         "firstName": responder.firstName || '',
+         "lastName": responder.lastName || '',
+         "trainingLevel": responder.trainingLevel || '',
          "acceptedTerms": responder.acceptedTerms || false
        }).then(function(results){
          self.db.select("Responder", {
@@ -93,10 +93,10 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
          "incidentLocation": soapAttr.incidentLocation || '',
          "incidentLat": soapAttr.incidentLat || '',
          "incidentLon": soapAttr.incidentLon || '',
-         "patientInitials": soapAttr.patientInitials || 'NO INITIALS',
-         "patientGender": soapAttr.patientGender || 'NO SEX',
+         "patientInitials": soapAttr.patientInitials || '',
+         "patientGender": soapAttr.patientGender || '',
          "patientDob": soapAttr.patientDob || '',
-         "patientAge": soapAttr.patientAge || 'NO AGE',
+         "patientAge": soapAttr.patientAge || '',
          "patientLOR": soapAttr.patientLOR || '',
          "patientComplaint": soapAttr.patientComplaint || '',
          "patientOnset": soapAttr.patientOnset || '',

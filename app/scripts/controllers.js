@@ -21,26 +21,27 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce'])
   $scope.$location = $location;
 
   //INTRO LOGIC
-  Responders.all(function(err,responders){
-  if(!responders) {
-    Responders.saveResponder({},function(err,responder){
-      $scope.responder = responder;
-    });
-  }else{
-    Responders.get(function(err,responder) {
-      if(responder !== null){
-        $scope.responder = responder;
-        if($scope.$location.path() == '/' && responder.acceptedTerms === 'true') {
-          $scope.mySoaps();
-        }
-      }else {
-        return;
-      }
-    })
-  }
-  })
-
   Responders.createResponderTable();
+    Responders.all(function(err,responders){
+    if(!responders) {
+      Responders.saveResponder({},function(err,responder){
+        $scope.responder = responder;
+        return $scope.responder;
+      })
+    }else{
+      Responders.get(function(err,responder) {
+        if(responder !== null){
+          $scope.responder = responder;
+          if($scope.$location.path() == '/' && responder.acceptedTerms === 'true') {
+            $scope.mySoaps();
+          }
+        }else {
+          return;
+        }
+      })
+    }
+    })
+
   $scope.acceptAndSave = function(responder) {
     Responders.updateResponder('acceptedTerms',responder.id,true);
     $scope.mySoaps();
@@ -99,17 +100,32 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce'])
 
   $scope.cancelSoap = function(soap){
     var confirmPopup = $ionicPopup.confirm({
-      title: 'sure?',
-      template: 'Are you sure?'
+      template: 'Delete Soap or view all soaps',
+      buttons: [
+        {text: 'Delete Soap',
+        type: 'button-positive',
+         onTap: function(){
+           Soaps.deleteSoap(soap.id);
+           $state.go('soaps');
+         }
+        },
+        {text: 'My Soaps',
+        type: 'button-soaps',
+         onTap: function(){
+           $state.go('soaps');
+         }
+        }
+      ]
     });
-    confirmPopup.then(function(res){
+
+    /*confirmPopup.then(function(res){
       if(res){
         Soaps.deleteSoap(soap.id);
         $state.go('soaps')
       }else {
         return;
       }
-    })
+    })*/
 
   }
 
@@ -567,10 +583,6 @@ var htmlbody = '<h2>Location</h2>'+
 
 
 .controller('CameraCtrl', function($scope, $state, Camera) {
-  $scope.imgs;
-  $scope.img;
-  $scope.pictureSource;
-  $scope.destinationType;
 
   Camera.all(function(err,imgs){
     $scope.imgs = imgs;

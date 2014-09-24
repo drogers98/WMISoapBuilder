@@ -35,7 +35,7 @@
       <div class="input-label">
           Sex
        </div>
-        <select id="Soap.patientGender" ng-model="soapSubjective.patientGender" ng-model-onblur ng-options="gender.value as gender.name for gender in genders" ng-change="monitorSoapSubjectiveChange(soapSubjective,soapSubjective.patientGender,'patientGender')"  onchange="changeClass(this.id)">
+        <select id="Soap.patientGender" ng-model="soapSubjective.patientGender" ng-options="gender.value as gender.name for gender in genders" ng-change="monitorSoapSubjectiveChange(soapSubjective,soapSubjective.patientGender,'patientGender')"  onchange="changeClass(this.id)">
 	        <option style="display:none;" value="" selected>Please Choose</option>
         </select>
       </div>
@@ -46,7 +46,7 @@
     <h5>Chief Complaint<a ng-click="openModal(2)"><span>i</span></a></h5>
     <div class="list">
       <label class="item item-input">
-        <textarea id ="Soap.patientComplaint" type="text" placeholder="Describe the patient's chief complaint." ng-model="soapSubjective.patientComplaint" ng-model-onblur
+        <textarea id ="Soap.patientComplaint" type="text" placeholder="Describe the patient's chief complaint." ng-model="soapSubjective.patientComplaint"
 	ng-keyup="expandText($event)"
 	ng-keydown="expandText($event)"
   ng-change="monitorSoapSubjectiveChange(soapSubjective,soapSubjective.patientComplaint,'patientComplaint')"></textarea>
@@ -58,7 +58,8 @@
       <div class="input-label">
           Onset
        </div>
-        <select id="Soap.patientOnset" ng-model="soapSubjective.patientOnset" ng-options="onset for onset in onsets" ng-model-onblur ng-change="monitorSoapSubjectiveChange(soapSubject,soapSubjective.patientOnset,'patientOnset')"  onchange="changeClass(this.id)">
+       <!-- onchange="changeClass(this.id)" removed from onset -->
+        <select id="Soap.patientOnset" ng-model="soapSubjective.patientOnset" ng-options="onset for onset in onsets" ng-change="monitorSoapSubjectiveChange(soapSubjective,soapSubjective.patientOnset,'patientOnset')">
 	        <option style="display:none;" value="" selected>Please Choose</option>
         </select>
       </div>

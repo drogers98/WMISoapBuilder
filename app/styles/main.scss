@@ -528,3 +528,21 @@ padding-bottom: 50px;
 .AboutWMI {
 	padding-bottom: 10px;
 }
+
+//popup
+.popup-head{
+	height:0 !important;
+}
+.popup-title{
+	color:#fff !important;
+}
+.popup {
+	.popup-buttons {
+		.button-delete {
+			background-color: #244b6f !important;
+		}
+		.button-soaps {
+			background-color: #efefef !important;
+		}
+	}
+}
