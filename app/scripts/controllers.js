@@ -531,55 +531,6 @@ var htmlbody = '<h2>Location</h2>'+
 
 })*/
 
-// coundown controls.
-.controller('VitalCtrl', function($scope, $state, $stateParams, $timeout, Vitals, Soaps) {
-"use strict";
-
-  Vitals.createVitalTable();
-
-/*
-  Vitals.all($scope.soap,function(err,vitals,recentSoapVitals){
-    $scope.vitals = vitals;
-    $scope.recentSoapVitals = recentSoapVitals;
-    console.log(recentSoapVitals);
-  })
-*/
-  $scope.initiateVital = function(vital,soap) {
-    var vital = {};
-
-      Vitals.saveNewVital(vital,soap.id,function(err,vital){
-        $scope.vital = vital;
-        $state.go('tab.newvital');
-      })
-  }
-
-  $scope.timeValue = 0;
-
-  function countdown() {
-    $scope.timeValue++;
-    $scope.timeout = $timeout(countdown, 1000);
-  };
-
-  $scope.start = function() {
-    countdown();
-    $scope.play = true;
-    $scope.pause = false;
-  };
-
-  $scope.stop = function() {
-    $timeout.cancel($scope.timeout);
-    $scope.play = false;
-    $scope.pause = true;
-  };
-
-  $scope.reset = function() {
-	$scope.timeValue = 0;
-    $timeout.cancel($scope.timeout);
-    $scope.play = false;
-    $scope.pause = true;
-  };
-})
-
 .controller('VitalDetailCtrl', function($scope, $state, $stateParams, Vitals) {
   $scope.vitalDetail;
   Vitals.get($stateParams.vitalId, function(err, vitalDetail) {
