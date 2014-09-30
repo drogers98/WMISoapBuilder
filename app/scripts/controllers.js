@@ -150,10 +150,16 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce'])
 
   $scope.trainingLevels = ['WFA','WAFA','WFR', 'WEMT', 'Other'];
 
+  //AUTO EXPAND BOXES
+  $scope.expandText = function(obj){
+  var valueID = obj.target.attributes.id.value;
+  var element = document.getElementById(valueID);
+  element.style.height =  element.scrollHeight + "px";}
+
   //GEOLOCATION
   $scope.showPosition = function(position){
     $scope.soapOverview.incidentLat = position.coords.latitude;
-    $scooe.soapOverview.incidentLon = position.coords.longitude;
+    $scope.soapOverview.incidentLon = position.coords.longitude;
     $scope.apply();
   }
   if(!navigator.geolocation){
@@ -359,39 +365,6 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce'])
 
 
 /*
-.controller('SoapCtrl', function($scope, $state, $stateParams, $ionicPopup,
-                                 $ionicModal, $timeout, $location,
-                                 Soaps, Responders, Nols ) {
-
-  //same logic specific to each tabed page
-  $scope.handleSoap = function(soapId, responder){
-    var soap = {};
-    if(!soapId){
-      Soaps.saveNewSoap(soap,responder, function(err,soap){
-        $state.go('tab.overview');
-        $scope.soap = soap;
-
-      });
-    }else {
-      Soaps.get(soapId, function(err, soap){
-        $scope.soap = soap;
-      })
-    }
-  }
-
-
-
-
-  // Auto expand text boxes vertically
-  $scope.expandText = function(obj){
-	var valueID = obj.target.attributes.id.value;
-	var element = document.getElementById(valueID);
-	element.style.height =  element.scrollHeight + "px";}
-  // end auto expand
-
-
-
-
 
   //$scope.dt = new Date();
 
