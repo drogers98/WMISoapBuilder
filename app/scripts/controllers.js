@@ -81,7 +81,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce'])
 
   Soaps.all('mySoaps',function(err,soaps){
     $scope.soaps = soaps;
-    //display only soaps where starter flag === true
+    //display only soaps where starter flag === true; handled on factory
   })
 
   $scope.moveItem = function(soap,fromIndex,toIndex){
@@ -90,8 +90,18 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce'])
   };
 
   $scope.onItemDelete = function(soapId) {
-    Soaps.deleteSoap(soapId);
-    $scope.soaps.splice($scope.soaps.indexOf(soapId), 1)
+    var confirmDelete = $ionicPopup.confirm({
+      title: 'SOAP ID ' + soapId,
+      template: 'Are you sure you want to delete this SOAP?'
+    })
+    confirmDelete.then(function(res){
+      if(res){
+        Soaps.deleteSoap(soapId);
+        $scope.soaps.splice($scope.soaps.indexOf(soapId), 1)
+      }else {
+        return;
+      }
+    })
   }
 
   $scope.data = {
@@ -117,16 +127,6 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce'])
         }
       ]
     });
-
-    /*confirmPopup.then(function(res){
-      if(res){
-        Soaps.deleteSoap(soap.id);
-        $state.go('soaps')
-      }else {
-        return;
-      }
-    })*/
-
   }
 
 
@@ -217,10 +217,21 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce'])
 
 //SOAP OBJECTIVE TAB
 .controller('SoapObjectiveCtrl', function($scope,$state,$stateParams,Soaps,Responders,Vitals,Nols){
+  Vitals.createVitalTable();
   Soaps.get($stateParams.soapId, function(err,soapObjective){
     $scope.soapObjective = soapObjective;
     Vitals.all(soapObjective.id, function(err,recentSoapVitals){
-      $scope.recentSoapVitals = recentSoapVitals
+      $scope.recentSoapVitals = recentSoapVitals;
+      //hand on services
+    })
+    Vitals.getLast(function(err,lastVital){
+      if(lastVital === null || lastVital.starterFlag === 'true'){
+        Vitals.saveNewVital({},soapObjective.id,function(err,starterVital){
+          $scope.starterVital = starterVital;
+        })
+      }else {
+        $scope.starterVital = lastVital;
+      }
     })
   })
 
@@ -261,16 +272,13 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce'])
 })
 
 .controller('VitalCtrl', function($scope,$state,$stateParams,Vitals,Soaps,Nols){
-  Vitals.createVitalTable();
-
-  $scope.addVital = function(soap,vital){
-    Vital.saveNewVital({},soap.id,function(err,newVital){
-      $scope.newVital = newVital;
-      if(newVital){
-        $state.go('tab.vitalnew');
-      }
-    })
-  }
+  console.log('vitals')
+  Vitals.get($stateParams.vitalId, function(err, vitalDetail){
+    if(vitalDetail.starterFlag === 'false'){
+    Vitals.updateVital('starterFlag',vitalDetail.id,true);
+    }
+    $scope.vitalDetail = vitalDetail;
+  })
 
   $scope.monitorVitalChange = function(vital,vitalVal,attrElem){
     var kindElem = attrElem,kindId = vital.id,kindVal = vitalVal;
@@ -302,6 +310,9 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce'])
 
 .controller('VitalDetailCtrl', function($scope,$state,$stateParams,Vitals){
   Vitals.get($stateParams.vitalId, function(err, vitalDetail){
+    if(vitalDetail.starterFlag === 'false'){
+      Vitals.updateVital("starterFlag",vitalDetail.id,true);
+    }
     $scope.vitalDetail = vitalDetail;
   })
 
@@ -329,6 +340,13 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce'])
         {name:'Painful Stimulus', value:'P'},
         {name:'Unresponsive', value:'U'}
       ];
+
+  $scope.monitorVitalChange = function(vital,vitalVal,attrElem){
+    var kindElem = attrElem,kindId = vital.id,kindVal = vitalVal;
+    Vitals.updateVital(kindElem,kindId,kindVal);
+  }
+
+
 })
 
 
@@ -531,8 +549,48 @@ var htmlbody = '<h2>Location</h2>'+
 
 })*/
 
-.controller('VitalDetailCtrl', function($scope, $state, $stateParams, Vitals) {
-  $scope.vitalDetail;
+// coundown controls.
+.controller('VitalCtrl', function($scope, $state, $stateParams, $timeout, Vitals, Soaps) {
+"use strict";
+
+
+/*
+  Vitals.all($scope.soap,function(err,vitals,recentSoapVitals){
+    $scope.vitals = vitals;
+    $scope.recentSoapVitals = recentSoapVitals;
+    console.log(recentSoapVitals);
+  })
+*/
+
+  $scope.timeValue = 0;
+
+  function countdown() {
+    $scope.timeValue++;
+    $scope.timeout = $timeout(countdown, 1000);
+  };
+
+  $scope.start = function() {
+    countdown();
+    $scope.play = true;
+    $scope.pause = false;
+  };
+
+  $scope.stop = function() {
+    $timeout.cancel($scope.timeout);
+    $scope.play = false;
+    $scope.pause = true;
+  };
+
+  $scope.reset = function() {
+	$scope.timeValue = 0;
+    $timeout.cancel($scope.timeout);
+    $scope.play = false;
+    $scope.pause = true;
+  };
+})
+
+.controller('VitalNewCtrl', function($scope, $state, $stateParams, Vitals) {
+  //LOOK AT SOAP OVERVIEW CONTROLLER FOR THIS FIX
   Vitals.get($stateParams.vitalId, function(err, vitalDetail) {
     $scope.vitalDetail = vitalDetail;
     $state.reload();

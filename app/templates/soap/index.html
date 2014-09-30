@@ -6,7 +6,7 @@
   </ion-nav-buttons>
 
   <ion-nav-buttons side="right">
-    <button class="button icon ion-edit" ng-click="data.showDelete = !data.showDelete"></button>
+    <button ng-hide="!soaps.length" class="button icon ion-edit" ng-click="data.showDelete = !data.showDelete"></button>
     <button class="button button-icon ion-navicon" ng-controller="MenuCtrl" ng-click="toggleSideMenu()"></button>
   </ion-nav-buttons>
 

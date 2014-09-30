@@ -116,11 +116,11 @@ angular.module('WMISoapBuilder', ['ionic', 'WMISoapBuilder.controllers', 'WMISoa
     })
 
     .state('tab.newvital', {
-      url: '/vitals/new',
+      url: '/vitals/new/:vitalId',
       views: {
         'tab-objective': {
           templateUrl: 'templates/vital/new.html',
-          controller: 'VitalCtrl'
+          controller: 'VitalDetailCtrl'
         }
       }
     })

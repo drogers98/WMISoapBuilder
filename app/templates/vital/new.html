@@ -11,7 +11,7 @@
         <!-- Time Taken -->
         <h5>Time Taken<a ng-click="openModal(5)"><span>i</span></a></h5>
       <div class="item item-input">
-       <input type="time" ng-model="vital.timeTaken">
+       <input id="Vital.timeTaken" type="time" ng-model="vitalDetail.timeTaken" ng-model-onblur ng-change="monitorVitalChange(vitalDetail,vitalDetail.timeTaken,'timeTaken')">
       </div>
 
     <!-- LOR -->
@@ -20,7 +20,7 @@
         <div class="input-label">
           LOR
         </div>
-        <select id="test" ng-model="vital.lor" ng-options="lor.value as lor.name for lor in LORs" onchange="changeClass(this.id)">
+        <select id="Vital.lor" ng-model="vitalDetail.lor" ng-options="lor.value as lor.name for lor in LORs" ng-model-onblur ng-change="monitorVitalChange(vitalDetail,vitalDetail.lor,'lor')" onchange="changeClass(this.id)">
 	         <option style="display:none;" value="" selected>Please Choose</option>
         </select>
       </div>
@@ -30,7 +30,7 @@
      <h5>Heart<a ng-click="openModal(5)"><span>i</span></a></h5>
 <h6>Rate (Beats Per Minute)</h6>
 	  <label class="item item-input">
-        <input type="number" placeholder="Rate (BPM)" ng-model="vital.rate">
+        <input id="Vital.rate" type="number" placeholder="Rate (BPM)" ng-model="vital.rate" ng-model-onblur ng-change="monitorVitalChange(vitalDetail,vitalDetail.rate,'rate')">
       </label>
       <h6>Rythm</h6>
       <div class="item item-select">
@@ -38,7 +38,7 @@
           Rhythm
           <!-- leave select empty - data will be brough in through ctrl -->
         </div>
-        <select id="HRythym" ng-model="vital.heartRythm" ng-options="HEARTrythm for HEARTrythm in HEARTrythms" onchange="changeClass(this.id)">
+        <select id="Vital.heartRythm" ng-model-onblur ng-model="vitalDetail.heartRythm" ng-options="HEARTrythm for HEARTrythm in HEARTrythms" ng-change="monitorVitalChange(vitalDetail,vitalDetail.heartRythm,'heartRythm')" onchange="changeClass(this.id)">
 	        <option style="display:none;" value="" selected>Please Choose</option>
         </select>
       </div>
@@ -48,7 +48,7 @@
           Quality
           <!-- leave select empty - data will be brough in through ctrl -->
         </div>
-        <select id="HRQuality" ng-model="vital.heartQuality" ng-options="HEARTquality for HEARTquality in HEARTqualities" onchange="changeClass(this.id)">
+        <select id="Vital.heartQuality" ng-model-onblur ng-model="vitalDetail.heartQuality" ng-change="monitorVitalChange(vitalDetail,vitalDetail.heartQuality,'heartQuality')" ng-options="HEARTquality for HEARTquality in HEARTqualities" onchange="changeClass(this.id)">
 	        <option style="display:none;" value="" selected>Please Choose</option>
         </select>
       </div>
@@ -60,7 +60,7 @@
 <h6>Rate (Breaths Per Minute)</h6>
 
 	  <label class="item item-input">
-        <input type="number" placeholder="Rate (BPM)" ng-model="vital.respRate">
+        <input id="Vital.respRate" type="number" placeholder="Rate (BPM)" ng-model="vitalDetail.respRate" ng-model-onblur ng-change="monitorVitalChange(vitalDetail,vitalDetail.respRate,'respRate')">
       </label>
       <h6>Rhythm</h6>
       <div class="item item-select">

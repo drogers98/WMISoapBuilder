@@ -134,6 +134,7 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
          "id": {"type": "INTEGER", "null": "NOT NULL", "primary": true, "auto_increment": true},
          "created": {"type": "TIMESTAMP", "null": "NOT NULL", "default": "CURRENT_TIMESTAMP" },
          "soapId": {"type": "INTEGER", "null": "NOT NULL"},
+         "starterFlag": {"type": "TEXT", "null": "NOT NULL"},
          "timeTaken": {"type": "TEXT", "null": "NOT NULL"},
          "lor": {"type": "TEXT", "null": "NOT NULL"},
          "rate": {"type": "INTEGER", "null": "NOT NULL"},
@@ -166,6 +167,7 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
 
        self.db.insert('Vital', {
          "soapId": soapAttr,
+         "starterFlag": vitalAttr.starterFlag || false,
          "lor": vitalAttr.lor || '',
          "timeTaken": vitalAttr.timeTaken || getDateTime(),
          "rate": vitalAttr.rate || '',
@@ -280,6 +282,11 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
          'id': objId
        })
      },
+     vitalUpdate: function(kind,objId,obj){
+       self.db.update(kind,obj,{
+         'id': objId
+       })
+     },
      deleteKind: function(kind,id){
        self.db.del(kind,{"id": id});
        if(kind == 'Soap') {
@@ -295,27 +302,8 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
      dropVit: function(){
        self.db.dropTable("Vital");
      },
-
-     vitalUpdate: function(newVitalParam){
-       var objectForUpdate = function(newVitalParam){
-         var buildKeyValue = {};
-         buildKeyValue[newVitalParam.key] = newVitalParam.val;
-         return buildKeyValue;
-       }
-       var grabLastId = function(){
-         self.db.selectAll('Vital').then(function(results){
-           for(var i = results.rows.length - 1;i < results.rows.length;i++){
-             var vitalID = results.rows.item(i).id;
-           }
-           self.db.update('Vital', objectForUpdate(newVitalParam), {
-             "id": vitalID
-           })
-         })
-       }
-       grabLastId();
-     },
-     vitals: function(object, query, callback){
-       self.db.select(object,query).then(function(results){
+     vitals: function(object, queryA,queryB, callback){
+       self.db.select(object,queryA,queryB).then(function(results){
          callback(null,results.rows);
        })
      },
@@ -486,6 +474,7 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
 
 .factory('Vitals', function(nolsDB) {
   var vitals = [];
+  var vitalKind = "Vital";
 
   return {
     createVitalTable: function() {
@@ -494,11 +483,14 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
     saveNewVital: function(vitalAttr, soapAttr, callback) {
       return nolsDB.saveVital(vitalAttr,soapAttr,callback);
     },
-    updateVital: function(newVitalParam) {
-      nolsDB.vitalUpdate(newVitalParam);
+    updateVital: function(vitalEl,vitalId,vitalVal) {
+      var vitalAttr = {};
+      vitalAttr[vitalEl] = vitalVal;
+      return nolsDB.vitalUpdate(vitalKind,vitalId,vitalAttr);
     },
     all: function(soap,callback) {
-      return nolsDB.vitals('Vital', {'soapId': soap}, function(err,data){
+      return nolsDB.vitals('Vital', {'soapId': soap},{'starterFlag': 'true'}, function(err,data){
+        //object argument wont work above
         var vitals = [];
         var recentSoapVitals = [];
         for(var i=0;i < data.length;i++){
@@ -519,8 +511,24 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
     get: function(vitalId, callback) {
       return nolsDB.vital('Vital', {'id': vitalId}, function(err, data){
         for(var i=0;i < data.length;i++){
-          console.log(data.item(i));
-          callback(null,data.item(i));
+          callback(null,angular.copy(data.item(i)));
+        }
+      })
+    },
+    getLast: function(callback){
+      return nolsDB.allKind('Vital', function(err,data){
+        var vital = {};
+        if(data.length > 0){
+          var len = data.length - 1;
+          for(var i=len;i<data.length;i++){
+            vital = data.item(i);
+            var neededParams = {};
+            neededParams['id'] = vital.id;
+            neededParams['starterFlag'] = vital.starterFlag;
+            callback(null,neededParams);
+          }
+        }else {
+          callback(null,null);
         }
       })
     },
