@@ -1,6 +1,6 @@
 <ion-view title="Vitals">
   <ion-nav-buttons side="left">
-    <button class="button icon ion-ios7-arrow-back" ng-click="objectivePage()"></button>
+    <button class="button icon ion-ios7-arrow-back" href="javascript: history.go(-1)"></button>
   </ion-nav-buttons>
 
   <ion-nav-buttons side="right">
@@ -9,14 +9,14 @@
 
   <ion-content has-header="true" padding="false" has-bouncing="false">
   <div class="SOAP">
-  <a class="button button-block button-light margin" ng-click="initiateVital(vital,soap)"><icon class="icon ion-plus-circled "></icon>Add Vitals</a>
+  <a class="button button-block button-light margin" href="#/tab/vitals/{{starterVital.id}}"><icon class="icon ion-plus-circled "></icon>Add Vitals</a>
     <ion-list show-delete="data.showDelete">
-      <ion-item class="item-icon-right" ng-repeat="vital in vitals" type="item-text-wrap" href="#/tab/vitals/{{vital.id}}">
-        <ion-delete-button class="ion-minus-circled" ng-click="onItemDelete({{vital.id}})">
-        </ion-delete-button>{{vital.timeTaken}} | {{vital.lor}}
+      <ion-item class="item-icon-right" ng-repeat="soapVital in soapVitals" type="item-text-wrap" href="#/tab/vitals/{{soapVital.id}}">
+        <ion-delete-button class="ion-minus-circled" ng-click="onItemDelete({{soapVital.id}})">
+        </ion-delete-button>{{soapVital.timeTaken}} | {{soapVital.lor}}
         <i class="icon ion-chevron-right icon-accessory"></i>
       </ion-item>
-      <div ng-hide="vitals.length" class="row responsive-sm">
+      <div ng-hide="soapVitals.length" class="row responsive-sm">
         <div class="col">No Added Vitals</div>
       </div>
     </ion-list>

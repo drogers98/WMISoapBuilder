@@ -22,7 +22,7 @@
       <!-- DOB -->
       <h6>Date of Birth</h6>
       <label class="item item-input">
-        <input type="date" id="Soap.patientDob" placeholder="Patient DOB" ng-model="soapSubjective.patientDob" ng-model-onblur ng-change="monitorSoapSubjectiveChange(soapSubjective,soapSubjective.patientDob,'patientDob')">
+        <input type="date" id="Soap.patientDob" placeholder="Patient DOB" ng-model="soapSubjective.patientDob" ng-model-onblur ng-change="monitorSoapSubjectiveChange(soapSubjective,soapSubjective.patientDob,'patientDob')" ng-change="findAge()">
       </label>
       <!-- Age. Auto populate from DOB if filled -->
       <h6>Age</h6>

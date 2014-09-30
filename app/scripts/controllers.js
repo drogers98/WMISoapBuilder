@@ -271,19 +271,23 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce'])
   })
 })
 
-.controller('VitalCtrl', function($scope,$state,$stateParams,Vitals,Soaps,Nols){
-  console.log('vitals')
-  Vitals.get($stateParams.vitalId, function(err, vitalDetail){
-    if(vitalDetail.starterFlag === 'false'){
-    Vitals.updateVital('starterFlag',vitalDetail.id,true);
-    }
-    $scope.vitalDetail = vitalDetail;
-  })
+.controller('VitalAllCtrl', function($scope,$state,$stateParams,Vitals,Soaps,Nols){
 
-  $scope.monitorVitalChange = function(vital,vitalVal,attrElem){
-    var kindElem = attrElem,kindId = vital.id,kindVal = vitalVal;
-    Vitals.updateVital(kindElem,kindId,kindVal);
-  }
+    Vitals.getLast(function(err,lastVital){
+      if(lastVital === null || lastVital.starterFlag === 'true'){
+        Vitals.saveNewVital({},$stateParams.soapId,function(err,starterVital){
+          $scope.starterVital = starterVital;
+        })
+      }else {
+        $scope.starterVital = lastVital;
+      }
+    })
+
+
+  Vitals.getAll($stateParams.soapId, function(err, soapVitals){
+    console.log(soapVitals)
+    $scope.soapVitals = soapVitals;
+  })
 
   $scope.timeValue = 0;
   function countdown(){

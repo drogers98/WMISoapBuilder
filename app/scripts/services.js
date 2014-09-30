@@ -508,6 +508,15 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
         callback(null,vitals,recentSoapVitals);
       })
     },
+    getAll: function(soapId,callback){
+      return nolsDB.allKindQuery('Vital', {'soapId': soapId}, function(err,data){
+        var soapVitals = [];
+        for(var i = 0;i<data.length;i++){
+          soapVitals.push(data.item(i))
+        }
+        callback(null,soapVitals);
+      })
+    },
     get: function(vitalId, callback) {
       return nolsDB.vital('Vital', {'id': vitalId}, function(err, data){
         for(var i=0;i < data.length;i++){
