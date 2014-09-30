@@ -226,7 +226,8 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce'])
   Vitals.createVitalTable();
   Soaps.get($stateParams.soapId, function(err,soapObjective){
     $scope.soapObjective = soapObjective;
-    Vitals.all(soapObjective.id, function(err,recentSoapVitals){
+    Vitals.all(soapObjective.id, function(err,soapVitals,recentSoapVitals){
+      $scope.soapVitals = soapVitals;
       $scope.recentSoapVitals = recentSoapVitals;
       //hand on services
     })
