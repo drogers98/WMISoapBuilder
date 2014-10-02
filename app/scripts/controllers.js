@@ -132,6 +132,140 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce'])
 
   //Nols.cutLifeLine();
 
+  // Modal 1
+     $ionicModal.fromTemplateUrl('modal-1.html', {
+       id: '1', // We need to use and ID to identify the modal that is firing the event!
+       scope: $scope,
+       animation: 'slide-in-up'
+     }).then(function(modal) {
+       $scope.oModal1 = modal;
+     });
+
+     // Modal 2
+     $ionicModal.fromTemplateUrl('modal-2.html', {
+       id: '2', // We need to use and ID to identify the modal that is firing the event!
+       scope: $scope,
+       animation: 'slide-in-up'
+     }).then(function(modal) {
+       $scope.oModal2 = modal;
+     });
+
+         // Modal 3
+     $ionicModal.fromTemplateUrl('modal-3.html', {
+       id: '3', // We need to use and ID to identify the modal that is firing the event!
+       scope: $scope,
+       animation: 'slide-in-up'
+     }).then(function(modal) {
+       $scope.oModal3 = modal;
+     });
+
+             // Modal 4
+     $ionicModal.fromTemplateUrl('modal-4.html', {
+       id: '4', // We need to use and ID to identify the modal that is firing the event!
+       scope: $scope,
+       animation: 'slide-in-up'
+     }).then(function(modal) {
+       $scope.oModal4 = modal;
+     });
+
+                 // Modal 5
+     $ionicModal.fromTemplateUrl('modal-5.html', {
+       id: '5', // We need to use and ID to identify the modal that is firing the event!
+       scope: $scope,
+       animation: 'slide-in-up'
+     }).then(function(modal) {
+       $scope.oModal5 = modal;
+     });
+
+     $scope.openModal = function(index) {
+       if(index == 1) $scope.oModal1.show();
+       if(index == 2) $scope.oModal2.show();
+       if(index == 3) $scope.oModal3.show();
+       if(index == 4) $scope.oModal4.show();
+       if(index == 5) $scope.oModal5.show();
+
+     };
+
+     $scope.closeModal = function(index) {
+       if(index == 1) $scope.oModal1.hide();
+       if(index == 2) $scope.oModal2.hide();
+       if(index == 3) $scope.oModal3.hide();
+       if(index == 4) $scope.oModal4.hide();
+       if(index == 5) $scope.oModal5.hide();
+
+     };
+
+     $scope.$on('modal.shown', function(event, modal) {
+       console.log('Modal ' + modal.id + ' is shown!');
+     });
+
+     $scope.$on('modal.hidden', function(event, modal) {
+       console.log('Modal ' + modal.id + ' is hidden!');
+     });
+
+     // Cleanup the modals when we're done with them (i.e: state change)
+     // Angular will broadcast a $destroy event just before tearing down a scope
+     // and removing the scope from its parent.
+     $scope.$on('$destroy', function() {
+       console.log('Destroying modals...');
+       $scope.oModal1.remove();
+       $scope.oModal2.remove();
+       $scope.oModal3.remove();
+       $scope.oModal4.remove();
+       $scope.oModal5.remove();
+     });
+ // end modals
+     $scope.shareSOAP = function(soap) {
+     var htmlbody = '<h2>Location</h2>'+
+     '<strong>Date of Incident</strong>: ' + soap.incidentDate + '<br/>' +
+     '<strong>Location</strong>: ' + soap.incidentLocation + '<br/>' +
+     '<strong>Coordinates</strong>: ' + soap.incidentLat + ', ' + soap.incidentLon + '<br/>' +
+     '<strong>Responder</strong>: ' + soap.responderFirstName + ' ' + soap.responderLastName + ', ' + soap.responderTrainingLevel + '<br/>' +
+     '<h2>Subjective</h2>'+
+     '<strong>Initials</strong>: ' + soap.patientInitials + '<br/>' +
+     '<strong>DOB</strong>: ' + soap.patientDob + '<br/>' +
+     '<strong>Age</strong>: ' + soap.patientAge + '<br/>' +
+     '<strong>Sex</strong>: ' + soap.patientGender + '<br/>' +
+     '<h3>Chief Complaint</h3>'+
+     '<p>' + soap.patientComplaint + '</p>' +
+     '<strong>Onset</strong>: ' + soap.patientOnset + '<br/>' +
+     '<strong>Provokes/Palliates</strong>: ' + soap.patientPPalliates + '<br/>' +
+     '<strong>Quality</strong>: ' + soap.patientQuality + '<br/>' +
+     '<strong>Radiation/Region/Referred</strong>: ' + soap.patientRadiates + '<br/>' +
+     '<strong>Severity</strong>: ' + soap.patientSeverity + ' out of 10<br/>' +
+     '<strong>Time of Onset</strong>: ' + soap.patientTime + '<br/>' +
+     '<h3>MOI/HPI</h3>'+
+     '<p>' + soap.patientHPI + '</p>' +
+     '<strong>Suspected Spinal MOI</strong>: ' + soap.patientSpinal + '<br/>' +
+     '<h2>Objective</h2>'+
+     '<h3>General</h3>'+
+     '<strong>Patient Position When Found</strong>: ' + soap.patientFound + '<br/>' +
+     '<strong>Patient Exam</strong>: ' + soap.patientExamReveals + '<br/>' +
+     '<h3>Vital Signs</h3>'+
+     '<p>Vital Signs coming soon</p>'+
+     '<h3>Patient History</h3>'+
+     '<strong>Symptoms</strong>: ' + soap.patientSymptoms + '<br/>' +
+     '<strong>Allergies</strong>: ' + soap.patientAllergies + '<br/>' +
+     '<strong>Medications</strong>: ' + soap.patientMedications + '<br/>' +
+     '<strong>Pertinent Medical History</strong>: ' + soap.patientMedicalHistory + '<br/>' +
+     '<strong>Last Intake/Output</strong>: ' + soap.patientLastIntake + '<br/>' +
+     '<strong>Events Leading up to Injury/Illness</strong>: ' + soap.patientEventsForCause + '<br/>' +
+     '<h2>Assessment</h2>'+
+     '<p>' + soap.patientAssessment + '</p>' +
+     '<h2>Plan</h2>'+
+     '<p>' + soap.patientPlan + '</p>' +
+     '<strong>Anticipated Problems</strong>: ' + soap.patientAnticipatedProblems + '<br/>';
+
+      window.plugin.email.open({
+        to:      ['rogers@eyebytesolutions.com'],
+        cc:      ['vehr@eyebytesolutions.com'],
+        bcc:     [''],
+        subject: 'SOAP Note: Test',
+        body:    htmlbody,
+        isHtml:  true
+     });
+    };
+
 })
 
 //SOAP OVERVIEW TAB
@@ -252,7 +386,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce'])
 //SOAP A-P TAB
 .controller('SoapAPCtrl', function($scope,$state,$stateParams,Soaps,Responders, Nols){
   Soaps.get($stateParams.soapId, function(err,soapAP){
-    $scope.soapAp = soapAP;
+    $scope.soapAP = soapAP;
   })
 
   $scope.monitorSoapAPChange = function(soap,soapVal,attrElem){
@@ -292,7 +426,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce'])
 
 
   Vitals.getAll($stateParams.soapId, function(err, soapVitals){
-    console.log(soapVitals)
+    $scope.soapVitalsId = $stateParams.soapId;
     $scope.soapVitals = soapVitals;
   })
 
@@ -368,77 +502,6 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce'])
 /*
 
   //$scope.dt = new Date();
-
-
-
-
-
-// Email Share Function
-$scope.shareSOAP = function(soap) {
-
-// add hooks for soap id in order for vitals?
-  /* come back and address
-  console.log(typeof recentSoapVitals);
-  var vitalLoop = function() {
-    for(var i=0;i < soapVitals.length;i++){
-      var vitals = [];
-      vitals.push(soapVitals[i].created)
-    }
-    return vitals;
-  }
-
-var htmlbody = '<h2>Location</h2>'+
-'<strong>Date of Incident</strong>: ' + soap.incidentDate + '<br/>' +
-'<strong>Location</strong>: ' + soap.incidentLocation + '<br/>' +
-'<strong>Coordinates</strong>: ' + soap.incidentLat + ', ' + soap.incidentLon + '<br/>' +
-'<strong>Responder</strong>: ' + soap.responderFirstName + ' ' + soap.responderLastName + ', ' + soap.responderTrainingLevel + '<br/>' +
-'<h2>Subjective</h2>'+
-'<strong>Initials</strong>: ' + soap.patientInitials + '<br/>' +
-'<strong>DOB</strong>: ' + soap.patientDob + '<br/>' +
-'<strong>Age</strong>: ' + soap.patientAge + '<br/>' +
-'<strong>Sex</strong>: ' + soap.patientGender + '<br/>' +
-'<h3>Chief Complaint</h3>'+
-'<p>' + soap.patientComplaint + '</p>' +
-'<strong>Onset</strong>: ' + soap.patientOnset + '<br/>' +
-'<strong>Provokes/Palliates</strong>: ' + soap.patientPPalliates + '<br/>' +
-'<strong>Quality</strong>: ' + soap.patientQuality + '<br/>' +
-'<strong>Radiation/Region/Referred</strong>: ' + soap.patientRadiates + '<br/>' +
-'<strong>Severity</strong>: ' + soap.patientSeverity + ' out of 10<br/>' +
-'<strong>Time of Onset</strong>: ' + soap.patientTime + '<br/>' +
-'<h3>MOI/HPI</h3>'+
-'<p>' + soap.patientHPI + '</p>' +
-'<strong>Suspected Spinal MOI</strong>: ' + soap.patientSpinal + '<br/>' +
-'<h2>Objective</h2>'+
-'<h3>General</h3>'+
-'<strong>Patient Position When Found</strong>: ' + soap.patientFound + '<br/>' +
-'<strong>Patient Exam</strong>: ' + soap.patientExamReveals + '<br/>' +
-'<h3>Vital Signs</h3>'+
-'<p>Vital Signs coming soon</p>'+
-'<h3>Patient History</h3>'+
-'<strong>Symptoms</strong>: ' + soap.patientSymptoms + '<br/>' +
-'<strong>Allergies</strong>: ' + soap.patientAllergies + '<br/>' +
-'<strong>Medications</strong>: ' + soap.patientMedications + '<br/>' +
-'<strong>Pertinent Medical History</strong>: ' + soap.patientMedicalHistory + '<br/>' +
-'<strong>Last Intake/Output</strong>: ' + soap.patientLastIntake + '<br/>' +
-'<strong>Events Leading up to Injury/Illness</strong>: ' + soap.patientEventsForCause + '<br/>' +
-'<h2>Assessment</h2>'+
-'<p>' + soap.patientAssessment + '</p>' +
-'<h2>Plan</h2>'+
-'<p>' + soap.patientPlan + '</p>' +
-'<strong>Anticipated Problems</strong>: ' + soap.patientAnticipatedProblems + '<br/>';
-
-   window.plugin.email.open({
-    to:      ['rogers@eyebytesolutions.com'],
-    cc:      ['vehr@eyebytesolutions.com'],
-    bcc:     [''],
-    subject: 'SOAP Note: Test',
-    body:    htmlbody,
-    isHtml:  true
-});
-};
-// end email
-
-
 
 //modals. DRY up, and seperate templates later.
  // Modal 1
@@ -532,14 +595,6 @@ var htmlbody = '<h2>Location</h2>'+
 "use strict";
 
 
-/*
-  Vitals.all($scope.soap,function(err,vitals,recentSoapVitals){
-    $scope.vitals = vitals;
-    $scope.recentSoapVitals = recentSoapVitals;
-    console.log(recentSoapVitals);
-  })
-*/
-
   $scope.timeValue = 0;
 
   function countdown() {
@@ -575,30 +630,25 @@ var htmlbody = '<h2>Location</h2>'+
   })
 })
 
-
-.controller('CameraCtrl', function($scope, $state, Camera) {
+.controller('CameraCtrl', function($scope,$stateParams,$state,Camera,Soaps) {
+  Camera.createImgTable();
+  //Soaps.get($stateParams.soapId, function(err,soapImage){
+  //  $scope.soapImage = soapImage;
+  //})
 
   Camera.all(function(err,imgs){
-    $scope.imgs = imgs;
+   $scope.imgs = imgs;
   })
 
   $scope.takeNewImg = function() {
-    /*navigator.camera.getPicture(function(result){
-      console.log(result);
-    });*/
     Camera.getNewImg(function(err,imgAttr){
-    //console.log(imgAttr);
-      if(imgAttr !== null){
-        $scope.saveImg(imgAttr);
-      }
+      Camera.saveNewImg(imgAttr);
     })
   }
 
-  $scope.saveImg = function(imgAttr) {
-    Camera.saveNewImg(imgAttr,function(err,imgURI){
-      $scope.img = imgURI;
-    })
-  }
+
+  //$scope.addNewImg = function(source){
+  //}
     /*navigator.camera.getPicture(onPhotoURISuccess, onFail, { quality: 50,
     destinationType: destinationType.FILE_URI,
     sourceType: source });*/
@@ -606,31 +656,6 @@ var htmlbody = '<h2>Location</h2>'+
   //  $scope.pictureSource = navigator.camera.PictureSourceType;
   //  $scope.destinationType = navigator.camera.DestinationType;
   //}
-
-  function onPhotoDataSuccess(imageData){
-    var smallImage = document.getElementById('smallImage');
-    smallImage.style.display = 'block';
-    smallImage.src = "data:image/jpeg;base64," + imageData;
-  }
-
-  function onPhotoFileSuccess(imageData) {
-    console.log(JSON.stringify(imageData));
-    var smallImage = document.getElementById('smallImage');
-    var smallImageText = document.getElementById('smallImageText');
-    smallImage.style.display = 'block';
-    smallImageText.style.display = 'block';
-    //smallImage.src = imageData;
-    $scope.image = imageURI;
-  }
-
-  function onPhotoURISuccess(imageURI){
-    var largeImage = document.getElementById('largeImage');
-    var largeImageText = document.getElementById('largeImageText');
-    largeImage.style.display = 'block';
-    largeImageText.style.display = 'block';
-    //largeImage.src = imageURI;
-    $scope.img = imageURI;
-  }
 
   $scope.capturePhotoWithFile = function() {
     /*navigator.camera.getPicture(
@@ -642,10 +667,5 @@ var htmlbody = '<h2>Location</h2>'+
   }
 
 
-  function onFail(message){
-    alert('Failed because' + message)
-  }
-
-  //pictureSource.PHOTOLIBRARY
 
 })

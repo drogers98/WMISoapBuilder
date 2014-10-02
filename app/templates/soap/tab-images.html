@@ -12,21 +12,19 @@
   <div class="SOAP">
 
 <div id="camera">
-<ion-list ng-controller="CameraCtrl">
-  <ion-item ng-repeat="img in imgs">
-    <img ng-src="img.imageURI">
-  </ion-item>
+<ion-list>
+  <div class="row">
+    <div class="col">
+      <ion-item ng-repeat="img in imgs">
+        <img style="width:40%;height:30%;display:block;" ng-src="{{img.imageURI}}">
+      </ion-item>
+    </div>
+  </div>
 </ion-list>
-
-<img id="smallImage" src="" />
-<textarea id="smallImageText">Caption Here</textarea>
-<img id="largeImage" src="" />
-<textarea id="largeImageText">Caption Here</textarea>
 </div>
 
 
-<a class="button button-block button-light margin" ng-controller="CameraCtrl" ng-click="capturePhotoWithFile();"><i class="icon ion-app-photos margin"></i>Capture Photo</a>
-<a class="button button-block button-light margin" ng-controller="CameraCtrl" ng-click="takeNewImg()">Add From Library</a>
+<a class="button button-block button-light margin" ng-controller="CameraCtrl" ng-click="takeNewImg()"><i class="icon ion-app-photos margin"></i>Capture Photo</a>
 <a class="button button-block button-calm margin" href="#/tab/review">Review SOAP Note</a>
 
     </div>

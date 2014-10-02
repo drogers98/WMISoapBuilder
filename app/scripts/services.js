@@ -197,26 +197,18 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
          })
        })
      },
-     createImageTable: function() {
+     createImgTable: function() {
        self.db.createTable('Camera', {
          "id": {"type": "INTEGER", "null": "NOT NULL", "primary": true, "auto_increment":true},
          "created": {"type": "TIMESTAMP", "null": "NOT NULL", "default": "CURRENT_TIMESTAMP"},
-         "imageURI": {"type": "STRING", "null": "NOT NULL"}
+         "imageURI": {"type": "TEXT", "null": "NOT NULL"}
        })
      },
-     saveNewImage: function(cameraAttr,callback) {
-       var img = {};
+     saveImg: function(img) {
        self.db.insert('Camera', {
-         "imageURI": cameraAttr.image
-       }).then(function(results){
-         self.db.select('Camera', {
-           "id": results.insertId
-         }).then(function(results){
-           for(var i=0;i < results.rows.length;i++){
-             img = results.rows.item(i);
-             callback(null,img)
-           }
-         })
+         "imageURI": img
+       }).then(function(result){
+         return;
        })
      },
      getKind: function(object,callback) {
@@ -302,8 +294,10 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
      dropVit: function(){
        self.db.dropTable("Vital");
      },
-     vitals: function(object, queryA,queryB, callback){
-       self.db.select(object,queryA,queryB).then(function(results){
+     vitals: function(object,soap,callback){
+       self.db.select(object,{
+         "soapId": soap
+       }).then(function(results){
          callback(null,results.rows);
        })
      },
@@ -318,7 +312,7 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
      },
 
      imgs: function(object,callback){
-       self.db.selectAll('Camera').then(function(results){
+       self.db.selectAll(object).then(function(results){
          callback(null,results.rows);
        })
      }
@@ -489,11 +483,12 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
       return nolsDB.vitalUpdate(vitalKind,vitalId,vitalAttr);
     },
     all: function(soap,callback) {
-      return nolsDB.vitals('Vital', {'soapId': soap},{'starterFlag': 'true'}, function(err,data){
+      return nolsDB.vitals('Vital',soap, function(err,data){
         //object argument wont work above
         var vitals = [];
         var recentSoapVitals = [];
         for(var i=0;i < data.length;i++){
+          console.log(data.item(i).starterFlag);
           vitals.push(data.item(i));
         }
         var len = function() {
@@ -503,6 +498,7 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
           else {return data.length - 3;}
         }
         for(var i = len();i < data.length;i++){
+          console.log('recents ' + data.item(i).starterFlag)
           recentSoapVitals.push(data.item(i));
         }
         callback(null,vitals,recentSoapVitals);
@@ -549,26 +545,29 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
 
 .factory('Camera', function(nolsDB) {
 
-  var imgs = [];
   return {
     createImgTable: function(){
       return nolsDB.createImgTable();
     },
+    addNewImg: function(source,callback){
+      //do something
+    },
     getNewImg: function(callback){
-      return navigator.camera.getPicture(function(result){
+      navigator.camera.getPicture(function(result){
         callback(null,result);
       });
     },
-    saveNewImg: function(callback){
-    return nolsDB.saveImg(callback);
+    saveNewImg: function(imgPath){
+      nolsDB.saveImg(imgPath);
     },
     all: function(callback){
-      //{'soapId': soap}, put this back when ready
+      var images = [];
       return nolsDB.imgs('Camera', function(err,data){
-        for(var i=0;i<data.length;i++){
-          imgs.push(data.item(i));
+        for(var i = 0;i < data.length;i++){
+          var imgData = angular.copy(data.item(i));
+          images.push(imgData);
         }
-        callback(null,imgs);
+        callback(null,images);
       })
     }
   }

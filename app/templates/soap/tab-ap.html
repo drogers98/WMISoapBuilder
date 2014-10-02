@@ -29,13 +29,13 @@
         <h6>Anticipated Problems<a ng-click="openModal(4)"><span>i</span></a></h6>
         <div class="list">
         <label class="item item-input">
-          <textarea id="Soap.patientAnticipatedProblems" type="text" placeholder="Consider anticipated problems and possible impact on evacuation needs." ng-model="soap.patientAnticipatedProblems" ng-change="monitorSoapAPChange(soapAP,soapAP.patientAnticipatedProblems,'patientAnticipatedProblems')" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
+          <textarea id="Soap.patientAnticipatedProblems" type="text" placeholder="Consider anticipated problems and possible impact on evacuation needs." ng-model="soapAP.patientAnticipatedProblems" ng-change="monitorSoapAPChange(soapAP,soapAP.patientAnticipatedProblems,'patientAnticipatedProblems')" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
         </label>
       </div>
 
 
-      <a class="button button-block button-light icon icon-right ion-ios7-arrow-right margin" ng-controller="CameraCtrl" href="#/tab/images">Add Photos</a>
+      <a class="button button-block button-light icon icon-right ion-ios7-arrow-right margin" href="#/tab/images/{{soapAP.id}}">Add Photos</a>
 
-      <a class="button button-block button-calm margin" href="#/tab/review">Review SOAP Note</a>
+      <a class="button button-block button-calm margin" href="#/tab/review/{{soapAP.id}}">Review SOAP Note</a>
 
     </div>

@@ -38,6 +38,10 @@ border:1px solid #ccc;
 
 }
 
+::-webkit-input-placeholder {
+	color:#ddd !important;
+	font-style: italic;
+}
 
 .strong-input {
 	padding:0 !important;

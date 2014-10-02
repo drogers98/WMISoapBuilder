@@ -130,7 +130,7 @@ angular.module('WMISoapBuilder', ['ionic', 'WMISoapBuilder.controllers', 'WMISoa
       views: {
         'tab-ap': {
           templateUrl: 'templates/soap/tab-ap.html',
-          controller: 'SoapApCtrl'
+          controller: 'SoapAPCtrl'
         }
       }
     })
@@ -146,10 +146,11 @@ angular.module('WMISoapBuilder', ['ionic', 'WMISoapBuilder.controllers', 'WMISoa
     })
 
     .state('tab.image', {
-      url: '/images',
+      url: '/images/:soapId',
       views: {
         'tab-image': {
-          templateUrl: 'templates/soap/tab-images.html'
+          templateUrl: 'templates/soap/tab-images.html',
+          controller: 'CameraCtrl'
         }
       }
     });
@@ -182,10 +183,6 @@ else {
 };
 
 
-
-// Photo capture.
-
-//begin test
 /*
 var pictureSource; // picture source
 var destinationType; // sets the format of returned value
