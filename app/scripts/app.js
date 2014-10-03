@@ -150,7 +150,7 @@ angular.module('WMISoapBuilder', ['ionic', 'WMISoapBuilder.controllers', 'WMISoa
       views: {
         'tab-image': {
           templateUrl: 'templates/soap/tab-images.html',
-          controller: 'CameraCtrl'
+          controller: 'SoapImgCtrl'
         }
       }
     });

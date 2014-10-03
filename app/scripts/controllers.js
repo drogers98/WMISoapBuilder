@@ -297,14 +297,14 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce'])
     $scope.apply();
   }
   if(!navigator.geolocation){
-    document.getElementById('GeolocationBtnInner').innerHTML = "GPS Unavailable";
+    document.getElementById('GeoLocationBtnInner').innerHTML = "GPS Unavailable";
     document.getElementById("coordsBtn").className = "";
     document.getElementById("coordsBtn").className = "button button-block button-calm margin";
   }
   $scope.getLocation = function(){
     if(navigator.geolocation){
       navigator.geolocation.getCurrentPosition($scope.showPosition);
-      document.getElementById('GeoLocationBtnInnder').innerHTML = "Reset Coordinates";
+      document.getElementById('GeoLocationBtnInner').innerHTML = "Reset Coordinates";
       document.getElementById("coordsBtn").className = "";
       document.getElementById("coordsBtn").className = "button button-block button-calm margin";
     }else {
@@ -396,15 +396,34 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce'])
 })
 
 //SOAP REVIEW TAB
-.controller('SoapReviewCtrl', function($scope,$state,$stateParams,Soaps,Responders, Nols){
+.controller('SoapReviewCtrl', function($scope,$state,$stateParams,Soaps,Responders,Vitals,Nols){
   Soaps.get($stateParams.soapId, function(err,soapReview){
     $scope.soapReview = soapReview;
+    Vitals.all(soapReview.id, function(err,soapVitals,recentSoapReviewVitals){
+      $scope.recentSoapReviewVitals = recentSoapReviewVitals;
+      $scope.recentSoapReviewVitals = recentSoapReviewVitals;
+      //hand on services
+    })
   })
 })
 
-.controller('SoapImageCtrl', function($scope,$state,$stateParams,Soaps,Responders,Nols){
-  //To do images
+.controller('SoapImgCtrl', function($scope,$stateParams,$state,Camera,Soaps) {
+  Soaps.get($stateParams.soapId, function(err,soapImg){
+    $scope.soapImg = soapImg;
+  })
+  Camera.createImgTable();
+  Camera.all(function(err,imgs){
+   $scope.imgs = imgs;
+  })
+
+  $scope.takeNewImg = function() {
+    Camera.getNewImg(function(err,imgAttr){
+      Camera.saveNewImg(imgAttr);
+    })
+  }
+
 })
+
 
 .controller('SoapDetailCtrl', function($scope,$state,$stateParams,Soaps,Responders,Vitals,Nols){
   Soaps.get($stateParams.soapId, function(err,soapDetail){
@@ -489,6 +508,30 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce'])
   $scope.monitorVitalChange = function(vital,vitalVal,attrElem){
     var kindElem = attrElem,kindId = vital.id,kindVal = vitalVal;
     Vitals.updateVital(kindElem,kindId,kindVal);
+  }
+
+  $scope.timeValue = 0;
+
+  $scope.timeValue = 0;
+  function countdown(){
+    $scope.timeValue++;
+    $scope.timeout = $timeout(countdown,1000);
+  };
+  $scope.start = function(){
+    countdown();
+    $scope.play = true;
+    $scope.pause = false;
+  }
+  $scope.stop = function(){
+    $timeout.cancel($scope.timeout);
+    $scope.play = false;
+    $scope.pause = true;
+  }
+  $scope.reset = function(){
+    $scope.timeValue = 0;
+    $timeout.cancel($scope.timeout);
+    $scope.play = false;
+    $scope.pause = true;
   }
 
 
@@ -628,44 +671,4 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce'])
     $scope.vitalDetail = vitalDetail;
     $state.reload();
   })
-})
-
-.controller('CameraCtrl', function($scope,$stateParams,$state,Camera,Soaps) {
-  Camera.createImgTable();
-  //Soaps.get($stateParams.soapId, function(err,soapImage){
-  //  $scope.soapImage = soapImage;
-  //})
-
-  Camera.all(function(err,imgs){
-   $scope.imgs = imgs;
-  })
-
-  $scope.takeNewImg = function() {
-    Camera.getNewImg(function(err,imgAttr){
-      Camera.saveNewImg(imgAttr);
-    })
-  }
-
-
-  //$scope.addNewImg = function(source){
-  //}
-    /*navigator.camera.getPicture(onPhotoURISuccess, onFail, { quality: 50,
-    destinationType: destinationType.FILE_URI,
-    sourceType: source });*/
-  //if('device fig this out'){
-  //  $scope.pictureSource = navigator.camera.PictureSourceType;
-  //  $scope.destinationType = navigator.camera.DestinationType;
-  //}
-
-  $scope.capturePhotoWithFile = function() {
-    /*navigator.camera.getPicture(
-      onPhotoFileSuccess,
-      onFail,
-      { quality: 50,
-        destinationType: Camera.DestinationType.FILE_URI }
-      );*/
-  }
-
-
-
 })

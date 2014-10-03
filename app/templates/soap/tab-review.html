@@ -74,59 +74,59 @@
       <h6>Vital Signs</h6>
       <div class="list">
 
-      <table class="VitalsTable" ng-controller="VitalCtrl">
+      <table class="VitalsTable">
           <tr>
             <th>Time</th>
-          <td ng-repeat="sv in recentSoapVitals">{{sv.timeTaken}}</td>
+          <td ng-repeat="sv in recentSoapReviewVitals">{{sv.timeTaken}}</td>
           <td ng-hide="recentSoapVitals.length" >--</td>
           <td ng-hide="recentSoapVitals.length >= 2">--</td>
           <td ng-hide="recentSoapVitals.length >= 3">--</td>
           </tr>
           <tr>
               <th>LOR</th>
-              <td ng-repeat="sv in recentSoapVitals">{{sv.lor}}</td>
+              <td ng-repeat="sv in recentSoapReviewVitals">{{sv.lor}}</td>
               <td ng-hide="recentSoapVitals.length" >--</td>
           <td ng-hide="recentSoapVitals.length >= 2">--</td>
           <td ng-hide="recentSoapVitals.length >= 3">--</td>
           </tr>
           <tr>
               <th>HR</th>
-              <td ng-repeat="sv in recentSoapVitals">{{sv.rate}} {{sv.heartRythm}} {{sv.heartQuality}}</td>
+              <td ng-repeat="sv in recentSoapReviewVitals">{{sv.rate}} {{sv.heartRythm}} {{sv.heartQuality}}</td>
               <td ng-hide="recentSoapVitals.length" >--</td>
           <td ng-hide="recentSoapVitals.length >= 2">--</td>
           <td ng-hide="recentSoapVitals.length >= 3">--</td>
           </tr>
           <tr>
               <th>RR</th>
-              <td ng-repeat="sv in recentSoapVitals">{{sv.respRate}} {{sv.respRythm}} {{sv.respQuality}}</td>
+              <td ng-repeat="sv in recentSoapReviewVitals">{{sv.respRate}} {{sv.respRythm}} {{sv.respQuality}}</td>
               <td ng-hide="recentSoapVitals.length" >--</td>
           <td ng-hide="recentSoapVitals.length >= 2">--</td>
           <td ng-hide="recentSoapVitals.length >= 3">--</td>
           </tr>
           <tr>
               <th>Skin</th>
-              <td ng-repeat="sv in recentSoapVitals">{{sv.sctmcolor}} {{sv.sctmtemp}} {{sv.sctmmoisture}}</td>
+              <td ng-repeat="sv in recentSoapReviewVitals">{{sv.sctmcolor}} {{sv.sctmtemp}} {{sv.sctmmoisture}}</td>
               <td ng-hide="recentSoapVitals.length" >--</td>
           <td ng-hide="recentSoapVitals.length >= 2">--</td>
           <td ng-hide="recentSoapVitals.length >= 3">--</td>
           </tr>
           <tr>
               <th>BP</th>
-              <td ng-repeat="sv in recentSoapVitals">{{sv.brradialpulse}} {{sv.brsystolic}}/{{sv.brradialReading}} {{sv.brradialtaken}}</td>
+              <td ng-repeat="sv in recentSoapReviewVitals">{{sv.brradialpulse}} {{sv.brsystolic}}/{{sv.brradialReading}} {{sv.brradialtaken}}</td>
               <td ng-hide="recentSoapVitals.length" >--</td>
           <td ng-hide="recentSoapVitals.length >= 2">--</td>
           <td ng-hide="recentSoapVitals.length >= 3">--</td>
           </tr>
           <tr>
               <th>Pupils</th>
-              <td ng-repeat="sv in recentSoapVitals">{{sv.pupils}}</td>
+              <td ng-repeat="sv in recentSoapReviewVitals">{{sv.pupils}}</td>
               <td ng-hide="recentSoapVitals.length" >--</td>
           <td ng-hide="recentSoapVitals.length >= 2">--</td>
           <td ng-hide="recentSoapVitals.length >= 3">--</td>
           </tr>
           <tr>
               <th>Temp</th>
-              <td ng-repeat="sv in recentSoapVitals">{{sv.tempDegreesReading}}{{sv.tempDegrees}}</td>
+              <td ng-repeat="sv in recentSoapReviewVitals">{{sv.tempDegreesReading}}{{sv.tempDegrees}}</td>
               <td ng-hide="recentSoapVitals.length" >--</td>
           <td ng-hide="recentSoapVitals.length >= 2">--</td>
           <td ng-hide="recentSoapVitals.length >= 3">--</td>
