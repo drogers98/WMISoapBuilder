@@ -166,9 +166,9 @@ angular.module('WMISoapBuilder', ['ionic', 'WMISoapBuilder.controllers', 'WMISoa
 
 
 // Change select classes for greyed out appearance to live.
-function changeClass(id) {
-	document.getElementById(id).setAttribute('class','active');
-	}
+//function changeClass(id) {
+//	document.getElementById(id).setAttribute('class','active');
+//	}
 
 // enable/disable field based on BP taken or palpation. currently val is 1, change to actual val
 function check_option(val){

@@ -59,8 +59,8 @@
       <h6>MOI/HPI</h6>
       <div class="list">
         <ion-list>
-          <ion-item class="item-text-wrap">{{soap.patientHPI}}</ion-item>
-          <ion-item class="item-text-wrap"><strong>Suspected Spinal MOI:</strong> {{soapDetail.patientSpinal}}</ion-item>
+          <ion-item class="item-text-wrap">{{soapDetail.patientHPI}}</ion-item>
+          <ion-item class="item-text-wrap"><strong>Spinal MOI:</strong> {{soapDetail.patientSpinal}}</ion-item>
         </ion-list>
       </div>
 
@@ -76,7 +76,7 @@
       <h6>Vital Signs</h6>
       <div class="list">
 
-      	  <table class="VitalsTable" ng-controller="VitalCtrl">
+      	   <table class="VitalsTable">
             <tr>
               <th>Time</th>
             <td ng-repeat="sv in recentSoapVitals">{{sv.timeTaken}}</td>
