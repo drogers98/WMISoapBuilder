@@ -9,7 +9,7 @@
     <div class="list">
 
         <!-- Time Taken -->
-        <h5>Time Taken<a ng-click="openModal(5)"><span>i</span></a></h5>
+        <h5>Time Taken<a ng-controller="SoapCtrl"  ng-click="openModal(5)"><span>i</span></a></h5>
       <div class="item item-input">
        <input id="Vital.timeTaken" type="time" ng-model="vitalDetail.timeTaken" ng-model-onblur ng-change="monitorVitalChange(vitalDetail,vitalDetail.timeTaken,'timeTaken')">
       </div>
@@ -28,7 +28,7 @@
 
       <!-- Heart -->
 
-     <h5>Heart<a ng-click="openModal(5)"><span>i</span></a></h5>
+     <h5>Heart<a ng-controller="SoapCtrl" ng-click="openModal(5)"><span>i</span></a></h5>
 <h6>Rate (Beats Per Minute)</h6>
 	  <label class="item item-input">
         <input id="Vital.rate" type="number" placeholder="Rate (BPM)" ng-model="vitalDetail.rate" ng-model-onblur ng-change="monitorVitalChange(vitalDetail,vitalDetail.rate,'rate')">
@@ -57,7 +57,7 @@
 
 
       <!-- Respiratory -->
-<h5>Respiratory<a ng-click="openModal(5)"><span>i</span></a></h5>
+<h5>Respiratory<a ng-controller="SoapCtrl" ng-click="openModal(5)"><span>i</span></a></h5>
 <h6>Rate (Breaths Per Minute)</h6>
 
 	  <label class="item item-input">
@@ -88,7 +88,7 @@
 
 
       <!-- Skin -->
-      <h5>Skin<a ng-click="openModal(5)"><span>i</span></a></h5>
+      <h5>Skin<a ng-controller="SoapCtrl" ng-click="openModal(5)"><span>i</span></a></h5>
       <h6>Color</h6>
 	   <div class="item item-select">
         <div class="input-label">
@@ -120,7 +120,7 @@
 
 
  <!-- Blood Pressure -->
- <h5>Blood Pressure<a ng-click="openModal(5)"><span>i</span></a></h5>
+ <h5>Blood Pressure<a ng-controller="SoapCtrl" ng-click="openModal(5)"><span>i</span></a></h5>
  <h6>Radial Pulse</h6>
     <div class="item item-select">
         <div class="input-label">
@@ -158,7 +158,7 @@
   </div>
 
 
- <h5>Pupils<a ng-click="openModal(5)"><span>i</span></a></h5>
+ <h5>Pupils<a ng-controller="SoapCtrl" ng-click="openModal(5)"><span>i</span></a></h5>
       <div class="item item-select">
         <div class="input-label">
           Pupils
@@ -169,7 +169,7 @@
       </div>
 
 
-    <h5>Temperature<a ng-click="openModal(5)"><span>i</span></a></h5>
+    <h5>Temperature<a ng-controller="SoapCtrl" ng-click="openModal(5)"><span>i</span></a></h5>
     <div class="row">
   <div class="col">
 	  <label class="item item-input">

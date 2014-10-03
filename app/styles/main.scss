@@ -51,10 +51,7 @@ border:1px solid #ccc;
 	width:0;
 }
 
-.WMImodalWrapper {
-	margin-top: 40px;
-	margin-bottom: 40px;
-}
+
 .WMIsideMenu {
 			margin-top: 40px;
 		}
@@ -238,6 +235,19 @@ a {
 	color: $WMIred;
 	font-weight: normal;
 }
+}
+
+.WMImodalWrapper {
+	margin-top: 20px;
+	//margin-bottom: 40px;
+	
+}
+
+.modal {
+	
+	.scroll-content {
+		
+	}
 }
 
 .modal ion-content{
