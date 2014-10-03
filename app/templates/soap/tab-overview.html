@@ -45,11 +45,13 @@
       <div class="list">
       <h6>First Name</h6>
       <label class="item item-input">
-        <input type="text" id="Soap.responderFirstName" placeholder="First Name" ng-model="soapOverview.responderFirstName" ng-model-onblur ng-change="monitorSoapOverviewChange(soapOverview,soapOverview.responderFirstName,'responderFirstName')" >
+        <input type="text" id="Soap.responderFirstName" placeholder="First Name" ng-model="soapOverview.responderFirstName" ng-model-onblur ng-change="monitorSoapOverviewChange(soapOverview,soapOverview.responderFirstName,'responderFirstName')" autocapitalize="off"
+autocorrect="off">
       </label>
       <h6>Last Name</h6>
       <label class="item item-input">
-        <input type="text" id="Soap.responderLastName" placeholder="Last Name" ng-model="soapOverview.responderLastName" ng-model-onblur ng-change="monitorSoapOverviewChange(soapOverview,soapOverview.responderLastName,'responderLastName')">
+        <input type="text" id="Soap.responderLastName" placeholder="Last Name" ng-model="soapOverview.responderLastName" ng-model-onblur ng-change="monitorSoapOverviewChange(soapOverview,soapOverview.responderLastName,'responderLastName')" autocapitalize="off"
+autocorrect="off">
       </label>
 
 
@@ -58,7 +60,7 @@
        <div class="input-label">
           Training Level
        </div>
-        <select id="Soap.trainingLevel" ng-model="soapOverview.responderTrainingLevel" ng-model-onblur ng-change="monitorSoapOverviewChange(soapOverview,soapOverview.trainingLevel,'trainingLevel')" ng-options="trainingLevel for trainingLevel in trainingLevels"  onchange="changeClass(this.id)">
+        <select id="Soap.responderTrainingLevel" ng-model="soapOverview.responderTrainingLevel" ng-change="monitorSoapOverviewChange(soapOverview,soapOverview.responderTrainingLevel,'responderTrainingLevel')" ng-options="trainingLevel for trainingLevel in trainingLevels">
 	        <option style="display:none;" value="" selected>Please Choose</option>
         </select>
 

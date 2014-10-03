@@ -20,7 +20,8 @@
       <h5>Patient Exam<a ng-click="openModal(3)"><span>i</span></a></h5>
       <div class="list">
         <label class="item item-input">
-          <textarea id="Soap.patientExamReveals" type="text" placeholder="Describe in detail the injuries observed in the head-to-toe examination. Include pertinent negatives. Assess CSM's." ng-model="soap.patientExamReveals" ng-model-onblur ng-change="monitorSoapObjectiveChange(soapObjective,soapObjective.patientExamReveals,'patientReveals')" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
+          
+          <textarea id="Soap.patientExamReveals" type="text" placeholder="Describe in detail the injuries observed in the head-to-toe examination. Include pertinent negatives. Assess CSM's." ng-model="soapObjective.patientExamReveals" ng-model-onblur ng-change="monitorSoapObjectiveChange(soapObjective,soapObjective.patientExamReveals,'patientExamReveals')" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
         </label>
       </div>
       <h5>Vital Signs<a ng-click="openModal(3)"><span>i</span></a></h5>
@@ -98,31 +99,33 @@
       <h6>Allergies</h6>
         <div class="list">
         <label class="item item-input">
-          <textarea id="Allergies" type="text" placeholder="Allergies to Medications? Foods? Insects? Pollens? Exposure? What happens with exposure?" ng-model="soapObjective.patientAllergies" ng-model-onblur ng-change="monitorSoapObjective(soapObjective,soapObjective.patientAllergies,'patientAllergies')" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
+          <textarea id="Soap.patientAllergies" type="text" placeholder="Allergies to Medications? Foods? Insects? Pollens? Exposure? What happens with exposure?" ng-model="soapObjective.patientAllergies" ng-model-onblur ng-change="monitorSoapObjectiveChange(soapObjective,soapObjective.patientAllergies,'patientAllergies')" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
         </label>
         </div>
         <h6>Medications</h6>
         <div class="list">
         <label class="item item-input">
-          <textarea id="patientMedications" type="text" placeholder="Over the Counter? Prescription? Alcohol or Recreational?" ng-model="soapObjective.patientMedications" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
+          <textarea id="Soap.patientMedications" type="text" placeholder="Over the Counter? Prescription? Alcohol or Recreational?" ng-model="soapObjective.patientMedications" ng-model-onblur ng-change="monitorSoapObjectiveChange(soapObjective,soapObjective.patientMedications,'patientMedications')" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
         </label>
         </div>
         <h6>Pertinent Medical History</h6>
         <div class="list">
         <label class="item item-input">
-          <textarea id="History" type="text" placeholder="Felt this way before? Problems with Heart? Breathing? Digestion? History of Seizures? Diabetes?" ng-model="soap.patientMedicalHistory" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
+          <textarea id="Soap.patientMedicalHistory" type="text" placeholder="Felt this way before? Problems with Heart? Breathing? Digestion? History of Seizures? Diabetes?" ng-model="soapObjective.patientMedicalHistory" ng-model-onblur ng-change="monitorSoapObjectiveChange(soapObjective,soapObjective.patientMedicalHistory,'patientMedicalHistory')" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
         </label>
         </div>
         <h6>Last Intake/Output</h6>
         <div class="list">
         <label class="item item-input">
-          <textarea id="LIO" type="text" placeholder="Food? Water? Urination? Defecation? Vomiting?" ng-model="soap.patientLastIntake" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
+          
+          <textarea id="Soap.patientLastIntake" type="text" placeholder="Food? Water? Urination? Defecation? Vomiting?" ng-model="soapObjective.patientLastIntake" ng-model-onblur ng-change="monitorSoapObjectiveChange(soapObjective,soapObjective.patientLastIntake,'patientLastIntake')" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
+          
         </label>
         </div>
         <h6>Events Leading up to Incident/Illness</h6>
         <div class="list">
         <label class="item item-input">
-          <textarea id="ELUT" type="text" placeholder="Events leading up to or causing the incident/illness." ng-model="soap.patientEventsForCause" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
+           <textarea id="Soap.patientEventsForCause" type="text" placeholder="Events leading up to or causing the incident/illness." ng-model="soapObjective.patientEventsForCause" ng-model-onblur ng-change="monitorSoapObjectiveChange(soapObjective,soapObjective.patientEventsForCause,'patientEventsForCause')" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
         </label>
       </div>
       <a class="button button-block button-light icon-right ion-ios7-arrow-right margin last" href="#/tab/ap/{{soapObjective.id}}">Continue to Assessment & Plan</a>
