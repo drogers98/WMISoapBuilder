@@ -12,24 +12,26 @@
 
   <ion-content has-header="true" padding="false" has-bouncing="false">
     <div class="SOAP">
-      <h5>Assessment<a ng-click="openModal(4)"><span>i</span></a></h5>
+      <h5>Assessment<a ng-controller="SoapCtrl" ng-click="openModal(4)"><span>i</span></a></h5>
       <div class="list">
         <label class="item item-input">
           <textarea id="Soap.patientAssessment" type="text" placeholder="List all possible problems." ng-model="soapAP.patientAssessment" ng-model-onblur ng-change="monitorSoapAPChange(soapAP,soapAP.patientAssessment,'patientAssessment')" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
         </label>
       </div>
 
-        <h5>Plan<a ng-click="openModal(4)"><span>i</span></a></h5>
+        <h5>Plan<a ng-controller="SoapCtrl" ng-click="openModal(4)"><span>i</span></a></h5>
         <div class="list">
         <label class="item item-input">
-          <textarea id="Soap.patientPlan" type="text" placeholder="Describe actions taken for each problem and plans for further care." ng-model="soapAP.patientPlan" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
+          
+          <textarea id="Soap.patientPlan" type="text" placeholder="Describe actions taken for each problem and plans for further care." ng-model-onblur ng-model="soapAP.patientPlan" ng-change="monitorSoapAPChange(soapAP,soapAP.patientPlan,'patientPlan')" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
+          
         </label>
         </div>
 
-        <h6>Anticipated Problems<a ng-click="openModal(4)"><span>i</span></a></h6>
+        <h6>Anticipated Problems<a ng-controller="SoapCtrl" ng-click="openModal(4)"><span>i</span></a></h6>
         <div class="list">
         <label class="item item-input">
-          <textarea id="Soap.patientAnticipatedProblems" type="text" placeholder="Consider anticipated problems and possible impact on evacuation needs." ng-model="soapAP.patientAnticipatedProblems" ng-change="monitorSoapAPChange(soapAP,soapAP.patientAnticipatedProblems,'patientAnticipatedProblems')" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
+          <textarea id="Soap.patientAnticipatedProblems" type="text" placeholder="Consider anticipated problems and possible impact on evacuation needs." ng-model-onblur ng-model="soapAP.patientAnticipatedProblems" ng-change="monitorSoapAPChange(soapAP,soapAP.patientAnticipatedProblems,'patientAnticipatedProblems')" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
         </label>
       </div>
 

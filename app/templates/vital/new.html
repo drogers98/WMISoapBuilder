@@ -9,7 +9,7 @@
     <div class="list">
 
         <!-- Time Taken -->
-        <h5>Time Taken<a ng-click="openModal(5)"><span>i</span></a></h5>
+        <h5>Time Taken<a ng-controller="SoapCtrl"  ng-click="openModal(5)"><span>i</span></a></h5>
       <div class="item item-input">
        <input id="Vital.timeTaken" type="time" ng-model="vitalDetail.timeTaken" ng-model-onblur ng-change="monitorVitalChange(vitalDetail,vitalDetail.timeTaken,'timeTaken')">
       </div>
@@ -20,17 +20,18 @@
         <div class="input-label">
           LOR
         </div>
-        <select id="Vital.lor" ng-model="vitalDetail.lor" ng-options="lor.value as lor.name for lor in LORs" ng-model-onblur ng-change="monitorVitalChange(vitalDetail,vitalDetail.lor,'lor')" onchange="changeClass(this.id)">
+        <select id="Vital.lor" ng-model="vitalDetail.lor" ng-options="lor.value as lor.name for lor in LORs" ng-change="monitorVitalChange(vitalDetail,vitalDetail.lor,'lor')">
+        
 	         <option style="display:none;" value="" selected>Please Choose</option>
         </select>
       </div>
 
       <!-- Heart -->
 
-     <h5>Heart<a ng-click="openModal(5)"><span>i</span></a></h5>
+     <h5>Heart<a ng-controller="SoapCtrl" ng-click="openModal(5)"><span>i</span></a></h5>
 <h6>Rate (Beats Per Minute)</h6>
 	  <label class="item item-input">
-        <input id="Vital.rate" type="number" placeholder="Rate (BPM)" ng-model="vital.rate" ng-model-onblur ng-change="monitorVitalChange(vitalDetail,vitalDetail.rate,'rate')">
+        <input id="Vital.rate" type="number" placeholder="Rate (BPM)" ng-model="vitalDetail.rate" ng-model-onblur ng-change="monitorVitalChange(vitalDetail,vitalDetail.rate,'rate')">
       </label>
       <h6>Rythm</h6>
       <div class="item item-select">
@@ -38,7 +39,7 @@
           Rhythm
           <!-- leave select empty - data will be brough in through ctrl -->
         </div>
-        <select id="Vital.heartRythm" ng-model-onblur ng-model="vitalDetail.heartRythm" ng-options="HEARTrythm for HEARTrythm in HEARTrythms" ng-change="monitorVitalChange(vitalDetail,vitalDetail.heartRythm,'heartRythm')" onchange="changeClass(this.id)">
+        <select id="Vital.heartRythm" ng-model="vitalDetail.heartRythm" ng-options="HEARTrythm for HEARTrythm in HEARTrythms" ng-change="monitorVitalChange(vitalDetail,vitalDetail.heartRythm,'heartRythm')">
 	        <option style="display:none;" value="" selected>Please Choose</option>
         </select>
       </div>
@@ -48,7 +49,7 @@
           Quality
           <!-- leave select empty - data will be brough in through ctrl -->
         </div>
-        <select id="Vital.heartQuality" ng-model-onblur ng-model="vitalDetail.heartQuality" ng-change="monitorVitalChange(vitalDetail,vitalDetail.heartQuality,'heartQuality')" ng-options="HEARTquality for HEARTquality in HEARTqualities" onchange="changeClass(this.id)">
+        <select id="Vital.heartQuality" ng-model="vitalDetail.heartQuality" ng-change="monitorVitalChange(vitalDetail,vitalDetail.heartQuality,'heartQuality')" ng-options="HEARTquality for HEARTquality in HEARTqualities">
 	        <option style="display:none;" value="" selected>Please Choose</option>
         </select>
       </div>
@@ -56,7 +57,7 @@
 
 
       <!-- Respiratory -->
-<h5>Respiratory<a ng-click="openModal(5)"><span>i</span></a></h5>
+<h5>Respiratory<a ng-controller="SoapCtrl" ng-click="openModal(5)"><span>i</span></a></h5>
 <h6>Rate (Breaths Per Minute)</h6>
 
 	  <label class="item item-input">
@@ -68,7 +69,7 @@
           Rhythm
           <!-- leave select empty - data will be brough in through ctrl -->
         </div>
-        <select id="RRythm" ng-model="vital.respRhythm" ng-options="RESPrythm for RESPrythm in RESPrythms" onchange="changeClass(this.id)">
+        <select id="respRhythm" ng-model="vitalDetail.respRhythm" ng-options="RESPrythm for RESPrythm in RESPrythms" ng-change="monitorVitalChange(vitalDetail,vitalDetail.respRhythm,'respRhythm')">
 	        <option style="display:none;" value="" selected>Please Choose</option>
         </select>
       </div>
@@ -78,7 +79,7 @@
           Quality
           <!-- leave select empty - data will be brough in through ctrl -->
         </div>
-        <select id="RQuality" ng-model="vital.respQuality" ng-options="RESPquality for RESPquality in RESPqualities" onchange="changeClass(this.id)">
+        <select id="RQuality" ng-model="vitalDetail.respQuality" ng-options="RESPquality for RESPquality in RESPqualities" ng-change="monitorVitalChange(vitalDetail,vitalDetail.respQuality,'respQuality')">
 	        <option style="display:none;" value="" selected>Please Choose</option>
         </select>
       </div>
@@ -87,14 +88,14 @@
 
 
       <!-- Skin -->
-      <h5>Skin<a ng-click="openModal(5)"><span>i</span></a></h5>
+      <h5>Skin<a ng-controller="SoapCtrl" ng-click="openModal(5)"><span>i</span></a></h5>
       <h6>Color</h6>
 	   <div class="item item-select">
         <div class="input-label">
           Color
           <!-- leave select empty - data will be brough in through ctrl -->
         </div>
-        <select id="SColor" ng-model="vital.sctmcolor" ng-options="SKINcolor for SKINcolor in SKINcolors" onchange="changeClass(this.id)">
+        <select id="sctmcolor" ng-model="vitalDetail.sctmcolor" ng-options="SKINcolor for SKINcolor in SKINcolors" ng-change="monitorVitalChange(vitalDetail,vitalDetail.sctmcolor,'sctmcolor')">
 	        <option style="display:none;" value="" selected>Please Choose</option>
         </select>
       </div>
@@ -103,7 +104,7 @@
         <div class="input-label">
           Temperature
         </div>
-        <select id="STemp" ng-model="vital.sctmtemp" ng-options="SKINtemp for SKINtemp in SKINtemps" onchange="changeClass(this.id)">
+        <select id="STemp" ng-model="vitalDetail.sctmtemp" ng-options="SKINtemp for SKINtemp in SKINtemps" ng-change="monitorVitalChange(vitalDetail,vitalDetail.sctmtemp,'sctmtemp')">
 	        <option style="display:none;" value="" selected>Please Choose</option>
         </select>
       </div>
@@ -112,27 +113,27 @@
         <div class="input-label">
           Moisture
         </div>
-        <select id="SMoist" ng-model="vital.sctmmoisture" ng-options="SKINmoist for SKINmoist in SKINmoists" onchange="changeClass(this.id)">
+        <select id="SMoist" ng-model="vitalDetail.sctmmoisture" ng-options="SKINmoist for SKINmoist in SKINmoists" ng-change="monitorVitalChange(vitalDetail,vitalDetail.sctmmoisture,'sctmmoisture')">
 	        <option style="display:none;" value="" selected>Please Choose</option>
         </select>
       </div>
 
 
  <!-- Blood Pressure -->
- <h5>Blood Pressure<a ng-click="openModal(5)"><span>i</span></a></h5>
+ <h5>Blood Pressure<a ng-controller="SoapCtrl" ng-click="openModal(5)"><span>i</span></a></h5>
  <h6>Radial Pulse</h6>
     <div class="item item-select">
         <div class="input-label">
           Radial Pulse
           <!-- leave select empty - data will be brough in through ctrl -->
         </div>
-        <select id="BPRP" ng-model="vital.brradialpulse" ng-options="BPpulse for BPpulse in BPpulses" onchange="changeClass(this.id)">
+        <select id="BPRP" ng-model="vitalDetail.brradialpulse" ng-options="BPpulse for BPpulse in BPpulses" ng-change="monitorVitalChange(vitalDetail,vitalDetail.brradialpulse,'brradialpulse')">
 	        <option style="display:none;" value="" selected>Please Choose</option>
         </select>
       </div>
       <h6>Systolic</h6>
 	  <label class="item item-input">
-        <input type="number" placeholder="Reading" ng-model="vital.brsystolic">
+        <input id="brsystolic" type="number" placeholder="Reading" ng-model="vitalDetail.brsystolic" ng-change="monitorVitalChange(vitalDetail,vitalDetail.brsystolic,'brsystolic')">
       </label>
       <h6>Diastolic</h6>
 
@@ -143,7 +144,7 @@
         <div class="input-label">
           Taken/Palpated
         </div>
-        <select id="TP" ng-model="vital.brradialtaken" ng-options="BPtaken for BPtaken in BPtakens" onchange="changeClass(this.id); check_option(this.value);">
+        <select id="TP" ng-model="vitalDetail.brradialtaken" ng-options="BPtaken for BPtaken in BPtakens" onchange="check_option(this.value);" ng-change="monitorVitalChange(vitalDetail,vitalDetail.brradialtaken,'brradialtaken')">
 	        <option style="display:none;" value="" selected>Please Choose</option>
         </select>
       </div>
@@ -151,28 +152,28 @@
   </div>
   <div class="col col-50">
 	   <label class="item item-input">
-        <input id="Diastolic" type="number" placeholder="N/A" disabled="disabled" ng-model="vital.brradialReading">
+        <input id="Diastolic" type="number" placeholder="N/A" disabled="disabled" ng-model="vitalDetail.brradialReading" ng-change="monitorVitalChange(vitalDetail,vitalDetail.brradialReading,'brradialReading')">
       </label>  </div>
     </div>
   </div>
 
 
- <h5>Pupils<a ng-click="openModal(5)"><span>i</span></a></h5>
+ <h5>Pupils<a ng-controller="SoapCtrl" ng-click="openModal(5)"><span>i</span></a></h5>
       <div class="item item-select">
         <div class="input-label">
           Pupils
         </div>
-        <select id="Pupils" ng-model="vital.pupils" ng-options="pupil for pupil in pupils" onchange="changeClass(this.id)">
+        <select id="Pupils" ng-model="vitalDetail.pupils" ng-options="pupil for pupil in pupils" ng-change="monitorVitalChange(vitalDetail,vitalDetail.pupils,'pupils')">
 	        <option style="display:none;" value="" selected>Please Choose</option>
         </select>
       </div>
 
 
-    <h5>Temperature<a ng-click="openModal(5)"><span>i</span></a></h5>
+    <h5>Temperature<a ng-controller="SoapCtrl" ng-click="openModal(5)"><span>i</span></a></h5>
     <div class="row">
   <div class="col">
 	  <label class="item item-input">
-	  <input type="number" min="0" max="140" placeholder="Degrees" ng-model="vital.tempDegreesReading">
+	  <input type="number" min="0" max="140" placeholder="Degrees" ng-model="vitalDetail.tempDegreesReading" ng-change="monitorVitalChange(vitalDetail,vitalDetail.tempDegreesReading,'tempDegreesReading')">
     </label>
   </div>
   <div class="col col-50">
@@ -180,7 +181,7 @@
 	   <div class="input-label">
           Degrees
         </div>
-        <select id="Degrees" ng-model="vital.tempDegrees" ng-options="tempDegree.value as tempDegree.name for tempDegree in tempDegrees" onchange="changeClass(this.id)">
+        <select id="Degrees" ng-model="vitalDetail.tempDegrees" ng-options="tempDegree.value as tempDegree.name for tempDegree in tempDegrees" ng-change="monitorVitalChange(vitalDetail,vitalDetail.tempDegrees,'tempDegrees')">
 	        <option style="display:none;" value="" selected>Please Choose</option>
         </select>
       </div>
