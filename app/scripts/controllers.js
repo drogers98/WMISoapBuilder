@@ -408,18 +408,27 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce'])
 })
 
 .controller('SoapImgCtrl', function($scope,$stateParams,$state,Camera,Soaps) {
+  Camera.createImgTable();
+
   Soaps.get($stateParams.soapId, function(err,soapImg){
     $scope.soapImg = soapImg;
   })
-  Camera.createImgTable();
+
   Camera.all(function(err,imgs){
    $scope.imgs = imgs;
   })
 
   $scope.takeNewImg = function() {
-    Camera.getNewImg(function(err,imgAttr){
-      Camera.saveNewImg(imgAttr);
+    Soaps.get($stateParams.soapId, function(err,soapImg){
+      Camera.getNewImg(function(err,imgAttr){
+        Camera.saveNewImg(imgAttr, soapImg);
+      })
     })
+  }
+
+  $scope.addACaption = function(img,imgCaption,attrElem) {
+    var kindElem = attrElem,kindId = img.id,kindVal = imgVal;
+    Camera.updateImg(kindElem,kindId,kindVal);
   }
 
 })
@@ -537,11 +546,6 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce'])
 
 })
 
-
-
-
-
-
 /*
 
   //$scope.dt = new Date();
@@ -634,36 +638,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce'])
 })*/
 
 // coundown controls.
-.controller('VitalCtrl', function($scope, $state, $stateParams, $timeout, Vitals, Soaps) {
-"use strict";
 
-
-  $scope.timeValue = 0;
-
-  function countdown() {
-    $scope.timeValue++;
-    $scope.timeout = $timeout(countdown, 1000);
-  };
-
-  $scope.start = function() {
-    countdown();
-    $scope.play = true;
-    $scope.pause = false;
-  };
-
-  $scope.stop = function() {
-    $timeout.cancel($scope.timeout);
-    $scope.play = false;
-    $scope.pause = true;
-  };
-
-  $scope.reset = function() {
-	$scope.timeValue = 0;
-    $timeout.cancel($scope.timeout);
-    $scope.play = false;
-    $scope.pause = true;
-  };
-})
 
 .controller('VitalNewCtrl', function($scope, $state, $stateParams, Vitals) {
   //LOOK AT SOAP OVERVIEW CONTROLLER FOR THIS FIX

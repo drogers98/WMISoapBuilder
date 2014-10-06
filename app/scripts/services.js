@@ -201,14 +201,23 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
        self.db.createTable('Camera', {
          "id": {"type": "INTEGER", "null": "NOT NULL", "primary": true, "auto_increment":true},
          "created": {"type": "TIMESTAMP", "null": "NOT NULL", "default": "CURRENT_TIMESTAMP"},
-         "imageURI": {"type": "TEXT", "null": "NOT NULL"}
+         "imageURI": {"type": "TEXT", "null": "NOT NULL"},
+         "soapId": {"type": "TEXT", "null": "NOT NULL"},
+         "caption": {"type": "TEXT", "null": "NOT NULL"}
        })
      },
-     saveImg: function(img) {
+     saveImg: function(img,soap,imgCaption) {
        self.db.insert('Camera', {
-         "imageURI": img
+         "imageURI": img,
+         "soapId": soap.id,
+         "caption": imgCaption || ''
        }).then(function(result){
          return;
+       })
+     },
+     imgUpdate: function(kind,objId,obj){
+       self.db.update(kind,obj,{
+         'id': objId
        })
      },
      getKind: function(object,callback) {
@@ -544,7 +553,7 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
 })
 
 .factory('Camera', function(nolsDB) {
-
+  var imgKind = 'Camera';
   return {
     createImgTable: function(){
       return nolsDB.createImgTable();
@@ -557,8 +566,13 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
         callback(null,result);
       });
     },
-    saveNewImg: function(imgPath){
-      nolsDB.saveImg(imgPath);
+    saveNewImg: function(imgPath,soap){
+      nolsDB.saveImg(imgPath,soap);
+    },
+    updateImg: function(imgEl,imgId,imgVal){
+      var imgAttr = {};
+      imgAttr[imgEl] = imgVal;
+      return nolsDB.imgUpdate(imgKind,imgId,imgVal);
     },
     all: function(callback){
       var images = [];

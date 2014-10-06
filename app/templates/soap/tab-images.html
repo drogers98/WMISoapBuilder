@@ -16,7 +16,10 @@
   <div class="row">
     <div class="col">
       <ion-item ng-repeat="img in imgs">
-        <img style="width:40%;height:30%;display:block;" ng-src="{{img.imageURI}}">
+        <div>
+          <img style="width:40%;height:30%;display:block;" ng-src="{{img.imageURI}}">
+          <input id="Camera.imgCaption" type="text" ng-model="img.imgCaption" ng-model-onblur ng-change="addACaption(img,img.imgCaption,'imgCaption')" placeholder="Add a Caption">
+        </div>
       </ion-item>
     </div>
   </div>
@@ -25,7 +28,7 @@
 
 
 
-<!-- <a class="button button-block button-light margin" ng-controller="SoapImgCtrl" ng-click="takeNewImg()"><i class="icon ion-app-photos margin"></i>Capture Photo</a>-->
+<a class="button button-block button-light margin" ng-controller="SoapImgCtrl" ng-click="takeNewImg()"><i class="icon ion-app-photos margin"></i>Capture Photo</a>
 <a class="button button-block button-calm margin" href="#/tab/review/{{soapImg.id}}">Review SOAP Note</a>
 
     </div>
