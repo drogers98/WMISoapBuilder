@@ -426,7 +426,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce'])
     })
   }
 
-  $scope.addACaption = function(img,imgCaption,attrElem) {
+  $scope.addACaption = function(img,imgVal,attrElem) {
     var kindElem = attrElem,kindId = img.id,kindVal = imgVal;
     Camera.updateImg(kindElem,kindId,kindVal);
   }

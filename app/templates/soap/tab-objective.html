@@ -20,7 +20,7 @@
       <h5>Patient Exam<a ng-controller="SoapCtrl" ng-click="openModal(3)"><span>i</span></a></h5>
       <div class="list">
         <label class="item item-input">
-          
+
           <textarea id="Soap.patientExamReveals" type="text" placeholder="Describe in detail the injuries observed in the head-to-toe examination. Include pertinent negatives. Assess CSM's." ng-model="soapObjective.patientExamReveals" ng-model-onblur ng-change="monitorSoapObjectiveChange(soapObjective,soapObjective.patientExamReveals,'patientExamReveals')" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
         </label>
       </div>
@@ -117,9 +117,9 @@
         <h6>Last Intake/Output</h6>
         <div class="list">
         <label class="item item-input">
-          
+
           <textarea id="Soap.patientLastIntake" type="text" placeholder="Food? Water? Urination? Defecation? Vomiting?" ng-model="soapObjective.patientLastIntake" ng-model-onblur ng-change="monitorSoapObjectiveChange(soapObjective,soapObjective.patientLastIntake,'patientLastIntake')" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
-          
+
         </label>
         </div>
         <h6>Events Leading up to Incident/Illness</h6>
