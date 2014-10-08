@@ -50,7 +50,7 @@ autocorrect="off" onkeyup="javascript:this.value=this.value.toUpperCase();" styl
         <textarea id="Soap.patientComplaint" type="text" placeholder="Describe the patient's chief complaint." ng-model="soapSubjective.patientComplaint"
 	ng-keyup="expandText($event)"
 	ng-keydown="expandText($event)"
- 
+
  ng-model-onblur  ng-change="monitorSoapSubjectiveChange(soapSubjective,soapSubjective.patientComplaint,'patientComplaint')"></textarea>
       </label>
 
@@ -100,7 +100,7 @@ autocorrect="off" onkeyup="javascript:this.value=this.value.toUpperCase();" styl
 
      <label class="item item-input">
         <textarea id="Soap.patientHPI" type="text" placeholder="Describe in detail the mechanism of injury or the history of the illness." ng-model="soapSubjective.patientHPI" ng-model-onblur ng-change="monitorSoapSubjectiveChange(soapSubjective,soapSubjective.patientHPI,'patientHPI')" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
-         
+
       </label>
 	  <h6>Spinal MOI</h6>
       <div class="item item-select">

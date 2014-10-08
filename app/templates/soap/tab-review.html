@@ -162,6 +162,16 @@
         </ion-list>
       </div>
 
+      <h5>Patient Images</h5>
+      <div class="list">
+        <ion-list>
+          <ion-item ng-repeat="soapImg in soapImgs">
+            <p>{{soapImg.imageURI}}</p>
+            <img style="width:40%;height:30%;display:block;" ng-src="{{soapImg.imageURI}}">
+          </ion-item>
+        </ion-list>
+      </div>
+
 <a class="button button-block button-light icon icon-right ion-app-share margin" ng-controller="SoapCtrl" ng-click="shareSOAP(soapReview)">Share This SOAP</a>
 
       </div>

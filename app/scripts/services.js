@@ -1,5 +1,5 @@
 'use strict';
-angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
+angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce', 'ngCordova'])
 
 /* Named global db methods as kind */
 //getKind (GET)
@@ -211,7 +211,7 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
          "imageURI": img,
          "soapId": soap.id,
          "imgCaption": imgCaption || ''
-       }).then(function(result){
+       }).then(function(results){
          return;
        })
      },
@@ -271,12 +271,24 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
      allKindQuery: function(object,query,callback){
        self.db.select(object,query).then(function(results){
          callback(null,results.rows);
+         console.log(results.rows)
        })
      },
      kind: function(object, query, callback) {
       self.db.select(object,query).then(function(results){
         callback(null, results.rows);
       })
+     },
+     soapUpdateQuery: function(kind,objId,obj){
+       self.db.update(kind,
+         {'incidentLon': obj.incidentLon},
+         {'id': objId
+       })
+       self.db.update(kind,
+         {'incidentLat': obj.incidentLat},
+         {'id': objId
+       })
+
      },
      soapUpdate: function(kind,objId,obj) {
        self.db.update(kind,obj,{
@@ -319,11 +331,13 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
      deleteVital: function(vitalId){
        self.db.del('Vital',{"id": vitalId});
      },
-
      imgs: function(object,callback){
        self.db.selectAll(object).then(function(results){
          callback(null,results.rows);
        })
+     },
+     deleteImg: function(img){
+       self.db.del('Camera',{"id": img});
      }
 
    };
@@ -401,7 +415,7 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
   })
 })
 
-.factory('Soaps', function(nolsDB) {
+.factory('Soaps', function(nolsDB,$cordovaGeolocation) {
   var soap = {};
   var soapKind = 'Soap';
 
@@ -416,6 +430,18 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
       var soapAttr = {};
       soapAttr[soapEl] = soapVal;
       return nolsDB.soapUpdate(soapKind,soapId,soapAttr);
+    },
+    updateSoapQuery: function(elems,id,vals){
+      var soapQuery = {};
+      soapQuery[elems[0]] = vals[0];
+      soapQuery[elems[1]] = vals[1];
+      return nolsDB.soapUpdateQuery(soapKind,id,soapQuery);
+    },
+    getLocation: function(callback){
+      $cordovaGeolocation.getCurrentPosition().then(function(position){
+        var patientCoords = [position.coords.latitude,position.coords.longitude];
+        callback(null,patientCoords);
+      })
     },
     updateEditSoap: function(soap){
       return nolsDB.soapUpdate(soap);
@@ -552,8 +578,8 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
   }
 })
 
-.factory('Camera', function(nolsDB) {
-  var imgkind = "Camera";
+.factory('Camera', function(nolsDB, $cordovaCamera) {
+  var imgKind = "Camera";
   return {
     createImgTable: function(){
       return nolsDB.createImgTable();
@@ -562,17 +588,31 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
       //do something
     },
     getNewImg: function(callback){
-      navigator.camera.getPicture(function(result){
-        callback(null,result);
+      var options = {
+        quality : 75,
+        //destinationType : Camera.DestinationType.DATA_URL,
+        //sourceType : Camera.PictureSourceType.CAMERA,
+        allowEdit : true,
+        encodingType: Camera.EncodingType.JPEG,
+        targetWidth: 100,
+        targetHeight: 120,
+        saveToPhotoAlbum: false
+      };
+
+      $cordovaCamera.getPicture(options).then(function(imgData){
+        callback(null,imgData);
       });
     },
     saveNewImg: function(imgPath,soap){
-      nolsDB.saveImg(imgPath,soap);
+      return nolsDB.saveImg(imgPath,soap);
     },
     updateImg: function(imgEl,imgId,imgVal){
       var imgAttr = {};
       imgAttr[imgEl] = imgVal;
-      return nolsDB.imgUpdate(imgkind,imgId,imgAttr);
+      return nolsDB.imgUpdate(imgKind,imgId,imgAttr);
+    },
+    deleteImg: function(img){
+      return nolsDB.deleteImg(img)
     },
     all: function(callback){
       var images = [];
@@ -582,6 +622,16 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce'])
           images.push(imgData);
         }
         callback(null,images);
+      })
+    },
+    allQuery: function(soapId, callback) {
+      return nols.DB.allKindQuery('Camera', {'soapId': soapId}, function(err,data){
+        var soapImgs = [];
+        for(var i = 0;i<data.length;i++){
+          soapImgs.push(data.item(i))
+        }
+        console.log(soapImgs)
+        callback(null,soapImgs);
       })
     }
   }

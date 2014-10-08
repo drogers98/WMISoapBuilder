@@ -1,5 +1,5 @@
 'use strict';
-angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce'])
+angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCordova'])
 
 .controller('MenuCtrl', function($scope, $ionicSideMenuDelegate) {
   $scope.toggleSideMenu = function() {
@@ -269,7 +269,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce'])
 })
 
 //SOAP OVERVIEW TAB
-.controller('SoapOverviewCtrl', function($scope,$state,$stateParams,Soaps,Responders,Nols){
+.controller('SoapOverviewCtrl', function($scope,$state,$stateParams,$cordovaGeolocation,Soaps,Responders,Nols){
   Soaps.get($stateParams.soapId, function(err, soapOverview){
     if(soapOverview.starterFlag === 'false') {
       Soaps.updateSoap('starterFlag',soapOverview.id,true);
@@ -291,7 +291,17 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce'])
   element.style.height =  element.scrollHeight + "px";}
 
   //GEOLOCATION
-  $scope.showPosition = function(position){
+  $scope.getLocation = function(soap) {
+    Soaps.getLocation(function(err,location){
+      if(location){
+        var locationElem = ['incidentLat','incidentLon'];
+        $scope.soapOverview.incidentLat = location[0];
+        $scope.soapOverview.incidentLon = location[1];
+        Soaps.updateSoapQuery(locationElem,soap.id,location);
+      }
+    })
+  }
+  /*$scope.showPosition = function(position){
     $scope.soapOverview.incidentLat = position.coords.latitude;
     $scope.soapOverview.incidentLon = position.coords.longitude;
     $scope.apply();
@@ -310,7 +320,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce'])
     }else {
       alert('Sorry, this feature is currently unavailable');
     }
-  }
+  }*/
 
 })
 
@@ -396,7 +406,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce'])
 })
 
 //SOAP REVIEW TAB
-.controller('SoapReviewCtrl', function($scope,$state,$stateParams,Soaps,Responders,Vitals,Nols){
+.controller('SoapReviewCtrl', function($scope,$state,$stateParams,Soaps,Responders,Vitals,Nols,Camera){
   Soaps.get($stateParams.soapId, function(err,soapReview){
     $scope.soapReview = soapReview;
     Vitals.all(soapReview.id, function(err,soapVitals,recentSoapReviewVitals){
@@ -404,10 +414,14 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce'])
       $scope.recentSoapReviewVitals = recentSoapReviewVitals;
       //hand on services
     })
+    Camera.allQuery(soapReview.id, function(err,soapImgs){
+      $scope.soapImgs = soapImgs;
+    })
   })
 })
 
-.controller('SoapImgCtrl', function($scope,$stateParams,$state,Camera,Soaps) {
+.controller('SoapImgCtrl', function($scope,$stateParams,$state,
+  $ionicPopup,Camera,Soaps) {
   Camera.createImgTable();
 
   Soaps.get($stateParams.soapId, function(err,soapImg){
@@ -429,6 +443,21 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce'])
   $scope.addACaption = function(img,imgVal,attrElem) {
     var kindElem = attrElem,kindId = img.id,kindVal = imgVal;
     Camera.updateImg(kindElem,kindId,kindVal);
+  }
+
+  $scope.deleteImg = function(img) {
+    var confirmDelete = $ionicPopup.confirm({
+      title: 'Remove Image',
+      template: 'Are you sure you to delete this image?'
+    })
+    confirmDelete.then(function(res){
+      if(res){
+        Camera.deleteImg(img.id);
+        $scope.imgs.splice($scope.imgs.indexOf(img.id), 1)
+      }else {
+        return;
+      }
+    })
   }
 
 })
@@ -457,31 +486,9 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce'])
     $scope.soapVitalsId = $stateParams.soapId;
     $scope.soapVitals = soapVitals;
   })
-
-  $scope.timeValue = 0;
-  function countdown(){
-    $scope.timeValue++;
-    $scope.timeout = $timeout(countdown,1000);
-  };
-  $scope.start = function(){
-    countdown();
-    $scope.play = true;
-    $scope.pause = false;
-  }
-  $scope.stop = function(){
-    $timeout.cancel($scope.timeout);
-    $scope.play = false;
-    $scope.pause = true;
-  }
-  $scope.reset = function(){
-    $scope.timeValue = 0;
-    $timeout.cancel($scope.timeout);
-    $scope.play = false;
-    $scope.pause = true;
-  }
 })
 
-.controller('VitalDetailCtrl', function($scope,$state,$stateParams,Vitals){
+.controller('VitalDetailCtrl', function($scope,$state,$stateParams,$timeout,Vitals){
   Vitals.get($stateParams.vitalId, function(err, vitalDetail){
     if(vitalDetail.starterFlag === 'false'){
       Vitals.updateVital("starterFlag",vitalDetail.id,true);
@@ -518,8 +525,6 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce'])
     var kindElem = attrElem,kindId = vital.id,kindVal = vitalVal;
     Vitals.updateVital(kindElem,kindId,kindVal);
   }
-
-  $scope.timeValue = 0;
 
   $scope.timeValue = 0;
   function countdown(){

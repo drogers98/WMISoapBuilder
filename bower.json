@@ -5,7 +5,8 @@
     "ionic": "v1.0.0-beta.8",
     "angular-websql": "~1.0.1",
     "ng-debounce": "~0.1.4",
-    "angular-placeholder": "~1.1.0"
+    "angular-placeholder": "~1.1.0",
+    "ngCordova": "~0.1.4-alpha"
   },
   "devDependencies": {
     "angular-mocks": "~1.2.17",
