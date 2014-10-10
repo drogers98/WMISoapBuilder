@@ -201,19 +201,29 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce', 'ngCord
        self.db.createTable('Camera', {
          "id": {"type": "INTEGER", "null": "NOT NULL", "primary": true, "auto_increment":true},
          "created": {"type": "TIMESTAMP", "null": "NOT NULL", "default": "CURRENT_TIMESTAMP"},
+         "starterFlag": {"type": "TIMESTAMP", "null": "NOT NULL"},
          "imageURI": {"type": "TEXT", "null": "NOT NULL"},
-         "soapId": {"type": "TEXT", "null": "NOT NULL"},
+         "soapId": {"type": "INTEGER", "null": "NOT NULL"},
          "imgCaption": {"type": "TEXT", "null": "NOT NULL"}
        })
      },
-     saveImg: function(img,soap,imgCaption) {
+     saveImg: function(img,soap,callback) {
+       var img = {};
        self.db.insert('Camera', {
-         "imageURI": img,
-         "soapId": soap.id,
-         "imgCaption": imgCaption || ''
+         "imageURI": img.imageURI || '',
+         "soapId": soap,
+         "starterFlag": img.starterFlag || false,
+         "imgCaption": img.imgCaption || ''
        }).then(function(results){
-         return;
-       })
+         self.db.select('Camera', {
+           "id": results.insertId
+         }).then(function(results){
+           for(var i = 0;i < results.rows.length;i++){
+             img = results.rows.item(i);
+             callback(null,img);
+          }
+        })
+      })
      },
      imgUpdate: function(kind,objId,obj){
        self.db.update(kind,obj,{
@@ -331,8 +341,10 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce', 'ngCord
      deleteVital: function(vitalId){
        self.db.del('Vital',{"id": vitalId});
      },
-     imgs: function(object,callback){
-       self.db.selectAll(object).then(function(results){
+     imgs: function(object,soap,callback){
+       self.db.select(object,{
+         "soapId": soap
+       }).then(function(results){
          callback(null,results.rows);
        })
      },
@@ -603,20 +615,29 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce', 'ngCord
         callback(null,imgData);
       });
     },
+    saveNewImg: function(imgAttr,soapAttr,callback){
+      return nolsDB.saveImg(imgAttr,soapAttr,callback);
+    },
+    /*
     saveNewImg: function(imgPath,soap){
       return nolsDB.saveImg(imgPath,soap);
-    },
+    },*/
     updateImg: function(imgEl,imgId,imgVal){
       var imgAttr = {};
       imgAttr[imgEl] = imgVal;
       return nolsDB.imgUpdate(imgKind,imgId,imgAttr);
     },
+    updateImgStarter: function(imgEl,imgId,imgVal,callback){
+      var starterAttr = {};
+      starterAttr[imgEl] = imgVal;
+      return nolsDB.imgStarterUpdate(imgKind,imgId,starterAttr,callback);
+    },
     deleteImg: function(img){
       return nolsDB.deleteImg(img)
     },
-    all: function(callback){
+    all: function(soap,callback){
       var images = [];
-      return nolsDB.imgs('Camera', function(err,data){
+      return nolsDB.imgs('Camera',soap, function(err,data){
         for(var i = 0;i < data.length;i++){
           var imgData = angular.copy(data.item(i));
           images.push(imgData);
@@ -625,13 +646,30 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce', 'ngCord
       })
     },
     allQuery: function(soapId, callback) {
-      return nols.DB.allKindQuery('Camera', {'soapId': soapId}, function(err,data){
+      return nolsDB.allKindQuery('Camera', {'soapId': soapId}, function(err,data){
         var soapImgs = [];
         for(var i = 0;i<data.length;i++){
           soapImgs.push(data.item(i))
         }
         console.log(soapImgs)
         callback(null,soapImgs);
+      })
+    },
+    getLast: function(callback){
+      return nolsDB.allKind('Camera', function(err,data){
+        var img = {};
+        if(data.length > 0){
+          var len = data.length - 1;
+          for(var i=len;i<data.length;i++){
+            img = data.item(i);
+            var neededImgParams = {};
+            neededImgParams['id'] = img.id;
+            neededImgParams['starterFlag'] = img.starterFlag;
+            callback(null,neededImgParams);
+          }
+        }else {
+          callback(null,null);
+        }
       })
     }
   }

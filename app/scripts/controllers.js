@@ -57,7 +57,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
 
 .controller('SoapCtrl', function($scope, $state, $stateParams, $ionicPopup,
                                  $ionicModal, $timeout, $location,
-                                 Soaps, Responders, Nols){
+                                 Soaps, Responders, Nols,$cordovaSocialSharing){
   "use strict";
 
   Soaps.createSoapTable();
@@ -215,61 +215,102 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
        $scope.oModal5.remove();
      });
  // end modals
-     $scope.shareSOAP = function(soap) {
-     var htmlbody = '<h2>Location</h2>'+
-     '<strong>Date of Incident</strong>: ' + soap.incidentDate + '<br/>' +
-     '<strong>Location</strong>: ' + soap.incidentLocation + '<br/>' +
-     '<strong>Coordinates</strong>: ' + soap.incidentLat + ', ' + soap.incidentLon + '<br/>' +
-     '<strong>Responder</strong>: ' + soap.responderFirstName + ' ' + soap.responderLastName + ', ' + soap.responderTrainingLevel + '<br/>' +
-     '<h2>Subjective</h2>'+
-     '<strong>Initials</strong>: ' + soap.patientInitials + '<br/>' +
-     '<strong>DOB</strong>: ' + soap.patientDob + '<br/>' +
-     '<strong>Age</strong>: ' + soap.patientAge + '<br/>' +
-     '<strong>Sex</strong>: ' + soap.patientGender + '<br/>' +
-     '<h3>Chief Complaint</h3>'+
-     '<p>' + soap.patientComplaint + '</p>' +
-     '<strong>Onset</strong>: ' + soap.patientOnset + '<br/>' +
-     '<strong>Provokes/Palliates</strong>: ' + soap.patientPPalliates + '<br/>' +
-     '<strong>Quality</strong>: ' + soap.patientQuality + '<br/>' +
-     '<strong>Radiation/Region/Referred</strong>: ' + soap.patientRadiates + '<br/>' +
-     '<strong>Severity</strong>: ' + soap.patientSeverity + ' out of 10<br/>' +
-     '<strong>Time of Onset</strong>: ' + soap.patientTime + '<br/>' +
-     '<h3>MOI/HPI</h3>'+
-     '<p>' + soap.patientHPI + '</p>' +
-     '<strong>Suspected Spinal MOI</strong>: ' + soap.patientSpinal + '<br/>' +
-     '<h2>Objective</h2>'+
-     '<h3>General</h3>'+
-     '<strong>Patient Position When Found</strong>: ' + soap.patientFound + '<br/>' +
-     '<strong>Patient Exam</strong>: ' + soap.patientExamReveals + '<br/>' +
-     '<h3>Vital Signs</h3>'+
-     '<p>Vital Signs coming soon</p>'+
-     '<h3>Patient History</h3>'+
-     '<strong>Symptoms</strong>: ' + soap.patientSymptoms + '<br/>' +
-     '<strong>Allergies</strong>: ' + soap.patientAllergies + '<br/>' +
-     '<strong>Medications</strong>: ' + soap.patientMedications + '<br/>' +
-     '<strong>Pertinent Medical History</strong>: ' + soap.patientMedicalHistory + '<br/>' +
-     '<strong>Last Intake/Output</strong>: ' + soap.patientLastIntake + '<br/>' +
-     '<strong>Events Leading up to Injury/Illness</strong>: ' + soap.patientEventsForCause + '<br/>' +
-     '<h2>Assessment</h2>'+
-     '<p>' + soap.patientAssessment + '</p>' +
-     '<h2>Plan</h2>'+
-     '<p>' + soap.patientPlan + '</p>' +
-     '<strong>Anticipated Problems</strong>: ' + soap.patientAnticipatedProblems + '<br/>';
+     $scope.shareSOAP = function(soap,soapVitals,soapImages) {
 
-      window.plugin.email.open({
+      var runImages = function(soapImages){
+        var imageURIS = [];
+        for(var i=0;i<soapImages.length;i++){
+          var uri = soapImages[i].imageURI;
+          imageURIS.push(uri);
+        }
+        return imageURIS;
+      }
+
+      var runMessage = function(soapVitals) {
+
+        var messagePartI = '<h2>Location</h2>'+
+        '<strong>Date of Incident</strong>: ' + soap.incidentDate + '<br/>' +
+        '<strong>Location</strong>: ' + soap.incidentLocation + '<br/>' +
+        '<strong>Coordinates</strong>: ' + soap.incidentLat + ', ' + soap.incidentLon + '<br/>' +
+        '<strong>Responder</strong>: ' + soap.responderFirstName + ' ' + soap.responderLastName + ', ' + soap.responderTrainingLevel + '<br/>' +
+        '<h2>Subjective</h2>'+
+        '<strong>Initials</strong>: ' + soap.patientInitials + '<br/>' +
+        '<strong>DOB</strong>: ' + soap.patientDob + '<br/>' +
+        '<strong>Age</strong>: ' + soap.patientAge + '<br/>' +
+        '<strong>Sex</strong>: ' + soap.patientGender + '<br/>' +
+        '<h3>Chief Complaint</h3>'+
+        '<p>' + soap.patientComplaint + '</p>' +
+        '<strong>Onset</strong>: ' + soap.patientOnset + '<br/>' +
+        '<strong>Provokes/Palliates</strong>: ' + soap.patientPPalliates + '<br/>' +
+        '<strong>Quality</strong>: ' + soap.patientQuality + '<br/>' +
+        '<strong>Radiation/Region/Referred</strong>: ' + soap.patientRadiates + '<br/>' +
+        '<strong>Severity</strong>: ' + soap.patientSeverity + ' out of 10<br/>' +
+        '<strong>Time of Onset</strong>: ' + soap.patientTime + '<br/>' +
+        '<h3>MOI/HPI</h3>'+
+        '<p>' + soap.patientHPI + '</p>' +
+        '<strong>Suspected Spinal MOI</strong>: ' + soap.patientSpinal + '<br/>' +
+        '<h2>Objective</h2>'+
+        '<h3>General</h3>'+
+        '<strong>Patient Position When Found</strong>: ' + soap.patientFound + '<br/>' +
+        '<strong>Patient Exam</strong>: ' + soap.patientExamReveals + '<br/>' +
+        '<h3>Vital Signs</h3>';
+
+        var messagePartIIA = "<table style='width=100%;border=1px solid black;border-collapse=collapse'>";
+        var messagePartIIB = function(soapVitals) {
+          var vitalCollection = [];
+          for(var key in soapVitals){
+            var obj = soapVitals[key];
+            for(var prop in obj) {
+              if(obj.hasOwnProperty(prop)){
+               vitalCollection.push('<tr>' + "<th style='border=1px solid black;border-collapse=collapse;padding=5px'>" + prop + '</th>' + "<td style='border=1px solid black;border-collapse=collapse;padding=5px'>" + obj[prop] + '</td>' + '</tr>');
+              }
+            }
+          }
+          return vitalCollection;
+        }
+        var messagePartIIC = "</table>";
+        var messagePartII = messagePartIIA + messagePartIIB(soapVitals) + messagePartIIC;
+
+        var messagePartIII = '<h3>Patient History</h3>'+
+        '<strong>Symptoms</strong>: ' + soap.patientSymptoms + '<br/>' +
+        '<strong>Allergies</strong>: ' + soap.patientAllergies + '<br/>' +
+        '<strong>Medications</strong>: ' + soap.patientMedications + '<br/>' +
+        '<strong>Pertinent Medical History</strong>: ' + soap.patientMedicalHistory + '<br/>' +
+        '<strong>Last Intake/Output</strong>: ' + soap.patientLastIntake + '<br/>' +
+        '<strong>Events Leading up to Injury/Illness</strong>: ' + soap.patientEventsForCause + '<br/>' +
+        '<h2>Assessment</h2>'+
+        '<p>' + soap.patientAssessment + '</p>' +
+        '<h2>Plan</h2>'+
+        '<p>' + soap.patientPlan + '</p>' +
+        '<strong>Anticipated Problems</strong>: ' + soap.patientAnticipatedProblems + '<br/>';
+
+        return messagePartI + messagePartII + messagePartIII;
+      }
+
+     //var subject = 'Soap Note: Test',
+     //   toArr = ['rogers@eyebytesolutions.com'],
+     //   bccArr = [''];
+
+     //$cordovaSocialSharing
+     //   .shareViaEmail(message,subject,toArr,bccArr)
+
+     window.plugin.email.open({
         to:      ['rogers@eyebytesolutions.com'],
         cc:      ['vehr@eyebytesolutions.com'],
         bcc:     [''],
         subject: 'SOAP Note: Test',
-        body:    htmlbody,
+        attachments: runImages(soapImages),
+        body:    runMessage(soapVitals),
         isHtml:  true
      });
+     //console.log(runMessage(soapVitals))
+     //console.log(runImages(soapImages))
     };
 
 })
 
 //SOAP OVERVIEW TAB
-.controller('SoapOverviewCtrl', function($scope,$state,$stateParams,$cordovaGeolocation,Soaps,Responders,Nols){
+.controller('SoapOverviewCtrl', function($scope,$state,$stateParams,$cordovaGeolocation,Soaps,Responders){
   Soaps.get($stateParams.soapId, function(err, soapOverview){
     if(soapOverview.starterFlag === 'false') {
       Soaps.updateSoap('starterFlag',soapOverview.id,true);
@@ -301,11 +342,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
       }
     })
   }
-  /*$scope.showPosition = function(position){
-    $scope.soapOverview.incidentLat = position.coords.latitude;
-    $scope.soapOverview.incidentLon = position.coords.longitude;
-    $scope.apply();
-  }
+/*
   if(!navigator.geolocation){
     document.getElementById('GeoLocationBtnInner').innerHTML = "GPS Unavailable";
     document.getElementById("coordsBtn").className = "";
@@ -366,13 +403,14 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
 })
 
 //SOAP OBJECTIVE TAB
-.controller('SoapObjectiveCtrl', function($scope,$state,$stateParams,Soaps,Responders,Vitals,Nols){
+.controller('SoapObjectiveCtrl', function($scope,$state,$stateParams,Soaps,Responders,Vitals){
   Vitals.createVitalTable();
   Soaps.get($stateParams.soapId, function(err,soapObjective){
     $scope.soapObjective = soapObjective;
     Vitals.all(soapObjective.id, function(err,soapVitals,recentSoapVitals){
       $scope.soapVitals = soapVitals;
-      $scope.recentSoapVitals = recentSoapVitals;
+      $scope.recentSoapVitals = recentSoapVitals.filter(function(entry){return entry.starterFlag === 'true';});
+      return $scope.recentSoapVitals;
       //hand on services
     })
     Vitals.getLast(function(err,lastVital){
@@ -406,18 +444,35 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
 })
 
 //SOAP REVIEW TAB
-.controller('SoapReviewCtrl', function($scope,$state,$stateParams,Soaps,Responders,Vitals,Nols,Camera){
+.controller('SoapReviewCtrl', function($scope,$state,$stateParams,Soaps,Responders,Vitals,Camera){
   Soaps.get($stateParams.soapId, function(err,soapReview){
     $scope.soapReview = soapReview;
     Vitals.all(soapReview.id, function(err,soapVitals,recentSoapReviewVitals){
       $scope.recentSoapReviewVitals = recentSoapReviewVitals;
-      $scope.recentSoapReviewVitals = recentSoapReviewVitals;
-      //hand on services
     })
     Camera.allQuery(soapReview.id, function(err,soapImgs){
-      $scope.soapImgs = soapImgs;
+      $scope.soapImgs = soapImgs.filter(function(entry){return entry.starterFlag === 'true';});
+      return $scope.soapImgs;
     })
   })
+})
+
+.controller('SoapImgDetailCtrl', function($scope,$stateParams,$state,Camera,Soaps){
+  $scope.takeNewImg = function(imgDetail) {
+    Camera.getNewImg(function(err,imgAttr){
+      Camera.updateImg("imageURI", imgDetail.id,imgAttr)
+      updateImgFlag(imgDetail.id)
+    })
+  }
+
+  var updateImgFlag = function(imgId){
+    Camera.updateImg("starterFlag",imgId,true);
+    reloadImgRepeat();
+  }
+
+  var reloadImgRepeat = function(){
+    $state.go($state.current, {},{reload: true});
+  }
 })
 
 .controller('SoapImgCtrl', function($scope,$stateParams,$state,
@@ -426,19 +481,20 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
 
   Soaps.get($stateParams.soapId, function(err,soapImg){
     $scope.soapImg = soapImg;
-  })
-
-  Camera.all(function(err,imgs){
-   $scope.imgs = imgs;
-  })
-
-  $scope.takeNewImg = function() {
-    Soaps.get($stateParams.soapId, function(err,soapImg){
-      Camera.getNewImg(function(err,imgAttr){
-        Camera.saveNewImg(imgAttr, soapImg);
-      })
+    Camera.all(soapImg.id, function(err,imgs){
+      $scope.imgs = imgs.filter(function(entry){return entry.starterFlag === 'true'});
+      return $scope.imgs;
     })
-  }
+    Camera.getLast(function(err,lastImg){
+      if(lastImg === null || lastImg.starterFlag === 'true'){
+        Camera.saveNewImg({},soapImg.id,function(err,starterImg){
+          $scope.starterImg = starterImg;
+        })
+      }else {
+        $scope.starterImg = lastImg;
+      }
+    })
+  })
 
   $scope.addACaption = function(img,imgVal,attrElem) {
     var kindElem = attrElem,kindId = img.id,kindVal = imgVal;
@@ -460,8 +516,22 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
     })
   }
 
-})
+/*  $scope.takeNewImg = function() {
+    Soaps.get($stateParams.soapId, function(err,soapImg){
+      Camera.getNewImg(function(err,imgAttr){
+        Camera.saveNewImg(imgAttr, soapImg);
+      })
+    })
+  }
 
+  $scope.addACaption = function(img,imgVal,attrElem) {
+    var kindElem = attrElem,kindId = img.id,kindVal = imgVal;
+    Camera.updateImg(kindElem,kindId,kindVal);
+  }
+
+
+*/
+})
 
 .controller('SoapDetailCtrl', function($scope,$state,$stateParams,Soaps,Responders,Vitals,Nols){
   Soaps.get($stateParams.soapId, function(err,soapDetail){
@@ -470,17 +540,15 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
 })
 
 .controller('VitalAllCtrl', function($scope,$state,$stateParams,Vitals,Soaps,Nols){
-
-    Vitals.getLast(function(err,lastVital){
-      if(lastVital === null || lastVital.starterFlag === 'true'){
-        Vitals.saveNewVital({},$stateParams.soapId,function(err,starterVital){
-          $scope.starterVital = starterVital;
-        })
-      }else {
-        $scope.starterVital = lastVital;
-      }
-    })
-
+  Vitals.getLast(function(err,lastVital){
+    if(lastVital === null || lastVital.starterFlag === 'true'){
+      Vitals.saveNewVital({},$stateParams.soapId,function(err,starterVital){
+        $scope.starterVital = starterVital;
+      })
+    }else {
+      $scope.starterVital = lastVital;
+    }
+  })
 
   Vitals.getAll($stateParams.soapId, function(err, soapVitals){
     $scope.soapVitalsId = $stateParams.soapId;
