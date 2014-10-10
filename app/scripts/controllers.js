@@ -222,6 +222,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
         for(var i=0;i<soapImages.length;i++){
           var uri = soapImages[i].imageURI;
           imageURIS.push(uri);
+          //ToDo add captions => put img and caption in an array and cycle
         }
         return imageURIS;
       }
@@ -480,6 +481,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
   Camera.createImgTable();
 
   Soaps.get($stateParams.soapId, function(err,soapImg){
+    console.log(soapImg);//MAKE SURE ID IS BEING PASSED!!!!
     $scope.soapImg = soapImg;
     Camera.all(soapImg.id, function(err,imgs){
       $scope.imgs = imgs.filter(function(entry){return entry.starterFlag === 'true'});
