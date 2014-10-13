@@ -28,12 +28,12 @@
 
       <!-- Heart -->
 
-     <h5>Heart<a ng-controller="SoapCtrl" ng-click="openModal(5)"><span>i</span></a></h5>
+     <h5>Heart</h5>
 <h6>Rate (Beats Per Minute)</h6>
 	  <label class="item item-input">
         <input id="Vital.rate" type="number" placeholder="Rate (BPM)" ng-model="vitalDetail.rate" ng-model-onblur ng-change="monitorVitalChange(vitalDetail,vitalDetail.rate,'rate')">
       </label>
-      <h6>Rythm</h6>
+      <h6>Rhythm</h6>
       <div class="item item-select">
         <div class="input-label">
           Rhythm
@@ -57,7 +57,7 @@
 
 
       <!-- Respiratory -->
-<h5>Respiratory<a ng-controller="SoapCtrl" ng-click="openModal(5)"><span>i</span></a></h5>
+<h5>Respiratory</h5>
 <h6>Rate (Breaths Per Minute)</h6>
 
 	  <label class="item item-input">
@@ -88,7 +88,7 @@
 
 
       <!-- Skin -->
-      <h5>Skin<a ng-controller="SoapCtrl" ng-click="openModal(5)"><span>i</span></a></h5>
+      <h5>Skin</h5>
       <h6>Color</h6>
 	   <div class="item item-select">
         <div class="input-label">
@@ -133,7 +133,7 @@
       </div>
       <h6>Systolic</h6>
 	  <label class="item item-input">
-        <input id="brsystolic" type="number" placeholder="Reading" ng-model="vitalDetail.brsystolic" ng-change="monitorVitalChange(vitalDetail,vitalDetail.brsystolic,'brsystolic')">
+        <input id="brsystolic" type="number" placeholder="Measurement (mmHg)" ng-model="vitalDetail.brsystolic" ng-change="monitorVitalChange(vitalDetail,vitalDetail.brsystolic,'brsystolic')">
       </label>
       <h6>Diastolic</h6>
 

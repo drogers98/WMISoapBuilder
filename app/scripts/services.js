@@ -606,8 +606,8 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce', 'ngCord
         //sourceType : Camera.PictureSourceType.CAMERA,
         allowEdit : true,
         encodingType: Camera.EncodingType.JPEG,
-        targetWidth: 100,
-        targetHeight: 120,
+        targetWidth: 200,
+        targetHeight: 200,
         saveToPhotoAlbum: false
       };
 

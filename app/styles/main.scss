@@ -184,7 +184,6 @@ a {
 		background-image: none;
 		@extend .boxShadow;
 
-
 		.title {
 				color: $WMIred;
 				font-weight: normal;
@@ -567,8 +566,34 @@ padding-bottom: 50px;
 	}
 }
 
+
 .ion-app-assessment-plan:before,.ion-app-help:before,.ion-app-objective:before,.ion-app-overview:before,.ion-app-photos:before,.ion-app-share:before,.ion-app-subjective:before{display:inline-block;font-family:Ionicons;speak:none;font-style:normal;font-weight:400;font-variant:normal;text-transform:none;text-rendering:auto;line-height:1;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
 
 .ion-app-assessment-plan:before{content:"\f360"}.ion-app-help:before{content:"\f361"}.ion-app-objective:before{content:"\f362"}.ion-app-overview:before{content:"\f363"}.ion-app-photos:before{content:"\f364"}.ion-app-share:before{content:"\f365"}.ion-app-subjective:before{content:"\f366"}.ion-archive:before{content:"\f102"}
 
 
+
+.card-image {
+	float:left;
+	width:100%;
+	.card-image-left{
+		float:left;
+		width:50%;
+		.item {
+			font-size:30px;
+			padding:0;
+		}
+		.item-avatar {
+			padding-left:0;
+			min-height:0;
+			text-align:center;
+			i {
+				color:darkred;
+			}
+		}
+		img{
+			height:100%;
+			width:100%;
+		}
+	}
+}

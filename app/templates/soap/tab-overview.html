@@ -28,17 +28,12 @@
       </label>
       <h6>Coordinates</h6>
 
-
-
       <label class="item">
-
-
 
       {{soapOverview.incidentLat}} {{soapOverview.incidentLon}}
       </label>
-
-      <a id="coordsBtn" class="button button-block button-light margin" ng-click="getLocation(soapOverview)"><icon class="ion-pinpoint"></icon><span id="GeoLocationBtnInner">Get Coordinates</span></a>
-
+      <a id="coordsBtn" ng-show="soapOverview.incidentLat == ''" class="button button-block button-light margin" ng-click="getLocation(soapOverview)"><icon class="ion-pinpoint"></icon><span id="GeoLocationBtnInner">Get Coordinates</span></a>
+      <a id="coordsBtn" ng-show="soapOverview.incidentLat || soapOverview.incidentLon" class="button button-block button-calm margin" ng-click="resetLocation(soapOverview)"><icon class="ion-pinpoint"></icon><span id="GeoLocationBtnInner">Reset Coordinates</span></a>
 
 
       </div>
