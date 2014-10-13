@@ -1,6 +1,6 @@
 <ion-view title="Add Photos">
 <ion-nav-buttons side="left">
-    <a class="button icon ion-ios7-arrow-back" href="#/tab/ap">A & P</a>
+    <a class="button icon ion-ios7-arrow-back" href="#/tab/ap/{{soapImg.id}}">A & P</a>
   </ion-nav-buttons>
 
   <ion-nav-buttons side="right">
@@ -11,23 +11,30 @@
 
   <div class="SOAP">
 
-<div id="camera">
-<ion-list>
-  <div class="row">
-    <div class="col list">
-      <ion-item ng-controller="SoapImgCtrl" ng-repeat="img in imgs">
-        <div item item-button-right>
-          <img style="display:block" ng-src="{{img.imageURI}}">
-          <input id="Camera.imgCaption" type="text" ng-model="img.imgCaption" ng-model-onblur ng-change="addACaption(img,img.imgCaption,'imgCaption')" placeholder="Add a Caption">
-          <a class="button button-dark" ng-click="deleteImg(img)">
-            <i class="icon ion-ios7-close"></i>
-          </a>
-        </div>
-      </ion-item>
+<div class="card-image">
+  <div class="list card card-image-left" ng-controller="SoapImgCtrl" ng-repeat="img in imgs">
+    <a class="item item-avatar" ng-controller="SoapImgDetailCtrl" ng-click="deleteImg(img)">
+      <i class="icon ion-ios7-close"></i>
+    </a>
+    <div class="item item-image">
+      <img style="display:block" ng-src="{{img.imageURI}}">
+      <input id="Camera.imgCaption" type="text" ng-model="img.imgCaption" ng-model-onblur ng-controller="SoapImgDetailCtrl" ng-change="addACaption(img,img.imgCaption,'imgCaption')" placeholder="Add a Caption">
     </div>
   </div>
-</ion-list>
 </div>
+
+<!--
+<ion-list class="card card-image">
+      <ion-item ng-controller="SoapImgCtrl" ng-repeat="img in imgs" class="item-image card-image-left">
+        <a class="item item-avatar" ng-click="deleteImg(img)">
+          <i class="icon ion-ios7-close"></i>
+        </a>
+        <img style="display:block" ng-src="{{img.imageURI}}">
+        <input id="Camera.imgCaption" type="text" ng-model="img.imgCaption" ng-model-onblur ng-change="addACaption(img,img.imgCaption,'imgCaption')" placeholder="Add a Caption">
+      </ion-item>
+</ion-list>
+-->
+
 
 
 

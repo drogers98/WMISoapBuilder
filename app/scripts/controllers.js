@@ -343,6 +343,15 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
       }
     })
   }
+
+  $scope.resetLocation = function(soap) {
+    var locationElem = ['incidentLat','incidentLon'];
+    var location = ['',''];
+    $scope.soapOverview.incidentLat = location[0];
+    $scope.soapOverview.incidentLon = location[1];
+    Soaps.updateSoapQuery(locationElem,soap.id,location)
+  }
+
 /*
   if(!navigator.geolocation){
     document.getElementById('GeoLocationBtnInner').innerHTML = "GPS Unavailable";
@@ -370,6 +379,15 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
 
   $scope.monitorSoapSubjectiveChange = function(soap,soapVal,attrElem){
     var kindElem = attrElem,kindId = soap.id,kindVal = soapVal;
+    if(kindElem === 'patientDob') {
+      var birthDay = kindVal,
+        DOB = new Date(birthDay),
+        today = new Date(),
+        age = today.getTime() - DOB.getTime();
+        age = Math.floor(age / (1000 * 60 * 60 * 24 * 365.25));
+        $scope.soapSubjective.patientAge = age;
+        Soaps.updateSoap('patientAge',kindId,age);
+    }
     Soaps.updateSoap(kindElem,kindId,kindVal);
   }
 
@@ -390,16 +408,6 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
                       'Tearing', 'Tight', 'Other'];
   $scope.severities = range(10);
   $scope.spinals = ['Yes', 'No'];
-
-  $scope.findAge = function (date) {
-    //SIT THIS INSIDE MONITOR SOAP SUB CHANGE
-    var birthDay = $scope.soapSubjective.patientDob,
-      DOB = new Date(birthDay),
-      today = new Date(),
-      age = today.getTime() - DOB.getTime();
-      age = Math.floor(age / (1000 * 60 * 60 * 24 * 365.25));
-      $scope.soapSubjective.patientAge = age;
-  }
 
 })
 
@@ -466,6 +474,28 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
     })
   }
 
+  $scope.deleteImg = function(img) {
+    var confirmDelete = $ionicPopup.confirm({
+      title: 'Remove Image',
+      template: 'Are you sure you to delete this image?'
+    })
+    confirmDelete.then(function(res){
+      if(res){
+        Camera.deleteImg(img.id);
+        $scope.imgs.splice($scope.imgs.indexOf(img.id), 1)
+        reloadImgRepeat();
+      }else {
+        return;
+      }
+    })
+  }
+
+
+  $scope.addACaption = function(img,imgVal,attrElem) {
+    var kindElem = attrElem,kindId = img.id,kindVal = imgVal;
+    Camera.updateImg(kindElem,kindId,kindVal);
+  }
+
   var updateImgFlag = function(imgId){
     Camera.updateImg("starterFlag",imgId,true);
     reloadImgRepeat();
@@ -498,26 +528,6 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
     })
   })
 
-  $scope.addACaption = function(img,imgVal,attrElem) {
-    var kindElem = attrElem,kindId = img.id,kindVal = imgVal;
-    Camera.updateImg(kindElem,kindId,kindVal);
-  }
-
-  $scope.deleteImg = function(img) {
-    var confirmDelete = $ionicPopup.confirm({
-      title: 'Remove Image',
-      template: 'Are you sure you to delete this image?'
-    })
-    confirmDelete.then(function(res){
-      if(res){
-        Camera.deleteImg(img.id);
-        $scope.imgs.splice($scope.imgs.indexOf(img.id), 1)
-      }else {
-        return;
-      }
-    })
-  }
-
 /*  $scope.takeNewImg = function() {
     Soaps.get($stateParams.soapId, function(err,soapImg){
       Camera.getNewImg(function(err,imgAttr){
@@ -535,9 +545,17 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
 */
 })
 
-.controller('SoapDetailCtrl', function($scope,$state,$stateParams,Soaps,Responders,Vitals,Nols){
+.controller('SoapDetailCtrl', function($scope,$state,$stateParams,Soaps,Responders,Vitals,Camera,Nols){
+
   Soaps.get($stateParams.soapId, function(err,soapDetail){
     $scope.soapDetail = soapDetail;
+    Vitals.all(soapDetail.id, function(err,soapVitals,recentSoapReviewVitals){
+      $scope.recentSoapDetailVitals = recentSoapDetailVitals;
+    })
+    Camera.allQuery(soapDetail.id, function(err,soapImgs){
+      $scope.soapImgs = soapImgs.filter(function(entry){return entry.starterFlag === 'true';});
+      return $scope.soapImgs;
+    })
   })
 })
 
@@ -599,9 +617,16 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
   $scope.timeValue = 0;
   function countdown(){
     $scope.timeValue++;
-    $scope.timeout = $timeout(countdown,1000);
+    if($scope.timeValue < 60) {
+      $scope.timeout = $timeout(countdown,1000);
+    }else{
+      $scope.stop();
+    }
   };
   $scope.start = function(){
+    if($scope.timeValue === 60){
+      $scope.timeValue = 0;
+    }
     countdown();
     $scope.play = true;
     $scope.pause = false;

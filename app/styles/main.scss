@@ -560,3 +560,28 @@ padding-bottom: 50px;
 		}
 	}
 }
+
+.card-image {
+	float:left;
+	width:100%;
+	.card-image-left{
+		float:left;
+		width:50%;
+		.item {
+			font-size:30px;
+			padding:0;
+		}
+		.item-avatar {
+			padding-left:0;
+			min-height:0;
+			text-align:center;
+			i {
+				color:darkred;
+			}
+		}
+		img{
+			height:100%;
+			width:100%;
+		}
+	}
+}
