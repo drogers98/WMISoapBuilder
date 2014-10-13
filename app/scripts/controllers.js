@@ -258,7 +258,8 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
 
         //var messagePartIIA = "<table style='width:100%;text-align:center;border:1px solid #EFEFEF;border-collapse:collapse;'>";
         var messagePartIIB = function(soapVitals) {
-          var vitalListTime = [],vitalListLor = [],vitalListRate = [];
+          var vitalListTime = [],vitalListLor = [],vitalListRate = [],vitalListHeartRhythm = [],
+              vitalListHeartQuality = [],vitalListRespRate = [],vitalListRespRhythm = [];
           var filteredVitals = soapVitals.filter(function(entry){return entry.starterFlag === 'true';});
           for(var key in filteredVitals){
             var tdStyle = "style='width:25%;border:1px solid #EFEFEF;padding:5px'";
@@ -266,6 +267,10 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
             vitalListTime.push("<td style='width:25%;border:1px solid #EFEFEF;padding:5px'>" + filteredVitals[key].timeTaken + "</td>");
             vitalListLor.push("<td style='width:25%;border:1px solid #EFEFEF;padding:5px'>" + filteredVitals[key].lor + "</td>");
             vitalListRate.push("<td style='width:25%;border:1px solid #EFEFEF;padding:5px'>" + filteredVitals[key].rate + "</td>");
+            vitalListHeartRhythm.push("<td style='width:25%;border:1px solid #EFEFEF;padding:5px'>" + filteredVitals[key].heartRythm + "</td>");
+            vitalListHeartQuality.push("<td style='width:25%;border:1px solid #EFEFEF;padding:5px'>" + filteredVitals[key].heartQuality + "</td>");
+            vitalListRespRate.push("<td style='width:25%;border:1px solid #EFEFEF;padding:5px'>" + filteredVitals[key].respRate + "</td>");
+            vitalListRespRhythm.push("<td style='width:25%;border:1px solid #EFEFEF;padding:5px'>" + filteredVitals[key].respRhythm + "</td>");
             emailVitalObj['timeTaken'] = vitalListTime;
             emailVitalObj['lor'] = vitalListLor;
             emailVitalObj['rate'] = vitalListRate;
@@ -273,6 +278,10 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
                           +'<tr>'+'<th>TimeTaken</th>'+emailVitalObj.timeTaken+'</tr>'
                           +'<tr>'+'<th>Lor</th>'+emailVitalObj.lor+'</tr>'
                           +'<tr>'+'<th>Rate</th>'+emailVitalObj.rate+'</tr>'
+                          +'<tr>'+'<th>Rate</th>'+emailVitalObj.heartRythm+'</tr>'
+                          +'<tr>'+'<th>Rate</th>'+emailVitalObj.heartQuality+'</tr>'
+                          +'<tr>'+'<th>Rate</th>'+emailVitalObj.respRate+'</tr>'
+                          +'<tr>'+'<th>Rate</th>'+emailVitalObj.respRhythm+'</tr>'
                           +'</table>';
           }
           return message;
