@@ -260,26 +260,27 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
         var messagePartIIB = function(soapVitals) {
           var vitalListTime = [],vitalListLor = [],vitalListRate = [];
           var filteredVitals = soapVitals.filter(function(entry){return entry.starterFlag === 'true';});
-          //console.log(filteredVitals);
           for(var key in filteredVitals){
             var tdStyle = "style='width:25%;border:1px solid #EFEFEF;padding:5px'";
             var emailVitalObj = {};
             vitalListTime.push("<td style='width:25%;border:1px solid #EFEFEF;padding:5px'>" + filteredVitals[key].timeTaken + "</td>");
+            vitalListLor.push("<td style='width:25%;border:1px solid #EFEFEF;padding:5px'>" + filteredVitals[key].lor + "</td>");
+            vitalListRate.push("<td style='width:25%;border:1px solid #EFEFEF;padding:5px'>" + filteredVitals[key].rate + "</td>");
             emailVitalObj['timeTaken'] = vitalListTime;
-            //emailVitalObj['timeTaken'] = vitalListTime.push("<td " + tdStyle + ">" + filteredVitals[key].timeTaken + "</td>");
-            //emailVitalObj['lor'] = vitalListLor.push("<td " + tdStyle + ">" + filteredVitals[key].lor + "</td>");
-            //emailVitalObj['rate'] = vitalListRate.push("<td " + tdStyle + ">" + filteredVitals[key].rate + "</td>")
-            var message = '<table>' +'<tr>'+'<th>TimeTaken</th>'+emailVitalObj.timeTaken+'</tr>'+ '</table>';
+            emailVitalObj['lor'] = vitalListLor;
+            emailVitalObj['rate'] = vitalListRate;
+            var message = "<table style='width:100%;text-align:center;border:1px solid #EFEFEF;border-collapse:collapse;'>"
+                          +'<tr>'+'<th>TimeTaken</th>'+emailVitalObj.timeTaken+'</tr>'
+                          +'<tr>'+'<th>Lor</th>'+emailVitalObj.lor+'</tr>'
+                          +'<tr>'+'<th>Rate</th>'+emailVitalObj.rate+'</tr>'
+                          +'</table>';
           }
           return message;
         }
 
 
         //'<tr>' + "<th style='width:25%;border:1px solid #EFEFEF;border-collapse:collapse;padding:5px;text-align:right;padding-right:10px;background-color:#EFEFEF;text-transform:uppercase'>"
-/*
-        var messagePartIIC = "</table>";
-        var messagePartII = buildVitalTable(soapVitals);
-*/
+
         var messagePartIII = '<h3>Patient History</h3>'+
         '<strong>Symptoms</strong>: ' + soap.patientSymptoms + '<br/>' +
         '<strong>Allergies</strong>: ' + soap.patientAllergies + '<br/>' +
@@ -296,12 +297,6 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
         return messagePartI + messagePartIIB(soapVitals) + messagePartIII;
       }
 
-     //var subject = 'Soap Note: Test',
-     //   toArr = ['rogers@eyebytesolutions.com'],
-     //   bccArr = [''];
-
-     //$cordovaSocialSharing
-     //   .shareViaEmail(message,subject,toArr,bccArr)
 
      window.plugin.email.open({
         to:      ['rogers@eyebytesolutions.com'],
@@ -312,11 +307,10 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
         body:    runMessage(soapVitals),
         isHtml:  true
      });
-     //runMessage(soapVitals);
+
 
  }
-     //console.log(runImages(soapImages))
-    //};
+
 
 
 })
@@ -452,7 +446,9 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
   Soaps.get($stateParams.soapId, function(err,soapReview){
     $scope.soapReview = soapReview;
     Vitals.all(soapReview.id, function(err,soapVitals,recentSoapReviewVitals){
-      $scope.recentSoapReviewVitals = recentSoapReviewVitals;
+      $scope.soapVitals = soapVitals;
+      $scope.recentSoapReviewVitals = recentSoapReviewVitals.filter(function(entry){return entry.starterFlag === 'true';});
+      return $scope.recentSoapReviewVitals;
     })
     Camera.allQuery(soapReview.id, function(err,soapImgs){
       $scope.soapImgs = soapImgs.filter(function(entry){return entry.starterFlag === 'true';});
@@ -543,8 +539,9 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
 
   Soaps.get($stateParams.soapId, function(err,soapDetail){
     $scope.soapDetail = soapDetail;
-    Vitals.all(soapDetail.id, function(err,soapVitals,recentSoapReviewVitals){
-      $scope.recentSoapDetailVitals = recentSoapDetailVitals;
+    Vitals.all(soapDetail.id, function(err,soapVitals,recentSoapDetailVitals){
+      $scope.recentSoapDetailVitals = recentSoapDetailVitals.filter(function(entry){return entry.starterFlag === 'true';});
+      return $scope.recentSoapDetailVitals;
     })
     Camera.allQuery(soapDetail.id, function(err,soapImgs){
       $scope.soapImgs = soapImgs.filter(function(entry){return entry.starterFlag === 'true';});
@@ -566,7 +563,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
 
   Vitals.getAll($stateParams.soapId, function(err, soapVitals){
     $scope.soapVitalsId = $stateParams.soapId;
-    $scope.soapVitals = soapVitals;
+    $scope.soapVitals = soapVitals.filter(function(entry){return entry.starterFlag === 'true';});
   })
 })
 
