@@ -1,4 +1,4 @@
-<ion-view title="{{soapReview.patientSex}}, {{soapReview.patientAge}} | {{soapReview.patientInitials}}">
+<ion-view title="{{soapReview.patientGender}}, {{soapReview.patientAge}} | {{soapReview.patientInitials}}">
 <ion-nav-buttons side="left">
     <a class="button icon ion-ios7-arrow-back" href="#/tab/ap/{{soapReview.id}}">Back</a>
   </ion-nav-buttons>
@@ -17,16 +17,12 @@
         <ion-list>
           <ion-item class="item-text-wrap"><strong>Date of Incident: </strong> {{soapReview.incidentDate}}</ion-item>
           <ion-item class="item-text-wrap"><strong>Location: </strong> {{soapReview.incidentLocation}}</ion-item>
-          <ion-item class="item-text-wrap"><strong>Coordinates: </strong> {{soapReview.incidentLat}}, {{soap.incidentLon}}</ion-item>
+          <ion-item class="item-text-wrap"><strong>Coordinates: </strong> {{soapReview.incidentLat}}, {{soapReview.incidentLon}}</ion-item>
            <ion-item class="item-text-wrap"><strong>Responder: </strong> {{soapReview.responderFirstName}} {{soapReview.responderLastName}}, {{soapReview.responderTrainingLevel}}</ion-item>
         </ion-list>
       </div>
 
-
-
      <h5>Subjective</h5>
-
-
 
       <div class="list">
         <ion-list>

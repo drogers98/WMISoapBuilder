@@ -404,7 +404,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
                       'Dull Pressure', 'Sharp',
                       'Squeezing', 'Stabbing',
                       'Tearing', 'Tight', 'Other'];
-  $scope.severities = range(10);
+  $scope.severities = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
   $scope.spinals = ['Yes', 'No'];
 
 })

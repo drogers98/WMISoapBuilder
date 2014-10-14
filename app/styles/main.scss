@@ -350,11 +350,12 @@ select {
 .input-label {
 	font-weight: normal;
 }
-.pane {
+.FirstResponder {
 	 background-image: url('../images/WMI_APP_BCKRD_Crushed.png');
 	background-size: cover;
     background-repeat: no-repeat;
     background-position: right center;
+    
 }
 .menu {
 	background-color:rgba(255, 255, 255, 0.4);
@@ -369,7 +370,7 @@ select {
   height: 100%;
 }
 .scroll-content > .scroll > .FirstResponder {
-  height: 100%;
+ 
 
 }
 
@@ -578,17 +579,20 @@ padding-bottom: 50px;
 	width:100%;
 	.card-image-left{
 		float:left;
-		width:50%;
+		width:43%;
 		.item {
 			font-size:30px;
 			padding:0;
 		}
 		.item-avatar {
 			padding-left:0;
+			padding-right: 3px;
 			min-height:0;
-			text-align:center;
+			text-align: right;
 			i {
-				color:darkred;
+				color:$WMI_DK_red;
+				
+				
 			}
 		}
 		img{
