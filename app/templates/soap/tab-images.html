@@ -18,7 +18,10 @@
     </a>
     <div class="item item-image">
       <img style="display:block" ng-src="{{img.imageURI}}">
-      <input id="Camera.imgCaption" type="text" ng-model="img.imgCaption" ng-model-onblur ng-controller="SoapImgDetailCtrl" ng-change="addACaption(img,img.imgCaption,'imgCaption')" placeholder="Add a Caption">
+      <input id="Camera.imgCaption" type="text" ng-model="img.imgCaption" ng-model-onblur ng-controller="SoapImgDetailCtrl" ng-change="addACaption(img,img.imgCaption,'imgCaption')"
+        ng-keyup="expandText($event)"
+        ng-keydown="expandText($event)"
+       placeholder="Add a Caption">
     </div>
   </div>
 </div>

@@ -463,6 +463,12 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
     reloadImgRepeat();
   }
 
+  $scope.expandText = function(obj){
+  var valueID = obj.target.attributes.id.value;
+  var element = document.getElementById(valueID);
+  element.style.height =  element.scrollHeight + "px";}
+
+
   $scope.addACaption = function(img,imgVal,attrElem) {
     var kindElem = attrElem,kindId = img.id,kindVal = imgVal;
     Camera.updateImg(kindElem,kindId,kindVal);
