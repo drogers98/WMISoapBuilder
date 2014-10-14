@@ -66,6 +66,15 @@ input[disabled] {
 	background-color: $WMIwhite;
 }
 
+// adjust styles for patient initials. smooth out touppercase.js
+.initials {
+	::-webkit-input-placeholder {
+	text-transform: none;
+}
+input {
+	text-transform: uppercase;
+}
+}
 
 // Mixins --------------------------
 @mixin border-radius($radius) {
@@ -326,7 +335,7 @@ select {
 }
 
 textarea {
-	height:40px;
+	height:80px;
 	resize:none;
 }
 
@@ -371,8 +380,6 @@ select {
   height: 100%;
 }
 .scroll-content > .scroll > .FirstResponder {
-
-
 }
 
 //wrapper
