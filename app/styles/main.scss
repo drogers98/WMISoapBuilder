@@ -326,7 +326,8 @@ select {
 }
 
 textarea {
-	height:auto;
+	height:40px;
+	resize:none;
 }
 
 .item-select {
@@ -416,11 +417,6 @@ padding-bottom: 10px;
 }
 
 // SOAP Pages -----------------------------------------------------
-
-// Hide textarea resize
-textarea {
-resize:none;
-}
 
 // Soap Specific
 .SOAP {
@@ -567,7 +563,7 @@ padding-bottom: 50px;
 	}
 }
 
-
+// Custom Icon Fonts
 .ion-app-assessment-plan:before,.ion-app-help:before,.ion-app-objective:before,.ion-app-overview:before,.ion-app-photos:before,.ion-app-share:before,.ion-app-subjective:before{display:inline-block;font-family:Ionicons;speak:none;font-style:normal;font-weight:400;font-variant:normal;text-transform:none;text-rendering:auto;line-height:1;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
 
 .ion-app-assessment-plan:before{content:"\f360"}.ion-app-help:before{content:"\f361"}.ion-app-objective:before{content:"\f362"}.ion-app-overview:before{content:"\f363"}.ion-app-photos:before{content:"\f364"}.ion-app-share:before{content:"\f365"}.ion-app-subjective:before{content:"\f366"}.ion-archive:before{content:"\f102"}
