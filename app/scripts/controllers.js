@@ -55,7 +55,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
 
 })
 
-.controller('SoapCtrl', function($scope, $state, $stateParams, $ionicPopup,
+.controller('SoapCtrl', function($scope, $state, $stateParams,
                                  $ionicModal, $timeout, $location,
                                  Soaps, Responders, Nols,$cordovaSocialSharing){
   "use strict";
@@ -90,7 +90,6 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
   };
 
   $scope.onItemDelete = function(soapId) {
-    alert('hi')
     Soaps.deleteSoap(soapId);
     $scope.soaps.splice($scope.soaps.indexOf(soapId), 1)
   }
@@ -100,24 +99,8 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
   };
 
   $scope.cancelSoap = function(soap){
-    var confirmPopup = $ionicPopup.confirm({
-      template: 'Delete Soap or view all soaps',
-      buttons: [
-        {text: 'Delete Soap',
-        type: 'button-positive',
-         onTap: function(){
-           Soaps.deleteSoap(soap.id);
-           $state.go('soaps');
-         }
-        },
-        {text: 'My Soaps',
-        type: 'button-soaps',
-         onTap: function(){
-           $state.go('soaps');
-         }
-        }
-      ]
-    });
+    Soaps.deleteSoap(soap.id);
+    $state.go('soaps');
   }
 
 

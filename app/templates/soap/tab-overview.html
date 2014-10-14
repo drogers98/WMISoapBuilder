@@ -1,7 +1,7 @@
 <ion-view title="Overview">
 
   <ion-nav-buttons side="left">
-    <a class="button icon ion-ios7-arrow-back" ng-controller="SoapCtrl" ng-click="cancelSoap(soapOverview)">Cancel</a>
+    <a class="button icon ion-ios7-arrow-back" ng-controller="SoapCtrl" confirmed-click="cancelSoap(soapOverview)" ng-confirm-click="Going back will delete this SOAP">Cancel</a>
   </ion-nav-buttons>
 
   <ion-nav-buttons side="right">

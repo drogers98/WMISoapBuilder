@@ -350,12 +350,12 @@ select {
 .input-label {
 	font-weight: normal;
 }
-.FirstResponder {
+.FirstResponder, .AboutWMI {
 	 background-image: url('../images/WMI_APP_BCKRD_Crushed.png');
 	background-size: cover;
     background-repeat: no-repeat;
     background-position: right center;
-    
+
 }
 .menu {
 	background-color:rgba(255, 255, 255, 0.4);
@@ -370,7 +370,7 @@ select {
   height: 100%;
 }
 .scroll-content > .scroll > .FirstResponder {
- 
+
 
 }
 
@@ -591,8 +591,8 @@ padding-bottom: 50px;
 			text-align: right;
 			i {
 				color:$WMI_DK_red;
-				
-				
+
+
 			}
 		}
 		img{
