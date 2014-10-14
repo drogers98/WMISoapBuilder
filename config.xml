@@ -11,6 +11,7 @@
     <feature name="Camera">
         <param name="ios-package" value="CDVCamera" />
     </feature>
+
  
     <access origin="*" />
 </widget>
