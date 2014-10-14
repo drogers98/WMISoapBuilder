@@ -458,19 +458,9 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
   }
 
   $scope.deleteImg = function(img) {
-    var confirmDelete = $ionicPopup.confirm({
-      title: 'Remove Image',
-      template: 'Are you sure you to delete this image?'
-    })
-    confirmDelete.then(function(res){
-      if(res){
-        Camera.deleteImg(img.id);
-        $scope.imgs.splice($scope.imgs.indexOf(img.id), 1)
-        reloadImgRepeat();
-      }else {
-        return;
-      }
-    })
+    Camera.deleteImg(img.id);
+    $scope.imgs.splice($scope.imgs.indexOf(img.id), 1)
+    reloadImgRepeat();
   }
 
   $scope.addACaption = function(img,imgVal,attrElem) {

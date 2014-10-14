@@ -13,7 +13,7 @@
 
 <div class="card-image">
   <div class="list card card-image-left" ng-controller="SoapImgCtrl" ng-repeat="img in imgs">
-    <a class="item item-avatar" ng-controller="SoapImgDetailCtrl" ng-click="deleteImg(img)">
+    <a class="item item-avatar" ng-controller="SoapImgDetailCtrl" confirmed-click="deleteImg(img)" ng-confirm-click="Are you sure you want to delete this image?">
       <i class="icon ion-ios7-close"></i>
     </a>
     <div class="item item-image">

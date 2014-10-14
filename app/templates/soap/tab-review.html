@@ -159,13 +159,13 @@
       </div>
 
       <h5>Patient Images</h5>
-      <div class="list">
-        <ion-list>
-          <ion-item ng-repeat="soapImg in soapImgs">
-            <img style="width:40%;height:30%;display:block;" ng-src="{{soapImg.imageURI}}">
+      <div class="card-image">
+        <div class="list card card-image-left" ng-repeat="soapImg in soapImgs">
+          <div class="item item-image">
+            <img style="display:block" ng-src="{{soapImg.imageURI}}">
             <p>{{soapImg.imgCaption}}</p>
-          </ion-item>
-        </ion-list>
+          </div>
+        </div>
       </div>
 
 <a class="button button-block button-light icon icon-right ion-app-share margin" ng-controller="SoapCtrl" ng-click="shareSOAP(soapReview,recentSoapReviewVitals,soapImgs)">Share This SOAP</a>
