@@ -90,18 +90,9 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
   };
 
   $scope.onItemDelete = function(soapId) {
-    var confirmDelete = $ionicPopup.confirm({
-      title: 'SOAP ID ' + soapId,
-      template: 'Are you sure you want to delete this SOAP?'
-    })
-    confirmDelete.then(function(res){
-      if(res){
-        Soaps.deleteSoap(soapId);
-        $scope.soaps.splice($scope.soaps.indexOf(soapId), 1)
-      }else {
-        return;
-      }
-    })
+    alert('hi')
+    Soaps.deleteSoap(soapId);
+    $scope.soaps.splice($scope.soaps.indexOf(soapId), 1)
   }
 
   $scope.data = {
@@ -258,30 +249,39 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
 
         //var messagePartIIA = "<table style='width:100%;text-align:center;border:1px solid #EFEFEF;border-collapse:collapse;'>";
         var messagePartIIB = function(soapVitals) {
-          var vitalListTime = [],vitalListLor = [],vitalListRate = [],vitalListHeartRhythm = [],
-              vitalListHeartQuality = [],vitalListRespRate = [],vitalListRespRhythm = [];
+          var vitalListTime = [],vitalListLor = [],vitalListHR = [],vitalListRR = [],
+              vitalListSkin = [],vitalListBP = [],vitalListPupils = [],vitalListTemp = [];
           var filteredVitals = soapVitals.filter(function(entry){return entry.starterFlag === 'true';});
           for(var key in filteredVitals){
             var tdStyle = "style='width:25%;border:1px solid #EFEFEF;padding:5px'";
+            var thStyle = "style='width:25%;border:1px solid #EFEFEF;border-collapse:collapse;padding:5px;text-align:right;padding-right:10px;background-color:#EFEFEF;text-transform:uppercase'";
+            var tbStyle = "style='width:100%;text-align:center;border:1px solid #EFEFEF;border-collapse:collapse;";
             var emailVitalObj = {};
-            vitalListTime.push("<td style='width:25%;border:1px solid #EFEFEF;padding:5px'>" + filteredVitals[key].timeTaken + "</td>");
-            vitalListLor.push("<td style='width:25%;border:1px solid #EFEFEF;padding:5px'>" + filteredVitals[key].lor + "</td>");
-            vitalListRate.push("<td style='width:25%;border:1px solid #EFEFEF;padding:5px'>" + filteredVitals[key].rate + "</td>");
-            vitalListHeartRhythm.push("<td style='width:25%;border:1px solid #EFEFEF;padding:5px'>" + filteredVitals[key].heartRythm + "</td>");
-            vitalListHeartQuality.push("<td style='width:25%;border:1px solid #EFEFEF;padding:5px'>" + filteredVitals[key].heartQuality + "</td>");
-            vitalListRespRate.push("<td style='width:25%;border:1px solid #EFEFEF;padding:5px'>" + filteredVitals[key].respRate + "</td>");
-            vitalListRespRhythm.push("<td style='width:25%;border:1px solid #EFEFEF;padding:5px'>" + filteredVitals[key].respRhythm + "</td>");
+            vitalListTime.push('<td '+tdStyle+'>'+ filteredVitals[key].timeTaken + '</td>');
+            vitalListLor.push('<td '+tdStyle+'>'+ filteredVitals[key].lor + '</td>');
+            vitalListHR.push('<td '+tdStyle+'>'+ filteredVitals[key].rate + ' ' + filteredVitals[key].heartRythm + ' ' + filteredVitals[key].heartQuality +'</td>');
+            vitalListRR.push('<td '+tdStyle+'>'+ filteredVitals[key].respRate + ' ' + filteredVitals[key].respRhythm + ' ' + filteredVitals[key].respQuality +'</td>');
+            vitalListSkin.push('<td '+tdStyle+'>'+ filteredVitals[key].sctmcolor + ' ' + filteredVitals[key].sctmtemp + ' ' + filteredVitals[key].sctmmoisture +'</td>');
+            vitalListBP.push('<td '+tdStyle+'>'+ filteredVitals[key].brradialpulse + ' ' + filteredVitals[key].brsystolic+'/'+filteredVitals[key].brradialReading + ' ' + filteredVitals[key].brradialtaken +'</td>');
+            vitalListPupils.push('<td '+tdStyle+'>'+ filteredVitals[key].pupils + '</td>');
+            vitalListTemp.push('<td '+tdStyle+'>'+ filteredVitals[key].tempDegreesReading + ' ' + filteredVitals[key].tempDegrees+'</td>');
             emailVitalObj['timeTaken'] = vitalListTime;
             emailVitalObj['lor'] = vitalListLor;
-            emailVitalObj['rate'] = vitalListRate;
-            var message = "<table style='width:100%;text-align:center;border:1px solid #EFEFEF;border-collapse:collapse;'>"
-                          +'<tr>'+'<th>TimeTaken</th>'+emailVitalObj.timeTaken+'</tr>'
-                          +'<tr>'+'<th>Lor</th>'+emailVitalObj.lor+'</tr>'
-                          +'<tr>'+'<th>Rate</th>'+emailVitalObj.rate+'</tr>'
-                          +'<tr>'+'<th>Rate</th>'+emailVitalObj.heartRythm+'</tr>'
-                          +'<tr>'+'<th>Rate</th>'+emailVitalObj.heartQuality+'</tr>'
-                          +'<tr>'+'<th>Rate</th>'+emailVitalObj.respRate+'</tr>'
-                          +'<tr>'+'<th>Rate</th>'+emailVitalObj.respRhythm+'</tr>'
+            emailVitalObj['hr'] = vitalListHR;
+            emailVitalObj['rr'] = vitalListRR;
+            emailVitalObj['skin'] = vitalListSkin;
+            emailVitalObj['bp'] = vitalListBP;
+            emailVitalObj['pupils'] = vitalListPupils;
+            emailVitalObj['temp'] = vitalListTemp;
+            var message = '<table '+tbStyle+'>'
+                          +'<tr>'+'<th '+thStyle+'>Time</th>'+emailVitalObj.timeTaken+'</tr>'
+                          +'<tr>'+'<th '+thStyle+'>Lor</th>'+emailVitalObj.lor+'</tr>'
+                          +'<tr>'+'<th '+thStyle+'>HR</th>'+emailVitalObj.hr+'</tr>'
+                          +'<tr>'+'<th '+thStyle+'>RR</th>'+emailVitalObj.rr+'</tr>'
+                          +'<tr>'+'<th '+thStyle+'>Skin</th>'+emailVitalObj.skin+'</tr>'
+                          +'<tr>'+'<th '+thStyle+'>BP</th>'+emailVitalObj.bp+'</tr>'
+                          +'<tr>'+'<th '+thStyle+'>Pupils</th>'+emailVitalObj.pupils+'</tr>'
+                          +'<tr>'+'<th '+thStyle+'>TEMP</th>'+emailVitalObj.temp+'</tr>'
                           +'</table>';
           }
           return message;
@@ -316,7 +316,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
         body:    runMessage(soapVitals),
         isHtml:  true
      });
-
+     //runMessage(soapVitals);
 
  }
 
