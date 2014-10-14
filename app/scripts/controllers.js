@@ -554,7 +554,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
     $scope.soapVitals = soapVitals.filter(function(entry){return entry.starterFlag === 'true';});
   })
 
-  scope.onItemDelete = function(vitalId) {
+  $scope.onItemDelete = function(vitalId) {
     Vitals.deleteVital(vitalId);
     $scope.soapVitals.splice($scope.soapVitals.indexOf(vitalId), 1)
   }
