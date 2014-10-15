@@ -601,15 +601,16 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce', 'ngCord
     addNewImg: function(source,callback){
       //do something
     },
-    getNewImg: function(callback){
+    getNewImg: function(type,callback){
+      type = (type === 'lib') ? Camera.PictureSourceType.PHOTOLIBRARY : Camera.PictureSourceType.CAMERA
       var options = {
-        quality : 75,
+        quality : 45, //setting below 50 to avoid memory errors
         //destinationType : Camera.DestinationType.DATA_URL,
-        //sourceType : Camera.PictureSourceType.CAMERA,
+        sourceType : type,
         allowEdit : true,
         encodingType: Camera.EncodingType.JPEG,
         targetWidth: 200,
-        targetHeight: 200,
+        targetHeight: 150,
         saveToPhotoAlbum: false
       };
 

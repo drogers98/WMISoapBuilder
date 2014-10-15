@@ -13,7 +13,7 @@
 
 <div class="card-image">
   <div class="list card card-image-left" ng-controller="SoapImgCtrl" ng-repeat="img in imgs">
-    <a class="item item-avatar" ng-controller="SoapImgDetailCtrl" confirmed-click="deleteImg(img)" ng-confirm-click="Are you sure you want to delete this image?">
+    <a class="item item-avatar" ng-controller="SoapImgDetailCtrl" ng-click="deleteImg(img)">
       <i class="icon ion-ios7-close"></i>
     </a>
     <div class="item item-image">
@@ -38,7 +38,8 @@
 
 
 
-<a class="button button-block button-light margin" ng-controller="SoapImgDetailCtrl" ng-click="takeNewImg(starterImg)"><i class="icon ion-app-photos margin"></i>Capture Photo</a>
+<a class="button button-block button-light margin" ng-controller="SoapImgDetailCtrl" ng-click="takeNewImg(starterImg,'cap')"><i class="icon ion-app-photos margin"></i>Capture Photo</a>
+<a class="button button-block button-light margin" ng-controller="SoapImgDetailCtrl" ng-click="takeNewImg(starterImg,'lib')"><i class="icon ion-app-photos margin"></i>Add From Library</a>
 <a class="button button-block button-calm margin" href="#/tab/review/{{soapImg.id}}">Review SOAP Note</a>
 
     </div>

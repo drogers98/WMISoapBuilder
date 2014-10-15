@@ -107,8 +107,19 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
 
 
   $scope.cancelSoap = function(soap){
-    Soaps.deleteSoap(soap.id);
-    $state.go('soaps');
+    var confirmPopup = $ionicPopup.confirm({
+       title: 'Cancel',
+       template: 'Going back will delete this SOAP'
+     });
+     confirmPopup.then(function(res) {
+       if(res) {
+        Soaps.deleteSoap(soap.id);
+        $state.go('soaps');
+       } else {
+         return;
+       }
+     });
+
   }
 
 
@@ -492,17 +503,27 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
 })
 
 .controller('SoapImgDetailCtrl', function($scope,$stateParams,$state,$ionicPopup,Camera,Soaps){
-  $scope.takeNewImg = function(imgDetail) {
-    Camera.getNewImg(function(err,imgAttr){
+  $scope.takeNewImg = function(imgDetail,type) {
+    Camera.getNewImg(type,function(err,imgAttr){
       Camera.updateImg("imageURI", imgDetail.id,imgAttr)
       updateImgFlag(imgDetail.id)
     })
   }
 
   $scope.deleteImg = function(img) {
-    Camera.deleteImg(img.id);
-    $scope.imgs.splice($scope.imgs.indexOf(img.id), 1)
-    reloadImgRepeat();
+    var confirmPopup = $ionicPopup.confirm({
+       title: 'Delete Image',
+       template: 'Are you sure you want to delete this image?'
+     });
+     confirmPopup.then(function(res) {
+       if(res) {
+         Camera.deleteImg(img.id);
+         $scope.imgs.splice($scope.imgs.indexOf(img.id), 1)
+         reloadImgRepeat()
+       } else {
+         return;
+       }
+     });
   }
 
   $scope.expandText = function(obj){

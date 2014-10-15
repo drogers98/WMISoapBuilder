@@ -4,7 +4,7 @@
   </ion-nav-buttons>
 
   <ion-content ng-controller="VitalDetailCtrl" has-header="true" padding="false" has-bouncing="false">
-
+  <form name="vital_Detail">
   <div class="SOAP VITALS">
     <div class="list">
 
@@ -31,8 +31,14 @@
      <h5>Heart</h5>
 <h6>Rate (Beats Per Minute)</h6>
 	  <label class="item item-input">
-        <input id="Vital.rate" type="number" placeholder="Rate (BPM)" ng-model="vitalDetail.rate" ng-model-onblur ng-change="monitorVitalChange(vitalDetail,vitalDetail.rate,'rate')">
+        <input id="Vital.rate" type="number" name="rate" ng-maxlength=3 placeholder="Rate (BPM)" ng-model="vitalDetail.rate" ng-model-onblur ng-change="monitorVitalChange(vitalDetail,vitalDetail.rate,'rate')">
       </label>
+      <div class="error">
+        <small class="error"
+              ng-show="vital_Detail.rate.$error.maxlength">
+              Please check that Heart Rate is correct
+      </small>
+      </div>
       <h6>Rhythm</h6>
       <div class="item item-select">
         <div class="input-label">
@@ -61,8 +67,14 @@
 <h6>Rate (Breaths Per Minute)</h6>
 
 	  <label class="item item-input">
-        <input id="Vital.respRate" type="number" placeholder="Rate (BPM)" ng-model="vitalDetail.respRate" ng-model-onblur ng-change="monitorVitalChange(vitalDetail,vitalDetail.respRate,'respRate')">
+        <input id="Vital.respRate" type="number" name="r-rate" ng-maxlength=2 placeholder="Rate (BPM)" ng-model="vitalDetail.respRate" ng-model-onblur ng-change="monitorVitalChange(vitalDetail,vitalDetail.respRate,'respRate')">
       </label>
+      <div class="error">
+        <small class="error"
+              ng-show="vital_Detail.r-rate.$error.maxlength">
+              Please check that Resp Rate is correct
+      </small>
+      </div>
       <h6>Rhythm</h6>
       <div class="item item-select">
         <div class="input-label">
@@ -133,7 +145,7 @@
       </div>
       <h6>Systolic</h6>
 	  <label class="item item-input">
-        <input id="brsystolic" type="number" placeholder="Measurement (mmHg)" ng-model="vitalDetail.brsystolic" ng-change="monitorVitalChange(vitalDetail,vitalDetail.brsystolic,'brsystolic')">
+        <input id="brsystolic" type="number" ng-maxlength=3 placeholder="Measurement (mmHg)" ng-model="vitalDetail.brsystolic" ng-change="monitorVitalChange(vitalDetail,vitalDetail.brsystolic,'brsystolic')">
       </label>
       <h6>Diastolic</h6>
 
@@ -152,7 +164,7 @@
   </div>
   <div class="col col-50">
 	   <label class="item item-input">
-        <input id="Diastolic" type="number" placeholder="N/A" disabled="disabled" ng-model="vitalDetail.brradialReading" ng-change="monitorVitalChange(vitalDetail,vitalDetail.brradialReading,'brradialReading')">
+        <input id="Diastolic" type="number" ng-maxlength=2 placeholder="N/A" disabled="disabled" ng-model="vitalDetail.brradialReading" ng-change="monitorVitalChange(vitalDetail,vitalDetail.brradialReading,'brradialReading')">
       </label>  </div>
     </div>
   </div>
@@ -173,8 +185,14 @@
     <div class="row">
   <div class="col">
 	  <label class="item item-input">
-	  <input type="number" min="0" max="140" placeholder="Degrees" ng-model="vitalDetail.tempDegreesReading" ng-change="monitorVitalChange(vitalDetail,vitalDetail.tempDegreesReading,'tempDegreesReading')">
+	  <input type="number" ng-maxlength=3 name="tempDegreesReading" placeholder="Degrees" ng-model="vitalDetail.tempDegreesReading" ng-change="monitorVitalChange(vitalDetail,vitalDetail.tempDegreesReading,'tempDegreesReading')">
     </label>
+    <div class="error">
+      <small class="error"
+            ng-show="vital_Detail.tempDegreesReading.$error.maxlength">
+            Please check that your Temp is correct
+    </small>
+    </div>
   </div>
   <div class="col col-50">
 	   <div class="item item-select">
@@ -192,7 +210,7 @@
 
 <a class="button button-block button-light margin" href="javascript: history.go(-1)">Save Vital Set</a>
   </div>
-
+</form>
   </ion-content>
   <!-- begin counter -->
   <div class="vital">

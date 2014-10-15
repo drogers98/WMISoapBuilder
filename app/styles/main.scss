@@ -18,7 +18,6 @@ $WMI_DK_grey: darken($WMIgrey, 10%);
 $WMIblack: #111;
 $WMIshadow: rgba(0,0,0,.5);
 
-
 //temp image
 #smallImage, #largeImage {
 display:none;
@@ -603,4 +602,9 @@ padding-bottom: 50px;
 			width:100%;
 		}
 	}
+}
+
+.error {
+	color:darkred;
+	font-size:1em;
 }
