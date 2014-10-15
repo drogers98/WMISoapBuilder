@@ -399,11 +399,8 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
       $scope.recentSoapVitals = recentSoapVitals.filter(function(entry){return entry.starterFlag === 'true';});
       $scope.recentSoapVitalFlag = recentSoapVitals.filter(function(entry){return entry.starterFlag === 'false';});
       if($scope.recentSoapVitalFlag.length){
-        console.log("CALLED IF")
-        console.log($scope.recentSoapVitalFlag[0]);
         $scope.starterVital = $scope.recentSoapVitalFlag[0]
       }else {
-        console.log("CALLED ELSE")
         Vitals.saveNewVital({},soapObjective.id, function(err,starterVital){
           return $scope.starterVital = starterVital;
         })
@@ -520,15 +517,21 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
 .controller('SoapImgCtrl', function($scope,$stateParams,$state,
   $ionicPopup,Camera,Soaps) {
   Camera.createImgTable();
-
   Soaps.get($stateParams.soapId, function(err,soapImg){
-    console.log(soapImg);//MAKE SURE ID IS BEING PASSED!!!!
     $scope.soapImg = soapImg;
     Camera.all(soapImg.id, function(err,imgs){
       $scope.imgs = imgs.filter(function(entry){return entry.starterFlag === 'true'});
-      return $scope.imgs;
+      $scope.imgsSoapFlag = $scope.imgs.filter(function(entry){return entry.starterFlag === 'false'});
+      if($scope.imgsSoapFlag.length){
+        $scope.starterImg = $scope.imgsSoapFlag[0];
+      }else {
+        Camera.saveNewImg({},soapImg.id,function(err,starterImg){
+          return $scope.starterImg = starterImg;
+        })
+      }
     })
-    Camera.getLast(function(err,lastImg){
+
+    /*Camera.getLast(function(err,lastImg){
       if(lastImg === null || lastImg.starterFlag === 'true'){
         Camera.saveNewImg({},soapImg.id,function(err,starterImg){
           $scope.starterImg = starterImg;
@@ -540,7 +543,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
       }else{
         $scope.starterImg = lastImg;
       }
-    })
+    })*/
   })
 
 /*  $scope.takeNewImg = function() {

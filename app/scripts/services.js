@@ -665,6 +665,7 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce', 'ngCord
             img = data.item(i);
             var neededImgParams = {};
             neededImgParams['id'] = img.id;
+            neededImgParams['soapId'] = img.soapId;
             neededImgParams['starterFlag'] = img.starterFlag;
             callback(null,neededImgParams);
           }
