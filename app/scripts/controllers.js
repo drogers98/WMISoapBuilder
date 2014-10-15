@@ -89,15 +89,15 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
     $scope.soaps.splice(toIndex, 0, item);
   };
 
-  $scope.onItemDelete = function(soapId) {
+  $scope.onItemDelete = function(soap) {
     var confirmPopup = $ionicPopup.confirm({
-       title: 'SOAP NOTE',
+       title: soap.incidentDate + ' | ' + soap.patientAge + ' , ' + soap.patientGender + ' , ' + soap.patientInitials,
        template: 'Are you sure you want to delete this SOAP NOTE?'
      });
      confirmPopup.then(function(res) {
        if(res) {
-        Soaps.deleteSoap(soapId);
-        $scope.soaps.splice($scope.soaps.indexOf(soapId), 1)
+        Soaps.deleteSoap(soap.id);
+        $scope.soaps.splice($scope.soaps.indexOf(soap.id), 1)
        } else {
          return;
        }
@@ -479,8 +479,8 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
   Soaps.get($stateParams.soapId, function(err,soapReview){
     $scope.soapReview = soapReview;
     Vitals.all(soapReview.id, function(err,soapVitals,recentSoapReviewVitals){
-      $scope.recentSoapReviewVitals = soapVitals.filter(function(entry){return entry.starterFlag === 'true'});
-      //$scope.recentSoapReviewVitals = recentSoapReviewVitals.filter(function(entry){return entry.starterFlag === 'true';});
+      //$scope.recentSoapReviewVitals = soapVitals.filter(function(entry){return entry.starterFlag === 'true'});
+      $scope.recentSoapReviewVitals = recentSoapReviewVitals.filter(function(entry){return entry.starterFlag === 'true';});
 
       return $scope.recentSoapReviewVitals;
     })
