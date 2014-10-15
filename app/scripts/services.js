@@ -576,6 +576,7 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce', 'ngCord
             vital = data.item(i);
             var neededParams = {};
             neededParams['id'] = vital.id;
+            neededParams['soapId'] = vital.soapId;
             neededParams['starterFlag'] = vital.starterFlag;
             callback(null,neededParams);
           }

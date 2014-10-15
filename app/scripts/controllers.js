@@ -7,10 +7,6 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
   };
 })
 
-.controller('WMICtrl', function($scope,$state, Nols) {
-
-})
-
 .controller('FirstResponderCtrl', function($scope, $state, $location,
                                            $stateParams,$timeout,
                                            Responders, Soaps, Nols,uiState) {
@@ -248,15 +244,15 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
             vitalListBP.push('<td '+tdStyle+'>'+ filteredVitals[key].brradialpulse + ' ' + filteredVitals[key].brsystolic+'/'+filteredVitals[key].brradialReading + ' ' + filteredVitals[key].brradialtaken +'</td>');
             vitalListPupils.push('<td '+tdStyle+'>'+ filteredVitals[key].pupils + '</td>');
             vitalListTemp.push('<td '+tdStyle+'>'+ filteredVitals[key].tempDegreesReading + ' ' + filteredVitals[key].tempDegrees+'</td>');
-            emailVitalObj['timeTaken'] = vitalListTime;
-            emailVitalObj['lor'] = vitalListLor;
-            emailVitalObj['hr'] = vitalListHR;
-            emailVitalObj['rr'] = vitalListRR;
-            emailVitalObj['skin'] = vitalListSkin;
-            emailVitalObj['bp'] = vitalListBP;
-            emailVitalObj['pupils'] = vitalListPupils;
-            emailVitalObj['temp'] = vitalListTemp;
-            
+            emailVitalObj['timeTaken'] = vitalListTime.join("");
+            emailVitalObj['lor'] = vitalListLor.join("");
+            emailVitalObj['hr'] = vitalListHR.join("");
+            emailVitalObj['rr'] = vitalListRR.join("");
+            emailVitalObj['skin'] = vitalListSkin.join("");
+            emailVitalObj['bp'] = vitalListBP.join("");
+            emailVitalObj['pupils'] = vitalListPupils.join("");
+            emailVitalObj['temp'] = vitalListTemp.join("");
+
             var message = "<table style='width:100%;text-align:center;border:1px solid #EFEFEF;border-collapse:collapse;'>"
                           +'<tr>'+'<th '+thStyle+'>Time</th>'+emailVitalObj.timeTaken+'</tr>'
                           +'<tr>'+'<th '+thStyle+'>Lor</th>'+emailVitalObj.lor+'</tr>'
@@ -401,17 +397,52 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
     Vitals.all(soapObjective.id, function(err,soapVitals,recentSoapVitals){
       $scope.soapVitals = soapVitals;
       $scope.recentSoapVitals = recentSoapVitals.filter(function(entry){return entry.starterFlag === 'true';});
-      return $scope.recentSoapVitals;
-      //hand on services
-    })
-    Vitals.getLast(function(err,lastVital){
-      if(lastVital === null || lastVital.starterFlag === 'true'){
-        Vitals.saveNewVital({},soapObjective.id,function(err,starterVital){
-          $scope.starterVital = starterVital;
-        })
+      $scope.recentSoapVitalFlag = recentSoapVitals.filter(function(entry){return entry.starterFlag === 'false';});
+      if($scope.recentSoapVitalFlag.length){
+        console.log("CALLED IF")
+        console.log($scope.recentSoapVitalFlag[0]);
+        $scope.starterVital = $scope.recentSoapVitalFlag[0]
       }else {
-        $scope.starterVital = lastVital;
+        console.log("CALLED ELSE")
+        Vitals.saveNewVital({},soapObjective.id, function(err,starterVital){
+          return $scope.starterVital = starterVital;
+        })
       }
+      //WOW YOU COULD JUST CHECK AGAINST THE SOAPS VITALS AND NOT ALL VITALS MAYBE
+      //PROPER LOGIC ON THIS IS GOING TO BE GO THROUGH ALL VITALS
+      //LOOP THROUGH ARRAY
+      /*BECAUSE WHAT HAPPENS WHEN YOU HAVE THIS SCENERIO
+        id = 1 - flag = false
+        id = 2 - flag = false
+        id = 3 - flag = false
+        id = 4 - flag = false
+        if you're checking only against the last you could save same soaps with multiple false flag
+      */
+      /*Vitals.getLast(function(err,lastVital){
+        if(lastVital === null || lastVital.starterFlag === 'true'){
+          Vitals.saveNewVital({},soapObjective.id, function(err,starterVital){
+            $scope.starterVital = starterVital;
+            console.log('called if')
+            console.log(starterVital)
+          })
+        }else if(lastVital.starterFlag === 'false' && lastVital.soapId !== soapObjective.id){
+          $scope.findMatchVitalSet = $scope.recentSoapVitals.filter(function(entry){return entry.soapId === lastVital.soapId})
+          if($scope.findMatchVitalSet) {
+            console.log($scope.findMatchVitalSet);
+            $scope.starterVital = $scope.findMatchVitalSet;
+          }else {
+            Vitals.saveNewVital({},soapObjective.id, function(err,starterVital){
+              console.log('called else if')
+              console.log(starterVital)
+              $scope.starterVital = starterVital;
+            })
+          }
+        }else {
+          console.log('called else')
+          console.log(lastVital)
+          $scope.starterVital = lastVital;
+        }
+      })*/
     })
   })
 
@@ -439,8 +470,9 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
   Soaps.get($stateParams.soapId, function(err,soapReview){
     $scope.soapReview = soapReview;
     Vitals.all(soapReview.id, function(err,soapVitals,recentSoapReviewVitals){
-      $scope.soapVitals = soapVitals;
-      $scope.recentSoapReviewVitals = recentSoapReviewVitals.filter(function(entry){return entry.starterFlag === 'true';});
+      $scope.recentSoapReviewVitals = soapVitals.filter(function(entry){return entry.starterFlag === 'true'});
+      //$scope.recentSoapReviewVitals = recentSoapReviewVitals.filter(function(entry){return entry.starterFlag === 'true';});
+
       return $scope.recentSoapReviewVitals;
     })
     Camera.allQuery(soapReview.id, function(err,soapImgs){
@@ -501,7 +533,11 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
         Camera.saveNewImg({},soapImg.id,function(err,starterImg){
           $scope.starterImg = starterImg;
         })
-      }else {
+      }else if(lastImg.starterFlag === 'false' && lastImg.id !== soapImg.id) {
+        Camera.saveNewImg({},soapImg.id,function(err,starterImg){
+          $scope.starterImg = starterImg;
+        })
+      }else{
         $scope.starterImg = lastImg;
       }
     })
@@ -540,7 +576,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
 })
 
 .controller('VitalAllCtrl', function($scope,$state,$stateParams,Vitals,Soaps,Nols){
-  Vitals.getLast(function(err,lastVital){
+  /*Vitals.getLast(function(err,lastVital){
     if(lastVital === null || lastVital.starterFlag === 'true'){
       Vitals.saveNewVital({},$stateParams.soapId,function(err,starterVital){
         $scope.starterVital = starterVital;
@@ -548,7 +584,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
     }else {
       $scope.starterVital = lastVital;
     }
-  })
+  })*/
 
   Vitals.getAll($stateParams.soapId, function(err, soapVitals){
     $scope.soapVitalsId = $stateParams.soapId;
