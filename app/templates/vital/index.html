@@ -13,7 +13,7 @@
   <a class="button button-block button-light margin" href="#/tab/vitals/{{starterVital.id}}"><icon class="icon ion-plus-circled "></icon>Add Vitals</a>
     <ion-list show-delete="data.showDelete">
       <ion-item class="item-icon-right" ng-repeat="soapVital in soapVitals" type="item-text-wrap" href="#/tab/vitals/{{soapVital.id}}">
-        <ion-delete-button class="ion-minus-circled" confirmed-click="onItemDelete({{soapVital.id}})" ng-confirm-click="Are you sure you wish to delete this vital?">
+        <ion-delete-button class="ion-minus-circled" ng-click="onItemDelete({{soapVital.id}})">
         </ion-delete-button>{{soapVital.timeTaken}} | {{soapVital.lor}}
         <i class="icon ion-chevron-right icon-accessory"></i>
       </ion-item>

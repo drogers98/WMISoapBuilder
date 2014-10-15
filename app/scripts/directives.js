@@ -33,7 +33,7 @@ angular.module('WMISoapBuilder.directives', ['angular-websql', 'debounce'])
         }
     };
 })
-
+/*
 .directive('ngConfirmClick', [
         function(){
             return {
@@ -47,4 +47,4 @@ angular.module('WMISoapBuilder.directives', ['angular-websql', 'debounce'])
                     });
                 }
             };
-    }])
+    }])*/

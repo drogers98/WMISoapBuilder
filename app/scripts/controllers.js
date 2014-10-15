@@ -53,7 +53,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
 
 .controller('SoapCtrl', function($scope, $state, $stateParams,
                                  $ionicModal, $timeout, $location,
-                                 Soaps, Responders, Nols,$cordovaSocialSharing){
+                                 Soaps, Responders, Nols,$ionicPopup,$cordovaSocialSharing){
   "use strict";
 
   Soaps.createSoapTable();
@@ -80,19 +80,31 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
     //display only soaps where starter flag === true; handled on factory
   })
 
+  $scope.data = {
+    showDelete: false
+  };
+
   $scope.moveItem = function(soap,fromIndex,toIndex){
     $scope.soaps.splice(fromIndex, 1);
     $scope.soaps.splice(toIndex, 0, item);
   };
 
   $scope.onItemDelete = function(soapId) {
-    Soaps.deleteSoap(soapId);
-    $scope.soaps.splice($scope.soaps.indexOf(soapId), 1)
+    var confirmPopup = $ionicPopup.confirm({
+       title: 'SOAP NOTE',
+       template: 'Are you sure you want to delete this SOAP NOTE?'
+     });
+     confirmPopup.then(function(res) {
+       if(res) {
+        Soaps.deleteSoap(soapId);
+        $scope.soaps.splice($scope.soaps.indexOf(soapId), 1)
+       } else {
+         return;
+       }
+     });
   }
 
-  $scope.data = {
-    showDelete: false
-  };
+
 
   $scope.cancelSoap = function(soap){
     Soaps.deleteSoap(soap.id);
@@ -398,7 +410,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
       $scope.soapVitals = soapVitals;
       $scope.recentSoapVitals = recentSoapVitals.filter(function(entry){return entry.starterFlag === 'true';});
       $scope.recentSoapVitalFlag = recentSoapVitals.filter(function(entry){return entry.starterFlag === 'false';});
-      if($scope.recentSoapVitalFlag.length){
+      if($scope.recentSoapVitalFlag.length > 0){
         $scope.starterVital = $scope.recentSoapVitalFlag[0]
       }else {
         Vitals.saveNewVital({},soapObjective.id, function(err,starterVital){
@@ -578,7 +590,26 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
   })
 })
 
-.controller('VitalAllCtrl', function($scope,$state,$stateParams,Vitals,Soaps,Nols){
+.controller('VitalAllCtrl', function($scope,$state,$stateParams,$ionicPopup,Vitals,Soaps,Nols){
+  $scope.data = {
+    showDelete: false
+  };
+
+  $scope.onItemDelete = function(vitalId) {
+    var confirmPopup = $ionicPopup.confirm({
+       title: 'VITALS',
+       template: 'Are you sure you want to delete this VITAL ENTRY?'
+     });
+     confirmPopup.then(function(res) {
+       if(res) {
+        Vitals.deleteVital(vitalId);
+        $scope.soapVitals.splice($scope.soapVitals.indexOf(vitalId), 1)
+       } else {
+         return;
+       }
+     });
+  }
+
   /*Vitals.getLast(function(err,lastVital){
     if(lastVital === null || lastVital.starterFlag === 'true'){
       Vitals.saveNewVital({},$stateParams.soapId,function(err,starterVital){
@@ -592,12 +623,18 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
   Vitals.getAll($stateParams.soapId, function(err, soapVitals){
     $scope.soapVitalsId = $stateParams.soapId;
     $scope.soapVitals = soapVitals.filter(function(entry){return entry.starterFlag === 'true';});
+    $scope.soapVitalsFlag = soapVitals.filter(function(entry){return entry.starterFlag === 'false';});
+    console.log($scope.soapVitalsFlag);
+    if($scope.soapVitalsFlag.length > 0){
+      $scope.starterVital = $scope.soapVitalsFlag[0];
+    }else {
+      Vitals.saveNewVital({},$stateParams.soapId, function(err,starterVital){
+        return $scope.starterVital = starterVital;
+      })
+    }
   })
 
-  $scope.onItemDelete = function(vitalId) {
-    Vitals.deleteVital(vitalId);
-    $scope.soapVitals.splice($scope.soapVitals.indexOf(vitalId), 1)
-  }
+
 })
 
 .controller('VitalDetailCtrl', function($scope,$state,$stateParams,$timeout,Vitals){

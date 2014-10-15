@@ -167,10 +167,10 @@
 
       <h5>Patient Images</h5>
       <div class="card-image">
-        <div class="list card card-image-left" ng-controller="SoapImgCtrl" ng-repeat="soapImg in soapImgs">
+        <div class="list card card-image-left" ng-repeat="soapImg in soapImgs">
           <div class="item item-image">
             <img style="display:block" ng-src="{{soapImg.imageURI}}">
-            <h3>{{soapImg.imgCaption}}</h3>
+            <p>{{soapImg.imgCaption}}</p>
           </div>
         </div>
       </div>
