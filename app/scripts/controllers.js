@@ -836,7 +836,10 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
 
   Vitals.getAll($stateParams.soapId, function(err, soapVitals){
     $scope.soapVitalsId = $stateParams.soapId;
-    $scope.soapVitals = soapVitals.filter(function(entry){return entry.starterFlag === 'true';});
+    $scope.soapVitalBeforeFilter = soapVitals.filter(function(entry){return entry.starterFlag === 'true';});
+    $scope.soapVitals = $scope.soapVitalBeforeFilter.sort(function (a,b) {
+      return new Date('1970/01/01 ' + a.timeTaken) - new Date('1970/01/01 ' + b.timeTaken);
+    });
     $scope.soapVitalsFlag = soapVitals.filter(function(entry){return entry.starterFlag === 'false';});
     console.log($scope.soapVitalsFlag);
     if($scope.soapVitalsFlag.length > 0){
@@ -913,9 +916,6 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
      });
 
   }
-
-
-
 
   $scope.timeValue = 0;
   function countdown(){
