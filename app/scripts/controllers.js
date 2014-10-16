@@ -1,10 +1,12 @@
 'use strict';
 angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCordova'])
 
-.controller('MenuCtrl', function($scope,$state, $ionicSideMenuDelegate, Soaps) {
+.controller('MenuCtrl', function($scope,$state,$stateParams, $ionicSideMenuDelegate, Soaps) {
+
   Soaps.all('mySoaps', function(err,soaps){
     $scope.soaps = soaps;
   })
+
   $scope.toggleSideMenu = function() {
     $ionicSideMenuDelegate.toggleRight();
   };
