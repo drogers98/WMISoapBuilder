@@ -11,20 +11,20 @@
   <ion-content has-header="true" padding="false" has-bouncing="false">
     <div class="SOAP">
       <!-- subjective section 1 -->
-      <h5>Patient Position When Found<a ng-controller="SoapCtrl" ng-click="openModal(3)"><span>i</span></a></h5>
+      <h5>Patient Position When Found<a ng-controller="SoapCtrl" ng-click="openModal(6)"><span>i</span></a></h5>
       <div class="list">
         <label class="item item-input">
           <textarea id="Soap.patientFound" type="text" placeholder="Describe the physical position of your patient." ng-model="soapObjective.patientFound" ng-model-onblur ng-change="monitorSoapObjectiveChange(soapObjective,soapObjective.patientFound,'patientFound')" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
         </label>
       </div>
-      <h5>Patient Exam<a ng-controller="SoapCtrl" ng-click="openModal(3)"><span>i</span></a></h5>
+      <h5>Patient Exam<a ng-controller="SoapCtrl" ng-click="openModal(7)"><span>i</span></a></h5>
       <div class="list">
         <label class="item item-input">
 
           <textarea id="Soap.patientExamReveals" type="text" placeholder="Describe in detail the injuries observed in the head-to-toe examination. Include pertinent negatives. Assess CSM's." ng-model="soapObjective.patientExamReveals" ng-model-onblur ng-change="monitorSoapObjectiveChange(soapObjective,soapObjective.patientExamReveals,'patientExamReveals')" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
         </label>
       </div>
-      <h5>Vital Signs<a ng-controller="SoapCtrl" ng-click="openModal(3)"><span>i</span></a></h5>
+      <h5>Vital Signs<a ng-controller="SoapCtrl" ng-click="openModal(8)"><span>i</span></a></h5>
       <div class="list">
       <a class="button button-block button-light margin" href="#/tab/vitals/{{starterVital.id}}"><icon class="icon icon-right ion-plus-circled"></icon> Add Vitals</a>
 
@@ -89,7 +89,7 @@
 
       <a class="button button-block button-calm margin" href="#/tab/vitals/all/{{soapObjective.id}}">View All Vitals</a>
       </div>
-      <h5>Patient History<a ng-controller="SoapCtrl" ng-click="openModal(3)"><span>i</span></a></h5>
+      <h5>Patient History<a ng-controller="SoapCtrl" ng-click="openModal(9)"><span>i</span></a></h5>
       <h6>Symptoms</h6>
       <div class="list">
         <label class="item item-input">

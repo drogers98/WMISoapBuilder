@@ -1,8 +1,10 @@
 'use strict';
 angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCordova'])
 
-.controller('MenuCtrl', function($scope, $ionicSideMenuDelegate, Soaps) {
-
+.controller('MenuCtrl', function($scope,$state, $ionicSideMenuDelegate, Soaps) {
+  Soaps.all('mySoaps', function(err,soaps){
+    $scope.soaps = soaps;
+  })
   $scope.toggleSideMenu = function() {
     $ionicSideMenuDelegate.toggleRight();
   };
@@ -197,12 +199,121 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
        $scope.oModal5 = modal;
      });
 
+     $ionicModal.fromTemplateUrl('modal-6.html', {
+       id: '6', // We need to use and ID to identify the modal that is firing the event!
+       scope: $scope,
+       animation: 'slide-in-up'
+     }).then(function(modal) {
+       $scope.oModal6 = modal;
+     });
+
+     $ionicModal.fromTemplateUrl('modal-7.html', {
+       id: '7', // We need to use and ID to identify the modal that is firing the event!
+       scope: $scope,
+       animation: 'slide-in-up'
+     }).then(function(modal) {
+       $scope.oModal7 = modal;
+     });
+
+     $ionicModal.fromTemplateUrl('modal-8.html', {
+       id: '8', // We need to use and ID to identify the modal that is firing the event!
+       scope: $scope,
+       animation: 'slide-in-up'
+     }).then(function(modal) {
+       $scope.oModal8 = modal;
+     });
+
+     $ionicModal.fromTemplateUrl('modal-9.html', {
+       id: '9', // We need to use and ID to identify the modal that is firing the event!
+       scope: $scope,
+       animation: 'slide-in-up'
+     }).then(function(modal) {
+       $scope.oModal9 = modal;
+     });
+
+     $ionicModal.fromTemplateUrl('modal-10.html', {
+       id: '10', // We need to use and ID to identify the modal that is firing the event!
+       scope: $scope,
+       animation: 'slide-in-up'
+     }).then(function(modal) {
+       $scope.oModal10 = modal;
+     });
+
+     $ionicModal.fromTemplateUrl('modal-11.html', {
+       id: '11', // We need to use and ID to identify the modal that is firing the event!
+       scope: $scope,
+       animation: 'slide-in-up'
+     }).then(function(modal) {
+       $scope.oModal11 = modal;
+     });
+
+     $ionicModal.fromTemplateUrl('modal-12.html', {
+       id: '12', // We need to use and ID to identify the modal that is firing the event!
+       scope: $scope,
+       animation: 'slide-in-up'
+     }).then(function(modal) {
+       $scope.oModal12 = modal;
+     });
+
+     $ionicModal.fromTemplateUrl('modal-13.html', {
+       id: '13', // We need to use and ID to identify the modal that is firing the event!
+       scope: $scope,
+       animation: 'slide-in-up'
+     }).then(function(modal) {
+       $scope.oModal13 = modal;
+     });
+
+     $ionicModal.fromTemplateUrl('modal-14.html', {
+       id: '14', // We need to use and ID to identify the modal that is firing the event!
+       scope: $scope,
+       animation: 'slide-in-up'
+     }).then(function(modal) {
+       $scope.oModal14 = modal;
+     });
+
+     $ionicModal.fromTemplateUrl('modal-15.html', {
+       id: '15', // We need to use and ID to identify the modal that is firing the event!
+       scope: $scope,
+       animation: 'slide-in-up'
+     }).then(function(modal) {
+       $scope.oModal15 = modal;
+     });
+
+     $ionicModal.fromTemplateUrl('modal-16.html', {
+       id: '16', // We need to use and ID to identify the modal that is firing the event!
+       scope: $scope,
+       animation: 'slide-in-up'
+     }).then(function(modal) {
+       $scope.oModal16 = modal;
+     });
+
+     $ionicModal.fromTemplateUrl('modal-17.html', {
+       id: '17', // We need to use and ID to identify the modal that is firing the event!
+       scope: $scope,
+       animation: 'slide-in-up'
+     }).then(function(modal) {
+       $scope.oModal17 = modal;
+     });
+
      $scope.openModal = function(index) {
        if(index == 1) $scope.oModal1.show();
        if(index == 2) $scope.oModal2.show();
        if(index == 3) $scope.oModal3.show();
        if(index == 4) $scope.oModal4.show();
        if(index == 5) $scope.oModal5.show();
+       if(index == 6) $scope.oModal6.show();
+       if(index == 7) $scope.oModal7.show();
+       if(index == 8) $scope.oModal8.show();
+       if(index == 9) $scope.oModal9.show();
+       if(index == 10) $scope.oModal10.show();
+       if(index == 11) $scope.oModal11.show();
+       if(index == 12) $scope.oModal12.show();
+       if(index == 13) $scope.oModal13.show();
+       if(index == 14) $scope.oModal14.show();
+       if(index == 15) $scope.oModal15.show();
+       if(index == 16) $scope.oModal16.show();
+       if(index == 17) $scope.oModal17.show();
+
 
      };
 
@@ -212,6 +323,18 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
        if(index == 3) $scope.oModal3.hide();
        if(index == 4) $scope.oModal4.hide();
        if(index == 5) $scope.oModal5.hide();
+       if(index == 6) $scope.oModal6.hide();
+       if(index == 7) $scope.oModal7.hide();
+       if(index == 8) $scope.oModal8.hide();
+       if(index == 9) $scope.oModal9.hide();
+       if(index == 10) $scope.oModal10.hide();
+       if(index == 11) $scope.oModal11.hide();
+       if(index == 12) $scope.oModal12.hide();
+       if(index == 13) $scope.oModal13.hide();
+       if(index == 14) $scope.oModal14.hide();
+       if(index == 15) $scope.oModal15.hide();
+       if(index == 16) $scope.oModal16.hide();
+       if(index == 17) $scope.oModal17.hide();
 
      };
 
@@ -233,6 +356,18 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
        $scope.oModal3.remove();
        $scope.oModal4.remove();
        $scope.oModal5.remove();
+       $scope.oModal6.remove();
+       $scope.oModal7.remove();
+       $scope.oModal8.remove();
+       $scope.oModal9.remove();
+       $scope.oModal10.remove();
+       $scope.oModal11.remove();
+       $scope.oModal12.remove();
+       $scope.oModal13.remove();
+       $scope.oModal14.remove();
+       $scope.oModal15.remove();
+       $scope.oModal16.remove();
+       $scope.oModal17.remove();
      });
  // end modals
      $scope.shareSOAP = function(soap,soapVitals,soapImages) {
@@ -716,7 +851,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
 
 })
 
-.controller('VitalDetailCtrl', function($scope,$state,$stateParams,$timeout,Vitals){
+.controller('VitalDetailCtrl', function($scope,$state,$stateParams,$timeout,$ionicPopup,Vitals){
   Vitals.get($stateParams.vitalId, function(err, vitalDetail){
     if(vitalDetail.starterFlag === 'false'){
       Vitals.updateVital("starterFlag",vitalDetail.id,true);
@@ -753,6 +888,34 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
     var kindElem = attrElem,kindId = vital.id,kindVal = vitalVal;
     Vitals.updateVital(kindElem,kindId,kindVal);
   }
+
+  $scope.cancelVital = function(vital){
+    var confirmPopup = $ionicPopup.confirm({
+       title: 'Cancel',
+       template: 'Going back will delete this Vital',
+       buttons: [
+         {
+           text: 'Cancel',
+           type: 'button-calm',
+           onTap: function() {
+             return;
+           }
+         },
+         {
+           text: 'Continue',
+           type: 'button-light',
+           onTap: function() {
+             Vitals.deleteVital(vital.id);
+             window.history.back();
+           }
+         }
+       ]
+     });
+
+  }
+
+
+
 
   $scope.timeValue = 0;
   function countdown(){
