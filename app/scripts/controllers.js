@@ -95,7 +95,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
        template: 'Are you sure you want to delete this SOAP NOTE?',
        buttons: [
          {
-           text: 'Cacel',
+           text: 'Cancel',
            type: 'button-calm',
            onTap: function() {
              return;

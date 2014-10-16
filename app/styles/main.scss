@@ -359,7 +359,7 @@ select {
 .input-label {
 	font-weight: normal;
 }
-.FirstResponder, .AboutWMI {
+.backgroundImage {
 	 background-image: url('../images/WMI_APP_BCKRD_Crushed.png');
 	background-size: cover;
     background-repeat: no-repeat;
@@ -604,8 +604,12 @@ padding-bottom: 50px;
 	}
 }
 
+.popup {
+	background: $WMIwhite !important;
+}
 .popup-title {
-	background: rgba(0,0,0,0) !important;
+	background: $WMIwhite !important;
+	padding-bottom: 10px;
 	color:darkred !important;
 }
 .error {
