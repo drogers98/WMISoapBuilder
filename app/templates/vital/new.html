@@ -31,12 +31,12 @@
      <h5>Heart</h5>
 <h6>Rate (Beats Per Minute)</h6>
 	  <label class="item item-input">
-        <input id="Vital.rate" type="number" name="rate" ng-maxlength=3 placeholder="Rate (BPM)" ng-model="vitalDetail.rate" ng-model-onblur ng-change="monitorVitalChange(vitalDetail,vitalDetail.rate,'rate')">
+        <input id="Vital.rate" type="number" name="rate" min="0" max="110" placeholder="Rate (BPM)" ng-model="vitalDetail.rate" ng-model-onblur ng-change="monitorVitalChange(vitalDetail,vitalDetail.rate,'rate')">
       </label>
       <div class="error">
         <small class="error"
-              ng-show="vital_Detail.rate.$error.maxlength">
-              Please check that Heart Rate is correct
+              ng-show="vital_Detail.rate.$error.number">
+              Please check that Heart Rate is correct and a valid number
       </small>
       </div>
       <h6>Rhythm</h6>
@@ -71,8 +71,8 @@
       </label>
       <div class="error">
         <small class="error"
-              ng-show="vital_Detail.r-rate.$error.maxlength">
-              Please check that Resp Rate is correct
+              ng-show="vital_Detail.r-rate.$error.number">
+              Please check Resp Rate is a valid number
       </small>
       </div>
       <h6>Rhythm</h6>
@@ -145,8 +145,20 @@
       </div>
       <h6>Systolic</h6>
 	  <label class="item item-input">
-        <input id="brsystolic" type="number" ng-maxlength=3 placeholder="Measurement (mmHg)" ng-model="vitalDetail.brsystolic" ng-change="monitorVitalChange(vitalDetail,vitalDetail.brsystolic,'brsystolic')">
+        <input id="brsystolic" type="number" name="systolic" ng-maxlength=3 placeholder="Measurement (mmHg)" ng-model="vitalDetail.brsystolic" ng-change="monitorVitalChange(vitalDetail,vitalDetail.brsystolic,'brsystolic')">
       </label>
+      <div class="error">
+        <small class="error"
+              ng-show="vital_Detail.systolic.$error.number">
+              Please check that Systolic is a number
+      </small>
+      </div>
+      <div class="error">
+        <small class="error"
+              ng-show="vital_Detail.systolic.$error.maxlength">
+              Please check that Systolic is correct
+      </small>
+      </div>
       <h6>Diastolic</h6>
 
 
@@ -164,8 +176,21 @@
   </div>
   <div class="col col-50">
 	   <label class="item item-input">
-        <input id="Diastolic" type="number" ng-maxlength=2 placeholder="N/A" disabled="disabled" ng-model="vitalDetail.brradialReading" ng-change="monitorVitalChange(vitalDetail,vitalDetail.brradialReading,'brradialReading')">
-      </label>  </div>
+        <input id="Diastolic" type="number" name="dias" ng-maxlength=2 placeholder="N/A" disabled="disabled" ng-model="vitalDetail.brradialReading" ng-change="monitorVitalChange(vitalDetail,vitalDetail.brradialReading,'brradialReading')">
+      </label>
+      <div class="error">
+        <small class="error"
+              ng-show="vital_Detail.dias.$error.number">
+              Please check your input is a valid number
+      </small>
+      </div>
+      <div class="error">
+        <small class="error"
+              ng-show="vital_Detail.dias.$error.maxlength">
+              Please check that your entry is correct
+      </small>
+      </div>
+      </div>
     </div>
   </div>
 

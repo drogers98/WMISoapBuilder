@@ -543,7 +543,7 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce', 'ngCord
           else if (data.length <= 1){return 0;}
           else if (data.length <= 2){return data.length - 2;}
           else if (data.length <= 3){return data.length - 3;}
-          else {return data.length - 4};
+          else {return data.length - 3};
         }
         for(var i = len();i < data.length;i++){
           console.log('recents ' + data.item(i).starterFlag)
