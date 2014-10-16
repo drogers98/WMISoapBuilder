@@ -415,7 +415,10 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
         var messagePartIIB = function(soapVitals) {
           var vitalListTime = [],vitalListLor = [],vitalListHR = [],vitalListRR = [],
               vitalListSkin = [],vitalListBP = [],vitalListPupils = [],vitalListTemp = [];
-          var filteredVitals = soapVitals.filter(function(entry){return entry.starterFlag === 'true';});
+          var filteredVitalsBefore = soapVitals.filter(function(entry){return entry.starterFlag === 'true';});
+          var filteredVitals = filteredVitalsBefore.sort(function(a,b){
+            return new Date('1970/01/01 ' + a.timeTaken) - new Date('1970/01/01 ' + b.timeTaken);
+          })
           for(var key in filteredVitals){
             var tdStyle = "style='width:25%;border:1px solid #EFEFEF;padding:5px'";
             var thStyle = "style='width:25%;border:1px solid #EFEFEF;border-collapse:collapse;padding:5px;text-align:right;padding-right:10px;background-color:#EFEFEF;text-transform:uppercase'";
@@ -594,7 +597,11 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
     $scope.soapObjective = soapObjective;
     Vitals.all(soapObjective.id, function(err,soapVitals,recentSoapVitals){
       $scope.soapVitals = soapVitals;
-      $scope.recentSoapVitals = recentSoapVitals.filter(function(entry){return entry.starterFlag === 'true';});
+      $scope.recentSoapVitalsBefore = recentSoapVitals.filter(function(entry){return entry.starterFlag === 'true';});
+      $scope.recentSoapVitals = $scope.recentSoapVitalsBefore.sort(function(a,b){
+        return new Date('1970/01/01 ' + a.timeTaken) - new Date('1970/01/01 ' + b.timeTaken);
+      })
+
       $scope.recentSoapVitalFlag = recentSoapVitals.filter(function(entry){return entry.starterFlag === 'false';});
       if($scope.recentSoapVitalFlag.length > 0){
         $scope.starterVital = $scope.recentSoapVitalFlag[0]
@@ -666,8 +673,10 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
     $scope.soapReview = soapReview;
     Vitals.all(soapReview.id, function(err,soapVitals,recentSoapReviewVitals){
       //$scope.recentSoapReviewVitals = soapVitals.filter(function(entry){return entry.starterFlag === 'true'});
-      $scope.recentSoapReviewVitals = recentSoapReviewVitals.filter(function(entry){return entry.starterFlag === 'true';});
-
+      $scope.recentSoapReviewVitalsBefore = recentSoapReviewVitals.filter(function(entry){return entry.starterFlag === 'true';});
+      $scope.recentSoapReviewVitals = $scope.recentSoapReviewVitalsBefore.sort(function(a,b){
+        return new Date('1970/01/01 ' + a.timeTaken) - new Date('1970/01/01 ' + b.timeTaken);
+      })
       return $scope.recentSoapReviewVitals;
     })
     Camera.allQuery(soapReview.id, function(err,soapImgs){
