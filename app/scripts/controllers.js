@@ -1,7 +1,8 @@
 'use strict';
 angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCordova'])
 
-.controller('MenuCtrl', function($scope, $ionicSideMenuDelegate) {
+.controller('MenuCtrl', function($scope, $ionicSideMenuDelegate, Soaps) {
+
   $scope.toggleSideMenu = function() {
     $ionicSideMenuDelegate.toggleRight();
   };
@@ -76,7 +77,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
   })
 
   Soaps.all('mySoaps',function(err,soaps){
-    $scope.soaps = soaps;
+    $scope.soaps = soaps.reverse();
     //display only soaps where starter flag === true; handled on factory
   })
 

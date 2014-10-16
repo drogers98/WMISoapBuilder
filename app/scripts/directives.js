@@ -10,6 +10,7 @@ angular.module('WMISoapBuilder.directives', ['angular-websql', 'debounce'])
         scope.$apply(uiState.blur(element));
       });
       angular.element(element).bind('focus', function(e) {
+        //console.log('focused')
         scope.$apply(uiState.focus(element));
       });
     }
@@ -25,7 +26,12 @@ angular.module('WMISoapBuilder.directives', ['angular-websql', 'debounce'])
             if (attr.type === 'radio' || attr.type === 'checkbox') return;
 
             elm.unbind('input').unbind('keydown').unbind('change');
+            elm.bind('focus', function() {
+              elm.toggleClass("turnOn");
+              //ngModelCtrl.$setViewValue(console.log(elm.css()));
+            })
             elm.bind('blur', function() {
+                elm.toggleClass("turnOn");
                 scope.$apply(function() {
                     ngModelCtrl.$setViewValue(elm.val());
                 });

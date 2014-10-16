@@ -15,11 +15,11 @@
       <div class="list">
       <h6>Date of Incident</h6>
       <div class="item item-input" >
-       <input type="date" id="Soap.incidentDate" ng-model="soapOverview.incidentDate" ng-model-onblur ng-change="monitorSoapOverviewChange(soapOverview,soapOverview.incidentDate,'incidentDate')" value="{{dt | date:'yyyy-MM-dd'}}"/>
-     </div>
+        <input type="date" id="Soap.incidentDate" ng-model="soapOverview.incidentDate" ng-model-onblur ng-change="monitorSoapOverviewChange(soapOverview,soapOverview.incidentDate,'incidentDate')" value="{{dt | date:'yyyy-MM-dd'}}"/>
+      </div>
 
       <h6>Location</h6>
-           <label class="item item-input">
+           <label class="item item-input" for="Soap.incidentLocation">
         <textarea id="Soap.incidentLocation" type="text" placeholder="Describe where it happened." ng-model="soapOverview.incidentLocation" ng-model-onblur ng-change="monitorSoapOverviewChange(soapOverview,soapOverview.incidentLocation,'incidentLocation')"
 	ng-keyup="expandText($event)"
 	ng-keydown="expandText($event)"></textarea>
