@@ -92,16 +92,33 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
   $scope.onItemDelete = function(soap) {
     var confirmPopup = $ionicPopup.confirm({
        title: soap.incidentDate + ' | ' + soap.patientAge + ' , ' + soap.patientGender + ' , ' + soap.patientInitials,
-       template: 'Are you sure you want to delete this SOAP NOTE?'
+       template: 'Are you sure you want to delete this SOAP NOTE?',
+       buttons: [
+         {
+           text: 'Cacel',
+           type: 'button-calm',
+           onTap: function() {
+             return;
+           }
+         },
+         {
+           text: 'Delete',
+           type: 'button-light',
+           onTap: function() {
+             Soaps.deleteSoap(soap.id);
+             $scope.soaps.splice($scope.soaps.indexOf(soap.id), 1)
+           }
+         }
+       ]
      });
-     confirmPopup.then(function(res) {
+    /* confirmPopup.then(function(res) {
        if(res) {
         Soaps.deleteSoap(soap.id);
         $scope.soaps.splice($scope.soaps.indexOf(soap.id), 1)
        } else {
          return;
        }
-     });
+     });*/
   }
 
 
@@ -109,15 +126,24 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
   $scope.cancelSoap = function(soap){
     var confirmPopup = $ionicPopup.confirm({
        title: 'Cancel',
-       template: 'Going back will delete this SOAP'
-     });
-     confirmPopup.then(function(res) {
-       if(res) {
-        Soaps.deleteSoap(soap.id);
-        $state.go('soaps');
-       } else {
-         return;
-       }
+       template: 'Going back will delete this SOAP',
+       buttons: [
+         {
+           text: 'Cancel',
+           type: 'button-calm',
+           onTap: function() {
+             return;
+           }
+         },
+         {
+           text: 'Continue',
+           type: 'button-light',
+           onTap: function() {
+             Soaps.deleteSoap(soap.id);
+             $state.go('soaps');
+           }
+         }
+       ]
      });
 
   }
@@ -333,6 +359,19 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
     if(soapOverview.starterFlag === 'false') {
       Soaps.updateSoap('starterFlag',soapOverview.id,true);
     }
+    /*Responders.get(function(err,responder){
+      //faster way to do this w/ a loop;
+      if(soapOverview.responderFirstName !== responder.firstName){
+        console.log("first name does not match");
+        Soaps.updateSoap('responderFirstName',soapOverview.id,responder.firstName);
+        if(soapOverview.responderLastName !== responder.lastName) {
+          Soaps.updateSoap('responderLastName',soapOverview.id,responder.lastName);
+          if(soapOverview.responderTrainingLevel !== responder.trainingLevel) {
+            Soaps.updateSoap('responderTrainingLevel',soapOverview.id,responderTrainingLevel);
+          }
+        }
+      }
+    })*/
     $scope.soapOverview = soapOverview;
   })
 
@@ -513,16 +552,25 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
   $scope.deleteImg = function(img) {
     var confirmPopup = $ionicPopup.confirm({
        title: 'Delete Image',
-       template: 'Are you sure you want to delete this image?'
-     });
-     confirmPopup.then(function(res) {
-       if(res) {
-         Camera.deleteImg(img.id);
-         $scope.imgs.splice($scope.imgs.indexOf(img.id), 1)
-         reloadImgRepeat()
-       } else {
-         return;
-       }
+       template: 'Are you sure you want to delete this image?',
+       buttons: [
+         {
+           text: 'Cancel',
+           type: 'button-calm',
+           onTap: function() {
+             return;
+           }
+         },
+         {
+           text: 'Delete',
+           type: 'button-light',
+           onTap: function() {
+             Camera.deleteImg(img.id);
+             $scope.imgs.splice($scope.imgs.indexOf(img.id), 1)
+             reloadImgRepeat()
+           }
+         }
+       ]
      });
   }
 
@@ -619,15 +667,24 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
   $scope.onItemDelete = function(vitalId) {
     var confirmPopup = $ionicPopup.confirm({
        title: 'VITALS',
-       template: 'Are you sure you want to delete this VITAL ENTRY?'
-     });
-     confirmPopup.then(function(res) {
-       if(res) {
-        Vitals.deleteVital(vitalId);
-        $scope.soapVitals.splice($scope.soapVitals.indexOf(vitalId), 1)
-       } else {
-         return;
-       }
+       template: 'Are you sure you want to delete this VITAL ENTRY?',
+       buttons: [
+         {
+           text: 'Cancel',
+           type: 'button-calm',
+           onTap: function() {
+             return;
+           },
+         },
+         {
+           text: 'Delete',
+           type: 'button-light',
+           onTap: function() {
+             Vitals.deleteVital(vitalId);
+             $scope.soapVitals.splice($scope.soapVitals.indexOf(vitalId), 1)
+           }
+         }
+       ]
      });
   }
 
