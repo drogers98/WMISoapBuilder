@@ -158,6 +158,7 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce', 'ngCord
      },
      saveVital: function(vitalAttr, soapAttr, callback) {
        var vital = {};
+       //come back to this as it was called from timeTaken
        function getDateTime() {
          var d = new Date();
          d.toLocaleString();       // -> "2/1/2013 7:37:08 AM"
@@ -169,7 +170,7 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce', 'ngCord
          "soapId": soapAttr,
          "starterFlag": vitalAttr.starterFlag || false,
          "lor": vitalAttr.lor || '',
-         "timeTaken": vitalAttr.timeTaken || getDateTime(),
+         "timeTaken": vitalAttr.timeTaken || '',
          "rate": vitalAttr.rate || '',
          "heartRythm": vitalAttr.heartRythm || '',
          "heartQuality": vitalAttr.heartQuality || '',
