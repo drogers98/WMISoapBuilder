@@ -29,17 +29,17 @@
     -->
     <ion-side-menus>
         <!-- Center content Views -->
-		<ion-side-menu-content>
+		<ion-side-menu-content ng-controller="MenuCtrl">
         <ion-nav-view class="slide-left-right"></ion-nav-view>
         </ion-side-menu-content>
         <!-- Left menu -->
-        <ion-side-menu side="right">
+        <ion-side-menu side="right" ng-controller="MenuCtrl">
         <div class="WMIsideMenu">
         <a class="button button-block button-calm margin menu-first" href="#/about" ng-controller="MenuCtrl" ng-click="toggleSideMenu()">About WMI</a>
            <a class="button button-block button-calm margin" href="#/soaps" ng-controller="MenuCtrl" ng-click="toggleSideMenu()">My SOAPs</a>
            <a class="button button-block button-calm margin" href="#/terms" ng-controller="MenuCtrl" ng-click="toggleSideMenu()">Terms of Service</a>
            <a class="button button-block button-calm margin" href="#/responder/settings" ng-controller="MenuCtrl" ng-click="toggleSideMenu()">Settings</a>
-           <ion-list ng-controller="SoapCtrl">
+           <ion-list>
              <ion-item class="item-icon-right" ng-repeat="soap in soaps" href="#/soaps/{{soap.id}}">
                {{soap.incidentDate}} | {{soap.patientAge}}, {{soap.patientGender}} | {{soap.patientInitials}}
                <i class="icon ion-ios7-arrow-forward"></i>
@@ -52,7 +52,7 @@
 
 <!-- Help modals -->
 
-<!-- overview -->
+<!-- overview - date and location -->
 <script id="modal-1.html" type="text/ng-template">
 	<div class="modal">
         <header class="bar bar-header bar-light">
@@ -70,26 +70,41 @@
 					<p>Coordinates Uses the GPS feature on your device, if available, to record coordinates.</p>
 			  </div>
 			</div>
-			<div class="card">
-			  <div class="item item-divider">
-			  Responder Information
-			  </div>
-			  <div class="item item-text-wrap">
-					<p>Defaults to the user defined in the settings. If another user is completing the SOAP Note this field may be edited.</p>
-			  </div>
-			</div>
 </div>
 <div class="modalSpacer"></div>
         </ion-content>
 		</div>
 </script>
+<!-- overview responder info -->
+<script id="modal-2.html" type="text/ng-template">
+  <div class="modal">
+        <header class="bar bar-header bar-light">
+          <h1 class="title">Overview Help</h1>
+    <button class="button button-icon ion-close" ng-click="closeModal(2)"></button>
+        </header>
+        <ion-content has-header="true" overflow-scroll="true">
+<div class="WMImodalWrapper">
+      <div class="card">
+        <div class="item item-divider">
+        Responder Information
+        </div>
+        <div class="item item-text-wrap">
+          <p>Defaults to the user defined in the settings. If another user is completing the SOAP Note this field may be edited.</p>
+        </div>
+      </div>
+</div>
+<div class="modalSpacer"></div>
+        </ion-content>
+    </div>
+</script>
 
-<!-- subjective -->
-        <script id="modal-2.html" type="text/ng-template">
+
+<!-- subjective - patient information -->
+        <script id="modal-3.html" type="text/ng-template">
 	<div class="modal">
         <header class="bar bar-header bar-light">
           <h1 class="title">Subjective Help</h1>
-    <button class="button button-icon ion-close" ng-click="closeModal(2)"></button>
+    <button class="button button-icon ion-close" ng-click="closeModal(3)"></button>
         </header>
         <ion-content has-header="true" overflow-scroll="true">
 <div class="WMImodalWrapper">
@@ -98,31 +113,7 @@
 			  Patient Information
 			  </div>
 			  <div class="item item-text-wrap">
-					<p>Enter up to three characters for the patient's initials.</p>
-			  </div>
-			</div>
-			<div class="card">
-			  <div class="item item-divider">
-			  Chief Complaint
-			  </div>
-			  <div class="item item-text-wrap">
-					<p>Describe the patient's chief complaint. </p>
-					<ul>
-						<li><strong>Onset:</strong> Was the onset sudden or gradual?</li>
-						<li><strong>Provokes/Palliates:</strong> What makes the complaint worse or better?</li>
-						<li><strong>Quality:</strong> What word describes the complaint?</li>
-						<li><strong>Radiation/Region/Referred:</strong> Does the feeling move anywhere? Where is it located?</li>
-						<li><strong>Severity:</strong> How does this rate on a scale of 1-10?</li>
-						<li><strong>Time of Onset:</strong> What time did this begin?</li>
-					</ul>
-			  </div>
-			</div>
-			<div class="card">
-			  <div class="item item-divider">
-			  MOI/HPI
-			  </div>
-			  <div class="item item-text-wrap">
-					<p>Describe in detail the mechanism of injury or the history of the illness.</p>
+					<p>Enter up to three characters for the patients initials.</p>
 			  </div>
 			</div>
 </div>
@@ -131,12 +122,67 @@
 		</div>
 </script>
 
-<!-- objective -->
-        <script id="modal-3.html" type="text/ng-template">
+<!-- subjective - chief complaint -->
+        <script id="modal-4.html" type="text/ng-template">
+  <div class="modal">
+        <header class="bar bar-header bar-light">
+          <h1 class="title">Subjective Help</h1>
+    <button class="button button-icon ion-close" ng-click="closeModal(4)"></button>
+        </header>
+        <ion-content has-header="true" overflow-scroll="true">
+<div class="WMImodalWrapper">
+      <div class="card">
+        <div class="item item-divider">
+        Chief Complaint
+        </div>
+        <div class="item item-text-wrap">
+          <p>Describe the patients chief complaint. </p>
+          <ul>
+            <li><strong>Onset:</strong> Was the onset sudden or gradual?</li>
+            <li><strong>Provokes/Palliates:</strong> What makes the complaint worse or better?</li>
+            <li><strong>Quality:</strong> What word describes the complaint?</li>
+            <li><strong>Radiation/Region/Referred:</strong> Does the feeling move anywhere? Where is it located?</li>
+            <li><strong>Severity:</strong> How does this rate on a scale of 1-10?</li>
+            <li><strong>Time of Onset:</strong> What time did this begin?</li>
+          </ul>
+        </div>
+      </div>
+</div>
+<div class="modalSpacer"></div>
+        </ion-content>
+    </div>
+</script>
+
+
+<!-- subjective - MOI -->
+        <script id="modal-5.html" type="text/ng-template">
+  <div class="modal">
+        <header class="bar bar-header bar-light">
+          <h1 class="title">Subjective Help</h1>
+    <button class="button button-icon ion-close" ng-click="closeModal(5)"></button>
+        </header>
+        <ion-content has-header="true" overflow-scroll="true">
+<div class="WMImodalWrapper">
+      <div class="card">
+        <div class="item item-divider">
+        MOI/HPI
+        </div>
+        <div class="item item-text-wrap">
+          <p>Describe in detail the mechanism of injury or the history of the illness.</p>
+        </div>
+      </div>
+</div>
+<div class="modalSpacer"></div>
+        </ion-content>
+    </div>
+</script>
+
+<!-- objective patient found -->
+        <script id="modal-6.html" type="text/ng-template">
 	<div class="modal">
         <header class="bar bar-header bar-light">
           <h1 class="title">Objective Help</h1>
-    <button class="button button-icon ion-close" ng-click="closeModal(3)"></button>
+    <button class="button button-icon ion-close" ng-click="closeModal(6)"></button>
         </header>
         <ion-content has-header="true" overflow-scroll="true">
 <div class="WMImodalWrapper">
@@ -148,50 +194,99 @@
 					<p>Describe the physical position of your patient.</p>
 			  </div>
 			</div>
-			<div class="card">
-			  <div class="item item-divider">
-			  Patient Exam
-			  </div>
-			  <div class="item item-text-wrap">
-					<p>Describe in detail the injuries observed in the head-to-toe examination. Include pertinent negatives. Assess circulation, sensation and motion. Consider adding photos.</p>
-			  </div>
-			</div>
-			<div class="card">
-			  <div class="item item-divider">
-			  Vital Signs
-			  </div>
-			  <div class="item item-text-wrap">
-					<p>Take multiple sets of vital signs.</p>
-			  </div>
-			</div>
-			<div class="card last">
-			  <div class="item item-divider">
-			  Patient History
-			  </div>
-			  <div class="item item-text-wrap">
-					<p>Describe the patients chief complaint. </p>
-					<ul>
-						<li><strong>Symptoms:</strong> Headache? Dizziness? Nausea? Cold? Hot?</li>
-						<li><strong>Allergies:</strong> Allergies to Medications? Foods? Insects? Pollens? Exposure? What happens with exposure?</li>
-						<li><strong>Medications:</strong> Over the Counter? Prescription? Alcohol or Recreation Drugs? Herbal?</li>
-						<li><strong>Pertinent Medical History:</strong> Felt this way before? Problems with Heart? Breathing? Digestion? History of Seizures? Diabetes?</li>
-						<li><strong>Last Intake/Output:</strong> Food? Water? Urination? Defecation? Vomiting?</li>
-						<li><strong>Events Leading up to Incident/Illness:</strong>  Events leading up to or causing the incident/illness.</li>
-					</ul>
-			  </div>
-			</div>
-</div>
+    </div>
 <div class="modalSpacer"></div>
         </ion-content>
 		</div>
 </script>
 
+
+<!-- objective patient exam -->
+        <script id="modal-7.html" type="text/ng-template">
+  <div class="modal">
+        <header class="bar bar-header bar-light">
+          <h1 class="title">Objective Help</h1>
+    <button class="button button-icon ion-close" ng-click="closeModal(7)"></button>
+        </header>
+        <ion-content has-header="true" overflow-scroll="true">
+<div class="WMImodalWrapper">
+      <div class="card">
+        <div class="item item-divider">
+        Patient Exam
+        </div>
+        <div class="item item-text-wrap">
+          <p>Describe in detail the injuries observed in the head-to-toe examination. Include pertinent negatives. Assess circulation, sensation and motion. Consider adding photos.</p>
+        </div>
+      </div>
+</div>
+<div class="modalSpacer"></div>
+        </ion-content>
+    </div>
+</script>
+
+<!-- objective vital sign -->
+        <script id="modal-8.html" type="text/ng-template">
+  <div class="modal">
+        <header class="bar bar-header bar-light">
+          <h1 class="title">Objective Help</h1>
+    <button class="button button-icon ion-close" ng-click="closeModal(8)"></button>
+        </header>
+        <ion-content has-header="true" overflow-scroll="true">
+<div class="WMImodalWrapper">
+      <div class="card">
+        <div class="item item-divider">
+        Vital Signs
+        </div>
+        <div class="item item-text-wrap">
+          <p>Take multiple sets of vital signs.</p>
+        </div>
+      </div>
+</div>
+<div class="modalSpacer"></div>
+        </ion-content>
+    </div>
+</script>
+
+
+<!-- objective patient history -->
+        <script id="modal-9.html" type="text/ng-template">
+  <div class="modal">
+        <header class="bar bar-header bar-light">
+          <h1 class="title">Objective Help</h1>
+    <button class="button button-icon ion-close" ng-click="closeModal(9)"></button>
+        </header>
+        <ion-content has-header="true" overflow-scroll="true">
+<div class="WMImodalWrapper">
+      <div class="card last">
+        <div class="item item-divider">
+        Patient History
+        </div>
+        <div class="item item-text-wrap">
+          <p>Describe the patients chief complaint. </p>
+          <ul>
+            <li><strong>Symptoms:</strong> Headache? Dizziness? Nausea? Cold? Hot?</li>
+            <li><strong>Allergies:</strong> Allergies to Medications? Foods? Insects? Pollens? Exposure? What happens with exposure?</li>
+            <li><strong>Medications:</strong> Over the Counter? Prescription? Alcohol or Recreation Drugs? Herbal?</li>
+            <li><strong>Pertinent Medical History:</strong> Felt this way before? Problems with Heart? Breathing? Digestion? History of Seizures? Diabetes?</li>
+            <li><strong>Last Intake/Output:</strong> Food? Water? Urination? Defecation? Vomiting?</li>
+            <li><strong>Events Leading up to Incident/Illness:</strong>  Events leading up to or causing the incident/illness.</li>
+          </ul>
+        </div>
+      </div>
+</div>
+<div class="modalSpacer"></div>
+        </ion-content>
+    </div>
+</script>
+
+
+
 <!-- A & P -->
-        <script id="modal-4.html" type="text/ng-template">
+        <script id="modal-10.html" type="text/ng-template">
 	<div class="modal">
         <header class="bar bar-header bar-light">
           <h1 class="title">Assessment & Plan Help</h1>
-    <button class="button button-icon ion-close" ng-click="closeModal(4)"></button>
+    <button class="button button-icon ion-close" ng-click="closeModal(10)"></button>
         </header>
         <ion-content has-header="true" overflow-scroll="true">
 <div class="WMImodalWrapper">
@@ -203,34 +298,66 @@
 					<p>List all possible problems.</p>
 			  </div>
 			</div>
-			<div class="card">
-			  <div class="item item-divider">
-			  Plan
-			  </div>
-			  <div class="item item-text-wrap">
-					<p>Describe actions taken for each problem and plans for further care.</p>
-			  </div>
-			</div>
-			<div class="card">
-			  <div class="item item-divider">
-			  Anticipated Problems
-			  </div>
-			  <div class="item item-text-wrap">
-					<p>Consider anticipated problems and possible impact on evacuation needs.</p>
-			  </div>
-			</div>
 </div>
 <div class="modalSpacer"></div>
         </ion-content>
 		</div>
+  </script>
+<!-- A & P -->
+        <script id="modal-11.html" type="text/ng-template">
+  <div class="modal">
+        <header class="bar bar-header bar-light">
+          <h1 class="title">Assessment & Plan Help</h1>
+    <button class="button button-icon ion-close" ng-click="closeModal(11)"></button>
+        </header>
+        <ion-content has-header="true" overflow-scroll="true">
+<div class="WMImodalWrapper">
+
+      <div class="card">
+        <div class="item item-divider">
+        Plan
+        </div>
+        <div class="item item-text-wrap">
+          <p>Describe actions taken for each problem and plans for further care.</p>
+        </div>
+      </div>
+</div>
+<div class="modalSpacer"></div>
+        </ion-content>
+    </div>
         </script>
 
+
+<!-- A & P -->
+        <script id="modal-12.html" type="text/ng-template">
+  <div class="modal">
+        <header class="bar bar-header bar-light">
+          <h1 class="title">Assessment & Plan Help</h1>
+    <button class="button button-icon ion-close" ng-click="closeModal(12)"></button>
+        </header>
+        <ion-content has-header="true" overflow-scroll="true">
+<div class="WMImodalWrapper">
+      <div class="card">
+        <div class="item item-divider">
+        Anticipated Problems
+        </div>
+        <div class="item item-text-wrap">
+          <p>Consider anticipated problems and possible impact on evacuation needs.</p>
+        </div>
+      </div>
+</div>
+<div class="modalSpacer"></div>
+        </ion-content>
+    </div>
+        </script>
+
+
 		<!-- Vitals -->
-        <script id="modal-5.html" type="text/ng-template">
+        <script id="modal-13.html" type="text/ng-template">
 	<div class="modal">
         <header class="bar bar-header bar-light">
           <h1 class="title">Vital Signs help</h1>
-    <button class="button button-icon ion-close" ng-click="closeModal(5)"></button>
+    <button class="button button-icon ion-close" ng-click="closeModal(13)"></button>
         </header>
         <ion-content has-header="true" overflow-scroll="true">
 <div class="WMImodalWrapper">
@@ -242,77 +369,120 @@
 					<p>vitals info here</p>
 			  </div>
 			</div>
-			<div class="card">
-			  <div class="item item-divider">
-			  Level of Responsiveness
-			  </div>
-			  <div class="item item-text-wrap">
-			  <ul>
-					<li><strong>Awake & Oriented  x 4</strong>: Person, Place, Time, and Events.</li>
-					<li><strong>Awake & Oriented  x 3</strong>: Person, Place, and Time.</li>
-					<li><strong>Awake & Oriented  x 2</strong>: Person and Place.</li>
-					<li><strong>Awake & Oriented  x 1</strong>: Person.</li>
-					<li><strong>Awake & Oriented  x 0</strong>: Awake, but not oriented, not responding appropriately.</li>
-					<li><strong>Verbal Stimulus</strong>: Not awake. Responds to a verbal stimulus.</li>
-					<li><strong>Painful Stimulus</strong>: Not awake. Responds only to a painful stimulus.</li>
-					<li><strong>Unresponsive</strong>: Not awake. Does not respond to any stimulus.</li>
-			  </ul>
-			  </div>
-			</div>
-						<div class="card">
-			  <div class="item item-divider">
-			  Heart
-			  </div>
-			  <div class="item item-text-wrap">
-					<p>text here</p>
-			  </div>
-			</div>
-						<div class="card">
-			  <div class="item item-divider">
-			  Respiratory
-			  </div>
-			  <div class="item item-text-wrap">
-					<p>text here</p>
-			  </div>
-			</div>
-						<div class="card">
-			  <div class="item item-divider">
-			  Skin
-			  </div>
-			  <div class="item item-text-wrap">
-					<p>text here</p>
-			  </div>
-			</div>
-						<div class="card">
-			  <div class="item item-divider">
-			  Blood Pressure
-			  </div>
-			  <div class="item item-text-wrap">
-					<p>If blood pressure measured by palpation do not enter a reading in diastolic field.</p>
-			  </div>
-			</div>
-						<div class="card">
-			  <div class="item item-divider">
-			  Pupils
-			  </div>
-			  <div class="item item-text-wrap">
-					<p>Pupils are Equal, Round and Reactive to Light (PERRL).</p>
-			  </div>
-			</div>
-						<div class="card">
-			  <div class="item item-divider">
-			  Temperature
-			  </div>
-			  <div class="item item-text-wrap">
-					<p>vitals info here</p>
-			  </div>
-			</div>
 </div>
 <div class="modalSpacer"></div>
         </ion-content>
 		</div>
 
 </script>
+
+<!-- Vitals -->
+    <script id="modal-14.html" type="text/ng-template">
+<div class="modal">
+    <header class="bar bar-header bar-light">
+      <h1 class="title">Vital Signs help</h1>
+<button class="button button-icon ion-close" ng-click="closeModal(14)"></button>
+    </header>
+    <ion-content has-header="true" overflow-scroll="true">
+<div class="WMImodalWrapper">
+
+  <div class="card">
+    <div class="item item-divider">
+    Level of Responsiveness
+    </div>
+    <div class="item item-text-wrap">
+    <ul>
+      <li><strong>Awake & Oriented  x 4</strong>: Person, Place, Time, and Events.</li>
+      <li><strong>Awake & Oriented  x 3</strong>: Person, Place, and Time.</li>
+      <li><strong>Awake & Oriented  x 2</strong>: Person and Place.</li>
+      <li><strong>Awake & Oriented  x 1</strong>: Person.</li>
+      <li><strong>Awake & Oriented  x 0</strong>: Awake, but not oriented, not responding appropriately.</li>
+      <li><strong>Verbal Stimulus</strong>: Not awake. Responds to a verbal stimulus.</li>
+      <li><strong>Painful Stimulus</strong>: Not awake. Responds only to a painful stimulus.</li>
+      <li><strong>Unresponsive</strong>: Not awake. Does not respond to any stimulus.</li>
+    </ul>
+    </div>
+  </div>
+
+</div>
+<div class="modalSpacer"></div>
+    </ion-content>
+</div>
+
+</script>
+
+<!-- Vitals -->
+    <script id="modal-15.html" type="text/ng-template">
+<div class="modal">
+    <header class="bar bar-header bar-light">
+      <h1 class="title">Vital Signs help</h1>
+<button class="button button-icon ion-close" ng-click="closeModal(15)"></button>
+    </header>
+    <ion-content has-header="true" overflow-scroll="true">
+<div class="WMImodalWrapper">
+        <div class="card">
+    <div class="item item-divider">
+    Blood Pressure
+    </div>
+    <div class="item item-text-wrap">
+      <p>If blood pressure measured by palpation do not enter a reading in diastolic field.</p>
+    </div>
+  </div>
+</div>
+<div class="modalSpacer"></div>
+    </ion-content>
+</div>
+
+</script>
+
+<!-- Vitals -->
+    <script id="modal-16.html" type="text/ng-template">
+<div class="modal">
+    <header class="bar bar-header bar-light">
+      <h1 class="title">Vital Signs help</h1>
+<button class="button button-icon ion-close" ng-click="closeModal(16)"></button>
+    </header>
+    <ion-content has-header="true" overflow-scroll="true">
+<div class="WMImodalWrapper">
+        <div class="card">
+    <div class="item item-divider">
+    Pupils
+    </div>
+    <div class="item item-text-wrap">
+      <p>Pupils are Equal, Round and Reactive to Light (PERRL).</p>
+    </div>
+  </div>
+</div>
+<div class="modalSpacer"></div>
+    </ion-content>
+</div>
+
+</script>
+
+<!-- Vitals -->
+    <script id="modal-17.html" type="text/ng-template">
+<div class="modal">
+    <header class="bar bar-header bar-light">
+      <h1 class="title">Vital Signs help</h1>
+<button class="button button-icon ion-close" ng-click="closeModal(17)"></button>
+    </header>
+    <ion-content has-header="true" overflow-scroll="true">
+<div class="WMImodalWrapper">
+        <div class="card">
+    <div class="item item-divider">
+    Temperature
+    </div>
+    <div class="item item-text-wrap">
+      <p>vitals info here</p>
+    </div>
+  </div>
+</div>
+<div class="modalSpacer"></div>
+    </ion-content>
+</div>
+
+</script>
+
 
 
     <!-- build:js scripts/vendor.js -->

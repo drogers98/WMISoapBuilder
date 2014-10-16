@@ -1,6 +1,6 @@
 <ion-view title="Add Vitals">
   <ion-nav-buttons side="left">
-    <a class="button button" href="javascript: history.go(-1)">Back</a>
+    <a class="button button" ng-controller="VitalDetailCtrl" ng-click="cancelVital(vitalDetail)">Cancel</a>
   </ion-nav-buttons>
 
   <ion-content ng-controller="VitalDetailCtrl" has-header="true" padding="false" has-bouncing="false">
@@ -9,7 +9,7 @@
     <div class="list">
 
         <!-- Time Taken -->
-        <h5>Time Taken<a ng-controller="SoapCtrl"  ng-click="openModal(5)"><span>i</span></a></h5>
+        <h5>Time Taken<a ng-controller="SoapCtrl"  ng-click="openModal(13)"><span>i</span></a></h5>
       <div class="item item-input">
        <input id="Vital.timeTaken" type="time" ng-model="vitalDetail.timeTaken" ng-model-onblur ng-change="monitorVitalChange(vitalDetail,vitalDetail.timeTaken,'timeTaken')">
       </div>
@@ -133,7 +133,7 @@
 
 
  <!-- Blood Pressure -->
- <h5>Blood Pressure<a ng-controller="SoapCtrl" ng-click="openModal(5)"><span>i</span></a></h5>
+ <h5>Blood Pressure<a ng-controller="SoapCtrl" ng-click="openModal(15)"><span>i</span></a></h5>
  <h6>Radial Pulse</h6>
     <div class="item item-select">
         <div class="input-label">
@@ -196,7 +196,7 @@
   </div>
 
 
- <h5>Pupils<a ng-controller="SoapCtrl" ng-click="openModal(5)"><span>i</span></a></h5>
+ <h5>Pupils<a ng-controller="SoapCtrl" ng-click="openModal(16)"><span>i</span></a></h5>
       <div class="item item-select">
         <div class="input-label">
           Pupils
@@ -207,7 +207,9 @@
       </div>
 
 
+
     <h5>Temperature</h5>
+
     <div class="row">
   <div class="col">
 	  <label class="item item-input">

@@ -12,7 +12,7 @@
 
     <!-- subjective section 1 -->
     <div class="SOAP">
-      <h5>Patient Information<a ng-controller="SoapCtrl" ng-click="openModal(2)"><span>i</span></a></h5>
+      <h5>Patient Information<a ng-controller="SoapCtrl" ng-click="openModal(3)"><span>i</span></a></h5>
       <div class="list">
       <!-- initials -->
       <h6>Patient Initials</h6>
@@ -44,7 +44,7 @@ autocorrect="off" onkeyup="javascript:this.value=this.value.toUpperCase();">
 
     </div>
     <!-- subjective section 2 -->
-    <h5>Chief Complaint<a ng-controller="SoapCtrl" ng-click="openModal(2)"><span>i</span></a></h5>
+    <h5>Chief Complaint<a ng-controller="SoapCtrl" ng-click="openModal(4)"><span>i</span></a></h5>
     <div class="list">
       <label class="item item-input">
         <textarea id="Soap.patientComplaint" type="text" placeholder="Describe the patient's chief complaint." ng-model="soapSubjective.patientComplaint"
@@ -95,7 +95,7 @@ autocorrect="off" onkeyup="javascript:this.value=this.value.toUpperCase();">
         <input type="time" id="Soap.patientTime" placeholder="" ng-model="soapSubjective.patientTime" ng-model-onblur ng-change="monitorSoapSubjectiveChange(soapSubjective,soapSubjective.patientTime,'patientTime')">
       </label>
     </div>
-    <h5>MOI/HPI<a ng-controller="SoapCtrl" ng-click="openModal(2)"><span>i</span></a></h5>
+    <h5>MOI/HPI<a ng-controller="SoapCtrl" ng-click="openModal(5)"><span>i</span></a></h5>
     <div class="list">
 
      <label class="item item-input">
