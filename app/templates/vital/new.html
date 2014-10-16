@@ -29,9 +29,10 @@
       <!-- Heart -->
 
      <h5>Heart</h5>
+      
 <h6>Rate (Beats Per Minute)</h6>
 	  <label class="item item-input">
-        <input id="Vital.rate" type="number" name="rate" min="0" max="110" placeholder="Rate (BPM)" ng-model="vitalDetail.rate" ng-model-onblur ng-change="monitorVitalChange(vitalDetail,vitalDetail.rate,'rate')">
+        <input id="Vital.rate" type="number" onkeypress='validateNumber(event)' name="rate" min="0" max="110" placeholder="Rate (BPM)" ng-model="vitalDetail.rate" ng-model-onblur ng-change="monitorVitalChange(vitalDetail,vitalDetail.rate,'rate')">
       </label>
       <div class="error">
         <small class="error"
@@ -67,7 +68,7 @@
 <h6>Rate (Breaths Per Minute)</h6>
 
 	  <label class="item item-input">
-        <input id="Vital.respRate" type="number" name="r-rate" ng-maxlength=2 placeholder="Rate (BPM)" ng-model="vitalDetail.respRate" ng-model-onblur ng-change="monitorVitalChange(vitalDetail,vitalDetail.respRate,'respRate')">
+        <input id="Vital.respRate" type="number" onkeypress='validateNumber(event)' name="r-rate" ng-maxlength=2 placeholder="Rate (BPM)" ng-model="vitalDetail.respRate" ng-model-onblur ng-change="monitorVitalChange(vitalDetail,vitalDetail.respRate,'respRate')">
       </label>
       <div class="error">
         <small class="error"
@@ -145,7 +146,7 @@
       </div>
       <h6>Systolic</h6>
 	  <label class="item item-input">
-        <input id="brsystolic" type="number" name="systolic" ng-maxlength=3 placeholder="Measurement (mmHg)" ng-model="vitalDetail.brsystolic" ng-change="monitorVitalChange(vitalDetail,vitalDetail.brsystolic,'brsystolic')">
+        <input id="brsystolic" type="number" onkeypress='validateNumber(event)' name="systolic" ng-maxlength=3 placeholder="Measurement (mmHg)" ng-model="vitalDetail.brsystolic" ng-change="monitorVitalChange(vitalDetail,vitalDetail.brsystolic,'brsystolic')">
       </label>
       <div class="error">
         <small class="error"
@@ -176,7 +177,7 @@
   </div>
   <div class="col col-50">
 	   <label class="item item-input">
-        <input id="Diastolic" type="number" name="dias" ng-maxlength=2 placeholder="N/A" disabled="disabled" ng-model="vitalDetail.brradialReading" ng-change="monitorVitalChange(vitalDetail,vitalDetail.brradialReading,'brradialReading')">
+        <input id="Diastolic" type="number" onkeypress='validateNumber(event)' name="dias" ng-maxlength=2 placeholder="N/A" disabled="disabled" ng-model="vitalDetail.brradialReading" ng-change="monitorVitalChange(vitalDetail,vitalDetail.brradialReading,'brradialReading')">
       </label>
       <div class="error">
         <small class="error"
@@ -206,11 +207,11 @@
       </div>
 
 
-    <h5>Temperature<a ng-controller="SoapCtrl" ng-click="openModal(5)"><span>i</span></a></h5>
+    <h5>Temperature</h5>
     <div class="row">
   <div class="col">
 	  <label class="item item-input">
-	  <input type="number" ng-maxlength=3 name="tempDegreesReading" placeholder="Degrees" ng-model="vitalDetail.tempDegreesReading" ng-change="monitorVitalChange(vitalDetail,vitalDetail.tempDegreesReading,'tempDegreesReading')">
+	  <input type="number" onkeypress='validateNumber(event)' ng-maxlength=3 name="tempDegreesReading" placeholder="Degrees" ng-model="vitalDetail.tempDegreesReading" ng-change="monitorVitalChange(vitalDetail,vitalDetail.tempDegreesReading,'tempDegreesReading')">
     </label>
     <div class="error">
       <small class="error"

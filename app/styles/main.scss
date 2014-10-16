@@ -607,6 +607,7 @@ padding-bottom: 50px;
 
 .turnOn {
 	background-color:$WMI_LT_grey !important;
+	}
 
 .popup {
 	background: $WMIwhite !important;
@@ -616,7 +617,11 @@ padding-bottom: 50px;
 	padding-bottom: 10px;
 	color:$WMI_DK_red !important;
 }
-.error {
-	color:$WMI_DK_red;
+small.error {
+	background-color:$WMIred;
+	color: $WMIwhite;
+	padding: 4px;
 	font-size:1em;
+	display:block;
+	width: 100%;
 }
