@@ -530,36 +530,24 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce', 'ngCord
       vitalAttr[vitalEl] = vitalVal;
       return nolsDB.vitalUpdate(vitalKind,vitalId,vitalAttr);
     },
-    all: function(soap,callback) {
-      return nolsDB.vitals('Vital',soap, function(err,data){
-        //object argument wont work above
-        var vitals = [];
-        var recentSoapVitals = [];
-        for(var i=0;i < data.length;i++){
-          console.log(data.item(i).starterFlag);
-          vitals.push(data.item(i));
+    currentVitals: function(soap,callback) {
+      return nolsDB.vitals('Vital', soap, function(err, data){
+        var currentAllVitals = [],filteredCurrentVitals = [];
+
+        var sortTimeTaken = function(vitalArray) {
+          vitalArray.sort(function(a,b){
+            return new Date('1970/01/01 ' + a.timeTaken) - new Date('1970/01/01 ' + b.timeTaken);
+          })
+          return vitalArray;
         }
-        var len = function() {
-          if(data.length <= 0) {return;}
-          else if (data.length <= 1){return 0;}
-          else if (data.length <= 2){return data.length - 2;}
-          else if (data.length <= 3){return data.length - 3;}
-          else {return data.length - 3};
+
+        for(var i=0;i<data.length;i++){
+          currentAllVitals.push(data.item(i));
         }
-        for(var i = len();i < data.length;i++){
-          console.log('recents ' + data.item(i).starterFlag)
-          recentSoapVitals.push(data.item(i));
-        }
-        callback(null,vitals,recentSoapVitals);
-      })
-    },
-    getAll: function(soapId,callback){
-      return nolsDB.allKindQuery('Vital', {'soapId': soapId}, function(err,data){
-        var soapVitals = [];
-        for(var i = 0;i<data.length;i++){
-          soapVitals.push(data.item(i))
-        }
-        callback(null,soapVitals);
+
+        filteredCurrentVitals = currentAllVitals.filter(function(entry){return entry.starterFlag == 'true';});
+        var recentFilteredCurrentVitals = filteredCurrentVitals.reverse().slice(0,3)//Most recent 3 vitals
+        callback(null,sortTimeTaken(currentAllVitals),sortTimeTaken(recentFilteredCurrentVitals));
       })
     },
     get: function(vitalId, callback) {

@@ -32,7 +32,6 @@ angular.module('WMISoapBuilder', ['ionic', 'WMISoapBuilder.controllers', 'WMISoa
   // Set up the various states which the app can be in.
   // Each state's controller can be found in controllers.js
   $stateProvider
-
     .state('first-responder', {
       url: '/',
       templateUrl: 'templates/responder/first-responder.html',
