@@ -78,7 +78,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
       if($state.includes('soaps')){
       Soaps.getLast(function(err,lastSoap){
         if(lastSoap === null || lastSoap.starterFlag === 'true'){
-          Soaps.saveNewSoap({},responder,function(err,starterSoap){
+          Soaps.saveNewSoap({},{},function(err,starterSoap){
             $scope.starterSoap = starterSoap.id;
           })
         }else {
@@ -504,24 +504,22 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
 //SOAP OVERVIEW TAB
 .controller('SoapOverviewCtrl', function($scope,$state,$stateParams,$location,$cordovaGeolocation,Soaps,Responders){
   Soaps.get($stateParams.soapId, function(err, soapOverview){
+    Responders.get(function(err,responder) {
     $scope.$location = $location;
+    $scope.soapOverview = soapOverview;
     if(soapOverview.starterFlag === 'false') {
       Soaps.updateSoap('starterFlag',soapOverview.id,true);
     }
-    /*Responders.get(function(err,responder){
-      //faster way to do this w/ a loop;
-      if(soapOverview.responderFirstName !== responder.firstName){
-        console.log("first name does not match");
+    if(!soapOverview.responderFirstName && !soapOverview.responderLastName){
         Soaps.updateSoap('responderFirstName',soapOverview.id,responder.firstName);
-        if(soapOverview.responderLastName !== responder.lastName) {
-          Soaps.updateSoap('responderLastName',soapOverview.id,responder.lastName);
-          if(soapOverview.responderTrainingLevel !== responder.trainingLevel) {
-            Soaps.updateSoap('responderTrainingLevel',soapOverview.id,responderTrainingLevel);
-          }
-        }
-      }
-    })*/
-    $scope.soapOverview = soapOverview;
+        Soaps.updateSoap('responderLastName', soapOverview.id,responder.lastName);
+        Soaps.updateSoap('responderTrainingLevel',soapOverview.id,responder.trainingLevel);
+        $scope.soapOverview.responderFirstName = responder.firstName;
+        $scope.soapOverview.responderLastName = responder.lastName;
+        $scope.soapOverview.responderTrainingLevel = responder.trainingLevel;
+    }
+
+    });
   })
 
   $scope.monitorSoapOverviewChange = function(soap,soapVal,attrElem){
@@ -832,16 +830,6 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
        ]
      });
   }
-
-  /*Vitals.getLast(function(err,lastVital){
-    if(lastVital === null || lastVital.starterFlag === 'true'){
-      Vitals.saveNewVital({},$stateParams.soapId,function(err,starterVital){
-        $scope.starterVital = starterVital;
-      })
-    }else {
-      $scope.starterVital = lastVital;
-    }
-  })*/
 
   Vitals.currentVitals($stateParams.soapId, function(err, allVitals,allTrueVitals){
     $scope.soapVitalsId = $stateParams.soapId;
