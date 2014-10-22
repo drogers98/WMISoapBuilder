@@ -368,16 +368,16 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce', 'ngCord
   var responderKind = 'Responder';
 
   return {
-    updateResponder: function(responderEl,responderId,responderVal) {
-      var responderAttr = {};
-      responderAttr[responderEl] = responderVal;
-      nolsDB.updateResp(responderKind,responderId,responderAttr);
-    },
     createResponderTable: function(){
       nolsDB.createResponderTable();
     },
     saveResponder: function(responder, callback){
       return nolsDB.saveResponder(responder, callback);
+    },
+    updateResponder: function(responderEl,responderId,responderVal) {
+      var responderAttr = {};
+      responderAttr[responderEl] = responderVal;
+      nolsDB.updateResp(responderKind,responderId,responderAttr);
     },
     all: function(callback){
       return nolsDB.allKind('Responder', function(err,data){

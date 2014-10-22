@@ -379,6 +379,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
        $scope.oModal17.remove();
      });
  // end modals
+
      $scope.shareSOAP = function(soap,soapVitals,soapImages) {
 
       var runImages = function(soapImages){
@@ -494,7 +495,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
         isHtml:  true
      });
      //runMessage(soapVitals);
-
+     $state.go('soaps');
  }
 
 
