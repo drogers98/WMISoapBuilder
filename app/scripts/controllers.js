@@ -70,6 +70,8 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
                                  Soaps, Responders, Nols,$ionicPopup,$cordovaSocialSharing){
   "use strict";
 
+  console.log(window.location.origin);
+
   Soaps.createSoapTable();
 
   Responders.get(function(err,responder){
@@ -104,6 +106,9 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
   };
 
   $scope.onItemDelete = function(soap) {
+    console.log($scope.$location.path());
+
+
     var confirmPopup = $ionicPopup.confirm({
        title: soap.incidentDate + ' | ' + soap.patientAge + ' , ' + soap.patientGender + ' , ' + soap.patientInitials,
        template: 'Are you sure you want to delete this SOAP NOTE?',
@@ -136,6 +141,10 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
   }
 
   $scope.cancelSoap = function(soap){
+    console.log($scope.$location.path());
+    console.log($scope.$location.absUrl());
+    console.log(window.location.origin)
+    /*
     var confirmPopup = $ionicPopup.confirm({
        title: 'Cancel',
        template: 'Going back will delete this SOAP',
@@ -156,12 +165,14 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
            }
          }
        ]
-     });
+     });*/
 
   }
 
 
   //Nols.cutLifeLine();
+
+    $ionicModal.fromTemplateUrl()
 
   // Modal 1
      $ionicModal.fromTemplateUrl('modal-1.html', {
@@ -382,7 +393,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
 
      $scope.shareSOAP = function(soap,soapVitals,soapImages) {
 
-      var runImages = function(soapImages){
+      var imgURIS = function(soapImages){
         var imageURIS = [];
         for(var i=0;i<soapImages.length;i++){
           var uri = soapImages[i].imageURI;
@@ -481,7 +492,17 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
         '<p>' + soap.patientPlan + '</p>' +
         '<strong>Anticipated Problems</strong>: ' + soap.patientAnticipatedProblems + '<br/>';
 
-        return messagePartI + messagePartIIB(soapVitals) + messagePartIII;
+        var messagePartIVA = '<h3>Image Captions</h3>';
+        var messagePartIV = function(soapImages) {
+          for(var i=0;i<soapImages.length;i++) {
+            var captions = [];
+            captions.push('<p>' + soapImages[i].imgCaption + '</p>');
+          }
+          return captions;
+        }
+
+
+        return messagePartI + messagePartIIB(soapVitals) + messagePartIII + messagePartIVA + messagePartIV(soapImages);
       }
 
 
@@ -489,8 +510,8 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
         to:      ['rogers@eyebytesolutions.com'],
         cc:      ['vehr@eyebytesolutions.com'],
         bcc:     [''],
-        subject: 'SOAP Note: Test',
-        attachments: runImages(soapImages),
+        subject: 'Soap Note: ' + soap.incidentDate + '|' + soap.patientAge + ',' + soap.patientGender + '|' + soap.patientInitials,
+        attachments: imgURIS(soapImages),
         body:    runMessage(soapVitals),
         isHtml:  true
      });
@@ -504,6 +525,8 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
 
 //SOAP OVERVIEW TAB
 .controller('SoapOverviewCtrl', function($scope,$state,$stateParams,$location,$cordovaGeolocation,Soaps,Responders){
+  console.log(window.location.origin)
+
   Soaps.get($stateParams.soapId, function(err, soapOverview){
     Responders.get(function(err,responder) {
     $scope.$location = $location;
@@ -757,19 +780,6 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
       }
     })
 
-    /*Camera.getLast(function(err,lastImg){
-      if(lastImg === null || lastImg.starterFlag === 'true'){
-        Camera.saveNewImg({},soapImg.id,function(err,starterImg){
-          $scope.starterImg = starterImg;
-        })
-      }else if(lastImg.starterFlag === 'false' && lastImg.id !== soapImg.id) {
-        Camera.saveNewImg({},soapImg.id,function(err,starterImg){
-          $scope.starterImg = starterImg;
-        })
-      }else{
-        $scope.starterImg = lastImg;
-      }
-    })*/
   })
 
 /*  $scope.takeNewImg = function() {

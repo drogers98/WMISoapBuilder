@@ -66,7 +66,8 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce', 'ngCord
          "patientQuality": {"type": "TEXT","null": "NOT NULL"},
          "patientRadiates": {"type": "TEXT","null": "NOT NULL"},
          "patientSeverity": {"type": "TEXT","null": "NOT NULL"},
-         "patientTime": {"type": "TEXT","null": "NOT NULL"},
+         "patientOnsetDate": {"type": "TEXT", "null": "NOT NULL"},
+         "patientOnsetTime": {"type": "TEXT","null": "NOT NULL"},
          "patientHPI": {"type": "TEXT","null": "NOT NULL"},
          "patientSpinal": {"type": "TEXT","null": "NOT NULL"},
          "patientFound": {"type": "TEXT","null": "NOT NULL"},
@@ -104,7 +105,8 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce', 'ngCord
          "patientQuality": soapAttr.patientQuality || '',
          "patientRadiates": soapAttr.patientRadiates || '',
          "patientSeverity": soapAttr.patientSeverity || '',
-         "patientTime": soapAttr.patientTime || '',
+         "patientOnsetDate": soapAttr.patientOnsetDate || '',
+         "patientOnsetTime": soapAttr.patientOnsetTime || '',
          "patientHPI": soapAttr.patientHPI || '',
          "patientSpinal": soapAttr.patientSpinal || '',
          "patientFound": soapAttr.patientFound || '',
@@ -186,7 +188,7 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce', 'ngCord
          "brradialReading": vitalAttr.brradialReading || '',
          "pupils": vitalAttr.pupils || '',
          "tempDegreesReading": vitalAttr.tempDegreesReading || '',
-         "tempDegrees": vitalAttr.tempDegrees || ''
+         "tempDegrees": vitalAttr.tempDegrees || '°F'
        }).then(function(results) {
          self.db.select('Vital', {
            "id": results.insertId
@@ -317,15 +319,6 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce', 'ngCord
          self.db.del('Vital',{"soapId":id});
        }
      },
-     dropSoap: function() {
-       self.db.dropTable("Soap");
-     },
-     dropRes: function(){
-       self.db.dropTable("Responder");
-     },
-     dropVit: function(){
-       self.db.dropTable("Vital");
-     },
      vitals: function(object,soap,callback){
        self.db.select(object,{
          "soapId": soap
@@ -351,6 +344,18 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce', 'ngCord
      },
      deleteImg: function(img){
        self.db.del('Camera',{"id": img});
+     },
+     dropSoap: function() {
+       self.db.dropTable("Soap");
+     },
+     dropRes: function(){
+       self.db.dropTable("Responder");
+     },
+     dropVit: function(){
+       self.db.dropTable("Vital");
+     },
+     dropCam: function(){
+       self.db.dropTable("Camera");
      }
 
    };
@@ -456,9 +461,6 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce', 'ngCord
         callback(null,patientCoords);
       })
     },
-    updateEditSoap: function(soap){
-      return nolsDB.soapUpdate(soap);
-    },
     all: function(mySoaps,callback) {
       var soaps = [];
       if(!mySoaps) {
@@ -500,11 +502,6 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce', 'ngCord
           callback(null,angular.copy(data.item(i)));
         }
       })
-    },
-    getIT: function(soap, callback) {
-      if(soap) {
-      return nolsDB.soapUpdate(soap)
-      }
     },
     deleteSoap: function(soapId){
       return nolsDB.deleteKind(soapKind,soapId);
@@ -593,10 +590,10 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce', 'ngCord
     getNewImg: function(type,callback){
       type = (type === 'lib') ? Camera.PictureSourceType.PHOTOLIBRARY : Camera.PictureSourceType.CAMERA
       var options = {
-        quality : 45, //setting below 50 to avoid memory errors
+        quality : 49, //setting below 50 to avoid memory errors
         //destinationType : Camera.DestinationType.DATA_URL,
         sourceType : type,
-        allowEdit : true,
+        allowEdit : false,
         encodingType: Camera.EncodingType.JPEG,
         targetWidth: 200,
         targetHeight: 150,
@@ -674,7 +671,7 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce', 'ngCord
       nolsDB.dropSoap();
       nolsDB.dropRes();
       nolsDB.dropVit();
-      nolsDB.dropImg();
+      nolsDB.dropCam();
     }
   }
 })

@@ -336,6 +336,7 @@ select {
 textarea {
 	height:80px;
 	resize:none;
+	overflow: auto;
 }
 
 .item-select {
@@ -604,7 +605,9 @@ padding-bottom: 50px;
 	}
 }
 
-
+.disabBlack {
+	color:black;
+}
 .turnOn {
 	background-color:$WMI_LT_grey !important;
 }
