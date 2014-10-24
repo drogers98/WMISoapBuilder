@@ -506,7 +506,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
       }
 
 
-     window.plugin.email.open({
+     /*window.plugin.email.open({
         to:      ['rogers@eyebytesolutions.com'],
         cc:      ['vehr@eyebytesolutions.com'],
         bcc:     [''],
@@ -514,9 +514,33 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
         attachments: imgURIS(soapImages),
         body:    runMessage(soapVitals),
         isHtml:  true
-     });
-     //runMessage(soapVitals);
-     $state.go('soaps');
+     });*/
+
+     var soapSubject = 'Soap Note ' + soap.incidentDate + '|' + soap.patientAge + ',' + soap.patientGender + '|' + soap.patientInitials,
+         goTo = ['rogers@eyebyteSolutions.com'];
+
+
+    Soaps.sendEmail(runMessage(soapVitals),soapSubject,goTo,imgURIS(soapImages),function(soapEmailSuccess){
+        var confirmPopup = $ionicPopup.confirm({
+          template: "Where would you like to go?",
+          buttons: [
+            {
+              text: 'Stay on Review',
+              type: 'button-calm',
+              onTap: function() {
+                return;
+              }
+            },
+            {
+              text: 'MySOAPS',
+              type: 'button-light',
+              onTap: function(){
+                $state.go('soaps');
+              }
+            }
+          ]
+        })
+     })
  }
 
 

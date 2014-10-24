@@ -433,7 +433,7 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce', 'ngCord
   })
 })
 
-.factory('Soaps', function(nolsDB,$cordovaGeolocation) {
+.factory('Soaps', function(nolsDB,$cordovaGeolocation,$cordovaSocialSharing) {
   var soap = {};
   var soapKind = 'Soap';
 
@@ -454,12 +454,6 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce', 'ngCord
       soapQuery[elems[0]] = vals[0];
       soapQuery[elems[1]] = vals[1];
       return nolsDB.soapUpdateQuery(soapKind,id,soapQuery);
-    },
-    getLocation: function(callback){
-      $cordovaGeolocation.getCurrentPosition().then(function(position){
-        var patientCoords = [position.coords.latitude,position.coords.longitude];
-        callback(null,patientCoords);
-      })
     },
     all: function(mySoaps,callback) {
       var soaps = [];
@@ -501,6 +495,17 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce', 'ngCord
         for(var i=0;i < data.length;i++){
           callback(null,angular.copy(data.item(i)));
         }
+      })
+    },
+    getLocation: function(callback){
+      $cordovaGeolocation.getCurrentPosition().then(function(position){
+        var patientCoords = [position.coords.latitude,position.coords.longitude];
+        callback(null,patientCoords);
+      })
+    },
+    sendEmail: function(message,subject,toAttr,file,callback){
+      $cordovaSocialSharing.shareViaEmail(message,subject,toAttr,file).then(function(result){
+        callback(result);
       })
     },
     deleteSoap: function(soapId){

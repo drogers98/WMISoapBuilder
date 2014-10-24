@@ -28,7 +28,7 @@ autocorrect="off" onkeyup="javascript:this.value=this.value.toUpperCase();">
       <!-- Age. Auto populate from DOB if filled -->
       <h6>Age</h6>
       <label class="item item-input">
-        <input type="number" id="Soap.patientAge" placeholder="Patient Age" ng-model="soapSubjective.patientAge" ng-attr-class="{{soapSubjective.patientAge && 'disabBlack'}}" ng-disabled="soapSubjective.patientAge" ng-model-onblur ng-change="monitorSoapSubjectiveChange(soapSubjective,soapSubjective.patientAge,'patientAge')">
+        <input type="number" id="Soap.patientAge" placeholder="Patient Age" ng-model="soapSubjective.patientAge" ng-disabled="soapSubjective.patientAge" ng-model-onblur ng-change="monitorSoapSubjectiveChange(soapSubjective,soapSubjective.patientAge,'patientAge')">
       </label>
       <!-- Sex -->
       <h6>Sex</h6>
@@ -92,8 +92,10 @@ autocorrect="off" onkeyup="javascript:this.value=this.value.toUpperCase();">
       </div>
 	  <h6>Time of Onset</h6>
       <label class="item item-input">
-        <input type="date" placeholder="Date of Onset" ng-model="soapSubjective.patientOnsetDate" ng-model-onblur ng-change="monitorSoapSubjectiveChange(soapSubjective,soapSubjective.patientOnsetDate, 'patientOnsetDate')" >
-        <input type="time" id="Soap.patientTime" placeholder="Time of Onset" ng-model="soapSubjective.patientOnsetTime" ng-model-onblur ng-change="monitorSoapSubjectiveChange(soapSubjective,soapSubjective.patientOnsetTime,'patientOnsetTime')">
+        <input type="date" id="Soap.patientOnsetDate" placeholder="Date of Onset" ng-model="soapSubjective.patientOnsetDate" ng-model-onblur ng-change="monitorSoapSubjectiveChange(soapSubjective,soapSubjective.patientOnsetDate, 'patientOnsetDate')" >
+      </label>
+      <label class="item item-input">
+        <input type="time" id="Soap.patientOnsetTime" placeholder="HH:mm:ss" ng-model="soapSubjective.patientOnsetTime" ng-model-onblur ng-change="monitorSoapSubjectiveChange(soapSubjective,soapSubjective.patientOnsetTime,'patientOnsetTime')">
       </label>
     </div>
     <h5>MOI/HPI<a ng-controller="SoapCtrl" ng-click="openModal(5)"><span>i</span></a></h5>

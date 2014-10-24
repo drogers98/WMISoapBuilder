@@ -63,6 +63,8 @@ input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
 
 input[disabled] {
 	background-color: $WMIwhite;
+	-webkit-text-fill-color:black;
+	opacity:1 !important;
 }
 
 // adjust styles for patient initials. smooth out touppercase.js
@@ -334,7 +336,7 @@ select {
 }
 
 textarea {
-	height:80px;
+	//height:80px;
 	resize:none;
 	overflow: auto;
 }
@@ -605,9 +607,6 @@ padding-bottom: 50px;
 	}
 }
 
-.disabBlack {
-	color:black;
-}
 .turnOn {
 	background-color:$WMI_LT_grey !important;
 }
