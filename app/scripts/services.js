@@ -51,6 +51,7 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce', 'ngCord
          "responderUid": {"type": "TEXT", "null": "NOT NULL"},
          "responderTrainingLevel": {"type": "TEXT", "null": "NOT NULL"},
          "starterFlag": {"type": "TEXT", "null": "NOT NULL"},
+         "editFlag": {"type": "TEXT", "null": "NOT NULL"},
          "incidentDate": {"type": "DATE", "null": "NOT NULL"},
          "incidentLocation": {"type": "TEXT","null": "NOT NULL"},
          "incidentLat": {"type": "TEXT","null": "NOT NULL"},
@@ -66,7 +67,8 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce', 'ngCord
          "patientQuality": {"type": "TEXT","null": "NOT NULL"},
          "patientRadiates": {"type": "TEXT","null": "NOT NULL"},
          "patientSeverity": {"type": "TEXT","null": "NOT NULL"},
-         "patientTime": {"type": "TEXT","null": "NOT NULL"},
+         "patientOnsetDate": {"type": "TEXT", "null": "NOT NULL"},
+         "patientOnsetTime": {"type": "TEXT","null": "NOT NULL"},
          "patientHPI": {"type": "TEXT","null": "NOT NULL"},
          "patientSpinal": {"type": "TEXT","null": "NOT NULL"},
          "patientFound": {"type": "TEXT","null": "NOT NULL"},
@@ -89,6 +91,7 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce', 'ngCord
          "responderUid": responderAttr.id || '',
          "responderTrainingLevel": responderAttr.trainingLevel || '',
          "starterFlag": soapAttr.starterFlag || false,
+         "editFlag": soapAttr.editFlag || false,
          "incidentDate": soapAttr.incidentDate || '',
          "incidentLocation": soapAttr.incidentLocation || '',
          "incidentLat": soapAttr.incidentLat || '',
@@ -104,7 +107,8 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce', 'ngCord
          "patientQuality": soapAttr.patientQuality || '',
          "patientRadiates": soapAttr.patientRadiates || '',
          "patientSeverity": soapAttr.patientSeverity || '',
-         "patientTime": soapAttr.patientTime || '',
+         "patientOnsetDate": soapAttr.patientOnsetDate || '',
+         "patientOnsetTime": soapAttr.patientOnsetTime || '',
          "patientHPI": soapAttr.patientHPI || '',
          "patientSpinal": soapAttr.patientSpinal || '',
          "patientFound": soapAttr.patientFound || '',
@@ -186,7 +190,7 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce', 'ngCord
          "brradialReading": vitalAttr.brradialReading || '',
          "pupils": vitalAttr.pupils || '',
          "tempDegreesReading": vitalAttr.tempDegreesReading || '',
-         "tempDegrees": vitalAttr.tempDegrees || ''
+         "tempDegrees": vitalAttr.tempDegrees || '°F'
        }).then(function(results) {
          self.db.select('Vital', {
            "id": results.insertId
@@ -317,15 +321,6 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce', 'ngCord
          self.db.del('Vital',{"soapId":id});
        }
      },
-     dropSoap: function() {
-       self.db.dropTable("Soap");
-     },
-     dropRes: function(){
-       self.db.dropTable("Responder");
-     },
-     dropVit: function(){
-       self.db.dropTable("Vital");
-     },
      vitals: function(object,soap,callback){
        self.db.select(object,{
          "soapId": soap
@@ -351,6 +346,18 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce', 'ngCord
      },
      deleteImg: function(img){
        self.db.del('Camera',{"id": img});
+     },
+     dropSoap: function() {
+       self.db.dropTable("Soap");
+     },
+     dropRes: function(){
+       self.db.dropTable("Responder");
+     },
+     dropVit: function(){
+       self.db.dropTable("Vital");
+     },
+     dropCam: function(){
+       self.db.dropTable("Camera");
      }
 
    };
@@ -368,16 +375,16 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce', 'ngCord
   var responderKind = 'Responder';
 
   return {
-    updateResponder: function(responderEl,responderId,responderVal) {
-      var responderAttr = {};
-      responderAttr[responderEl] = responderVal;
-      nolsDB.updateResp(responderKind,responderId,responderAttr);
-    },
     createResponderTable: function(){
       nolsDB.createResponderTable();
     },
     saveResponder: function(responder, callback){
       return nolsDB.saveResponder(responder, callback);
+    },
+    updateResponder: function(responderEl,responderId,responderVal) {
+      var responderAttr = {};
+      responderAttr[responderEl] = responderVal;
+      nolsDB.updateResp(responderKind,responderId,responderAttr);
     },
     all: function(callback){
       return nolsDB.allKind('Responder', function(err,data){
@@ -428,7 +435,7 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce', 'ngCord
   })
 })
 
-.factory('Soaps', function(nolsDB,$cordovaGeolocation) {
+.factory('Soaps', function(nolsDB,$cordovaGeolocation,$cordovaSocialSharing) {
   var soap = {};
   var soapKind = 'Soap';
 
@@ -441,7 +448,7 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce', 'ngCord
     },
     updateSoap: function(soapEl,soapId,soapVal) {
       var soapAttr = {};
-      soapAttr[soapEl] = soapVal;
+      soapAttr[soapEl] = JSON.stringify(soapVal);
       return nolsDB.soapUpdate(soapKind,soapId,soapAttr);
     },
     updateSoapQuery: function(elems,id,vals){
@@ -449,15 +456,6 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce', 'ngCord
       soapQuery[elems[0]] = vals[0];
       soapQuery[elems[1]] = vals[1];
       return nolsDB.soapUpdateQuery(soapKind,id,soapQuery);
-    },
-    getLocation: function(callback){
-      $cordovaGeolocation.getCurrentPosition().then(function(position){
-        var patientCoords = [position.coords.latitude,position.coords.longitude];
-        callback(null,patientCoords);
-      })
-    },
-    updateEditSoap: function(soap){
-      return nolsDB.soapUpdate(soap);
     },
     all: function(mySoaps,callback) {
       var soaps = [];
@@ -501,10 +499,16 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce', 'ngCord
         }
       })
     },
-    getIT: function(soap, callback) {
-      if(soap) {
-      return nolsDB.soapUpdate(soap)
-      }
+    getLocation: function(callback){
+      $cordovaGeolocation.getCurrentPosition().then(function(position){
+        var patientCoords = [position.coords.latitude,position.coords.longitude];
+        callback(null,patientCoords);
+      })
+    },
+    sendEmail: function(message,subject,toAttr,file,callback){
+      $cordovaSocialSharing.shareViaEmail(message,subject,toAttr,file).then(function(result){
+        callback(result);
+      })
     },
     deleteSoap: function(soapId){
       return nolsDB.deleteKind(soapKind,soapId);
@@ -527,39 +531,27 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce', 'ngCord
     },
     updateVital: function(vitalEl,vitalId,vitalVal) {
       var vitalAttr = {};
-      vitalAttr[vitalEl] = vitalVal;
+      vitalAttr[vitalEl] = JSON.stringify(vitalVal);
       return nolsDB.vitalUpdate(vitalKind,vitalId,vitalAttr);
     },
-    all: function(soap,callback) {
-      return nolsDB.vitals('Vital',soap, function(err,data){
-        //object argument wont work above
-        var vitals = [];
-        var recentSoapVitals = [];
-        for(var i=0;i < data.length;i++){
-          console.log(data.item(i).starterFlag);
-          vitals.push(data.item(i));
+    currentVitals: function(soap,callback) {
+      return nolsDB.vitals('Vital', soap, function(err, data){
+        var currentAllVitals = [],filteredCurrentVitals = [];
+
+        var sortTimeTaken = function(vitalArray) {
+          vitalArray.sort(function(a,b){
+            return new Date('1970/01/01 ' + a.timeTaken) - new Date('1970/01/01 ' + b.timeTaken);
+          })
+          return vitalArray;
         }
-        var len = function() {
-          if(data.length <= 0) {return;}
-          else if (data.length <= 1){return 0;}
-          else if (data.length <= 2){return data.length - 2;}
-          else if (data.length <= 3){return data.length - 3;}
-          else {return data.length - 3};
+
+        for(var i=0;i<data.length;i++){
+          currentAllVitals.push(data.item(i));
         }
-        for(var i = len();i < data.length;i++){
-          console.log('recents ' + data.item(i).starterFlag)
-          recentSoapVitals.push(data.item(i));
-        }
-        callback(null,vitals,recentSoapVitals);
-      })
-    },
-    getAll: function(soapId,callback){
-      return nolsDB.allKindQuery('Vital', {'soapId': soapId}, function(err,data){
-        var soapVitals = [];
-        for(var i = 0;i<data.length;i++){
-          soapVitals.push(data.item(i))
-        }
-        callback(null,soapVitals);
+
+        filteredCurrentVitals = currentAllVitals.filter(function(entry){return entry.starterFlag == 'true';});
+        var recentFilteredCurrentVitals = filteredCurrentVitals.reverse().slice(0,3)//Most recent 3 vitals
+        callback(null,sortTimeTaken(currentAllVitals),sortTimeTaken(recentFilteredCurrentVitals));
       })
     },
     get: function(vitalId, callback) {
@@ -605,10 +597,10 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce', 'ngCord
     getNewImg: function(type,callback){
       type = (type === 'lib') ? Camera.PictureSourceType.PHOTOLIBRARY : Camera.PictureSourceType.CAMERA
       var options = {
-        quality : 45, //setting below 50 to avoid memory errors
+        quality : 49, //setting below 50 to avoid memory errors
         //destinationType : Camera.DestinationType.DATA_URL,
         sourceType : type,
-        allowEdit : true,
+        allowEdit : false,
         encodingType: Camera.EncodingType.JPEG,
         targetWidth: 200,
         targetHeight: 150,
@@ -686,7 +678,7 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce', 'ngCord
       nolsDB.dropSoap();
       nolsDB.dropRes();
       nolsDB.dropVit();
-      nolsDB.dropImg();
+      nolsDB.dropCam();
     }
   }
 })

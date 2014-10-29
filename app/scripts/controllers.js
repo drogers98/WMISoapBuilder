@@ -1,11 +1,20 @@
 'use strict';
 angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCordova'])
 
-.controller('MenuCtrl', function($scope,$state,$stateParams, $ionicSideMenuDelegate, Soaps) {
-
+.controller('MenuCtrl', function($scope,$state,$stateParams,$location, $ionicSideMenuDelegate, Soaps) {
   Soaps.all('mySoaps', function(err,soaps){
     $scope.soaps = soaps;
   })
+
+  $scope.$location = $location;
+  var path = $scope.$location.path();
+  $scope.pathId = path.match(/\d+/g);
+
+  $scope.callPath = function() {
+    function goReview() {$state.go('tab.review', {soapId: $scope.pathId});$ionicSideMenuDelegate.toggleRight();}
+    function hideReview() {alert('Sorry we could not find that SOAP')}
+    $scope.pathId ? goReview() : hideReview();
+  }
 
   $scope.toggleSideMenu = function() {
     $ionicSideMenuDelegate.toggleRight();
@@ -60,7 +69,6 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
                                  $ionicModal, $timeout, $location,
                                  Soaps, Responders, Nols,$ionicPopup,$cordovaSocialSharing){
   "use strict";
-
   Soaps.createSoapTable();
 
   Responders.get(function(err,responder){
@@ -69,7 +77,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
       if($state.includes('soaps')){
       Soaps.getLast(function(err,lastSoap){
         if(lastSoap === null || lastSoap.starterFlag === 'true'){
-          Soaps.saveNewSoap({},responder,function(err,starterSoap){
+          Soaps.saveNewSoap({},{},function(err,starterSoap){
             $scope.starterSoap = starterSoap.id;
           })
         }else {
@@ -95,6 +103,9 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
   };
 
   $scope.onItemDelete = function(soap) {
+    console.log($scope.$location.path());
+
+
     var confirmPopup = $ionicPopup.confirm({
        title: soap.incidentDate + ' | ' + soap.patientAge + ' , ' + soap.patientGender + ' , ' + soap.patientInitials,
        template: 'Are you sure you want to delete this SOAP NOTE?',
@@ -126,9 +137,11 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
      });*/
   }
 
-
-
   $scope.cancelSoap = function(soap){
+    console.log($scope.$location.path());
+    console.log($scope.$location.absUrl());
+    console.log(window.location.origin)
+    /*
     var confirmPopup = $ionicPopup.confirm({
        title: 'Cancel',
        template: 'Going back will delete this SOAP',
@@ -149,12 +162,14 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
            }
          }
        ]
-     });
+     });*/
 
   }
 
 
   //Nols.cutLifeLine();
+
+    $ionicModal.fromTemplateUrl()
 
   // Modal 1
      $ionicModal.fromTemplateUrl('modal-1.html', {
@@ -372,9 +387,10 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
        $scope.oModal17.remove();
      });
  // end modals
+
      $scope.shareSOAP = function(soap,soapVitals,soapImages) {
 
-      var runImages = function(soapImages){
+      var imgURIS = function(soapImages){
         var imageURIS = [];
         for(var i=0;i<soapImages.length;i++){
           var uri = soapImages[i].imageURI;
@@ -473,21 +489,55 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
         '<p>' + soap.patientPlan + '</p>' +
         '<strong>Anticipated Problems</strong>: ' + soap.patientAnticipatedProblems + '<br/>';
 
-        return messagePartI + messagePartIIB(soapVitals) + messagePartIII;
+        var messagePartIVA = '<h3>Image Captions</h3>';
+        var messagePartIV = function(soapImages) {
+          for(var i=0;i<soapImages.length;i++) {
+            var captions = [];
+            captions.push('<p>' + soapImages[i].imgCaption + '</p>');
+          }
+          return captions;
+        }
+
+
+        return messagePartI + messagePartIIB(soapVitals) + messagePartIII + messagePartIVA + messagePartIV(soapImages);
       }
 
 
-     window.plugin.email.open({
+     /*window.plugin.email.open({
         to:      ['rogers@eyebytesolutions.com'],
         cc:      ['vehr@eyebytesolutions.com'],
         bcc:     [''],
-        subject: 'SOAP Note: Test',
-        attachments: runImages(soapImages),
+        subject: 'Soap Note: ' + soap.incidentDate + '|' + soap.patientAge + ',' + soap.patientGender + '|' + soap.patientInitials,
+        attachments: imgURIS(soapImages),
         body:    runMessage(soapVitals),
         isHtml:  true
-     });
-     //runMessage(soapVitals);
+     });*/
 
+     var soapSubject = 'Soap Note ' + soap.incidentDate + '|' + soap.patientAge + ',' + soap.patientGender + '|' + soap.patientInitials,
+         goTo = ['rogers@eyebyteSolutions.com'];
+
+
+    Soaps.sendEmail(runMessage(soapVitals),soapSubject,goTo,imgURIS(soapImages),function(soapEmailSuccess){
+        var confirmPopup = $ionicPopup.confirm({
+          template: "Where would you like to go?",
+          buttons: [
+            {
+              text: 'Stay on Review',
+              type: 'button-calm',
+              onTap: function() {
+                return;
+              }
+            },
+            {
+              text: 'MySOAPS',
+              type: 'button-light',
+              onTap: function(){
+                $state.go('soaps');
+              }
+            }
+          ]
+        })
+     })
  }
 
 
@@ -495,25 +545,27 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
 })
 
 //SOAP OVERVIEW TAB
-.controller('SoapOverviewCtrl', function($scope,$state,$stateParams,$cordovaGeolocation,Soaps,Responders){
+.controller('SoapOverviewCtrl', function($scope,$state,$stateParams,$location,$cordovaGeolocation,Soaps,Responders){
+
   Soaps.get($stateParams.soapId, function(err, soapOverview){
+    Responders.get(function(err,responder) {
+    $scope.$location = $location;
+    $scope.soapOverview = soapOverview;
+    console.log(soapOverview);
     if(soapOverview.starterFlag === 'false') {
       Soaps.updateSoap('starterFlag',soapOverview.id,true);
     }
-    /*Responders.get(function(err,responder){
-      //faster way to do this w/ a loop;
-      if(soapOverview.responderFirstName !== responder.firstName){
-        console.log("first name does not match");
+    soapOverview.editFlag === 'false' ? $scope.edit = false : $scope.edit = true;
+    if(!soapOverview.responderFirstName && !soapOverview.responderLastName){
         Soaps.updateSoap('responderFirstName',soapOverview.id,responder.firstName);
-        if(soapOverview.responderLastName !== responder.lastName) {
-          Soaps.updateSoap('responderLastName',soapOverview.id,responder.lastName);
-          if(soapOverview.responderTrainingLevel !== responder.trainingLevel) {
-            Soaps.updateSoap('responderTrainingLevel',soapOverview.id,responderTrainingLevel);
-          }
-        }
-      }
-    })*/
-    $scope.soapOverview = soapOverview;
+        Soaps.updateSoap('responderLastName', soapOverview.id,responder.lastName);
+        Soaps.updateSoap('responderTrainingLevel',soapOverview.id,responder.trainingLevel);
+        $scope.soapOverview.responderFirstName = responder.firstName;
+        $scope.soapOverview.responderLastName = responder.lastName;
+        $scope.soapOverview.responderTrainingLevel = responder.trainingLevel;
+    }
+
+    });
   })
 
   $scope.monitorSoapOverviewChange = function(soap,soapVal,attrElem){
@@ -572,6 +624,11 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
     Soaps.updateSoap(kindElem,kindId,kindVal);
   }
 
+  $scope.expandText = function(obj){
+  var valueID = obj.target.attributes.id.value;
+  var element = document.getElementById(valueID);
+  element.style.height =  element.scrollHeight + "px";}
+
   var range = function(i){
     return i ? range(i-1).concat(i):[];
   }
@@ -597,14 +654,10 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
   Vitals.createVitalTable();
   Soaps.get($stateParams.soapId, function(err,soapObjective){
     $scope.soapObjective = soapObjective;
-    Vitals.all(soapObjective.id, function(err,soapVitals,recentSoapVitals){
-      $scope.soapVitals = soapVitals;
-      $scope.recentSoapVitalsBefore = recentSoapVitals.filter(function(entry){return entry.starterFlag === 'true';});
-      $scope.recentSoapVitals = $scope.recentSoapVitalsBefore.sort(function(a,b){
-        return new Date('1970/01/01 ' + a.timeTaken) - new Date('1970/01/01 ' + b.timeTaken);
-      })
+    Vitals.currentVitals(soapObjective.id, function(err,allobjVitals,objTrueVitals){
+      $scope.recentSoapVitals = objTrueVitals;
 
-      $scope.recentSoapVitalFlag = recentSoapVitals.filter(function(entry){return entry.starterFlag === 'false';});
+      $scope.recentSoapVitalFlag = allobjVitals.filter(function(entry){return entry.starterFlag === 'false';});
       if($scope.recentSoapVitalFlag.length > 0){
         $scope.starterVital = $scope.recentSoapVitalFlag[0]
       }else {
@@ -655,6 +708,11 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
     Soaps.updateSoap(kindElem,kindId,kindVal);
   }
 
+  $scope.expandText = function(obj){
+  var valueID = obj.target.attributes.id.value;
+  var element = document.getElementById(valueID);
+  element.style.height =  element.scrollHeight + "px";}
+
 })
 
 //SOAP A-P TAB
@@ -667,19 +725,23 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
     var kindElem = attrElem,kindId = soap.id,kindVal = soapVal;
     Soaps.updateSoap(kindElem,kindId,kindVal);
   }
+
+  $scope.expandText = function(obj){
+  var valueID = obj.target.attributes.id.value;
+  var element = document.getElementById(valueID);
+  element.style.height =  element.scrollHeight + "px";}
 })
 
 //SOAP REVIEW TAB
-.controller('SoapReviewCtrl', function($scope,$state,$stateParams,Soaps,Responders,Vitals,Camera){
+.controller('SoapReviewCtrl', function($scope,$state,$stateParams,$location,Soaps,Responders,Vitals,Camera){
+  $scope.reviewRoute = $scope.$location.path().substring(0,12);
   Soaps.get($stateParams.soapId, function(err,soapReview){
     $scope.soapReview = soapReview;
-    Vitals.all(soapReview.id, function(err,soapVitals,recentSoapReviewVitals){
-      //$scope.recentSoapReviewVitals = soapVitals.filter(function(entry){return entry.starterFlag === 'true'});
-      $scope.recentSoapReviewVitalsBefore = recentSoapReviewVitals.filter(function(entry){return entry.starterFlag === 'true';});
-      $scope.recentSoapReviewVitals = $scope.recentSoapReviewVitalsBefore.sort(function(a,b){
-        return new Date('1970/01/01 ' + a.timeTaken) - new Date('1970/01/01 ' + b.timeTaken);
-      })
-      return $scope.recentSoapReviewVitals;
+    if(soapReview.editFlag === 'false') {
+      Soaps.updateSoap('editFlag',soapReview.id,true);
+    }
+    Vitals.currentVitals(soapReview.id, function(err,allreviewVitals,reviewTrueVitals){
+      $scope.recentSoapReviewVitals = reviewTrueVitals;
     })
     Camera.allQuery(soapReview.id, function(err,soapImgs){
       $scope.soapImgs = soapImgs.filter(function(entry){return entry.starterFlag === 'true';});
@@ -759,19 +821,6 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
       }
     })
 
-    /*Camera.getLast(function(err,lastImg){
-      if(lastImg === null || lastImg.starterFlag === 'true'){
-        Camera.saveNewImg({},soapImg.id,function(err,starterImg){
-          $scope.starterImg = starterImg;
-        })
-      }else if(lastImg.starterFlag === 'false' && lastImg.id !== soapImg.id) {
-        Camera.saveNewImg({},soapImg.id,function(err,starterImg){
-          $scope.starterImg = starterImg;
-        })
-      }else{
-        $scope.starterImg = lastImg;
-      }
-    })*/
   })
 
 /*  $scope.takeNewImg = function() {
@@ -795,9 +844,11 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
 
   Soaps.get($stateParams.soapId, function(err,soapDetail){
     $scope.soapDetail = soapDetail;
-    Vitals.all(soapDetail.id, function(err,soapVitals,recentSoapDetailVitals){
-      $scope.recentSoapDetailVitals = recentSoapDetailVitals.filter(function(entry){return entry.starterFlag === 'true';});
-      return $scope.recentSoapDetailVitals;
+    if(soapDetail.editFlag === 'false') {
+      Soaps.updateSoap('editFlag',soapDetail.id,true);
+    }
+    Vitals.currentVitals(soapDetail.id, function(err,alldetailVitals,detailTrueVitals){
+      $scope.recentSoapDetailVitals = detailTrueVitals;
     })
     Camera.allQuery(soapDetail.id, function(err,soapImgs){
       $scope.soapImgs = soapImgs.filter(function(entry){return entry.starterFlag === 'true';});
@@ -835,24 +886,10 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
      });
   }
 
-  /*Vitals.getLast(function(err,lastVital){
-    if(lastVital === null || lastVital.starterFlag === 'true'){
-      Vitals.saveNewVital({},$stateParams.soapId,function(err,starterVital){
-        $scope.starterVital = starterVital;
-      })
-    }else {
-      $scope.starterVital = lastVital;
-    }
-  })*/
-
-  Vitals.getAll($stateParams.soapId, function(err, soapVitals){
+  Vitals.currentVitals($stateParams.soapId, function(err, allVitals,allTrueVitals){
     $scope.soapVitalsId = $stateParams.soapId;
-    $scope.soapVitalBeforeFilter = soapVitals.filter(function(entry){return entry.starterFlag === 'true';});
-    $scope.soapVitals = $scope.soapVitalBeforeFilter.sort(function (a,b) {
-      return new Date('1970/01/01 ' + a.timeTaken) - new Date('1970/01/01 ' + b.timeTaken);
-    });
-    $scope.soapVitalsFlag = soapVitals.filter(function(entry){return entry.starterFlag === 'false';});
-    console.log($scope.soapVitalsFlag);
+    $scope.soapVitals = allVitals.filter(function(entry){return entry.starterFlag === 'true';});
+    $scope.soapVitalsFlag = allVitals.filter(function(entry){return entry.starterFlag === 'false';});
     if($scope.soapVitalsFlag.length > 0){
       $scope.starterVital = $scope.soapVitalsFlag[0];
     }else {

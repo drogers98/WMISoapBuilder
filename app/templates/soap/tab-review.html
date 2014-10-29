@@ -4,8 +4,9 @@
   </ion-nav-buttons>
 
   <ion-nav-buttons side="right">
-    <a class="button icon ion-edit" href="#/tab/overview/{{soapReview.id}}"></a>
-    <button class="button icon ion-ios7-compose-outline" ng-controller="SoapCtrl" ng-click="shareSOAP(soapReview,recentSoapReviewVitals,soapImgs)"></button>
+
+    <!-- <a class="button icon ion-edit" href="#/tab/overview/{{soapReview.id}}"></a> -->
+    <button class="button icon ion-ios7-compose-outline" ng-controller="SoapCtrl" ng-click="shareSOAP(soapReview)"></button>
   </ion-nav-buttons>
 
 
@@ -45,7 +46,7 @@
           <ion-item class="item-text-wrap"><strong>Quality:</strong> {{soapReview.patientQuality}}</ion-item>
           <ion-item class="item-text-wrap"><strong>Radiation/Region/Referred:</strong> {{soapReview.patientRadiates}}</ion-item>
           <ion-item class="item-text-wrap"><strong>Severity:</strong> {{soapReview.patientSeverity}} out of 10</ion-item>
-          <ion-item class="item-text-wrap"><strong>Time of Onset:</strong> {{soapReview.patientTime}}</ion-item>
+          <ion-item class="item-text-wrap"><strong>Time of Onset:</strong> {{soapReview.patientOnsetDate}}, {{soapReview.patientOnsetTime}}</ion-item>
 
         </ion-list>
       </div>

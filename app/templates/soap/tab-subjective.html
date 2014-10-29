@@ -15,35 +15,42 @@
       <h5>Patient Information<a ng-controller="SoapCtrl" ng-click="openModal(3)"><span>i</span></a></h5>
       <div class="list">
       <!-- initials -->
-      <h6>Patient Initials</h6>
-      <label class="item item-input initials">
-        <input type="text" id="Soap.patientInitials" placeholder="Enter up to three characters." ng-model="soapSubjective.patientInitials" ng-model-onblur ng-change="monitorSoapSubjectiveChange(soapSubjective,soapSubjective.patientInitials,'patientInitials')" maxlength="3" autocapitalize="off"
+        <div class="titleParent">
+          <h6>Patient Initials</h6>
+          <label class="item item-input initials">
+            <input type="text" id="Soap.patientInitials" placeholder="Enter up to three characters." ng-model="soapSubjective.patientInitials" ng-model-onblur ng-change="monitorSoapSubjectiveChange(soapSubjective,soapSubjective.patientInitials,'patientInitials')" maxlength="3" autocapitalize="off"
 autocorrect="off" onkeyup="javascript:this.value=this.value.toUpperCase();">
-      </label>
+          </label>
+        </div>
       <!-- DOB -->
-      <h6>Date of Birth</h6>
-      <label class="item item-input">
-        <input type="date" id="Soap.patientDob" placeholder="Patient DOB" ng-model="soapSubjective.patientDob" ng-model-onblur ng-change="monitorSoapSubjectiveChange(soapSubjective,soapSubjective.patientDob,'patientDob')">
-      </label>
-      <!-- Age. Auto populate from DOB if filled -->
-      <h6>Age</h6>
-      <label class="item item-input">
-        <input type="number" id="Soap.patientAge" placeholder="Patient Age" ng-model="soapSubjective.patientAge" ng-disabled="soapSubjective.patientAge" ng-model-onblur ng-change="monitorSoapSubjectiveChange(soapSubjective,soapSubjective.patientAge,'patientAge')">
-      </label>
-      <!-- Sex -->
-      <h6>Sex</h6>
-      <div class="item item-select">
-      <div class="input-label">
-          Sex
-       </div>
-        <select id="Soap.patientGender" ng-model="soapSubjective.patientGender" ng-options="gender.value as gender.name for gender in genders" ng-change="monitorSoapSubjectiveChange(soapSubjective,soapSubjective.patientGender,'patientGender')">
-	        <option style="display:none;" value="" selected>Please Choose</option>
-        </select>
+      <div class="titleParent">
+        <h6>Date of Birth</h6>
+        <label class="item item-input">
+          <input type="date" id="Soap.patientDob" placeholder="Patient DOB" ng-model="soapSubjective.patientDob" ng-model-onblur ng-change="monitorSoapSubjectiveChange(soapSubjective,soapSubjective.patientDob,'patientDob')">
+        </label>
       </div>
-
-
+      <!-- Age. Auto populate from DOB if filled -->
+      <div class="titleParent">
+        <h6>Age</h6>
+        <label class="item item-input">
+          <input type="number" id="Soap.patientAge" placeholder="Patient Age" ng-model="soapSubjective.patientAge" ng-disabled="soapSubjective.patientAge" ng-model-onblur ng-change="monitorSoapSubjectiveChange(soapSubjective,soapSubjective.patientAge,'patientAge')">
+        </label>
+      </div>
+      <div class="titleParent">
+      <!-- Sex -->
+        <h6>Sex</h6>
+        <div class="item item-select">
+          <div class="input-label">
+            Sex
+          </div>
+          <select id="Soap.patientGender" ng-model="soapSubjective.patientGender" ng-options="gender.value as gender.name for gender in genders" ng-change="monitorSoapSubjectiveChange(soapSubjective,soapSubjective.patientGender,'patientGender')">
+	           <option style="display:none;" value="" selected>Please Choose</option>
+           </select>
+        </div>
+      </div>
     </div>
     <!-- subjective section 2 -->
+    <div class="titleParent">
     <h5>Chief Complaint<a ng-controller="SoapCtrl" ng-click="openModal(4)"><span>i</span></a></h5>
     <div class="list">
       <label class="item item-input">
@@ -53,67 +60,91 @@ autocorrect="off" onkeyup="javascript:this.value=this.value.toUpperCase();">
 
  ng-model-onblur  ng-change="monitorSoapSubjectiveChange(soapSubjective,soapSubjective.patientComplaint,'patientComplaint')"></textarea>
       </label>
-
+    </div>
+  </div>
     <!-- subjective section 3 -->
-   <h6>Onset</h6>
-      <div class="item item-select">
-      <div class="input-label">
+      <div class="titleParent">
+      <h6>Onset</h6>
+        <div class="item item-select">
+          <div class="input-label">
           Onset
-       </div>
-        <select id="Soap.patientOnset" ng-model="soapSubjective.patientOnset" ng-options="onset for onset in onsets" ng-change="monitorSoapSubjectiveChange(soapSubjective,soapSubjective.patientOnset,'patientOnset')">
-	        <option style="display:none;" value="" selected>Please Choose</option>
-        </select>
+          </div>
+          <select id="Soap.patientOnset" ng-model="soapSubjective.patientOnset" ng-options="onset for onset in onsets" ng-change="monitorSoapSubjectiveChange(soapSubjective,soapSubjective.patientOnset,'patientOnset')">
+	           <option style="display:none;" value="" selected>Please Choose</option>
+          </select>
+        </div>
       </div>
-      <h6>Provokes/Palliates</h6>
-      <label class="item item-input">
-        <textarea id="Soap.patientPPalliates" type="text" placeholder="What makes the pain better or worse?" ng-model="soapSubjective.patientPPalliates" ng-model-onblur ng-change="monitorSoapSubjectiveChange(soapSubjective,soapSubjective.patientPPalliates,'patientPPalliates')" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
-      </label>
-	  <h6>Quality</h6>
-      <div class="item item-select">
-      <div class="input-label">
-          Quality
-       </div>
-        <select id="Soap.patientQuality" ng-model="soapSubjective.patientQuality" ng-change="monitorSoapSubjectiveChange(soapSubjective,soapSubjective.patientQuality,'patientQuality')" ng-options="quality for quality in qualities">
-	        <option style="display:none;" value="" selected>Please Choose</option>
-        </select>
+
+      <div class="titleParent">
+        <h6>Provokes/Palliates</h6>
+        <label class="item item-input">
+          <textarea id="Soap.patientPPalliates" type="text" placeholder="What makes the pain better or worse?" ng-model="soapSubjective.patientPPalliates" ng-model-onblur ng-change="monitorSoapSubjectiveChange(soapSubjective,soapSubjective.patientPPalliates,'patientPPalliates')" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
+        </label>
       </div>
-	  <h6>Radiation/Region/Referred</h6>
+
+      <div class="titleParent">
+        <h6>Quality</h6>
+        <div class="item item-select">
+          <div class="input-label">
+            Quality
+          </div>
+          <select id="Soap.patientQuality" ng-model="soapSubjective.patientQuality" ng-change="monitorSoapSubjectiveChange(soapSubjective,soapSubjective.patientQuality,'patientQuality')" ng-options="quality for quality in qualities">
+	           <option style="display:none;" value="" selected>Please Choose</option>
+          </select>
+        </div>
+      </div>
+
+    <div class="titleParent">
+      <h6>Radiation/Region/Referred</h6>
       <label class="item item-input">
         <textarea id="Soap.patientRadiates" type="text" placeholder="Does the feeling move anywhere? Where is it located?" ng-model="soapSubjective.patientRadiates" ng-model-onblur ng-change="monitorSoapSubjectiveChange(soapSubjective,soapSubjective.patientRadiates,'patientRadiates')" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
       </label>
-	  <h6>Severity</h6>
+	  </div>
+
+    <div class="titleParent">
+      <h6>Severity</h6>
       <div class="item item-select">
-      <div class="input-label">
+        <div class="input-label">
           Severity
-       </div>
+        </div>
         <select id="Soap.patientSeverity" ng-options="severity for severity in severities" ng-model="soapSubjective.patientSeverity" ng-change="monitorSoapSubjectiveChange(soapSubjective,soapSubjective.patientSeverity,'patientSeverity')">
 	        <option style="display:none;" value="" selected>Please Choose</option>
         </select>
       </div>
-	  <h6>Time of Onset</h6>
-      <label class="item item-input">
-        <input type="time" id="Soap.patientTime" placeholder="" ng-model="soapSubjective.patientTime" ng-model-onblur ng-change="monitorSoapSubjectiveChange(soapSubjective,soapSubjective.patientTime,'patientTime')">
+    </div>
+
+    <div class="titleParent">
+	     <h6>Time of Onset</h6>
+       <label class="item item-input">
+        <input type="date" id="Soap.patientOnsetDate" placeholder="Date of Onset" ng-model="soapSubjective.patientOnsetDate" ng-model-onblur ng-change="monitorSoapSubjectiveChange(soapSubjective,soapSubjective.patientOnsetDate, 'patientOnsetDate')" >
+       </label>
+       <label class="item item-input">
+        <input type="time" id="Soap.patientOnsetTime" placeholder="HH:mm:ss" ng-model="soapSubjective.patientOnsetTime" ng-model-onblur ng-change="monitorSoapSubjectiveChange(soapSubjective,soapSubjective.patientOnsetTime,'patientOnsetTime')">
       </label>
     </div>
+  </div>
+
     <h5>MOI/HPI<a ng-controller="SoapCtrl" ng-click="openModal(5)"><span>i</span></a></h5>
-    <div class="list">
+      <div class="list">
+        <label class="item item-input">
+          <textarea id="Soap.patientHPI" type="text" placeholder="Describe in detail the mechanism of injury or the history of the illness." ng-model="soapSubjective.patientHPI" ng-model-onblur ng-change="monitorSoapSubjectiveChange(soapSubjective,soapSubjective.patientHPI,'patientHPI')" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
+        </label>
 
-     <label class="item item-input">
-        <textarea id="Soap.patientHPI" type="text" placeholder="Describe in detail the mechanism of injury or the history of the illness." ng-model="soapSubjective.patientHPI" ng-model-onblur ng-change="monitorSoapSubjectiveChange(soapSubjective,soapSubjective.patientHPI,'patientHPI')" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
-
-      </label>
-	  <h6>Spinal MOI</h6>
-      <div class="item item-select">
-      <div class="input-label">
-          Spinal MOI
+      <div class="titleParent">
+        <h6>Spinal MOI</h6>
+        <div class="item item-select">
+          <div class="input-label">
+            Spinal MOI
+          </div>
+          <select id="Soap.patientSpinal" ng-model="soapSubjective.patientSpinal" ng-change="monitorSoapSubjectiveChange(soapSubjective,soapSubjective.patientSpinal,'patientSpinal')" ng-options="spinal for spinal in spinals">
+	           <option style="display:none;" value="" selected>Please Choose</option>
+           </select>
+         </div>
        </div>
-        <select id="Soap.patientSpinal" ng-model="soapSubjective.patientSpinal" ng-change="monitorSoapSubjectiveChange(soapSubjective,soapSubjective.patientSpinal,'patientSpinal')" ng-options="spinal for spinal in spinals">
-	        <option style="display:none;" value="" selected>Please Choose</option>
-        </select>
-      </div>
 
     </div>
       <a class="button button-block button-light icon-right ion-ios7-arrow-right margin" href="#/tab/objective/{{soapSubjective.id}}">Continue to Objective</a>
+      <a class="button button-block button-calm margin" href="#/tab/review/{{soapSubjective.id}}">Review SOAP Note</a>
     </div>
   </ion-content>
 </ion-view>

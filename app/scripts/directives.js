@@ -27,11 +27,13 @@ angular.module('WMISoapBuilder.directives', ['angular-websql', 'debounce'])
 
             elm.unbind('input').unbind('keydown').unbind('change');
             elm.bind('focus', function() {
-              elm.toggleClass("turnOn");
+              elm.parent().parent().find('h6').toggleClass("turnOn");
+              elm.parent().parent().parent().find('h5').toggleClass("turnOn");
               //ngModelCtrl.$setViewValue(console.log(elm.css()));
             })
             elm.bind('blur', function() {
-                elm.toggleClass("turnOn");
+              elm.parent().parent().find('h6').toggleClass("turnOn");
+              elm.parent().parent().parent().find('h5').toggleClass("turnOn");
                 scope.$apply(function() {
                     ngModelCtrl.$setViewValue(elm.val());
                 });

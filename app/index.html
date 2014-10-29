@@ -9,6 +9,9 @@
     <!-- <link rel="stylesheet" href="vendor/some.contrib.css"> -->
     <!-- bower:css -->
     <link rel="stylesheet" href="bower_components/ionic/release/css/ionic.css" />
+    <link rel="stylesheet" href="bower_components/angular-native-picker/build/themes/default.css" />
+    <link rel="stylesheet" href="bower_components/angular-native-picker/build/themes/default.date.css" />
+    <link rel="stylesheet" href="bower_components/angular-native-picker/build/themes/default.time.css" />
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -29,7 +32,7 @@
     -->
     <ion-side-menus>
         <!-- Center content Views -->
-		<ion-side-menu-content ng-controller="MenuCtrl">
+    <ion-side-menu-content ng-controller="MenuCtrl">
         <ion-nav-view class="slide-left-right"></ion-nav-view>
         </ion-side-menu-content>
         <!-- Left menu -->
@@ -39,10 +42,17 @@
            <a class="button button-block button-calm margin" href="#/soaps" ng-controller="MenuCtrl" ng-click="toggleSideMenu()">My SOAPs</a>
            <a class="button button-block button-calm margin" href="#/terms" ng-controller="MenuCtrl" ng-click="toggleSideMenu()">Terms of Service</a>
            <a class="button button-block button-calm margin" href="#/responder/settings" ng-controller="MenuCtrl" ng-click="toggleSideMenu()">Settings</a>
-           
+           <a ng-hide="!pathId" class="button button-block button-calm margin" ng-click="callPath()">Review</a>
+           <ion-list>
+             <ion-item class="item-icon-right" ng-repeat="soap in soaps" href="#/soaps/{{soap.id}}">
+               {{soap.incidentDate}} | {{soap.patientAge}}, {{soap.patientGender}} | {{soap.patientInitials}}
+               <i class="icon ion-ios7-arrow-forward"></i>
+             </ion-item>
+           </ion-list>
         </div>
         </ion-side-menu>
     </ion-side-menus>
+
 
 
 <!-- Help modals -->
@@ -494,6 +504,7 @@
     <script src="bower_components/angular-placeholder/placeholder.js"></script>
     <script src="bower_components/ngCordova/dist/ng-cordova.js"></script>
     <script src="bower_components/ngCordova/dist/ng-cordova.min.js"></script>
+    <script src="bower_components/angular-native-picker/build/angular-datepicker.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:js({.tmp,app}) scripts/scripts.js -->

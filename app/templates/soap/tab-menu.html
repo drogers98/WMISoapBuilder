@@ -1,0 +1,22 @@
+<ion-side-menus>
+    <!-- Center content Views -->
+<ion-side-menu-content ng-controller="MenuCtrl">
+  <ion-nav-views></ion-nav-views>
+</ion-side-menu-content>
+    <!-- Left menu -->
+    <ion-side-menu side="right" ng-controller="MenuCtrl">
+    <div class="WMIsideMenu">
+    <a class="button button-block button-calm margin menu-first" href="#/about" ng-controller="MenuCtrl" ng-click="toggleSideMenu()">About WMI</a>
+       <a class="button button-block button-calm margin" href="#/soaps" ng-controller="MenuCtrl" ng-click="toggleSideMenu()">My SOAPs</a>
+       <a class="button button-block button-calm margin" href="#/terms" ng-controller="MenuCtrl" ng-click="toggleSideMenu()">Terms of Service</a>
+       <a class="button button-block button-calm margin" href="#/responder/settings" ng-controller="MenuCtrl" ng-click="toggleSideMenu()">Settings</a>
+       <a ng-hide="!pathId" class="button button-block button-calm margin" ng-click="callPath()">Review</a>
+       <ion-list>
+         <ion-item class="item-icon-right" ng-repeat="soap in soaps" href="#/soaps/{{soap.id}}">
+           {{soap.incidentDate}} | {{soap.patientAge}}, {{soap.patientGender}} | {{soap.patientInitials}}
+           <i class="icon ion-ios7-arrow-forward"></i>
+         </ion-item>
+       </ion-list>
+    </div>
+    </ion-side-menu>
+</ion-side-menus>
