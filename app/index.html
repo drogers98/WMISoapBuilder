@@ -39,13 +39,7 @@
            <a class="button button-block button-calm margin" href="#/soaps" ng-controller="MenuCtrl" ng-click="toggleSideMenu()">My SOAPs</a>
            <a class="button button-block button-calm margin" href="#/terms" ng-controller="MenuCtrl" ng-click="toggleSideMenu()">Terms of Service</a>
            <a class="button button-block button-calm margin" href="#/responder/settings" ng-controller="MenuCtrl" ng-click="toggleSideMenu()">Settings</a>
-           <a class="button button-block button-calm margin" href="#/tab/review/{{soapModal.id}}">Review</a>
-           <ion-list>
-             <ion-item class="item-icon-right" ng-repeat="soap in soaps" href="#/soaps/{{soap.id}}">
-               {{soap.incidentDate}} | {{soap.patientAge}}, {{soap.patientGender}} | {{soap.patientInitials}}
-               <i class="icon ion-ios7-arrow-forward"></i>
-             </ion-item>
-           </ion-list>
+           
         </div>
         </ion-side-menu>
     </ion-side-menus>

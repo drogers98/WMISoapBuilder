@@ -18,6 +18,7 @@ $WMI_DK_grey: darken($WMIgrey, 10%);
 $WMIblack: #111;
 $WMIshadow: rgba(0,0,0,.5);
 
+$base-background-color: $WMIwhite;
 //temp image
 #smallImage, #largeImage {
 display:none;
@@ -605,14 +606,11 @@ padding-bottom: 50px;
 }
 
 
-.turnOn {
-	background-color:$WMI_LT_grey !important;
-<<<<<<< HEAD
-	}
+//.turnOn {
+//	background-color:$WMI_LT_grey !important;
+//	}
 
-=======
-}
->>>>>>> f4ca88cd1dc98543b380a796ddb27113d6355be0
+
 .popup {
 	background: $WMIwhite !important;
 }
