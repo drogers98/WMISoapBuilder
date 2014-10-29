@@ -51,6 +51,7 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce', 'ngCord
          "responderUid": {"type": "TEXT", "null": "NOT NULL"},
          "responderTrainingLevel": {"type": "TEXT", "null": "NOT NULL"},
          "starterFlag": {"type": "TEXT", "null": "NOT NULL"},
+         "editFlag": {"type": "TEXT", "null": "NOT NULL"},
          "incidentDate": {"type": "DATE", "null": "NOT NULL"},
          "incidentLocation": {"type": "TEXT","null": "NOT NULL"},
          "incidentLat": {"type": "TEXT","null": "NOT NULL"},
@@ -90,6 +91,7 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce', 'ngCord
          "responderUid": responderAttr.id || '',
          "responderTrainingLevel": responderAttr.trainingLevel || '',
          "starterFlag": soapAttr.starterFlag || false,
+         "editFlag": soapAttr.editFlag || false,
          "incidentDate": soapAttr.incidentDate || '',
          "incidentLocation": soapAttr.incidentLocation || '',
          "incidentLat": soapAttr.incidentLat || '',
@@ -446,7 +448,7 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce', 'ngCord
     },
     updateSoap: function(soapEl,soapId,soapVal) {
       var soapAttr = {};
-      soapAttr[soapEl] = soapVal;
+      soapAttr[soapEl] = JSON.stringify(soapVal);
       return nolsDB.soapUpdate(soapKind,soapId,soapAttr);
     },
     updateSoapQuery: function(elems,id,vals){
@@ -529,7 +531,7 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce', 'ngCord
     },
     updateVital: function(vitalEl,vitalId,vitalVal) {
       var vitalAttr = {};
-      vitalAttr[vitalEl] = vitalVal;
+      vitalAttr[vitalEl] = JSON.stringify(vitalVal);
       return nolsDB.vitalUpdate(vitalKind,vitalId,vitalAttr);
     },
     currentVitals: function(soap,callback) {

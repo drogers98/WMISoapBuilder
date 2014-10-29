@@ -69,9 +69,6 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
                                  $ionicModal, $timeout, $location,
                                  Soaps, Responders, Nols,$ionicPopup,$cordovaSocialSharing){
   "use strict";
-
-  console.log(window.location.origin);
-
   Soaps.createSoapTable();
 
   Responders.get(function(err,responder){
@@ -549,15 +546,16 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
 
 //SOAP OVERVIEW TAB
 .controller('SoapOverviewCtrl', function($scope,$state,$stateParams,$location,$cordovaGeolocation,Soaps,Responders){
-  console.log(window.location.origin)
 
   Soaps.get($stateParams.soapId, function(err, soapOverview){
     Responders.get(function(err,responder) {
     $scope.$location = $location;
     $scope.soapOverview = soapOverview;
+    console.log(soapOverview);
     if(soapOverview.starterFlag === 'false') {
       Soaps.updateSoap('starterFlag',soapOverview.id,true);
     }
+    soapOverview.editFlag === 'false' ? $scope.edit = false : $scope.edit = true;
     if(!soapOverview.responderFirstName && !soapOverview.responderLastName){
         Soaps.updateSoap('responderFirstName',soapOverview.id,responder.firstName);
         Soaps.updateSoap('responderLastName', soapOverview.id,responder.lastName);
@@ -625,6 +623,11 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
     }
     Soaps.updateSoap(kindElem,kindId,kindVal);
   }
+
+  $scope.expandText = function(obj){
+  var valueID = obj.target.attributes.id.value;
+  var element = document.getElementById(valueID);
+  element.style.height =  element.scrollHeight + "px";}
 
   var range = function(i){
     return i ? range(i-1).concat(i):[];
@@ -705,6 +708,11 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
     Soaps.updateSoap(kindElem,kindId,kindVal);
   }
 
+  $scope.expandText = function(obj){
+  var valueID = obj.target.attributes.id.value;
+  var element = document.getElementById(valueID);
+  element.style.height =  element.scrollHeight + "px";}
+
 })
 
 //SOAP A-P TAB
@@ -717,12 +725,21 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
     var kindElem = attrElem,kindId = soap.id,kindVal = soapVal;
     Soaps.updateSoap(kindElem,kindId,kindVal);
   }
+
+  $scope.expandText = function(obj){
+  var valueID = obj.target.attributes.id.value;
+  var element = document.getElementById(valueID);
+  element.style.height =  element.scrollHeight + "px";}
 })
 
 //SOAP REVIEW TAB
-.controller('SoapReviewCtrl', function($scope,$state,$stateParams,Soaps,Responders,Vitals,Camera){
+.controller('SoapReviewCtrl', function($scope,$state,$stateParams,$location,Soaps,Responders,Vitals,Camera){
+  $scope.reviewRoute = $scope.$location.path().substring(0,12);
   Soaps.get($stateParams.soapId, function(err,soapReview){
     $scope.soapReview = soapReview;
+    if(soapReview.editFlag === 'false') {
+      Soaps.updateSoap('editFlag',soapReview.id,true);
+    }
     Vitals.currentVitals(soapReview.id, function(err,allreviewVitals,reviewTrueVitals){
       $scope.recentSoapReviewVitals = reviewTrueVitals;
     })
@@ -827,6 +844,9 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
 
   Soaps.get($stateParams.soapId, function(err,soapDetail){
     $scope.soapDetail = soapDetail;
+    if(soapDetail.editFlag === 'false') {
+      Soaps.updateSoap('editFlag',soapDetail.id,true);
+    }
     Vitals.currentVitals(soapDetail.id, function(err,alldetailVitals,detailTrueVitals){
       $scope.recentSoapDetailVitals = detailTrueVitals;
     })

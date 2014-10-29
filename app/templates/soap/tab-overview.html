@@ -1,7 +1,8 @@
 <ion-view title="Overview">
 
   <ion-nav-buttons side="left">
-    <a class="button icon ion-ios7-arrow-back" ng-controller="SoapCtrl" ng-click="cancelSoap(soapOverview)">Cancel</a>
+    <a class="button icon" id="route" ng-hide="edit" ng-controller="SoapCtrl" ng-click="cancelSoap(soapOverview)">Cancel</a>
+    <a class="button icon" id="route" ng-show="edit" href="#/tab/review/{{soapOverview.id}}">Cancel Edit</a>
   </ion-nav-buttons>
 
   <ion-nav-buttons side="right">
@@ -10,62 +11,66 @@
 
   <ion-content has-header="true" padding="false"has-bouncing="false">
   <div class="SOAP">
-
   <h5>Date & Location<a ng-controller="SoapCtrl" ng-click="openModal(1)"><span>i</span></a></h5>
       <div class="list">
-      <h6>Date of Incident</h6>
-      <div class="item item-input" >
-        <input type="date" id="Soap.incidentDate" ng-model="soapOverview.incidentDate" ng-model-onblur ng-change="monitorSoapOverviewChange(soapOverview,soapOverview.incidentDate,'incidentDate')" value="{{dt | date:'yyyy-MM-dd'}}"/>
-      </div>
+        <div class="titleParent">
+          <h6>Date of Incident</h6>
+          <div class="item item-input" >
+            <input type="date" id="Soap.incidentDate" ng-model="soapOverview.incidentDate" ng-model-onblur ng-change="monitorSoapOverviewChange(soapOverview,soapOverview.incidentDate,'incidentDate')" value="{{dt | date:'yyyy-MM-dd'}}"/>
+          </div>
+        </div>
 
-      <h6>Location</h6>
-           <label class="item item-input" for="Soap.incidentLocation">
-        <textarea id="Soap.incidentLocation" type="text" placeholder="Describe where it happened." ng-model="soapOverview.incidentLocation" ng-model-onblur ng-change="monitorSoapOverviewChange(soapOverview,soapOverview.incidentLocation,'incidentLocation')"
+        <div class="titleParent">
+          <h6>Location</h6>
+          <label class="item item-input" for="Soap.incidentLocation">
+          <textarea id="Soap.incidentLocation" type="text" placeholder="Describe where it happened." ng-model="soapOverview.incidentLocation" ng-model-onblur ng-change="monitorSoapOverviewChange(soapOverview,soapOverview.incidentLocation,'incidentLocation')"
 	ng-keyup="expandText($event)"
 	ng-keydown="expandText($event)"></textarea>
+          </label>
+        </div>
 
-</textarea>
-      </label>
-      <h6>Coordinates</h6>
-
-      <label class="item">
-
-      {{soapOverview.incidentLat}} {{soapOverview.incidentLon}}
-      </label>
-      <a id="coordsBtn" ng-show="soapOverview.incidentLat == ''" class="button button-block button-light margin" ng-click="getLocation(soapOverview)"><icon class="ion-pinpoint"></icon><span id="GeoLocationBtnInner">Get Coordinates</span></a>
-      <a id="coordsBtn" ng-show="soapOverview.incidentLat || soapOverview.incidentLon" class="button button-block button-calm margin" ng-click="resetLocation(soapOverview)"><icon class="ion-pinpoint"></icon><span id="GeoLocationBtnInner">Reset Coordinates</span></a>
-
-
+        <div class="titleParent">
+          <h6>Coordinates</h6>
+          <label class="item">
+            {{soapOverview.incidentLat}} {{soapOverview.incidentLon}}
+          </label>
+          <a id="coordsBtn" ng-show="soapOverview.incidentLat == ''" class="button button-block button-light margin" ng-click="getLocation(soapOverview)"><icon class="ion-pinpoint"></icon><span id="GeoLocationBtnInner">Get Coordinates</span></a>
+          <a id="coordsBtn" ng-show="soapOverview.incidentLat || soapOverview.incidentLon" class="button button-block button-calm margin" ng-click="resetLocation(soapOverview)"><icon class="ion-pinpoint"></icon><span id="GeoLocationBtnInner">Reset Coordinates</span></a>
+        </div>
       </div>
 
 
     <h5>Responder Information<a ng-controller="SoapCtrl" ng-click="openModal(2)"><span>i</span></a></h5>
       <div class="list">
-      <h6>First Name</h6>
-      <label class="item item-input">
-        <input type="text" id="Soap.responderFirstName" placeholder="First Name" ng-model="soapOverview.responderFirstName" ng-model-onblur ng-change="monitorSoapOverviewChange(soapOverview,soapOverview.responderFirstName,'responderFirstName')" autocapitalize="off"
+        <div class="titleParent">
+          <h6>First Name</h6>
+          <label class="item item-input">
+            <input type="text" id="Soap.responderFirstName" placeholder="First Name" ng-model="soapOverview.responderFirstName" ng-model-onblur ng-change="monitorSoapOverviewChange(soapOverview,soapOverview.responderFirstName,'responderFirstName')" autocapitalize="off"
 autocorrect="off">
-      </label>
-      <h6>Last Name</h6>
-      <label class="item item-input">
-        <input type="text" id="Soap.responderLastName" placeholder="Last Name" ng-model="soapOverview.responderLastName" ng-model-onblur ng-change="monitorSoapOverviewChange(soapOverview,soapOverview.responderLastName,'responderLastName')" autocapitalize="off"
+          </label>
+        </div>
+        <div class="titleParent">
+          <h6>Last Name</h6>
+          <label class="item item-input">
+            <input type="text" id="Soap.responderLastName" placeholder="Last Name" ng-model="soapOverview.responderLastName" ng-model-onblur ng-change="monitorSoapOverviewChange(soapOverview,soapOverview.responderLastName,'responderLastName')" autocapitalize="off"
 autocorrect="off">
-      </label>
-
-
-      <h6>Current Training Level</h6>
-      <div class="item item-select">
-       <div class="input-label">
-          Training Level
-       </div>
-        <select id="Soap.responderTrainingLevel" ng-model="soapOverview.responderTrainingLevel" ng-change="monitorSoapOverviewChange(soapOverview,soapOverview.responderTrainingLevel,'responderTrainingLevel')" ng-options="trainingLevel for trainingLevel in trainingLevels">
-	        <option style="display:none;" value="" selected>Please Choose</option>
-        </select>
-
+          </label>
+        </div>
+        <div class="titleParent">
+          <h6>Current Training Level</h6>
+          <div class="item item-select">
+            <div class="input-label">
+              Training Level
+            </div>
+            <select id="Soap.responderTrainingLevel" ng-model="soapOverview.responderTrainingLevel" ng-change="monitorSoapOverviewChange(soapOverview,soapOverview.responderTrainingLevel,'responderTrainingLevel')" ng-options="trainingLevel for trainingLevel in trainingLevels">
+	             <option style="display:none;" value="" selected>Please Choose</option>
+            </select>
+          </div>
+        </div>
       </div>
-      </div>
 
-<a class="button button-block button-light icon-right ion-ios7-arrow-right margin" href="#/tab/subjective/{{soapOverview.id}}">Continue to Subjective</a>
+    <a class="button button-block button-light icon-right ion-ios7-arrow-right margin" href="#/tab/subjective/{{soapOverview.id}}">Continue to Subjective</a>
+    <a class="button button-block button-calm margin" href="#/tab/review/{{soapOverview.id}}">Review SOAP Note</a>
     </div>
 
   </ion-content>
