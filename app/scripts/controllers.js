@@ -945,6 +945,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
       ];
 
   $scope.monitorVitalChange = function(vital,vitalVal,attrElem){
+    console.log(vitalVal);
     var kindElem = attrElem,kindId = vital.id,kindVal = vitalVal;
     Vitals.updateVital(kindElem,kindId,kindVal);
   }

@@ -192,7 +192,7 @@
                 Diastolic
                 <!-- leave select empty - data will be brough in through ctrl -->
               </div>
-              <select id="brsystolic" ng-model-onblur ng-model="vitalDetail.brsystolic" ng-disabled="vitalDetail.brsystolic" ng-options="diastolic for diastolic in diastolics">
+              <select id="brsystolic" ng-model-onblur ng-model="vitalDetail.brsystolic" ng-disabled="vitalDetail.brsystolic == '0'" ng-options="diastolic for diastolic in diastolics">
                 <option style="display:none;" value="" selected>Please Choose</option>
               </select>
             </div>
