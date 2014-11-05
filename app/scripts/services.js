@@ -448,7 +448,8 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce', 'ngCord
     },
     updateSoap: function(soapEl,soapId,soapVal) {
       var soapAttr = {};
-      soapAttr[soapEl] = JSON.stringify(soapVal);
+      //JSON.stringify
+      soapAttr[soapEl] = soapVal;
       return nolsDB.soapUpdate(soapKind,soapId,soapAttr);
     },
     updateSoapQuery: function(elems,id,vals){
@@ -531,7 +532,8 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce', 'ngCord
     },
     updateVital: function(vitalEl,vitalId,vitalVal) {
       var vitalAttr = {};
-      vitalAttr[vitalEl] = JSON.stringify(vitalVal);
+      //JSON.stringify
+      vitalAttr[vitalEl] = vitalVal;
       return nolsDB.vitalUpdate(vitalKind,vitalId,vitalAttr);
     },
     currentVitals: function(soap,callback) {

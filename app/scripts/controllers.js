@@ -910,6 +910,15 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
     $scope.vitalDetail = vitalDetail;
   })
 
+  var range = function(i){
+    return i ? range(i-1).concat(i):[];
+  }
+
+  $scope.systolics = Array.apply(null, {length: 300}).map(Number.call, Number);
+  $scope.systolics.unshift("Radial Pulse")
+  $scope.diastolics = Array.apply(null, {length: 300}).map(Number.call, Number);
+  $scope.diastolics.unshift("P")
+
   $scope.pupils = ['PERRL', 'Not PERRL'];
   $scope.BPtakens = ['Taken', 'Palpated'];
   $scope.BPpulses = ['Present', 'Weak', 'Absent'];

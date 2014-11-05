@@ -43,7 +43,7 @@ autocorrect="off" onkeyup="javascript:this.value=this.value.toUpperCase();">
           <div class="input-label">
             Sex
           </div>
-          <select id="Soap.patientGender" ng-model="soapSubjective.patientGender" ng-options="gender.value as gender.name for gender in genders" ng-change="monitorSoapSubjectiveChange(soapSubjective,soapSubjective.patientGender,'patientGender')">
+          <select id="Soap.patientGender" ng-model="soapSubjective.patientGender" ng-model-onblur ng-options="gender.value as gender.name for gender in genders" ng-change="monitorSoapSubjectiveChange(soapSubjective,soapSubjective.patientGender,'patientGender')">
 	           <option style="display:none;" value="" selected>Please Choose</option>
            </select>
         </div>
@@ -69,7 +69,7 @@ autocorrect="off" onkeyup="javascript:this.value=this.value.toUpperCase();">
           <div class="input-label">
           Onset
           </div>
-          <select id="Soap.patientOnset" ng-model="soapSubjective.patientOnset" ng-options="onset for onset in onsets" ng-change="monitorSoapSubjectiveChange(soapSubjective,soapSubjective.patientOnset,'patientOnset')">
+          <select id="Soap.patientOnset" ng-model="soapSubjective.patientOnset" ng-model-onblur ng-options="onset for onset in onsets" ng-change="monitorSoapSubjectiveChange(soapSubjective,soapSubjective.patientOnset,'patientOnset')">
 	           <option style="display:none;" value="" selected>Please Choose</option>
           </select>
         </div>
@@ -88,7 +88,7 @@ autocorrect="off" onkeyup="javascript:this.value=this.value.toUpperCase();">
           <div class="input-label">
             Quality
           </div>
-          <select id="Soap.patientQuality" ng-model="soapSubjective.patientQuality" ng-change="monitorSoapSubjectiveChange(soapSubjective,soapSubjective.patientQuality,'patientQuality')" ng-options="quality for quality in qualities">
+          <select id="Soap.patientQuality" ng-model-onblur ng-model="soapSubjective.patientQuality" ng-change="monitorSoapSubjectiveChange(soapSubjective,soapSubjective.patientQuality,'patientQuality')" ng-options="quality for quality in qualities">
 	           <option style="display:none;" value="" selected>Please Choose</option>
           </select>
         </div>
@@ -107,7 +107,7 @@ autocorrect="off" onkeyup="javascript:this.value=this.value.toUpperCase();">
         <div class="input-label">
           Severity
         </div>
-        <select id="Soap.patientSeverity" ng-options="severity for severity in severities" ng-model="soapSubjective.patientSeverity" ng-change="monitorSoapSubjectiveChange(soapSubjective,soapSubjective.patientSeverity,'patientSeverity')">
+        <select id="Soap.patientSeverity" ng-model-onblur ng-options="severity for severity in severities" ng-model="soapSubjective.patientSeverity" ng-change="monitorSoapSubjectiveChange(soapSubjective,soapSubjective.patientSeverity,'patientSeverity')">
 	        <option style="display:none;" value="" selected>Please Choose</option>
         </select>
       </div>
@@ -136,7 +136,7 @@ autocorrect="off" onkeyup="javascript:this.value=this.value.toUpperCase();">
           <div class="input-label">
             Spinal MOI
           </div>
-          <select id="Soap.patientSpinal" ng-model="soapSubjective.patientSpinal" ng-change="monitorSoapSubjectiveChange(soapSubjective,soapSubjective.patientSpinal,'patientSpinal')" ng-options="spinal for spinal in spinals">
+          <select id="Soap.patientSpinal" ng-model-onblur ng-model="soapSubjective.patientSpinal" ng-change="monitorSoapSubjectiveChange(soapSubjective,soapSubjective.patientSpinal,'patientSpinal')" ng-options="spinal for spinal in spinals">
 	           <option style="display:none;" value="" selected>Please Choose</option>
            </select>
          </div>
