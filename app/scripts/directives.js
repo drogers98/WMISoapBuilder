@@ -17,6 +17,10 @@ angular.module('WMISoapBuilder.directives', ['angular-websql', 'debounce'])
   }
 })
 
+
+
+
+
 .directive('ngModelOnblur', function() {
     return {
         restrict: 'A',
@@ -28,12 +32,12 @@ angular.module('WMISoapBuilder.directives', ['angular-websql', 'debounce'])
             elm.unbind('input').unbind('keydown').unbind('change');
             elm.bind('focus', function() {
               elm.parent().parent().find('h6').toggleClass("turnOn");
-              elm.parent().parent().parent().find('h5').toggleClass("turnOn");
+              elm.parent().parent().find('h5').toggleClass("turnOn");
               //ngModelCtrl.$setViewValue(console.log(elm.css()));
             })
             elm.bind('blur', function() {
               elm.parent().parent().find('h6').toggleClass("turnOn");
-              elm.parent().parent().parent().find('h5').toggleClass("turnOn");
+              elm.parent().parent().find('h5').toggleClass("turnOn");
                 scope.$apply(function() {
                     ngModelCtrl.$setViewValue(elm.val());
                 });
@@ -41,6 +45,26 @@ angular.module('WMISoapBuilder.directives', ['angular-websql', 'debounce'])
         }
     };
 })
+
+.directive('customBlur', function() {
+  return {
+    restrict: 'A',
+    priority: 1,
+    link: function(scope,elm,attr) {
+      if(attr.type === 'radio' || attr.type === 'checkbox') return;
+      elm.unbind('input').unbind('keydown').unbind('change');
+      elm.bind('focus', function(){
+        elm.parent().parent().parent().find('h6').toggleClass("turnOn")
+        elm.parent().parent().parent().find('h5').toggleClass("turnOn")
+      })
+      elm.bind('blur', function(){
+        elm.parent().parent().parent().find('h6').toggleClass("turnOn")
+        elm.parent().parent().parent().find('h5').toggleClass("turnOn")
+      })
+    }
+  }
+})
+
 /*
 .directive('ngConfirmClick', [
         function(){
