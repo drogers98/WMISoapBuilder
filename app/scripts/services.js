@@ -151,7 +151,7 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce', 'ngCord
          "sctmtemp": {"type": "TEXT", "null": "NOT NULL"},
          "sctmmoisture": {"type": "TEXT", "null": "NOT NULL"},
          "brradialpulse": {"type": "TEXT", "null": "NOT NULL"},
-         "brsystolic": {"type": "INTEGER", "null": "NOT NULL"},
+         "brsystolic": {"type": "TEXT", "null": "NOT NULL"},
          "brradialtaken": {"type": "TEXT", "null": "NOT NULL"},
          "brradialReading": {"type": "INTEGER", "null": "NOT NULL"},
          "pupils": {"type": "TEXT", "null": "NOT NULL"},
