@@ -192,7 +192,7 @@
                 Diastolic
                 <!-- leave select empty - data will be brough in through ctrl -->
               </div>
-              <select id="brsystolic" ng-model-onblur ng-model="vitalDetail.brsystolic" ng-options="diastolic for diastolic in diastolics">
+              <select id="brsystolic" ng-model-onblur ng-model="vitalDetail.brsystolic" ng-disabled="vitalDetail.brsystolic" ng-options="diastolic for diastolic in diastolics">
                 <option style="display:none;" value="" selected>Please Choose</option>
               </select>
             </div>
@@ -250,9 +250,10 @@
       </small>
       </div>
       </div>
+    -->
     </div>
   </div>
--->
+
 
 <div class="titleParent">
  <h5>Pupils<a ng-controller="SoapCtrl" ng-click="openModal(16)"><span>i</span></a></h5>
