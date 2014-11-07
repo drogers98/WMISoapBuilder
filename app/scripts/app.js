@@ -17,6 +17,7 @@ angular.module('WMISoapBuilder', ['ionic', 'WMISoapBuilder.controllers', 'WMISoa
     // for form inputs)
     if(window.cordova && window.cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+      cordova.plugins.Keyboard.disableScroll(true);
     }
     if(window.StatusBar) {
       // org.apache.cordova.statusbar required
@@ -183,13 +184,28 @@ angular.module('WMISoapBuilder', ['ionic', 'WMISoapBuilder.controllers', 'WMISoa
 function check_option(val){
 	if(val == 0){
 	document.getElementById("Diastolic").disabled = false;
-	document.getElementById("Diastolic").placeholder = "Reading";
+	document.getElementById("Diastolic").placeholder = "Measurement (mmHg)";
 	}
 else {
+document.getElementById("Diastolic").value = "test";
 	document.getElementById("Diastolic").disabled = true;
 	document.getElementById("Diastolic").placeholder = "N/A";
+	
 	}
 };
+
+// for limiting to numbers only
+function validateNumber(evt) {
+  var theEvent = evt || window.event;
+  var key = theEvent.keyCode || theEvent.which;
+  key = String.fromCharCode( key );
+  var regex = /[0-9]|\./;
+  if( !regex.test(key) ) {
+    theEvent.returnValue = false;
+    if(theEvent.preventDefault) theEvent.preventDefault();
+  }
+}
+
 
 
 /*

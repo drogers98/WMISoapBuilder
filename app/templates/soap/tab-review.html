@@ -4,7 +4,7 @@
   </ion-nav-buttons>
 
   <ion-nav-buttons side="right">
-    <a class="button icon ion-edit" href="#/tab/overview/{{soapReview.id}}"></a>
+
     <!-- <a class="button icon ion-edit" href="#/tab/overview/{{soapReview.id}}"></a> -->
     <button class="button icon ion-ios7-compose-outline" ng-controller="SoapCtrl" ng-click="shareSOAP(soapReview,recentSoapReviewVitals,soapImgs)"></button>
   </ion-nav-buttons>
@@ -36,7 +36,7 @@
         </ion-list>
       </div>
 
-      <h6>Whose chief complaint is:</h6>
+      <h6>Chief Complaint</h6>
       <div class="list">
         <ion-list>
           <ion-item class="item-text-wrap">{{soapReview.patientComplaint}}</ion-item>

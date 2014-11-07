@@ -18,6 +18,7 @@ $WMI_DK_grey: darken($WMIgrey, 10%);
 $WMIblack: #111;
 $WMIshadow: rgba(0,0,0,.5);
 
+$base-background-color: $WMIwhite;
 //temp image
 #smallImage, #largeImage {
 display:none;
@@ -608,9 +609,10 @@ padding-bottom: 50px;
 }
 
 .turnOn {
-	background-color:$WMIblue !important;
-	color: #FFF !important;
+background-color:$WMIblue !important;
+color: #FFF !important;
 }
+
 .popup {
 	background: $WMIwhite !important;
 }
@@ -619,7 +621,11 @@ padding-bottom: 50px;
 	padding-bottom: 10px;
 	color:$WMI_DK_red !important;
 }
-.error {
-	color:$WMI_DK_red;
+small.error {
+	background-color:$WMIred;
+	color: $WMIwhite;
+	padding: 4px;
 	font-size:1em;
+	display:block;
+	width: 100%;
 }
