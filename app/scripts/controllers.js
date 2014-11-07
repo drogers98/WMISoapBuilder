@@ -516,10 +516,10 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
      });*/
 
      var soapSubject = 'Soap Note ' + soap.incidentDate + '|' + soap.patientAge + ',' + soap.patientGender + '|' + soap.patientInitials,
-         goTo = ['rogers@eyebyteSolutions.com'];
+         goTo = ['rogers@eyebyteSolutions.com'],bccArr = [];
 
 
-    Soaps.sendEmail(runMessage(soapVitals),soapSubject,goTo,imgURIS(soapImages),function(soapEmailSuccess){
+    Soaps.sendEmail(runMessage(soapVitals),soapSubject,goTo,bccArr,imgURIS(soapImages),function(soapEmailSuccess){
         var confirmPopup = $ionicPopup.confirm({
           template: "Where would you like to go?",
           buttons: [

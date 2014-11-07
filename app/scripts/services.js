@@ -510,8 +510,9 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce', 'ngCord
         callback(null,patientCoords);
       })
     },
-    sendEmail: function(message,subject,toAttr,file,callback){
-      $cordovaSocialSharing.shareViaEmail(message,subject,toAttr,file).then(function(result){
+    sendEmail: function(message,subject,toAttr,bccArr,file,callback){
+
+    $cordovaSocialSharing.shareViaEmail(message,subject,toAttr,bccArr,[],file).then(function(result){
         callback(result);
       })
     },

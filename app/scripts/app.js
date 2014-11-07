@@ -190,7 +190,7 @@ else {
 document.getElementById("Diastolic").value = "test";
 	document.getElementById("Diastolic").disabled = true;
 	document.getElementById("Diastolic").placeholder = "N/A";
-	
+
 	}
 };
 
