@@ -28,7 +28,7 @@
       <div class="input-label">
           Training Level
        </div>
-        <select id="Responder.trainingLevel" ng-model="responder.trainingLevel" ng-model-onblur ng-change="monitorResponderChange(responder,responder.trainingLevel,'trainingLevel')" ng-options="trainingLevel for trainingLevel in trainingLevels" onchange="changeClass(this.id)">
+        <select id="Responder.trainingLevel" ng-model="responder.trainingLevel" ng-model-onblur ng-change="monitorResponderChange(responder,trainingLevels[responder.trainingLevel],'trainingLevel')" ng-options="trainingLevel for trainingLevel in trainingLevels" onchange="changeClass(this.id)">
 	        <option style="display:none;" value="" selected>Please Choose</option>
         </select>
       </div>

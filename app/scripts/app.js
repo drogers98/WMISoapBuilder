@@ -124,6 +124,16 @@ angular.module('WMISoapBuilder', ['ionic', 'WMISoapBuilder.controllers', 'WMISoa
       }
     })
 
+    .state('tab.editvital', {
+      url: '/vitals/edit/:vitalId',
+      views: {
+        'tab-objective': {
+          templateUrl: 'templates/vital/edit.html',
+          controller: 'VitalEditCtrl'
+        }
+      }
+    })
+
     .state('tab.ap', {
       url: '/ap/:soapId',
       views: {
