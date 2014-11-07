@@ -21,7 +21,9 @@
         <div class="input-label">
           Current Certification
         </div>
-        <select ng-model="responder.trainingLevel" ng-change="monitorResponderChange(responder,responder.trainingLevel,'trainingLevel')" ng-options="trainingLevel for trainingLevel in trainingLevels"></select>
+        <select ng-model="responder.trainingLevel" ng-change="monitorResponderChange(responder,trainingLevels[responder.trainingLevel],'trainingLevel')" ng-options="trainingLevel for trainingLevel in trainingLevels">
+        <option style="display:none" value="" selected></option>
+        </select>
       </div>
     </div>
   </ion-content>

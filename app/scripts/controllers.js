@@ -27,7 +27,9 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
   //Nols.cutLifeLine();
   $scope.mySoaps = function() {$state.go('soaps');}
   $scope.termsPage = function() {$state.go('terms');}
-  $scope.trainingLevels = ['WFA','WAFA','WFR', 'WEMT', 'Other'];
+
+  $scope.trainingLevels = ['WFA','WAFA','WFR','WEMT','OTHER']
+
   $scope.$location = $location;
 
   //INTRO LOGIC
@@ -573,7 +575,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
     Soaps.updateSoap(kindElem,kindId,kindVal);
   }
 
-  $scope.trainingLevels = ['WFA','WAFA','WFR', 'WEMT', 'Other'];
+  $scope.trainingLevels = ['WFA','WAFA','WFR','WEMT','OTHER'];
 
   //AUTO EXPAND BOXES
   $scope.expandText = function(obj){
@@ -621,6 +623,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
         $scope.soapSubjective.patientAge = age;
         Soaps.updateSoap('patientAge',kindId,age);
     }
+    console.log(kindVal)
     Soaps.updateSoap(kindElem,kindId,kindVal);
   }
 
@@ -1100,6 +1103,48 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
 
 // coundown controls.
 
+.controller('VitalEditCtrl', function($scope,$state,$stateParams,$timeout,$ionicPopup,Vitals){
+  Vitals.get($stateParams.vitalId, function(err,vitalEdit){
+    $scope.vitalEdit = vitalEdit;
+  })
+
+  $scope.monitorVitalChange = function(vital,vitalVal,attrElem){
+    var kindElem = attrElem,kindId = vital.id,kindVal = vitalVal;
+    Vitals.updateVital(kindElem,kindId,kindVal);
+  }
+
+  $scope.systolics = Array.apply(null, {length: 300}).map(Number.call, Number);
+  $scope.systolics.unshift("Radial Pulse")
+  $scope.diastolics = Array.apply(null, {length: 300}).map(Number.call, Number);
+  $scope.diastolics.unshift("P")
+
+  $scope.pupils = ['PERRL', 'Not PERRL'];
+  $scope.BPtakens = ['Taken', 'Palpated'];
+  $scope.BPpulses = ['Present', 'Weak', 'Absent'];
+  $scope.SKINmoists = ['Dry', 'Moist', 'Wet'];
+  $scope.SKINtemps = ['Warm', 'Cool', 'Hot'];
+  $scope.SKINcolors = ['Pink', 'Pale', 'Red'];
+  $scope.RESPrythms = ['Regular', 'Irregular'];
+  $scope.RESPqualities = ['Easy', 'Shallow', 'Labored'];
+  $scope.HEARTqualities = ['Strong', 'Weak', 'Bounding'];
+  $scope.HEARTrythms = ['Regular', 'Irregular'];
+  $scope.tempDegrees = [
+        {name:'°Fahrenheit', value:'°F'},
+        {name:'°Celsius', value:'°C'}
+      ];
+  $scope.LORs = [
+        {name:'Awake & Oriented x 4', value:'AOx4'},
+        {name:'Awake & Oriented x 3', value:'AOx3'},
+        {name:'Awake & Oriented x 2', value:'AOx2'},
+        {name:'Awake & Oriented x 1', value:'AOx1'},
+        {name:'Awake & Oriented x 0', value:'AOxO'},
+        {name:'Verbal Stimulus', value:'V'},
+        {name:'Painful Stimulus', value:'P'},
+        {name:'Unresponsive', value:'U'}
+      ];
+
+
+})
 
 .controller('VitalNewCtrl', function($scope, $state, $stateParams, Vitals) {
   //LOOK AT SOAP OVERVIEW CONTROLLER FOR THIS FIX

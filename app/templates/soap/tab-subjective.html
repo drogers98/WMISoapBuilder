@@ -43,7 +43,7 @@ autocorrect="off" onkeyup="javascript:this.value=this.value.toUpperCase();">
           <div class="input-label">
             Sex
           </div>
-          <select id="Soap.patientGender" ng-model="soapSubjective.patientGender" ng-model-onblur ng-options="gender.value as gender.name for gender in genders" ng-change="monitorSoapSubjectiveChange(soapSubjective,soapSubjective.patientGender,'patientGender')">
+          <select id="Soap.patientGender" ng-model="soapSubjective.patientGender" ng-model-onblur ng-options="gender.value as gender.name for gender in genders" ng-change="monitorSoapSubjectiveChange(soapSubjective,genders[soapSubjective.patientGender].value,'patientGender')">
 	           <option style="display:none;" value="" selected>Please Choose</option>
            </select>
         </div>
@@ -52,16 +52,16 @@ autocorrect="off" onkeyup="javascript:this.value=this.value.toUpperCase();">
     <!-- subjective section 2 -->
     <div class="titleParent">
     <h5>Chief Complaint<a ng-controller="SoapCtrl" ng-click="openModal(4)"><span>i</span></a></h5>
-    <div class="list">
+    <!-- <div class="list"> -->
       <label class="item item-input">
-        <textarea id="Soap.patientComplaint" type="text" placeholder="Describe the patient's chief complaint." ng-model="soapSubjective.patientComplaint"
+        <textarea id="Soap.patientComplaint" ng-model-onblur type="text" placeholder="Describe the patient's chief complaint." ng-model="soapSubjective.patientComplaint"
 	ng-keyup="expandText($event)"
 	ng-keydown="expandText($event)"
 
  ng-model-onblur  ng-change="monitorSoapSubjectiveChange(soapSubjective,soapSubjective.patientComplaint,'patientComplaint')"></textarea>
       </label>
     </div>
-  </div>
+    <!-- </div>-->
     <!-- subjective section 3 -->
       <div class="titleParent">
       <h6>Onset</h6>
@@ -69,7 +69,7 @@ autocorrect="off" onkeyup="javascript:this.value=this.value.toUpperCase();">
           <div class="input-label">
           Onset
           </div>
-          <select id="Soap.patientOnset" ng-model="soapSubjective.patientOnset" ng-model-onblur ng-options="onset for onset in onsets" ng-change="monitorSoapSubjectiveChange(soapSubjective,soapSubjective.patientOnset,'patientOnset')">
+          <select id="Soap.patientOnset" ng-model="soapSubjective.patientOnset" ng-model-onblur ng-options="onset for onset in onsets" ng-change="monitorSoapSubjectiveChange(soapSubjective,onsets[soapSubjective.patientOnset],'patientOnset')">
 	           <option style="display:none;" value="" selected>Please Choose</option>
           </select>
         </div>
@@ -88,7 +88,7 @@ autocorrect="off" onkeyup="javascript:this.value=this.value.toUpperCase();">
           <div class="input-label">
             Quality
           </div>
-          <select id="Soap.patientQuality" ng-model-onblur ng-model="soapSubjective.patientQuality" ng-change="monitorSoapSubjectiveChange(soapSubjective,soapSubjective.patientQuality,'patientQuality')" ng-options="quality for quality in qualities">
+          <select id="Soap.patientQuality" ng-model-onblur ng-model="soapSubjective.patientQuality" ng-change="monitorSoapSubjectiveChange(soapSubjective,qualities[soapSubjective.patientQuality],'patientQuality')" ng-options="quality for quality in qualities">
 	           <option style="display:none;" value="" selected>Please Choose</option>
           </select>
         </div>
@@ -107,7 +107,7 @@ autocorrect="off" onkeyup="javascript:this.value=this.value.toUpperCase();">
         <div class="input-label">
           Severity
         </div>
-        <select id="Soap.patientSeverity" ng-model-onblur ng-options="severity for severity in severities" ng-model="soapSubjective.patientSeverity" ng-change="monitorSoapSubjectiveChange(soapSubjective,soapSubjective.patientSeverity,'patientSeverity')">
+        <select id="Soap.patientSeverity" ng-model-onblur ng-options="severity for severity in severities" ng-model="soapSubjective.patientSeverity" ng-change="monitorSoapSubjectiveChange(soapSubjective,severities[soapSubjective.patientSeverity],'patientSeverity')">
 	        <option style="display:none;" value="" selected>Please Choose</option>
         </select>
       </div>
@@ -122,13 +122,15 @@ autocorrect="off" onkeyup="javascript:this.value=this.value.toUpperCase();">
         <input type="time" id="Soap.patientOnsetTime" placeholder="HH:mm:ss" ng-model="soapSubjective.patientOnsetTime" ng-model-onblur ng-change="monitorSoapSubjectiveChange(soapSubjective,soapSubjective.patientOnsetTime,'patientOnsetTime')">
       </label>
     </div>
-  </div>
+  <!--</div>-->
 
+    <div class="titleParent">
     <h5>MOI/HPI<a ng-controller="SoapCtrl" ng-click="openModal(5)"><span>i</span></a></h5>
-      <div class="list">
+    <!--  <div class="list"> -->
         <label class="item item-input">
           <textarea id="Soap.patientHPI" type="text" placeholder="Describe in detail the mechanism of injury or the history of the illness." ng-model="soapSubjective.patientHPI" ng-model-onblur ng-change="monitorSoapSubjectiveChange(soapSubjective,soapSubjective.patientHPI,'patientHPI')" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
         </label>
+    </div>
 
       <div class="titleParent">
         <h6>Spinal MOI</h6>
@@ -136,7 +138,7 @@ autocorrect="off" onkeyup="javascript:this.value=this.value.toUpperCase();">
           <div class="input-label">
             Spinal MOI
           </div>
-          <select id="Soap.patientSpinal" ng-model-onblur ng-model="soapSubjective.patientSpinal" ng-change="monitorSoapSubjectiveChange(soapSubjective,soapSubjective.patientSpinal,'patientSpinal')" ng-options="spinal for spinal in spinals">
+          <select id="Soap.patientSpinal" ng-model-onblur ng-model="soapSubjective.patientSpinal" ng-change="monitorSoapSubjectiveChange(soapSubjective,spinals[soapSubjective.patientSpinal],'patientSpinal')" ng-options="spinal for spinal in spinals">
 	           <option style="display:none;" value="" selected>Please Choose</option>
            </select>
          </div>
