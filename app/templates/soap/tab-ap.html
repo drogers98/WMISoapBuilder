@@ -16,7 +16,7 @@
       <h5>Assessment<a ng-controller="SoapCtrl" ng-click="openModal(10)"><span>i</span></a></h5>
       <div class="list">
         <label class="item item-input">
-          <textarea id="Soap.patientAssessment" type="text" placeholder="List all possible problems." ng-model="soapAP.patientAssessment" ng-model-onblur custom-blur ng-change="monitorSoapAPChange(soapAP,soapAP.patientAssessment,'patientAssessment')" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
+          <textarea id="Soap.patientAssessment" type="text" placeholder="List all possible problems." ng-model="soapAP.patientAssessment" ng-model-onblur custom-blur ng-change="monitorSoapAPChange(soapAP,soapAP.patientAssessment,'patientAssessment')" ng-keyup="expandText($event)" ng-keydown="expandText($event)" ng-focus="expandText($event)"></textarea>
         </label>
       </div>
     </div>
@@ -25,7 +25,7 @@
           <h5>Plan<a ng-controller="SoapCtrl" ng-click="openModal(11)"><span>i</span></a></h5>
           <div class="list">
           <label class="item item-input">
-            <textarea id="Soap.patientPlan" type="text" ng-model-onblur placeholder="Describe actions taken for each problem and plans for further care." custom-blur ng-model="soapAP.patientPlan" ng-change="monitorSoapAPChange(soapAP,soapAP.patientPlan,'patientPlan')" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
+            <textarea id="Soap.patientPlan" type="text" ng-model-onblur placeholder="Describe actions taken for each problem and plans for further care." custom-blur ng-model="soapAP.patientPlan" ng-change="monitorSoapAPChange(soapAP,soapAP.patientPlan,'patientPlan')" ng-keyup="expandText($event)" ng-keydown="expandText($event)" ng-focus="expandText($event)"></textarea>
           </label>
           </div>
         </div>
@@ -34,7 +34,7 @@
           <h6>Anticipated Problems<a ng-controller="SoapCtrl" ng-click="openModal(12)"><span>i</span></a></h6>
           <div class="list">
           <label class="item item-input">
-            <textarea id="Soap.patientAnticipatedProblems" type="text" placeholder="Consider anticipated problems and possible impact on evacuation needs." ng-model-onblur custom-blur ng-model="soapAP.patientAnticipatedProblems" ng-change="monitorSoapAPChange(soapAP,soapAP.patientAnticipatedProblems,'patientAnticipatedProblems')" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
+            <textarea id="Soap.patientAnticipatedProblems" type="text" placeholder="Consider anticipated problems and possible impact on evacuation needs." ng-model-onblur custom-blur ng-model="soapAP.patientAnticipatedProblems" ng-change="monitorSoapAPChange(soapAP,soapAP.patientAnticipatedProblems,'patientAnticipatedProblems')" ng-keyup="expandText($event)" ng-keydown="expandText($event)" ng-focus="expandText($event)"></textarea>
           </label>
         </div>
       </div>

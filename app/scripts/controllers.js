@@ -415,20 +415,20 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
         '<strong>Age</strong>: ' + soap.patientAge + '<br/>' +
         '<strong>Sex</strong>: ' + soap.patientGender + '<br/>' +
         '<h3>Chief Complaint</h3>'+
-        '<p>' + soap.patientComplaint + '</p>' +
+        '<p><pre style="font-family: inherit;">' + soap.patientComplaint + '</pre></p>' +
         '<strong>Onset</strong>: ' + soap.patientOnset + '<br/>' +
-        '<strong>Provokes/Palliates</strong>: ' + soap.patientPPalliates + '<br/>' +
+        '<strong>Provokes/Palliates</strong>: <pre style="font-family: inherit;">' + soap.patientPPalliates + '</pre><br/>' +
         '<strong>Quality</strong>: ' + soap.patientQuality + '<br/>' +
-        '<strong>Radiation/Region/Referred</strong>: ' + soap.patientRadiates + '<br/>' +
+        '<strong>Radiation/Region/Referred</strong>: <pre style="font-family: inherit;">' + soap.patientRadiates + '</pre><br/>' +
         '<strong>Severity</strong>: ' + soap.patientSeverity + ' out of 10<br/>' +
         '<strong>Time of Onset</strong>: ' + soap.patientTime + '<br/>' +
         '<h3>MOI/HPI</h3>'+
-        '<p>' + soap.patientHPI + '</p>' +
+        '<p><pre style="font-family: inherit;">' + soap.patientHPI + '</pre></p>' +
         '<strong>Suspected Spinal MOI</strong>: ' + soap.patientSpinal + '<br/>' +
         '<h2>Objective</h2>'+
         '<h3>General</h3>'+
-        '<strong>Patient Position When Found</strong>: ' + soap.patientFound + '<br/>' +
-        '<strong>Patient Exam</strong>: ' + soap.patientExamReveals + '<br/>' +
+        '<strong>Patient Position When Found</strong>: <pre style="font-family: inherit;">' + soap.patientFound + '</pre><br/>' +
+        '<strong>Patient Exam</strong>: <pre style="font-family: inherit;">' + soap.patientExamReveals + '</pre><br/>' +
         '<h3>Vital Signs</h3>';
 
         //var messagePartIIA = "<table style='width:100%;text-align:center;border:1px solid #EFEFEF;border-collapse:collapse;'>";
@@ -479,17 +479,17 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
         //'<tr>' + "<th style='width:25%;border:1px solid #EFEFEF;border-collapse:collapse;padding:5px;text-align:right;padding-right:10px;background-color:#EFEFEF;text-transform:uppercase'>"
 
         var messagePartIII = '<h3>Patient History</h3>'+
-        '<strong>Symptoms</strong>: ' + soap.patientSymptoms + '<br/>' +
-        '<strong>Allergies</strong>: ' + soap.patientAllergies + '<br/>' +
-        '<strong>Medications</strong>: ' + soap.patientMedications + '<br/>' +
-        '<strong>Pertinent Medical History</strong>: ' + soap.patientMedicalHistory + '<br/>' +
-        '<strong>Last Intake/Output</strong>: ' + soap.patientLastIntake + '<br/>' +
-        '<strong>Events Leading up to Injury/Illness</strong>: ' + soap.patientEventsForCause + '<br/>' +
+        '<strong>Symptoms</strong>: <pre style="font-family: inherit;">' + soap.patientSymptoms + '</pre><br/>' +
+        '<strong>Allergies</strong>: <pre style="font-family: inherit;">' + soap.patientAllergies + '</pre><br/>' +
+        '<strong>Medications</strong>: <pre style="font-family: inherit;">' + soap.patientMedications + '</pre><br/>' +
+        '<strong>Pertinent Medical History</strong>: <pre style="font-family: inherit;">' + soap.patientMedicalHistory + '</pre><br/>' +
+        '<strong>Last Intake/Output</strong>: <pre style="font-family: inherit;">' + soap.patientLastIntake + '</pre><br/>' +
+        '<strong>Events Leading up to Injury/Illness</strong>: <pre style="font-family: inherit;">' + soap.patientEventsForCause + '</pre><br/>' +
         '<h2>Assessment</h2>'+
-        '<p>' + soap.patientAssessment + '</p>' +
+        '<p><pre style="font-family: inherit;">' + soap.patientAssessment + '</pre></p>' +
         '<h2>Plan</h2>'+
-        '<p>' + soap.patientPlan + '</p>' +
-        '<strong>Anticipated Problems</strong>: ' + soap.patientAnticipatedProblems + '<br/>';
+        '<p><pre style="font-family: inherit;">' + soap.patientPlan + '</pre></p>' +
+        '<strong>Anticipated Problems</strong>: <pre style="font-family: inherit;">' + soap.patientAnticipatedProblems + '</pre><br/>';
 
         var messagePartIVA = '<h3>Image Captions</h3>';
         var messagePartIV = function(soapImages) {
@@ -515,7 +515,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
         isHtml:  true
      });*/
 
-     var soapSubject = 'Soap Note' + soap.incidentDate + ' | ' + soap.patientAge + ', ' + soap.patientGender + ' | ' + soap.patientInitials,
+     var soapSubject = 'Soap Note ' + soap.incidentDate + ' | ' + soap.patientAge + ', ' + soap.patientGender + ' | ' + soap.patientInitials,
          goTo = ['rogers@eyebyteSolutions.com'],bccArr = [];
 
 

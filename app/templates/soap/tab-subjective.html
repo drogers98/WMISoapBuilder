@@ -54,11 +54,7 @@ autocorrect="off" onkeyup="javascript:this.value=this.value.toUpperCase();">
     <h5>Chief Complaint<a ng-controller="SoapCtrl" ng-click="openModal(4)"><span>i</span></a></h5>
     <!-- <div class="list"> -->
       <label class="item item-input">
-        <textarea id="Soap.patientComplaint" ng-model-onblur type="text" placeholder="Describe the patient's chief complaint." ng-model="soapSubjective.patientComplaint"
-	ng-keyup="expandText($event)"
-	ng-keydown="expandText($event)"
-
- ng-model-onblur  ng-change="monitorSoapSubjectiveChange(soapSubjective,soapSubjective.patientComplaint,'patientComplaint')"></textarea>
+        <textarea id="Soap.patientComplaint" ng-model-onblur type="text" placeholder="Describe the patient's chief complaint." ng-model="soapSubjective.patientComplaint" ng-keyup="expandText($event)" ng-keydown="expandText($event)" ng-focus="expandText($event)" ng-model-onblur  ng-change="monitorSoapSubjectiveChange(soapSubjective,soapSubjective.patientComplaint,'patientComplaint')"></textarea>
       </label>
     </div>
     <!-- </div>-->
@@ -78,7 +74,7 @@ autocorrect="off" onkeyup="javascript:this.value=this.value.toUpperCase();">
       <div class="titleParent">
         <h6>Provokes/Palliates</h6>
         <label class="item item-input">
-          <textarea id="Soap.patientPPalliates" type="text" placeholder="What makes the pain better or worse?" ng-model="soapSubjective.patientPPalliates" ng-model-onblur ng-change="monitorSoapSubjectiveChange(soapSubjective,soapSubjective.patientPPalliates,'patientPPalliates')" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
+          <textarea id="Soap.patientPPalliates" type="text" placeholder="What makes the pain better or worse?" ng-model="soapSubjective.patientPPalliates" ng-model-onblur ng-change="monitorSoapSubjectiveChange(soapSubjective,soapSubjective.patientPPalliates,'patientPPalliates')" ng-keyup="expandText($event)" ng-keydown="expandText($event)" ng-focus="expandText($event)"></textarea>
         </label>
       </div>
 
@@ -97,7 +93,7 @@ autocorrect="off" onkeyup="javascript:this.value=this.value.toUpperCase();">
     <div class="titleParent">
       <h6>Radiation/Region/Referred</h6>
       <label class="item item-input">
-        <textarea id="Soap.patientRadiates" type="text" placeholder="Does the feeling move anywhere? Where is it located?" ng-model="soapSubjective.patientRadiates" ng-model-onblur ng-change="monitorSoapSubjectiveChange(soapSubjective,soapSubjective.patientRadiates,'patientRadiates')" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
+        <textarea id="Soap.patientRadiates" type="text" placeholder="Does the feeling move anywhere? Where is it located?" ng-model="soapSubjective.patientRadiates" ng-model-onblur ng-change="monitorSoapSubjectiveChange(soapSubjective,soapSubjective.patientRadiates,'patientRadiates')" ng-keyup="expandText($event)" ng-keydown="expandText($event)" ng-focus="expandText($event)"></textarea>
       </label>
 	  </div>
 
@@ -128,7 +124,7 @@ autocorrect="off" onkeyup="javascript:this.value=this.value.toUpperCase();">
     <h5>MOI/HPI<a ng-controller="SoapCtrl" ng-click="openModal(5)"><span>i</span></a></h5>
     <!--  <div class="list"> -->
         <label class="item item-input">
-          <textarea id="Soap.patientHPI" type="text" placeholder="Describe in detail the mechanism of injury or the history of the illness." ng-model="soapSubjective.patientHPI" ng-model-onblur ng-change="monitorSoapSubjectiveChange(soapSubjective,soapSubjective.patientHPI,'patientHPI')" ng-keyup="expandText($event)" ng-keydown="expandText($event)"></textarea>
+          <textarea id="Soap.patientHPI" type="text" placeholder="Describe in detail the mechanism of injury or the history of the illness." ng-model="soapSubjective.patientHPI" ng-model-onblur ng-change="monitorSoapSubjectiveChange(soapSubjective,soapSubjective.patientHPI,'patientHPI')" ng-keyup="expandText($event)" ng-keydown="expandText($event)" ng-focus="expandText($event)" ng-focus="expandText($event)"></textarea>
         </label>
     </div>
 
