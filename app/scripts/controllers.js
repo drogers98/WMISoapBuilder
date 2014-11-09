@@ -515,7 +515,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
         isHtml:  true
      });*/
 
-     var soapSubject = 'Soap Note ' + soap.incidentDate + '|' + soap.patientAge + ',' + soap.patientGender + '|' + soap.patientInitials,
+     var soapSubject = 'Soap Note' + soap.incidentDate + ' | ' + soap.patientAge + ', ' + soap.patientGender + ' | ' + soap.patientInitials,
          goTo = ['rogers@eyebyteSolutions.com'],bccArr = [];
 
 
