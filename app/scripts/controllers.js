@@ -521,17 +521,18 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
 
     Soaps.sendEmail(runMessage(soapVitals),soapSubject,goTo,bccArr,imgURIS(soapImages),function(soapEmailSuccess){
         var confirmPopup = $ionicPopup.confirm({
-          template: "Where would you like to go?",
+          title: 'Where would you like to go?',
+       template: 'You can stay on the review page or go to My SOAPs',
           buttons: [
             {
-              text: 'Stay on Review',
+              text: 'Review',
               type: 'button-calm',
               onTap: function() {
                 return;
               }
             },
             {
-              text: 'MySOAPS',
+              text: 'My SOAPS',
               type: 'button-light',
               onTap: function(){
                 $state.go('soaps');
@@ -767,7 +768,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
        template: 'Are you sure you want to delete this image?',
        buttons: [
          {
-           text: 'Cancel',
+           text: 'Keep',
            type: 'button-calm',
            onTap: function() {
              return;
@@ -867,11 +868,11 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
 
   $scope.onItemDelete = function(vitalId) {
     var confirmPopup = $ionicPopup.confirm({
-       title: 'VITALS',
+       title: 'Delete Vitals',
        template: 'Are you sure you want to delete this VITAL ENTRY?',
        buttons: [
          {
-           text: 'Cancel',
+           text: 'Keep',
            type: 'button-calm',
            onTap: function() {
              return;
@@ -959,7 +960,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
        template: 'Going back will delete this Vital',
        buttons: [
          {
-           text: 'Cancel',
+           text: 'Stay',
            type: 'button-calm',
            onTap: function() {
              return;

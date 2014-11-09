@@ -1,13 +1,15 @@
 <ion-view title="{{soapDetail.patientGender}}, {{soapDetail.patientAge}} | {{soapDetail.patientInitials}}">
 <ion-nav-buttons side="left">
 
-    <a class="button icon ion-ios7-arrow-back" href="#/responder/soaps">My SOAPs</a>
+    <a class="button icon ion-ios7-arrow-back" href="#/soaps">My SOAPs</a>
   </ion-nav-buttons>
 
 
   <ion-nav-buttons side="right">
   <a class="button icon ion-edit" href="#/tab/overview/{{soapDetail.id}}"></a>
   <button class="button icon ion-ios7-compose-outline" ng-controller="SoapCtrl" ng-click="shareSOAP(soapDetail,recentSoapDetailVitals,soapImgs)"></button>
+  <button class="button button-icon ion-navicon" ng-controller="MenuCtrl" ng-click="toggleSideMenu()"></button>
+
   </ion-nav-buttons>
 
 

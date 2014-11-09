@@ -1,8 +1,8 @@
 <ion-view title="Overview">
 
   <ion-nav-buttons side="left">
-    <a class="button icon" id="route" ng-hide="edit" ng-controller="SoapCtrl" ng-click="cancelSoap(soapOverview)">Cancel</a>
-    <a class="button icon" id="route" ng-show="edit" href="#/tab/review/{{soapOverview.id}}">Cancel Edit</a>
+    <a class="button icon ion-ios7-arrow-back" id="route" ng-hide="edit" ng-controller="SoapCtrl" href="#/soaps">My SOAPs</a>
+    <a class="button icon ion-ios7-arrow-back" id="route" ng-show="edit" href="#/soaps/{{soapOverview.id}}">Cancel</a>
   </ion-nav-buttons>
 
   <ion-nav-buttons side="right">
@@ -63,7 +63,7 @@ autocorrect="off">
               Training Level
             </div>
             <select id="Soap.responderTrainingLevel" ng-model="soapOverview.responderTrainingLevel" ng-model-onblur ng-change="monitorSoapOverviewChange(soapOverview,trainingLevels[soapOverview.responderTrainingLevel],'responderTrainingLevel')" ng-options="trainingLevel for trainingLevel in trainingLevels">
-            <option style="display:none;" value="" selected></option>
+            <option style="display:none;" value="Please Choose" selected></option>
             </select>
           </div>
         </div>

@@ -1,6 +1,6 @@
-<ion-view title="Add Vitals">
+<ion-view title="Edit Vitals">
   <ion-nav-buttons side="left">
-    <a class="button button" ng-controller="VitalDetailCtrl" href="#/tab/vitals/all/{{vitalEdit.id}}">Cancel Edit</a>
+    <a class="button button" ng-controller="VitalDetailCtrl" href="javascript: history.go(-1)">Cancel</a>
   </ion-nav-buttons>
 
   <ion-content ng-controller="VitalEditCtrl" has-header="true" padding="false" has-bouncing="false">
@@ -270,18 +270,14 @@
     <div class="titleParent">
     <h5>Temperature<a ng-controller="SoapCtrl" ng-click="openModal(17)"><span>i</span></a></h5>
     <div class="row">
-  <div class="col">
+  <div class="col col-50">
 	  <label class="item item-input">
-	  <input type="number" id="Vital.tempDegreesReading" ng-model-onblur ng-maxlength=3 name="tempDegreesReading" placeholder="Degrees" ng-model="vitalEdit.tempDegreesReading" ng-change="monitorVitalChange(vitalEdit,vitalEdit.tempDegreesReading,'tempDegreesReading')">
+	  <input type="number" id="Vital.tempDegreesReading" ng-model-onblur ng-maxlength=4 name="tempDegreesReading" placeholder="Degrees" ng-model="vitalEdit.tempDegreesReading" ng-change="monitorVitalChange(vitalEdit,vitalEdit.tempDegreesReading,'tempDegreesReading')">
     </label>
     <div class="error">
-      <small class="error"
-            ng-show="vital_Detail.tempDegreesReading.$error.maxlength">
-            Please check that your Temp is correct
-    </small>
     </div>
   </div>
-</div>
+
   <div class="col col-50">
 	   <div class="item item-select">
 	   <div class="input-label">
@@ -291,7 +287,7 @@
 	        <option style="display:none;" value="" selected>Please Choose</option>
         </select>
       </div>
-
+</div>
   </div>
     </div>
 
@@ -311,11 +307,11 @@
 
     <div class="col">
 
-<button ng-click="start()" controller="VitalDetailCtrl" ng-disabled="play" ng-init="play=false" class="button button-calm button-small icon ion-play" id="start"></button>
+<button ng-click="start()" ng-disabled="play" ng-init="play=false" class="button button-calm button-small icon ion-play" id="start"></button>
 
-<button ng-click="stop()" controller="VitalDetailCtrl" ng-disabled="pause" ng-init="pause=true" class="button button-calm button-small icon ion-stop"id="stop"></button>
+<button ng-click="stop()" ng-disabled="pause" ng-init="pause=true" class="button button-calm button-small icon ion-stop"id="stop"></button>
 
-<button ng-click="reset()" controller="VitalDetailCtrl" class="button button-calm button-small icon ion-refresh" id="clear"></button>
+<button ng-click="reset()"class="button button-calm button-small icon ion-refresh" id="clear"></button>
 
     </div>
     </div>
