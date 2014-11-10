@@ -453,7 +453,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
             vitalListHR.push('<td '+tdStyle+'>'+ filteredVitals[key].rate + ' ' + filteredVitals[key].heartRythm + ' ' + filteredVitals[key].heartQuality +'</td>');
             vitalListRR.push('<td '+tdStyle+'>'+ filteredVitals[key].respRate + ' ' + filteredVitals[key].respRhythm + ' ' + filteredVitals[key].respQuality +'</td>');
             vitalListSkin.push('<td '+tdStyle+'>'+ filteredVitals[key].sctmcolor + ' ' + filteredVitals[key].sctmtemp + ' ' + filteredVitals[key].sctmmoisture +'</td>');
-            vitalListBP.push('<td '+tdStyle+'>'+ filteredVitals[key].brradialpulse + ' ' + filteredVitals[key].brsystolic+'/'+filteredVitals[key].brradialReading + ' ' + filteredVitals[key].brradialtaken +'</td>');
+            vitalListBP.push('<td '+tdStyle+'>'+ filteredVitals[key].brradialpulse + ' ' + filteredVitals[key].brsystolic.replace('.0', '')+'/'+filteredVitals[key].diastolic.replace('.0', '') + '</td>');
             vitalListPupils.push('<td '+tdStyle+'>'+ filteredVitals[key].pupils + '</td>');
             vitalListTemp.push('<td '+tdStyle+'>'+ filteredVitals[key].tempDegreesReading + ' ' + filteredVitals[key].tempDegrees+'</td>');
             emailVitalObj['timeTaken'] = vitalListTime.join("");

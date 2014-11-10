@@ -5,7 +5,7 @@
 
   <ion-nav-buttons side="right">
 
-    <a class="button icon ion-edit" href="#/tab/overview/{{soapReview.id}}"></a> 
+    <!-- <a class="button icon ion-edit" href="#/tab/overview/{{soapReview.id}}"></a> -->
     <button class="button icon ion-ios7-compose-outline" ng-controller="SoapCtrl" ng-click="shareSOAP(soapReview,recentAllSoapReviewVitals,soapImgs)"></button>
     <button class="button button-icon ion-navicon" ng-controller="MenuCtrl" ng-click="toggleSideMenu()"></button>
 
@@ -111,7 +111,7 @@
           </tr>
           <tr>
               <th>BP</th>
-              <td ng-repeat="sv in recentSoapReviewVitals">{{sv.brradialpulse}} {{sv.brsystolic}}/{{sv.brradialReading}} {{sv.brradialtaken}}</td>
+              <td ng-repeat="sv in recentSoapReviewVitals">{{sv.brradialpulse}} {{sv.brsystolic.replace('.0', '')}}/{{sv.diastolic.replace('.0', '')}}</td>
               <td ng-hide="recentSoapReviewVitals.length" >--</td>
           <td ng-hide="recentSoapReviewVitals.length >= 2">--</td>
           <td ng-hide="recentSoapReviewVitals.length >= 3">--</td>
