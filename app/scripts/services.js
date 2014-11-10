@@ -611,7 +611,7 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce', 'ngCord
         encodingType: Camera.EncodingType.JPEG,
         targetWidth: 200,
         targetHeight: 150,
-        saveToPhotoAlbum: false
+        saveToPhotoAlbum: true
       };
 
       $cordovaCamera.getPicture(options).then(function(imgData){
