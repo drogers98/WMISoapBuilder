@@ -62,7 +62,18 @@ autocorrect="off">
             <div class="input-label">
               Training Level
             </div>
-            <select id="Soap.responderTrainingLevel" ng-model="soapOverview.responderTrainingLevel" ng-model-onblur ng-change="monitorSoapOverviewChange(soapOverview,trainingLevels[soapOverview.responderTrainingLevel],'responderTrainingLevel')" ng-options="trainingLevel for trainingLevel in trainingLevels">
+           <select id="Soap.responderTrainingLevel" ng-model="soapOverview.responderTrainingLevel" ng-model-onblur ng-change="monitorSoapOverviewChange(soapOverview,trainingLevels[soapOverview.responderTrainingLevel],'responderTrainingLevel')" ng-options="trainingLevel for trainingLevel in trainingLevels">
+<option style="display:none;" value="" selected></option>
+</select>
+</div>
+</div>
+</div>
+<a class="button button-block button-light icon-right ion-ios7-arrow-right margin" href="#/tab/subjective/{{soapOverview.id}}">Continue to Subjective</a>
+<a class="button button-block button-calm margin" href="#/tab/review/{{soapOverview.id}}">Review SOAP Note</a>
+</div>
+</ion-content>
+</ion-view>
+
             <option style="display:none;" value="Please Choose" selected></option>
             </select>
           </div>

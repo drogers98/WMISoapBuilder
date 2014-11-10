@@ -428,7 +428,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
         '<strong>Provokes/Palliates</strong>: <pre style="font-family: inherit;">' + soap.patientPPalliates + '</pre><br/>' +
         '<strong>Quality</strong>: ' + soap.patientQuality + '<br/>' +
         '<strong>Radiation/Region/Referred</strong>: <pre style="font-family: inherit;">' + soap.patientRadiates + '</pre><br/>' +
-        '<strong>Severity</strong>: ' + soap.patientSeverity + ' out of 10<br/>' +
+        '<strong>Severity</strong>: ' + soap.patientSeverity + '<br/>' +
         '<strong>Time of Onset</strong>: ' + soap.patientTime + '<br/>' +
         '<h3>MOI/HPI</h3>'+
         '<p><pre style="font-family: inherit;">' + soap.patientHPI + '</pre></p>' +
@@ -499,13 +499,17 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
         '<p><pre style="font-family: inherit;">' + soap.patientPlan + '</pre></p>' +
         '<strong>Anticipated Problems</strong>: <pre style="font-family: inherit;">' + soap.patientAnticipatedProblems + '</pre><br/>';
 
-        var messagePartIVA = '<h3>Image Captions</h3>';
+        var messagePartIVA = '<h3>Photos</h3>';
         var messagePartIV = function(soapImages) {
+	        var captions = [];
+	        var imgNum = 1;
           for(var i=0;i<soapImages.length;i++) {
-            var captions = [];
-            captions.push('<p>' + soapImages[i].imgCaption + '</p>');
+	          
+	          var imgNumPlus = imgNum++;
+	          
+            captions.push('Image ' + imgNumPlus + ': ' + soapImages[i].imgCaption + '</br>');
           }
-          return captions;
+          return captions.join("");
         }
 
 
@@ -656,7 +660,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
                       'Dull Pressure', 'Sharp',
                       'Squeezing', 'Stabbing',
                       'Tearing', 'Tight', 'Other'];
-  $scope.severities = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
+  $scope.severities = ['1 out of 10', '2 out of 10', '3 out of 10', '4 out of 10', '5 out of 10', '6 out of 10', '7 out of 10', '8 out of 10', '9 out of 10', '10 out of 10'];
   $scope.spinals = ['Yes', 'No'];
 
 })
