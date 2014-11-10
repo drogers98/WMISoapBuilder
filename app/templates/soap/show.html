@@ -7,7 +7,7 @@
 
   <ion-nav-buttons side="right">
   <a class="button icon ion-edit" href="#/tab/overview/{{soapDetail.id}}"></a>
-  <button class="button icon ion-ios7-compose-outline" ng-controller="SoapCtrl" ng-click="shareSOAP(soapDetail,recentSoapDetailVitals,soapImgs)"></button>
+  <button class="button icon ion-ios7-compose-outline" ng-controller="SoapCtrl" ng-click="shareSOAP(soapDetail,recentAllSoapDetailVitals,soapImgs)"></button>
   <button class="button button-icon ion-navicon" ng-controller="MenuCtrl" ng-click="toggleSideMenu()"></button>
 
   </ion-nav-buttons>
@@ -177,7 +177,7 @@
         </div>
       </div>
 
-<a class="button button-block button-light icon icon-right ion-app-share margin" ng-controller="SoapCtrl" ng-click="shareSOAP(soapDetail,recentSoapDetailVitals,soapImgs)">Share This SOAP</a>
+<a class="button button-block button-light icon icon-right ion-app-share margin" ng-controller="SoapCtrl" ng-click="shareSOAP(soapDetail,recentAllSoapDetailVitals,soapImgs)">Share This SOAP</a>
 
       </div>
   </ion-content>

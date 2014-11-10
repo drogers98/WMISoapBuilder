@@ -1,6 +1,6 @@
 <ion-view title="Edit Vitals">
   <ion-nav-buttons side="left">
-    <a class="button button" ng-controller="VitalDetailCtrl" href="javascript: history.go(-1)">Cancel</a>
+    <a class="button button" ng-controller="VitalDetailCtrl" href="#/tab/vitals/all/{{vitalEdit.soapId}}">Cancel</a>
   </ion-nav-buttons>
 
   <ion-content ng-controller="VitalEditCtrl" has-header="true" padding="false" has-bouncing="false">
@@ -307,11 +307,11 @@
 
     <div class="col">
 
-<button ng-click="start()" ng-disabled="play" ng-init="play=false" class="button button-calm button-small icon ion-play" id="start"></button>
+<button ng-click="start()" ng-controller="VitalDetailCtrl" ng-disabled="play" ng-init="play=false" class="button button-calm button-small icon ion-play" id="start"></button>
 
-<button ng-click="stop()" ng-disabled="pause" ng-init="pause=true" class="button button-calm button-small icon ion-stop"id="stop"></button>
+<button ng-click="stop()" ng-controller="VitalDetailCtrl" ng-disabled="pause" ng-init="pause=true" class="button button-calm button-small icon ion-stop"id="stop"></button>
 
-<button ng-click="reset()"class="button button-calm button-small icon ion-refresh" id="clear"></button>
+<button ng-click="reset()" ng-controller="VitalDetailCtrl" class="button button-calm button-small icon ion-refresh" id="clear"></button>
 
     </div>
     </div>

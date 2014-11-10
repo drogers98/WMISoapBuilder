@@ -105,8 +105,8 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
   };
 
   $scope.onItemDelete = function(soap) {
-    
-  
+
+
     console.log($scope.$location.path());
 
 
@@ -127,7 +127,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
            onTap: function() {
 	         $scope.soaps.splice($scope.soaps.indexOf(soap), 1);
              Soaps.deleteSoap(soap.id);
-            
+
            }
          }
        ]
@@ -141,17 +141,13 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
        }
      });*/
   }
-  
- $scope.remove=function(item){ 
+
+ $scope.remove=function(item){
       var index=$scope.bdays.indexOf(item)
-      $scope.bdays.splice(index,1);     
+      $scope.bdays.splice(index,1);
     }
 
   $scope.cancelSoap = function(soap){
-    console.log($scope.$location.path());
-    console.log($scope.$location.absUrl());
-    console.log(window.location.origin)
-    /*
     var confirmPopup = $ionicPopup.confirm({
        title: 'Cancel',
        template: 'Going back will delete this SOAP',
@@ -172,7 +168,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
            }
          }
        ]
-     });*/
+     });
 
   }
 
@@ -504,9 +500,9 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
 	        var captions = [];
 	        var imgNum = 1;
           for(var i=0;i<soapImages.length;i++) {
-	          
+
 	          var imgNumPlus = imgNum++;
-	          
+
             captions.push('Image ' + imgNumPlus + ': ' + soapImages[i].imgCaption + '</br>');
           }
           return captions.join("");
@@ -757,6 +753,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
       Soaps.updateSoap('editFlag',soapReview.id,true);
     }
     Vitals.currentVitals(soapReview.id, function(err,allreviewVitals,reviewTrueVitals){
+      $scope.recentAllSoapReviewVitals = allreviewVitals;
       $scope.recentSoapReviewVitals = reviewTrueVitals;
     })
     Camera.allQuery(soapReview.id, function(err,soapImgs){
@@ -864,6 +861,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
       Soaps.updateSoap('editFlag',soapDetail.id,true);
     }
     Vitals.currentVitals(soapDetail.id, function(err,alldetailVitals,detailTrueVitals){
+      $scope.recentAllSoapDetailVitals = alldetailVitals;
       $scope.recentSoapDetailVitals = detailTrueVitals;
     })
     Camera.allQuery(soapDetail.id, function(err,soapImgs){
@@ -1156,34 +1154,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
         {name:'Unresponsive', value:'U'}
       ];
 
-  $scope.timeValue = 0;
-  function countdown(){
-    $scope.timeValue++;
-    if($scope.timeValue < 60) {
-      $scope.timeout = $timeout(countdown,1000);
-    }else{
-      $scope.stop();
-    }
-  };
-  $scope.start = function(){
-    if($scope.timeValue === 60){
-      $scope.timeValue = 0;
-    }
-    countdown();
-    $scope.play = true;
-    $scope.pause = false;
-  }
-  $scope.stop = function(){
-    $timeout.cancel($scope.timeout);
-    $scope.play = false;
-    $scope.pause = true;
-  }
-  $scope.reset = function(){
-    $scope.timeValue = 0;
-    $timeout.cancel($scope.timeout);
-    $scope.play = false;
-    $scope.pause = true;
-  }
+
 })
 
 .controller('VitalNewCtrl', function($scope, $state, $stateParams, Vitals) {
