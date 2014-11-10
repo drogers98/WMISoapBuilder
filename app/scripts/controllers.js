@@ -153,14 +153,14 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
        template: 'Going back will delete this SOAP',
        buttons: [
          {
-           text: 'Cancel',
+           text: 'Stay Here',
            type: 'button-calm',
            onTap: function() {
              return;
            }
          },
          {
-           text: 'Continue',
+           text: 'Delete',
            type: 'button-light',
            onTap: function() {
              Soaps.deleteSoap(soap.id);
@@ -1154,6 +1154,35 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
         {name:'Unresponsive', value:'U'}
       ];
 
+
+ $scope.timeValue = 0;
+ function countdown(){
+ $scope.timeValue++;
+ if($scope.timeValue < 60) {
+ $scope.timeout = $timeout(countdown,1000);
+ }else{
+ $scope.stop();
+ }
+ };
+ $scope.start = function(){
+ if($scope.timeValue === 60){
+ $scope.timeValue = 0;
+ }
+ countdown();
+ $scope.play = true;
+ $scope.pause = false;
+ }
+ $scope.stop = function(){
+ $timeout.cancel($scope.timeout);
+ $scope.play = false;
+ $scope.pause = true;
+ }
+ $scope.reset = function(){
+ $scope.timeValue = 0;
+  $timeout.cancel($scope.timeout);
+ $scope.play = false;
+  $scope.pause = true;
+ }
 
 })
 
