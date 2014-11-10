@@ -105,12 +105,14 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
   };
 
   $scope.onItemDelete = function(soap) {
+    
+  
     console.log($scope.$location.path());
 
 
     var confirmPopup = $ionicPopup.confirm({
-       title: soap.incidentDate + ' | ' + soap.patientAge + ' , ' + soap.patientGender + ' , ' + soap.patientInitials,
-       template: 'Are you sure you want to delete this SOAP NOTE?',
+       title: soap.incidentDate + ' | ' + soap.patientAge + ' , ' + soap.patientGender + ' | ' + soap.patientInitials,
+       template: 'Are you sure you want to delete this SOAP note?',
        buttons: [
          {
            text: 'Cancel',
@@ -123,21 +125,27 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
            text: 'Delete',
            type: 'button-light',
            onTap: function() {
+	         $scope.soaps.splice($scope.soaps.indexOf(soap), 1);
              Soaps.deleteSoap(soap.id);
-             $scope.soaps.splice($scope.soaps.indexOf(soap.id), 1)
+            
            }
          }
        ]
      });
     /* confirmPopup.then(function(res) {
        if(res) {
-        Soaps.deleteSoap(soap.id);
+        Soaps.deleteSoap(.id);
         $scope.soaps.splice($scope.soaps.indexOf(soap.id), 1)
        } else {
          return;
        }
      });*/
   }
+  
+ $scope.remove=function(item){ 
+      var index=$scope.bdays.indexOf(item)
+      $scope.bdays.splice(index,1);     
+    }
 
   $scope.cancelSoap = function(soap){
     console.log($scope.$location.path());
@@ -869,7 +877,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
   $scope.onItemDelete = function(vitalId) {
     var confirmPopup = $ionicPopup.confirm({
        title: 'Delete Vitals',
-       template: 'Are you sure you want to delete this VITAL ENTRY?',
+       template: 'Are you sure you want to delete this Vitals entry?',
        buttons: [
          {
            text: 'Keep',
@@ -882,7 +890,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
            text: 'Delete',
            type: 'button-light',
            onTap: function() {
-             Vitals.deleteVital(vitalId);
+             Vitals.deleteVital(vitalId.id);
              $scope.soapVitals.splice($scope.soapVitals.indexOf(vitalId), 1)
            }
          }
@@ -1144,7 +1152,34 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
         {name:'Unresponsive', value:'U'}
       ];
 
-
+  $scope.timeValue = 0;
+  function countdown(){
+    $scope.timeValue++;
+    if($scope.timeValue < 60) {
+      $scope.timeout = $timeout(countdown,1000);
+    }else{
+      $scope.stop();
+    }
+  };
+  $scope.start = function(){
+    if($scope.timeValue === 60){
+      $scope.timeValue = 0;
+    }
+    countdown();
+    $scope.play = true;
+    $scope.pause = false;
+  }
+  $scope.stop = function(){
+    $timeout.cancel($scope.timeout);
+    $scope.play = false;
+    $scope.pause = true;
+  }
+  $scope.reset = function(){
+    $scope.timeValue = 0;
+    $timeout.cancel($scope.timeout);
+    $scope.play = false;
+    $scope.pause = true;
+  }
 })
 
 .controller('VitalNewCtrl', function($scope, $state, $stateParams, Vitals) {
@@ -1153,4 +1188,5 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
     $scope.vitalDetail = vitalDetail;
     $state.reload();
   })
+
 })
