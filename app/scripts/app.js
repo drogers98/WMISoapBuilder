@@ -71,6 +71,12 @@ angular.module('WMISoapBuilder', ['ionic', 'WMISoapBuilder.controllers', 'WMISoa
       controller: 'SoapDetailCtrl'
     })
 
+    .state('review', {
+      url: '/review/:soapId',
+      templateUrl: 'templates/soap/tab-review.html',
+      controller: 'SoapReviewCtrl'
+    })
+
     .state('tab', {
       url: '/tab',
       abstract: true,
@@ -143,16 +149,6 @@ angular.module('WMISoapBuilder', ['ionic', 'WMISoapBuilder.controllers', 'WMISoa
         'tab-ap': {
           templateUrl: 'templates/soap/tab-ap.html',
           controller: 'SoapAPCtrl'
-        }
-      }
-    })
-
-    .state('tab.review', {
-      url: '/review/:soapId',
-      views: {
-        'tab-ap': {
-          templateUrl: 'templates/soap/tab-review.html',
-          controller: 'SoapReviewCtrl'
         }
       }
     })

@@ -420,7 +420,8 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
         '<strong>Sex</strong>: ' + soap.patientGender + '<br/>' +
         '<h3>Chief Complaint</h3>'+
         '<p><pre style="font-family: inherit;">' + soap.patientComplaint + '</pre></p>' +
-        '<strong>Onset</strong>: ' + soap.patientOnset + '<br/>' +
+        '<strong>Onset Date</strong>: ' + soap.patientOnsetDate + '<br/>' +
+        '<strong>Onset Time</strong>: ' + soap.patientOnsetTime + '<br/>' +
         '<strong>Provokes/Palliates</strong>: <pre style="font-family: inherit;">' + soap.patientPPalliates + '</pre><br/>' +
         '<strong>Quality</strong>: ' + soap.patientQuality + '<br/>' +
         '<strong>Radiation/Region/Referred</strong>: <pre style="font-family: inherit;">' + soap.patientRadiates + '</pre><br/>' +
@@ -428,7 +429,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
         '<strong>Time of Onset</strong>: ' + soap.patientTime + '<br/>' +
         '<h3>MOI/HPI</h3>'+
         '<p><pre style="font-family: inherit;">' + soap.patientHPI + '</pre></p>' +
-        '<strong>Suspected Spinal MOI</strong>: ' + soap.patientSpinal + '<br/>' +
+        '<strong>Spinal MOI</strong>: ' + soap.patientSpinal + '<br/>' +
         '<h2>Objective</h2>'+
         '<h3>General</h3>'+
         '<strong>Patient Position When Found</strong>: <pre style="font-family: inherit;">' + soap.patientFound + '</pre><br/>' +
@@ -453,7 +454,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
             vitalListHR.push('<td '+tdStyle+'>'+ filteredVitals[key].rate + ' ' + filteredVitals[key].heartRythm + ' ' + filteredVitals[key].heartQuality +'</td>');
             vitalListRR.push('<td '+tdStyle+'>'+ filteredVitals[key].respRate + ' ' + filteredVitals[key].respRhythm + ' ' + filteredVitals[key].respQuality +'</td>');
             vitalListSkin.push('<td '+tdStyle+'>'+ filteredVitals[key].sctmcolor + ' ' + filteredVitals[key].sctmtemp + ' ' + filteredVitals[key].sctmmoisture +'</td>');
-            vitalListBP.push('<td '+tdStyle+'>'+ filteredVitals[key].brradialpulse + ' ' + filteredVitals[key].brsystolic.replace('.0', '')+'/'+filteredVitals[key].diastolic.replace('.0', '') + '</td>');
+            vitalListBP.push('<td '+tdStyle+'>'+ filteredVitals[key].brsystolic.replace('.0', '')+'/'+filteredVitals[key].diastolic.replace('.0', '') + '</td>');
             vitalListPupils.push('<td '+tdStyle+'>'+ filteredVitals[key].pupils + '</td>');
             vitalListTemp.push('<td '+tdStyle+'>'+ filteredVitals[key].tempDegreesReading + ' ' + filteredVitals[key].tempDegrees+'</td>');
             emailVitalObj['timeTaken'] = vitalListTime.join("");
@@ -929,7 +930,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
   }
 
   $scope.systolics = Array.apply(null, {length: 300}).map(Number.call, Number);
-  $scope.systolics.unshift("Radial Pulse")
+  //$scope.systolics.unshift("Radial Pulse")
   $scope.diastolics = Array.apply(null, {length: 300}).map(Number.call, Number);
   $scope.diastolics.unshift("P")
 
@@ -1125,7 +1126,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
   }
 
   $scope.systolics = Array.apply(null, {length: 300}).map(Number.call, Number);
-  $scope.systolics.unshift("Radial Pulse")
+  //$scope.systolics.unshift("Radial Pulse")
   $scope.diastolics = Array.apply(null, {length: 300}).map(Number.call, Number);
   $scope.diastolics.unshift("P")
 
