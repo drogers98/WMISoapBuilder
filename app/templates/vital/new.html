@@ -16,9 +16,17 @@
       </div>
     </div>
 
+    <!-- Date Taken -->
+    <div class="titleParent">
+      <h5>Date Taken</h5>
+      <div class="item item-input">
+        <input id="Vital.dateTaken" type="date" ng-model="vitalDetail.dateTaken" ng-model-onblur ng-change="monitorVitalChange(vitalDetail,vitalDetail.dateTaken,'dateTaken')">
+      </div>
+    </div>
+
     <!-- LOR -->
     <div class="titleParent">
-    <h5>Level of Responsiveness</h5>
+    <h5>Level of Responsiveness<a ng-controller="SoapCtrl" ng-click="openModal(18)"><span>i</span></a></h5>
       <div class="item item-select">
         <div class="input-label">
           LOR

@@ -318,6 +318,14 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
        $scope.oModal17 = modal;
      });
 
+     $ionicModal.fromTemplateUrl('modal-18.html', {
+       id: '18',
+       scope: $scope,
+       animation: 'slide-in-up'
+     }).then(function(modal){
+       $scope.oModal18 = modal;
+     })
+
      $scope.openModal = function(index) {
        if(index == 1) $scope.oModal1.show();
        if(index == 2) $scope.oModal2.show();
@@ -336,6 +344,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
        if(index == 15) $scope.oModal15.show();
        if(index == 16) $scope.oModal16.show();
        if(index == 17) $scope.oModal17.show();
+       if(index == 18) $scope.oModal18.show();
 
 
      };
@@ -358,6 +367,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
        if(index == 15) $scope.oModal15.hide();
        if(index == 16) $scope.oModal16.hide();
        if(index == 17) $scope.oModal17.hide();
+       if(index == 18) $scope.oModal18.hide();
 
      };
 
@@ -391,6 +401,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
        $scope.oModal15.remove();
        $scope.oModal16.remove();
        $scope.oModal17.remove();
+       $scope.oModal18.remove();
      });
  // end modals
 
@@ -406,6 +417,17 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
         return imageURIS;
       }
 
+      var genderFull = function(){
+        if(soap.patientGender == 'M' || soap.patientGender == 'Male'){
+          soap.patientGender = 'Male';
+        }else if(soap.patientGender == 'F' || soap.patientGender == 'Female'){
+          soap.patientGender = 'Female';
+        }else {
+          soap.patientGender = 'Transgender';
+        }
+        return soap.patientGender;
+      }
+
       var runMessage = function(soapVitals) {
 
         var messagePartI = '<h2>Location</h2>'+
@@ -417,16 +439,16 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
         '<strong>Initials</strong>: ' + soap.patientInitials + '<br/>' +
         '<strong>DOB</strong>: ' + soap.patientDob + '<br/>' +
         '<strong>Age</strong>: ' + soap.patientAge + '<br/>' +
-        '<strong>Sex</strong>: ' + soap.patientGender + '<br/>' +
+        '<strong>Sex</strong>: ' + genderFull() + '<br/>' +
         '<h3>Chief Complaint</h3>'+
         '<p><pre style="font-family: inherit;">' + soap.patientComplaint + '</pre></p>' +
+        '<strong>Onset</strong>: ' + soap.patientOnset + '<br/>' +
         '<strong>Onset Date</strong>: ' + soap.patientOnsetDate + '<br/>' +
         '<strong>Onset Time</strong>: ' + soap.patientOnsetTime + '<br/>' +
         '<strong>Provokes/Palliates</strong>: <pre style="font-family: inherit;">' + soap.patientPPalliates + '</pre><br/>' +
         '<strong>Quality</strong>: ' + soap.patientQuality + '<br/>' +
         '<strong>Radiation/Region/Referred</strong>: <pre style="font-family: inherit;">' + soap.patientRadiates + '</pre><br/>' +
         '<strong>Severity</strong>: ' + soap.patientSeverity + '<br/>' +
-        '<strong>Time of Onset</strong>: ' + soap.patientTime + '<br/>' +
         '<h3>MOI/HPI</h3>'+
         '<p><pre style="font-family: inherit;">' + soap.patientHPI + '</pre></p>' +
         '<strong>Spinal MOI</strong>: ' + soap.patientSpinal + '<br/>' +
@@ -438,7 +460,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
 
         //var messagePartIIA = "<table style='width:100%;text-align:center;border:1px solid #EFEFEF;border-collapse:collapse;'>";
         var messagePartIIB = function(soapVitals) {
-          var vitalListTime = [],vitalListLor = [],vitalListHR = [],vitalListRR = [],
+          var vitalListTime = [], vitalListDate = [],vitalListLor = [],vitalListHR = [],vitalListRR = [],
               vitalListSkin = [],vitalListBP = [],vitalListPupils = [],vitalListTemp = [];
           var filteredVitalsBefore = soapVitals.filter(function(entry){return entry.starterFlag === 'true';});
           var filteredVitals = filteredVitalsBefore.sort(function(a,b){
@@ -450,6 +472,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
             var tbStyle = "style='width:100%;text-align:center;border:1px solid #EFEFEF;border-collapse:collapse;";
             var emailVitalObj = {};
             vitalListTime.push('<td '+tdStyle+'>'+ filteredVitals[key].timeTaken + '</td>');
+            vitalListDate.push('<td '+tdStyle+'>'+ filteredVitals[key].dateTaken + '</td>');
             vitalListLor.push('<td '+tdStyle+'>'+ filteredVitals[key].lor + '</td>');
             vitalListHR.push('<td '+tdStyle+'>'+ filteredVitals[key].rate + ' ' + filteredVitals[key].heartRythm + ' ' + filteredVitals[key].heartQuality +'</td>');
             vitalListRR.push('<td '+tdStyle+'>'+ filteredVitals[key].respRate + ' ' + filteredVitals[key].respRhythm + ' ' + filteredVitals[key].respQuality +'</td>');
@@ -458,6 +481,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
             vitalListPupils.push('<td '+tdStyle+'>'+ filteredVitals[key].pupils + '</td>');
             vitalListTemp.push('<td '+tdStyle+'>'+ filteredVitals[key].tempDegreesReading + ' ' + filteredVitals[key].tempDegrees+'</td>');
             emailVitalObj['timeTaken'] = vitalListTime.join("");
+            emailVitalObj['dateTaken'] = vitalListDate.join("");
             emailVitalObj['lor'] = vitalListLor.join("");
             emailVitalObj['hr'] = vitalListHR.join("");
             emailVitalObj['rr'] = vitalListRR.join("");
@@ -468,6 +492,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
 
             var message = "<table style='width:100%;text-align:center;border:1px solid #EFEFEF;border-collapse:collapse;'>"
                           +'<tr>'+'<th '+thStyle+'>Time</th>'+emailVitalObj.timeTaken+'</tr>'
+                          +'<tr>'+'<th '+thStyle+'>Date</td>'+emailVitalObj.dateTaken+'</tr>'
                           +'<tr>'+'<th '+thStyle+'>Lor</th>'+emailVitalObj.lor+'</tr>'
                           +'<tr>'+'<th '+thStyle+'>HR</th>'+emailVitalObj.hr+'</tr>'
                           +'<tr>'+'<th '+thStyle+'>RR</th>'+emailVitalObj.rr+'</tr>'
@@ -981,6 +1006,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
            text: 'Continue',
            type: 'button-light',
            onTap: function() {
+             //console.log(vital)
              Vitals.deleteVital(vital.id);
              window.history.back();
            }
