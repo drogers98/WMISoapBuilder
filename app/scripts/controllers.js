@@ -440,8 +440,8 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
         '<strong>DOB</strong>: ' + soap.patientDob + '<br/>' +
         '<strong>Age</strong>: ' + soap.patientAge + '<br/>' +
         '<strong>Sex</strong>: ' + genderFull() + '<br/>' +
-        '<h3>Chief Complaint</h3>'+
-        '<p><pre style="font-family: inherit;">' + soap.patientComplaint + '</pre></p>' +
+        '<h3 style="margin-bottom:0;">Chief Complaint</h3>'+
+        '<pre style="font-family: inherit;margin-top:0;">' + soap.patientComplaint + '</pre>' +
         '<strong>Onset</strong>: ' + soap.patientOnset + '<br/>' +
         '<strong>Onset Date</strong>: ' + soap.patientOnsetDate + '<br/>' +
         '<strong>Onset Time</strong>: ' + soap.patientOnsetTime + '<br/>' +

@@ -607,7 +607,7 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce', 'ngCord
       type = (type === 'lib') ? Camera.PictureSourceType.PHOTOLIBRARY : Camera.PictureSourceType.CAMERA
       var options = {
         quality : 49, //setting below 50 to avoid memory errors
-        //destinationType : Camera.DestinationType.DATA_URL,
+        //destinationType : Camera.DestinationType.NATIVE_URI,
         sourceType : type,
         allowEdit : false,
         encodingType: Camera.EncodingType.JPEG,
