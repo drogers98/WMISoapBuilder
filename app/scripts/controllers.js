@@ -450,7 +450,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
         '<strong>Radiation/Region/Referred</strong>: <pre style="font-family: inherit;margin-top:0;">' + soap.patientRadiates + '</pre><br/>' +
         '<strong>Severity</strong>: ' + soap.patientSeverity + '<br/>' +
         '<h3 style="margin-bottom:0;">MOI/HPI</h3>'+
-        '<p><pre style="font-family: inherit;margin-top:0;">' + soap.patientHPI + '</pre></p>' +
+        '<pre style="font-family: inherit;margin-top:0;">' + soap.patientHPI + '</pre>' +
         '<strong>Spinal MOI</strong>: ' + soap.patientSpinal + '<br/>' +
         '<h2>Objective</h2>'+
         '<h3>General</h3>'+
@@ -515,10 +515,10 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
         '<strong>Pertinent Medical History</strong>: <pre style="font-family: inherit;margin-top:0;">' + soap.patientMedicalHistory + '</pre><br/>' +
         '<strong>Last Intake/Output</strong>: <pre style="font-family: inherit;margin-top:0;">' + soap.patientLastIntake + '</pre><br/>' +
         '<strong>Events Leading up to Injury/Illness</strong>: <pre style="font-family: inherit;margin-top:0;">' + soap.patientEventsForCause + '</pre><br/>' +
-        '<h2>Assessment</h2>'+
-        '<p><pre style="font-family: inherit;margin-top:0;">' + soap.patientAssessment + '</pre></p>' +
-        '<h2>Plan</h2>'+
-        '<p><pre style="font-family: inherit;margin-top:0;">' + soap.patientPlan + '</pre></p>' +
+        '<h2 style="margin-bottom:0;">Assessment</h2>'+
+        '<pre style="font-family: inherit;margin-top:0;">' + soap.patientAssessment + '</pre>' +
+        '<h2 style="margin-bottom:0;">Plan</h2>'+
+        '<pre style="font-family: inherit;margin-top:0;">' + soap.patientPlan + '</pre>' +
         '<strong>Anticipated Problems</strong>: <pre style="font-family: inherit;margin-top:0;">' + soap.patientAnticipatedProblems + '</pre><br/>';
 
         var messagePartIVA = '<h3>Photos</h3>';

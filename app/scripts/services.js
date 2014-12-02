@@ -604,16 +604,18 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce', 'ngCord
       //do something
     },
     getNewImg: function(type,callback){
-      type = (type === 'lib') ? Camera.PictureSourceType.PHOTOLIBRARY : Camera.PictureSourceType.CAMERA
+      var getType = type === 'lib' ? Camera.PictureSourceType.PHOTOLIBRARY : Camera.PictureSourceType.CAMERA
+      var save = type === 'lib' ? false : true
+
       var options = {
         quality : 49, //setting below 50 to avoid memory errors
         //destinationType : Camera.DestinationType.NATIVE_URI,
-        sourceType : type,
+        sourceType : getType,
         allowEdit : false,
         encodingType: Camera.EncodingType.JPEG,
-        targetWidth: 200,
-        targetHeight: 150,
-        saveToPhotoAlbum: true
+        targetWidth: 150,
+        targetHeight: 200,
+        saveToPhotoAlbum: save
       };
 
       $cordovaCamera.getPicture(options).then(function(imgData){
