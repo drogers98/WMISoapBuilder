@@ -141,7 +141,7 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce', 'ngCord
          "starterFlag": {"type": "TEXT", "null": "NOT NULL"},
          "editFlag": {"type": "TEXT", "null": "NOT NULL"},
          "timeTaken": {"type": "TEXT", "null": "NOT NULL"},
-         "dateTaken": {"type": "TEXT", "null": "NOT NULL"},
+         "dateTaken": {"type": "DATE", "null": "NOT NULL"},
          "lor": {"type": "TEXT", "null": "NOT NULL"},
          "rate": {"type": "INTEGER", "null": "NOT NULL"},
          "heartRythm": {"type": "TEXT", "null": "NOT NULL"},

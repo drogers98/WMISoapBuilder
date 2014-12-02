@@ -20,7 +20,7 @@
     <div class="titleParent">
       <h5>Date Taken</h5>
       <div class="item item-input">
-        <input id="Vital.dateTaken" type="date" ng-model="vitalDetail.dateTaken" ng-model-onblur ng-change="monitorVitalChange(vitalDetail,vitalDetail.dateTaken,'dateTaken')">
+        <input id="Vital.dateTaken" type="date" ng-model="vitalDetail.dateTaken" ng-model-onblur ng-change="monitorVitalChange(vitalDetail,vitalDetail.dateTaken,'dateTaken')" value="{{dt | date:'yyyy-MM-dd'}}">
       </div>
     </div>
 

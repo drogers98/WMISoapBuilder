@@ -445,17 +445,17 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
         '<strong>Onset</strong>: ' + soap.patientOnset + '<br/>' +
         '<strong>Onset Date</strong>: ' + soap.patientOnsetDate + '<br/>' +
         '<strong>Onset Time</strong>: ' + soap.patientOnsetTime + '<br/>' +
-        '<strong>Provokes/Palliates</strong>: <pre style="font-family: inherit;">' + soap.patientPPalliates + '</pre><br/>' +
+        '<strong>Provokes/Palliates</strong>: <pre style="font-family: inherit;margin-top:0;">' + soap.patientPPalliates + '</pre><br/>' +
         '<strong>Quality</strong>: ' + soap.patientQuality + '<br/>' +
-        '<strong>Radiation/Region/Referred</strong>: <pre style="font-family: inherit;">' + soap.patientRadiates + '</pre><br/>' +
+        '<strong>Radiation/Region/Referred</strong>: <pre style="font-family: inherit;margin-top:0;">' + soap.patientRadiates + '</pre><br/>' +
         '<strong>Severity</strong>: ' + soap.patientSeverity + '<br/>' +
-        '<h3>MOI/HPI</h3>'+
-        '<p><pre style="font-family: inherit;">' + soap.patientHPI + '</pre></p>' +
+        '<h3 style="margin-bottom:0;">MOI/HPI</h3>'+
+        '<p><pre style="font-family: inherit;margin-top:0;">' + soap.patientHPI + '</pre></p>' +
         '<strong>Spinal MOI</strong>: ' + soap.patientSpinal + '<br/>' +
         '<h2>Objective</h2>'+
         '<h3>General</h3>'+
-        '<strong>Patient Position When Found</strong>: <pre style="font-family: inherit;">' + soap.patientFound + '</pre><br/>' +
-        '<strong>Patient Exam</strong>: <pre style="font-family: inherit;">' + soap.patientExamReveals + '</pre><br/>' +
+        '<strong>Patient Position When Found</strong>: <pre style="font-family: inherit;margin-top:0;">' + soap.patientFound + '</pre><br/>' +
+        '<strong>Patient Exam</strong>: <pre style="font-family: inherit;margin-top:0;">' + soap.patientExamReveals + '</pre><br/>' +
         '<h3>Vital Signs</h3>';
 
         //var messagePartIIA = "<table style='width:100%;text-align:center;border:1px solid #EFEFEF;border-collapse:collapse;'>";
@@ -509,17 +509,17 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
         //'<tr>' + "<th style='width:25%;border:1px solid #EFEFEF;border-collapse:collapse;padding:5px;text-align:right;padding-right:10px;background-color:#EFEFEF;text-transform:uppercase'>"
 
         var messagePartIII = '<h3>Patient History</h3>'+
-        '<strong>Symptoms</strong>: <pre style="font-family: inherit;">' + soap.patientSymptoms + '</pre><br/>' +
-        '<strong>Allergies</strong>: <pre style="font-family: inherit;">' + soap.patientAllergies + '</pre><br/>' +
-        '<strong>Medications</strong>: <pre style="font-family: inherit;">' + soap.patientMedications + '</pre><br/>' +
-        '<strong>Pertinent Medical History</strong>: <pre style="font-family: inherit;">' + soap.patientMedicalHistory + '</pre><br/>' +
-        '<strong>Last Intake/Output</strong>: <pre style="font-family: inherit;">' + soap.patientLastIntake + '</pre><br/>' +
-        '<strong>Events Leading up to Injury/Illness</strong>: <pre style="font-family: inherit;">' + soap.patientEventsForCause + '</pre><br/>' +
+        '<strong>Symptoms</strong>: <pre style="font-family: inherit;margin-top:0;">' + soap.patientSymptoms + '</pre><br/>' +
+        '<strong>Allergies</strong>: <pre style="font-family: inherit;margin-top:0;">' + soap.patientAllergies + '</pre><br/>' +
+        '<strong>Medications</strong>: <pre style="font-family: inherit;margin-top:0;">' + soap.patientMedications + '</pre><br/>' +
+        '<strong>Pertinent Medical History</strong>: <pre style="font-family: inherit;margin-top:0;">' + soap.patientMedicalHistory + '</pre><br/>' +
+        '<strong>Last Intake/Output</strong>: <pre style="font-family: inherit;margin-top:0;">' + soap.patientLastIntake + '</pre><br/>' +
+        '<strong>Events Leading up to Injury/Illness</strong>: <pre style="font-family: inherit;margin-top:0;">' + soap.patientEventsForCause + '</pre><br/>' +
         '<h2>Assessment</h2>'+
-        '<p><pre style="font-family: inherit;">' + soap.patientAssessment + '</pre></p>' +
+        '<p><pre style="font-family: inherit;margin-top:0;">' + soap.patientAssessment + '</pre></p>' +
         '<h2>Plan</h2>'+
-        '<p><pre style="font-family: inherit;">' + soap.patientPlan + '</pre></p>' +
-        '<strong>Anticipated Problems</strong>: <pre style="font-family: inherit;">' + soap.patientAnticipatedProblems + '</pre><br/>';
+        '<p><pre style="font-family: inherit;margin-top:0;">' + soap.patientPlan + '</pre></p>' +
+        '<strong>Anticipated Problems</strong>: <pre style="font-family: inherit;margin-top:0;">' + soap.patientAnticipatedProblems + '</pre><br/>';
 
         var messagePartIVA = '<h3>Photos</h3>';
         var messagePartIV = function(soapImages) {
@@ -954,9 +954,9 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
     return i ? range(i-1).concat(i):[];
   }
 
-  $scope.systolics = Array.apply(null, {length: 300}).map(Number.call, Number);
+  $scope.systolics = Array.apply(null, {length: 301}).map(Number.call, Number);
   //$scope.systolics.unshift("Radial Pulse")
-  $scope.diastolics = Array.apply(null, {length: 300}).map(Number.call, Number);
+  $scope.diastolics = Array.apply(null, {length: 301}).map(Number.call, Number);
   $scope.diastolics.unshift("P")
 
   $scope.pupils = ['PERRL', 'Not PERRL'];
