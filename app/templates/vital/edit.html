@@ -7,20 +7,19 @@
   <form name="vital_Detail">
   <div class="SOAP VITALS">
     <div class="list">
+      <!-- Date Taken -->
+      <div class="titleParent">
+        <h5>Date Taken</h5>
+        <div class="item item-input">
+          <input id="Vital.dateTaken" type="date" ng-model="vitalEdit.dateTaken" ng-model-onblur ng-change="monitorVitalChange(vitalEdit,vitalEdit.dateTaken,'dateTaken')" value="{{dt | date:'yyyy-MM-dd'}}">
+        </div>
+      </div>
 
         <!-- Time Taken -->
       <div class="titleParent">
       <h5>Time Taken<a ng-controller="SoapCtrl"  ng-click="openModal(13)"><span>i</span></a></h5>
       <div class="item item-input">
        <input id="Vital.timeTaken" type="time" ng-model="vitalEdit.timeTaken" ng-model-onblur ng-change="monitorVitalChange(vitalEdit,vitalEdit.timeTaken,'timeTaken')">
-      </div>
-    </div>
-
-    <!-- Date Taken -->
-    <div class="titleParent">
-      <h5>Date Taken</h5>
-      <div class="item item-input">
-        <input id="Vital.dateTaken" type="date" ng-model="vitalEdit.dateTaken" ng-model-onblur ng-change="monitorVitalChange(vitalEdit,vitalEdit.dateTaken,'dateTaken')" value="{{dt | date:'yyyy-MM-dd'}}">
       </div>
     </div>
 
