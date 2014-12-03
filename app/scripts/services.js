@@ -609,11 +609,11 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce', 'ngCord
 
       var options = {
         quality : 49, //setting below 50 to avoid memory errors
-        //destinationType : Camera.DestinationType.NATIVE_URI,
+        //destinationType : Camera.DestinationType.DATA_URL,
         sourceType : getType,
         allowEdit : false,
         encodingType: Camera.EncodingType.JPEG,
-        targetWidth: 150,
+        targetWidth: 200,
         targetHeight: 200,
         saveToPhotoAlbum: save
       };

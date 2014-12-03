@@ -15,6 +15,14 @@ angular.module('WMISoapBuilder', ['ionic', 'WMISoapBuilder.controllers', 'WMISoa
   nolsDB.init();
   $ionicPlatform.ready(function() {
 
+    if(typeof analytics !== "undefined"){
+      analytics.startTrackerWithId('UA-57147829-1');
+    }else {
+      console.log("GA unavailable")
+    }
+
+    //$cordovaGoogleAnalytics.trackView('All Mobile App Data');
+
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
     if(window.cordova && window.cordova.plugins.Keyboard) {

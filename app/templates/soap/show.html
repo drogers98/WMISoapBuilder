@@ -116,7 +116,7 @@
             </tr>
             <tr>
                 <th>BP</th>
-                <td ng-repeat="sv in recentSoapDetailVitals">{{sv.brradialpulse}} {{sv.brsystolic}}/{{sv.brradialReading}} {{sv.brradialtaken}}</td>
+                <td ng-repeat="sv in recentSoapDetailVitals">{{sv.brradialpulse}} {{sv.brsystolic.replace('.0', '')}}/{{sv.diastolic.replace('.0', '')}}</td>
                 <td ng-hide="recentSoapDetailVitals.length" >--</td>
             <td ng-hide="recentSoapDetailVitals.length >= 2">--</td>
             <td ng-hide="recentSoapDetailVitals.length >= 3">--</td>

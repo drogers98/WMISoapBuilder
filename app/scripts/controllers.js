@@ -1,7 +1,7 @@
 'use strict';
 angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCordova'])
 
-.controller('MenuCtrl', function($scope,$state,$stateParams,$location, $ionicSideMenuDelegate, Soaps) {
+.controller('MenuCtrl', function($scope,$state,$stateParams,$location,$ionicSideMenuDelegate, Soaps) {
   Soaps.all('mySoaps', function(err,soaps){
     $scope.soaps = soaps;
   })
@@ -37,6 +37,9 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
     Responders.all(function(err,responders){
     if(!responders) {
       Responders.saveResponder({},function(err,responder){
+        if(typeof analytics !== "undefined") {
+          analytics.trackView('Responder Sign Up');
+          }
         $scope.responder = responder;
         return $scope.responder;
       })
@@ -55,6 +58,11 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
     })
 
   $scope.acceptAndSave = function(responder) {
+
+    if(typeof analytics !== "undefined") {
+      analytics.trackEvent('Responder','Created');
+    }
+
     Responders.updateResponder('acceptedTerms',responder.id,true);
     $scope.mySoaps();
   };
@@ -71,6 +79,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
                                  $ionicModal, $timeout, $location,
                                  Soaps, Responders, Nols,$ionicPopup,$cordovaSocialSharing){
   "use strict";
+
   Soaps.createSoapTable();
 
   Responders.get(function(err,responder){
@@ -80,6 +89,9 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
       Soaps.getLast(function(err,lastSoap){
         if(lastSoap === null || lastSoap.starterFlag === 'true'){
           Soaps.saveNewSoap({},{},function(err,starterSoap){
+            if(typeof analytics !== "undefined"){
+              analytics.trackEvent('Soap', 'Created')
+            }
             $scope.starterSoap = starterSoap.id;
           })
         }else {
@@ -125,6 +137,9 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
            text: 'Delete',
            type: 'button-light',
            onTap: function() {
+          if(typeof analytics !== "undefined"){
+            analytics.trackEvent('Soap', 'Deleted');
+          }
 	         $scope.soaps.splice($scope.soaps.indexOf(soap), 1);
              Soaps.deleteSoap(soap.id);
 
@@ -528,8 +543,9 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
           for(var i=0;i<soapImages.length;i++) {
 
 	          var imgNumPlus = imgNum++;
-
-            captions.push('Image ' + imgNumPlus + ': ' + soapImages[i].imgCaption + '</br>');
+            var captionIntroA = 'Image ' + imgNumPlus + ': ';
+            var captionIntro = soapImages[i].imgCaption ? captionIntroA : captionIntroA + "No Caption Provided"
+            captions.push(captionIntro + soapImages[i].imgCaption + '</br>');
           }
           return captions.join("");
         }
@@ -550,10 +566,12 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
      });*/
 
      var soapSubject = 'Soap Note ' + soap.incidentDate + ' | ' + soap.patientAge + ', ' + soap.patientGender + ' | ' + soap.patientInitials,
-         goTo = ['rogers@eyebyteSolutions.com'],bccArr = [];
+         goTo = [''],bccArr = [];
 
 
     Soaps.sendEmail(runMessage(soapVitals),soapSubject,goTo,bccArr,imgURIS(soapImages),function(soapEmailSuccess){
+        if(typeof analytics !== "undefined"){analytics.trackEvent('Email','Sent');}
+
         var confirmPopup = $ionicPopup.confirm({
           title: 'Where would you like to go?',
        template: 'You can stay on the review page or go to My SOAPs',
@@ -582,7 +600,8 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
 })
 
 //SOAP OVERVIEW TAB
-.controller('SoapOverviewCtrl', function($scope,$state,$stateParams,$location,$cordovaGeolocation,Soaps,Responders){
+.controller('SoapOverviewCtrl', function($scope,$state,$stateParams,$location, $cordovaGeolocation,Soaps,Responders){
+  if(typeof analytics !== "undefined") {analytics.trackView("SOAP OVERVIEW");}
 
   Soaps.get($stateParams.soapId, function(err, soapOverview){
     Responders.get(function(err,responder) {
@@ -643,6 +662,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
 
 //SOAP SUBJECTIVE TAB
 .controller('SoapSubjectiveCtrl', function($scope,$state,$stateParams,Soaps,Responders,Nols){
+  if(typeof analytics !== "undefined") {analytics.trackView("SOAP SUBJECTIVE");}
   Soaps.get($stateParams.soapId, function(err,soapSubjective){
     $scope.soapSubjective = soapSubjective;
   })
@@ -689,6 +709,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
 
 //SOAP OBJECTIVE TAB
 .controller('SoapObjectiveCtrl', function($scope,$state,$stateParams,Soaps,Responders,Vitals){
+  if(typeof analytics !== "undefined") {analytics.trackView("SOAP OBJECTIVE");}
   Vitals.createVitalTable();
   Soaps.get($stateParams.soapId, function(err,soapObjective){
     $scope.soapObjective = soapObjective;
@@ -755,6 +776,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
 
 //SOAP A-P TAB
 .controller('SoapAPCtrl', function($scope,$state,$stateParams,Soaps,Responders, Nols){
+  if(typeof analytics !== "undefined") {analytics.trackView("SOAP A-P");}
   Soaps.get($stateParams.soapId, function(err,soapAP){
     $scope.soapAP = soapAP;
   })
@@ -790,6 +812,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
 })
 
 .controller('SoapImgDetailCtrl', function($scope,$stateParams,$state,$ionicPopup,Camera,Soaps){
+  if(typeof analytics !== "undefined") {analytics.trackView("SOAP IMAGES");}
   $scope.takeNewImg = function(imgDetail,type) {
     Camera.getNewImg(type,function(err,imgAttr){
       Camera.updateImg("imageURI", imgDetail.id,imgAttr)
@@ -1026,6 +1049,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
     }
   };
   $scope.start = function(){
+    if(typeof analytics !== "undefined") {analytics.trackEvent('Vital','Start','Timer');}
     if($scope.timeValue === 60){
       $scope.timeValue = 0;
     }

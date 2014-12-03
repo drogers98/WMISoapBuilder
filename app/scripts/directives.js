@@ -70,6 +70,19 @@ angular.module('WMISoapBuilder.directives', ['angular-websql', 'debounce'])
   }
 })
 
+.directive('noDragLeft', function($ionicGesture) {
+
+  return {
+    restrict: 'A',
+    link: function($scope, $element, $attr) {
+
+      $ionicGesture.on('dragleft', function(e) {
+        e.gesture.srcEvent.preventDefault();
+      }, $element);
+    }
+  }
+});
+
 /*
 .directive('ngConfirmClick', [
         function(){
