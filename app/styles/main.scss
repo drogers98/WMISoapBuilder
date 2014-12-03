@@ -21,7 +21,7 @@ $WMIshadow: rgba(0,0,0,.5);
 $base-background-color: $WMIwhite;
 pre { font-family: inherit; }
 .SOAP .item-text-wrap {
-	white-space: pre;
+	white-space: pre-wrap;//was pre
 }
 //temp image
 #smallImage, #largeImage {

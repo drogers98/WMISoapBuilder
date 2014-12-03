@@ -613,8 +613,8 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce', 'ngCord
         sourceType : getType,
         allowEdit : false,
         encodingType: Camera.EncodingType.JPEG,
-        targetWidth: 200,
-        targetHeight: 200,
+        targetWidth: 350,
+        targetHeight: 350,
         saveToPhotoAlbum: save
       };
 

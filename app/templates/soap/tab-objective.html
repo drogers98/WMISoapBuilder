@@ -42,6 +42,13 @@
             <td ng-hide="recentSoapVitals.length >= 3">--</td>
             </tr>
             <tr>
+              <th>Date</th>
+              <td ng-repeat="sv in recentSoapVitals">{{sv.dateTaken}}</td>
+              <td ng-hide="recentSoapVitals.length" >--</td>
+              <td ng-hide="recentSoapVitals.length >= 2">--</td>
+              <td ng-hide="recentSoapVitals.length >= 3">--</td>
+            </tr>
+            <tr>
                 <th>LOR</th>
                 <td ng-repeat="sv in recentSoapVitals">{{sv.lor}}</td>
                 <td ng-hide="recentSoapVitals.length" >--</td>

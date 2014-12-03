@@ -455,7 +455,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
         '<strong>DOB</strong>: ' + soap.patientDob + '<br/>' +
         '<strong>Age</strong>: ' + soap.patientAge + '<br/>' +
         '<strong>Sex</strong>: ' + genderFull() + '<br/>' +
-        '<h3 style="margin-bottom:0;">Chief Complaint</h3>'+
+        '<h3">Chief Complaint</h3>'+
         '<pre style="font-family: inherit;margin-top:0;">' + soap.patientComplaint + '</pre>' +
         '<strong>Onset</strong>: ' + soap.patientOnset + '<br/>' +
         '<strong>Onset Date</strong>: ' + soap.patientOnsetDate + '<br/>' +
@@ -977,10 +977,16 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
     return i ? range(i-1).concat(i):[];
   }
 
-  $scope.systolics = Array.apply(null, {length: 301}).map(Number.call, Number);
-  //$scope.systolics.unshift("Radial Pulse")
-  $scope.diastolics = Array.apply(null, {length: 301}).map(Number.call, Number);
-  $scope.diastolics.unshift("P")
+  $scope.systolicsData = Array.apply(null, {length: 301}).map(Number.call, Number);
+  $scope.systolics = $scope.systolicsData.map(function(sys){
+    return sys.toString();
+  })
+  $scope.diastolicsData = Array.apply(null, {length: 301}).map(Number.call, Number);
+  $scope.diastolicsData.unshift("P")
+  $scope.diastolics = $scope.diastolicsData.map(function(dias){
+    return dias.toString();
+  })
+
 
   $scope.pupils = ['PERRL', 'Not PERRL'];
   $scope.BPtakens = ['Taken', 'Palpated'];
@@ -1175,10 +1181,15 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
     Vitals.updateVital(kindElem,kindId,kindVal);
   }
 
-  $scope.systolics = Array.apply(null, {length: 300}).map(Number.call, Number);
-  //$scope.systolics.unshift("Radial Pulse")
-  $scope.diastolics = Array.apply(null, {length: 300}).map(Number.call, Number);
-  $scope.diastolics.unshift("P")
+  $scope.systolicsData = Array.apply(null, {length: 300}).map(Number.call, Number);
+  $scope.systolics = $scope.systolicsData.map(function(sys){
+    return sys.toString();
+  });
+  $scope.diastolicsData = Array.apply(null, {length: 300}).map(Number.call, Number);
+  $scope.diastolicsData.unshift("P")
+  $scope.diastolics = $scope.diastolicsData.map(function(dias){
+    return dias.toString();
+  })
 
   $scope.pupils = ['PERRL', 'Not PERRL'];
   $scope.BPtakens = ['Taken', 'Palpated'];
