@@ -74,19 +74,19 @@
       <div class="list">
 
       <table class="VitalsTable">
+        <tr>
+          <th>Date</th>
+          <td ng-repeat="sv in recentSoapReviewVitals">{{sv.dateTaken}}</td>
+          <td ng-hide="recentSoapReviewVitals.length" >--</td>
+          <td ng-hide="recentSoapReviewVitals.length >= 2">--</td>
+          <td ng-hide="recentSoapReviewVitals.length >= 3">--</td>
+        </tr>
           <tr>
             <th>Time</th>
           <td ng-repeat="sv in recentSoapReviewVitals">{{sv.timeTaken}}</td>
           <td ng-hide="recentSoapReviewVitals.length" >--</td>
           <td ng-hide="recentSoapReviewVitals.length >= 2">--</td>
           <td ng-hide="recentSoapReviewVitals.length >= 3">--</td>
-          </tr>
-          <tr>
-            <th>Date</th>
-            <td ng-repeat="sv in recentSoapReviewVitals">{{sv.dateTaken}}</td>
-            <td ng-hide="recentSoapReviewVitals.length" >--</td>
-            <td ng-hide="recentSoapReviewVitals.length >= 2">--</td>
-            <td ng-hide="recentSoapReviewVitals.length >= 3">--</td>
           </tr>
           <tr>
               <th>LOR</th>

@@ -506,8 +506,8 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
             emailVitalObj['temp'] = vitalListTemp.join("");
 
             var message = "<table style='width:100%;text-align:center;border:1px solid #EFEFEF;border-collapse:collapse;'>"
-                          +'<tr>'+'<th '+thStyle+'>Time</th>'+emailVitalObj.timeTaken+'</tr>'
                           +'<tr>'+'<th '+thStyle+'>Date</td>'+emailVitalObj.dateTaken+'</tr>'
+                          +'<tr>'+'<th '+thStyle+'>Time</th>'+emailVitalObj.timeTaken+'</tr>'
                           +'<tr>'+'<th '+thStyle+'>Lor</th>'+emailVitalObj.lor+'</tr>'
                           +'<tr>'+'<th '+thStyle+'>HR</th>'+emailVitalObj.hr+'</tr>'
                           +'<tr>'+'<th '+thStyle+'>RR</th>'+emailVitalObj.rr+'</tr>'

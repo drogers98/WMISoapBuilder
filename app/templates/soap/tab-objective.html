@@ -34,19 +34,19 @@
       <a class="button button-block button-light margin" href="#/tab/vitals/{{starterVital.id}}"><icon class="icon icon-right ion-plus-circled"></icon> Add Vitals</a>
 
 	  <table class="VitalsTable">
+      <tr>
+        <th>Date</th>
+        <td ng-repeat="sv in recentSoapVitals">{{sv.dateTaken}}</td>
+        <td ng-hide="recentSoapVitals.length" >--</td>
+        <td ng-hide="recentSoapVitals.length >= 2">--</td>
+        <td ng-hide="recentSoapVitals.length >= 3">--</td>
+      </tr>
             <tr>
               <th>Time</th>
             <td ng-repeat="sv in recentSoapVitals">{{sv.timeTaken}}</td>
             <td ng-hide="recentSoapVitals.length" >--</td>
             <td ng-hide="recentSoapVitals.length >= 2">--</td>
             <td ng-hide="recentSoapVitals.length >= 3">--</td>
-            </tr>
-            <tr>
-              <th>Date</th>
-              <td ng-repeat="sv in recentSoapVitals">{{sv.dateTaken}}</td>
-              <td ng-hide="recentSoapVitals.length" >--</td>
-              <td ng-hide="recentSoapVitals.length >= 2">--</td>
-              <td ng-hide="recentSoapVitals.length >= 3">--</td>
             </tr>
             <tr>
                 <th>LOR</th>
