@@ -28,7 +28,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
   $scope.mySoaps = function() {$state.go('soaps');}
   $scope.termsPage = function() {$state.go('terms');}
 
-  $scope.trainingLevels = ['WFA','WAFA','WFR','WEMT','OTHER']
+  $scope.trainingLevels = ['WFA','WAFA','WFR','WEMT','OTHER'];
 
   $scope.$location = $location;
 
@@ -625,13 +625,14 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
   })
 
   $scope.monitorSoapOverviewChange = function(soap,soapVal,attrElem){
+    console.log(soap)
+    console.log(soapVal)
+    console.log(attrElem)
     var kindElem = attrElem,kindId = soap.id,kindVal = soapVal;
     Soaps.updateSoap(kindElem,kindId,kindVal);
   }
 
-  $scope.trainingLevels = [
-            {label:'WFA',value: 'WFA'}]
-            //2: 'WAFA',3: 'WFR',4:'WEMT',5:'OTHER'}];
+  $scope.trainingLevels = ['WFA','WAFA','WFR','WEMT','OTHER'];
 
   //AUTO EXPAND BOXES
   $scope.expandText = function(obj){

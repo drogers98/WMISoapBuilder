@@ -303,7 +303,7 @@
 	   <div class="input-label">
           Degrees
         </div>
-        <select id="Degrees" ng-model="vitalDetail.tempDegrees" ng-options="tempDegree.value as tempDegree.name for tempDegree in tempDegrees" ng-change="monitorVitalChange(vitalDetail,vitalDetail.tempDegrees,'tempDegrees')">
+        <select id="Degrees" ng-custom-blur ng-model="vitalDetail.tempDegrees" ng-options="tempDegree.value as tempDegree.name for tempDegree in tempDegrees" ng-change="monitorVitalChange(vitalDetail,vitalDetail.tempDegrees,'tempDegrees')">
 	        <option style="display:none;" value="" selected>Please Choose</option>
         </select>
       </div>

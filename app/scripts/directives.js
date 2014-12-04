@@ -36,9 +36,10 @@ angular.module('WMISoapBuilder.directives', ['angular-websql', 'debounce'])
               //ngModelCtrl.$setViewValue(console.log(elm.css()));
             })
             elm.bind('focusout', function(){
-              scope.$apply(function() {
-                ngModelCtrl.$setViewValue(elm.val());
-              });
+              //scope.$apply(function() {
+              //  console.log(elm);
+              //  ngModelCtrl.$setViewValue(elm.val());
+              //});
             })
             elm.bind('blur', function() {
               elm.parent().parent().find('h6').toggleClass("turnOn");
