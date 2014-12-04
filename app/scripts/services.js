@@ -594,7 +594,7 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce', 'ngCord
   }
 })
 
-.factory('Camera', function(nolsDB, $cordovaCamera) {
+.factory('Camera', function(nolsDB, $cordovaCamera, $cordovaFile) {
   var imgKind = "Camera";
   return {
     createImgTable: function(){
@@ -619,6 +619,9 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce', 'ngCord
       };
 
       $cordovaCamera.getPicture(options).then(function(imgData){
+      //  $cordovaFile.createDir('/Library',false).then(function(result){
+      //    $cordovaFile.createFile(result + imgData)
+      //  })
         callback(null,imgData);
       });
     },

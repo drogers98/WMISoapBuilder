@@ -455,8 +455,8 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
         '<strong>DOB</strong>: ' + soap.patientDob + '<br/>' +
         '<strong>Age</strong>: ' + soap.patientAge + '<br/>' +
         '<strong>Sex</strong>: ' + genderFull() + '<br/>' +
-        '<h3">Chief Complaint</h3>'+
-        '<pre style="font-family: inherit;margin-top:0;">' + soap.patientComplaint + '</pre>' +
+        '<strong>Chief Complaint</strong>'+
+        '<pre style="font-family: inherit;margin-top:0;">' + soap.patientComplaint + '</pre><br/>' +
         '<strong>Onset</strong>: ' + soap.patientOnset + '<br/>' +
         '<strong>Onset Date</strong>: ' + soap.patientOnsetDate + '<br/>' +
         '<strong>Onset Time</strong>: ' + soap.patientOnsetTime + '<br/>' +
@@ -464,14 +464,14 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
         '<strong>Quality</strong>: ' + soap.patientQuality + '<br/>' +
         '<strong>Radiation/Region/Referred</strong>: <pre style="font-family: inherit;margin-top:0;">' + soap.patientRadiates + '</pre><br/>' +
         '<strong>Severity</strong>: ' + soap.patientSeverity + '<br/>' +
-        '<h3 style="margin-bottom:0;">MOI/HPI</h3>'+
+        '<strong>MOI/HPI</strong>'+
         '<pre style="font-family: inherit;margin-top:0;">' + soap.patientHPI + '</pre>' +
         '<strong>Spinal MOI</strong>: ' + soap.patientSpinal + '<br/>' +
         '<h2>Objective</h2>'+
-        '<h3>General</h3>'+
+        //'<h3>General</h3>'+
         '<strong>Patient Position When Found</strong>: <pre style="font-family: inherit;margin-top:0;">' + soap.patientFound + '</pre><br/>' +
         '<strong>Patient Exam</strong>: <pre style="font-family: inherit;margin-top:0;">' + soap.patientExamReveals + '</pre><br/>' +
-        '<h3>Vital Signs</h3>';
+        '<h2>Vital Signs</h2>';
 
         //var messagePartIIA = "<table style='width:100%;text-align:center;border:1px solid #EFEFEF;border-collapse:collapse;'>";
         var messagePartIIB = function(soapVitals) {
@@ -530,13 +530,13 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
         '<strong>Pertinent Medical History</strong>: <pre style="font-family: inherit;margin-top:0;">' + soap.patientMedicalHistory + '</pre><br/>' +
         '<strong>Last Intake/Output</strong>: <pre style="font-family: inherit;margin-top:0;">' + soap.patientLastIntake + '</pre><br/>' +
         '<strong>Events Leading up to Injury/Illness</strong>: <pre style="font-family: inherit;margin-top:0;">' + soap.patientEventsForCause + '</pre><br/>' +
-        '<h2 style="margin-bottom:0;">Assessment</h2>'+
+        '<h2>Assessment</h2>'+
         '<pre style="font-family: inherit;margin-top:0;">' + soap.patientAssessment + '</pre>' +
-        '<h2 style="margin-bottom:0;">Plan</h2>'+
+        '<h2>Plan</h2>'+
         '<pre style="font-family: inherit;margin-top:0;">' + soap.patientPlan + '</pre>' +
         '<strong>Anticipated Problems</strong>: <pre style="font-family: inherit;margin-top:0;">' + soap.patientAnticipatedProblems + '</pre><br/>';
 
-        var messagePartIVA = '<h3>Photos</h3>';
+        var messagePartIVA = '<h2>Photos</h2>';
         var messagePartIV = function(soapImages) {
 	        var captions = [];
 	        var imgNum = 1;
@@ -629,7 +629,9 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
     Soaps.updateSoap(kindElem,kindId,kindVal);
   }
 
-  $scope.trainingLevels = ['WFA','WAFA','WFR','WEMT','OTHER'];
+  $scope.trainingLevels = [
+            {label:'WFA',value: 'WFA'}]
+            //2: 'WAFA',3: 'WFR',4:'WEMT',5:'OTHER'}];
 
   //AUTO EXPAND BOXES
   $scope.expandText = function(obj){

@@ -62,7 +62,7 @@ autocorrect="off">
             <div class="input-label">
               Training Level
             </div>
-           <select id="Soap.responderTrainingLevel" ng-model="soapOverview.responderTrainingLevel" ng-model-onblur ng-change="monitorSoapOverviewChange(soapOverview,trainingLevels[soapOverview.responderTrainingLevel],'responderTrainingLevel')" ng-options="trainingLevel for trainingLevel in trainingLevels">
+           <select id="Soap.responderTrainingLevel" ng-model="soapOverview.responderTrainingLevel" ng-model-onblur ng-change="monitorSoapOverviewChange(soapOverview,trainingLevels[soapOverview.responderTrainingLevel],'responderTrainingLevel')" ng-options="trainingLevel.label for trainingLevel in trainingLevels track by trainingLevel.value">
              <option style="display:none;" value="" selected></option>
            </select>
          </div>
