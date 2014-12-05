@@ -457,7 +457,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
         '<strong>DOB</strong>: ' + soap.patientDob + '<br/>' +
         '<strong>Age</strong>: ' + soap.patientAge + '<br/>' +
         '<strong>Sex</strong>: ' + genderFull() + '<br/>' +
-        '<strong>Chief Complaint</strong>'+
+        '<strong>Chief Complaint</strong>: ' +
         '<pre style="font-family: inherit;margin-top:0;">' + soap.patientComplaint + '</pre><br/>' +
         '<strong>Onset</strong>: ' + soap.patientOnset + '<br/>' +
         '<strong>Onset Date</strong>: ' + soap.patientOnsetDate + '<br/>' +
@@ -466,8 +466,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
         '<strong>Quality</strong>: ' + soap.patientQuality + '<br/>' +
         '<strong>Radiation/Region/Referred</strong>: <pre style="font-family: inherit;margin-top:0;">' + soap.patientRadiates + '</pre><br/>' +
         '<strong>Severity</strong>: ' + soap.patientSeverity + '<br/>' +
-        '<strong>MOI/HPI</strong>'+
-        '<pre style="font-family: inherit;margin-top:0;">' + soap.patientHPI + '</pre>' +
+        '<strong>MOI/HPI</strong>: <pre style="font-family: inherit;margin-top:0;">' + soap.patientHPI + '</pre><br/>' +
         '<strong>Spinal MOI</strong>: ' + soap.patientSpinal + '<br/>' +
         '<h2>Objective</h2>'+
         //'<h3>General</h3>'+
