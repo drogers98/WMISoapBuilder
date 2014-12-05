@@ -609,7 +609,7 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce', 'ngCord
 
       var options = {
         quality : 49, //setting below 50 to avoid memory errors
-        //destinationType : Camera.DestinationType.DATA_URL,
+        destinationType : Camera.DestinationType.FILE_URI,
         sourceType : getType,
         allowEdit : false,
         encodingType: Camera.EncodingType.JPEG,
@@ -619,10 +619,37 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce', 'ngCord
       };
 
       $cordovaCamera.getPicture(options).then(function(imgData){
-      //  $cordovaFile.createDir('/Library',false).then(function(result){
-      //    $cordovaFile.createFile(result + imgData)
-      //  })
-        callback(null,imgData);
+        window.resolveLocalFileSystemURI(imgData, wmiImgSuccess, fail);
+
+        function wmiImgSuccess(fileEntry) {
+          var image = imgData.substr(imgData.lastIndexOf('/') + 1)
+          window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSys) {
+            fileSys.root.getDirectory("photos", {create: true, exclusive: false}, function(dir) {
+              fileEntry.copyTo(dir, image, returnCopy, fail);
+            }, fail);
+          }, fail);
+        }
+
+        function returnCopy(entry) {
+          callback(null, entry.nativeURL)
+        }
+
+        function fail(error) {
+          console.log(error.code);
+        }
+
+        /*
+        WHAT I WOULD LIKE TO HAVE HAPPEN
+        $cordovaFile.createDir("photos",false).then(function(result){
+          var image = imgData.substr(imgData.lastIndexOf('/') + 1),
+              imgDataNewPath = result.fullPath + image;
+          $cordovaFile.createFile(image,false).then(function(res){
+            console.log(res)
+            callback(null,res.nativeURL);
+
+          })
+        })*/
+
       });
     },
     saveNewImg: function(imgAttr,soapAttr,callback){

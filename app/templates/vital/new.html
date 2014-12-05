@@ -31,7 +31,7 @@
         <div class="input-label">
           LOR
         </div>
-        <select id="Vital.lor" ng-model="vitalDetail.lor" ng-model-onblur ng-options="lor.value as lor.name for lor in LORs" ng-change="monitorVitalChange(vitalDetail,LORs[vitalDetail.lor].value,'lor')">
+        <select id="Vital.lor" ng-model="vitalDetail.lor" cust-blur ng-options="lor.value as lor.name for lor in LORs" ng-change="monitorVitalChange(vitalDetail,vitalDetail.lor,'lor')">
 
 	         <option style="display:none;" value="" selected>Please Choose</option>
         </select>
@@ -63,7 +63,7 @@
           Rhythm
           <!-- leave select empty - data will be brough in through ctrl -->
         </div>
-        <select id="Vital.heartRythm" ng-model="vitalDetail.heartRythm" ng-model-onblur ng-options="HEARTrythm for HEARTrythm in HEARTrythms" ng-change="monitorVitalChange(vitalDetail,HEARTrythms[vitalDetail.heartRythm],'heartRythm')">
+        <select id="Vital.heartRythm" ng-model="vitalDetail.heartRythm" cust-blur ng-options="HEARTrythm for HEARTrythm in HEARTrythms" ng-change="monitorVitalChange(vitalDetail,vitalDetail.heartRythm,'heartRythm')">
 	        <option style="display:none;" value="" selected>Please Choose</option>
         </select>
       </div>
@@ -76,7 +76,7 @@
           Quality
           <!-- leave select empty - data will be brough in through ctrl -->
         </div>
-        <select id="Vital.heartQuality" ng-model="vitalDetail.heartQuality" ng-model-onblur ng-change="monitorVitalChange(vitalDetail,HEARTqualities[vitalDetail.heartQuality],'heartQuality')" ng-options="HEARTquality for HEARTquality in HEARTqualities">
+        <select id="Vital.heartQuality" ng-model="vitalDetail.heartQuality" cust-blur ng-change="monitorVitalChange(vitalDetail,vitalDetail.heartQuality,'heartQuality')" ng-options="HEARTquality for HEARTquality in HEARTqualities">
 	        <option style="display:none;" value="" selected>Please Choose</option>
         </select>
       </div>
@@ -107,7 +107,7 @@
           Rhythm
           <!-- leave select empty - data will be brough in through ctrl -->
         </div>
-        <select id="respRhythm" ng-model="vitalDetail.respRhythm" ng-model-onblur ng-options="RESPrythm for RESPrythm in RESPrythms" ng-change="monitorVitalChange(vitalDetail,RESPrythms[vitalDetail.respRhythm],'respRhythm')">
+        <select id="respRhythm" ng-model="vitalDetail.respRhythm" cust-blur ng-options="RESPrythm for RESPrythm in RESPrythms" ng-change="monitorVitalChange(vitalDetail,vitalDetail.respRhythm,'respRhythm')">
 	        <option style="display:none;" value="" selected>Please Choose</option>
         </select>
       </div>
@@ -120,7 +120,7 @@
           Quality
           <!-- leave select empty - data will be brough in through ctrl -->
         </div>
-        <select id="RQuality" ng-model="vitalDetail.respQuality" ng-model-onblur ng-options="RESPquality for RESPquality in RESPqualities" ng-change="monitorVitalChange(vitalDetail,RESPqualities[vitalDetail.respQuality],'respQuality')">
+        <select id="RQuality" ng-model="vitalDetail.respQuality" cust-blur ng-options="RESPquality for RESPquality in RESPqualities" ng-change="monitorVitalChange(vitalDetail,vitalDetail.respQuality,'respQuality')">
 	        <option style="display:none;" value="" selected>Please Choose</option>
         </select>
       </div>
@@ -138,7 +138,7 @@
           Color
           <!-- leave select empty - data will be brough in through ctrl -->
         </div>
-        <select id="sctmcolor" ng-model="vitalDetail.sctmcolor" ng-model-onblur ng-options="SKINcolor for SKINcolor in SKINcolors" ng-change="monitorVitalChange(vitalDetail,SKINcolors[vitalDetail.sctmcolor],'sctmcolor')">
+        <select id="sctmcolor" ng-model="vitalDetail.sctmcolor" cust-blur ng-options="SKINcolor for SKINcolor in SKINcolors" ng-change="monitorVitalChange(vitalDetail,vitalDetail.sctmcolor,'sctmcolor')">
 	        <option style="display:none;" value="" selected>Please Choose</option>
         </select>
       </div>
@@ -149,7 +149,7 @@
         <div class="input-label">
           Temperature
         </div>
-        <select id="STemp" ng-model-onblur ng-model="vitalDetail.sctmtemp" ng-options="SKINtemp for SKINtemp in SKINtemps" ng-change="monitorVitalChange(vitalDetail,SKINtemps[vitalDetail.sctmtemp],'sctmtemp')">
+        <select id="STemp" cust-blur ng-model="vitalDetail.sctmtemp" ng-options="SKINtemp for SKINtemp in SKINtemps" ng-change="monitorVitalChange(vitalDetail,vitalDetail.sctmtemp,'sctmtemp')">
 	        <option style="display:none;" value="" selected>Please Choose</option>
         </select>
       </div>
@@ -160,7 +160,7 @@
         <div class="input-label">
           Moisture
         </div>
-        <select id="SMoist" ng-model-onblur ng-model="vitalDetail.sctmmoisture" ng-options="SKINmoist for SKINmoist in SKINmoists" ng-change="monitorVitalChange(vitalDetail,SKINmoists[vitalDetail.sctmmoisture],'sctmmoisture')">
+        <select id="SMoist" cust-blur ng-model="vitalDetail.sctmmoisture" ng-options="SKINmoist for SKINmoist in SKINmoists" ng-change="monitorVitalChange(vitalDetail,vitalDetail.sctmmoisture,'sctmmoisture')">
 	        <option style="display:none;" value="" selected>Please Choose</option>
         </select>
       </div>
@@ -190,7 +190,7 @@
              Systolic
              <!-- leave select empty - data will be brough in through ctrl -->
            </div>
-           <select id="brsystolic" ng-model-onblur ng-model="vitalDetail.brsystolic" ng-options="systolic for systolic in systolics" ng-change="monitorVitalChange(vitalDetail,systolics[vitalDetail.brsystolic],'brsystolic')">
+           <select id="brsystolic" cust-blur ng-model="vitalDetail.brsystolic" ng-options="systolic for systolic in systolics" ng-change="monitorVitalChange(vitalDetail,vitalDetail.brsystolic,'brsystolic')">
              <option style="display:none;" value="" selected>Please Choose</option>
            </select>
          </div>
@@ -203,7 +203,7 @@
                 Diastolic
                 <!-- leave select empty - data will be brough in through ctrl -->
               </div>
-              <select id="brdiastolic" ng-model-onblur ng-model="vitalDetail.diastolic" ng-disabled="vitalDetail.brsystolic == '0'" ng-options="diastolic for diastolic in diastolics" ng-change="monitorVitalChange(vitalDetail,diastolics[vitalDetail.diastolic],'diastolic')">
+              <select id="brdiastolic" cust-blur ng-model="vitalDetail.diastolic" ng-disabled="vitalDetail.brsystolic == '0'" ng-options="diastolic for diastolic in diastolics" ng-change="monitorVitalChange(vitalDetail,vitalDetail.diastolic,'diastolic')">
                 <option style="display:none;" value="" selected>Please Choose</option>
               </select>
             </div>
@@ -276,7 +276,7 @@
         <div class="input-label">
           Pupils
         </div>
-        <select id="Pupils" ng-model-onblur ng-model="vitalDetail.pupils" ng-options="pupil for pupil in pupils" ng-change="monitorVitalChange(vitalDetail,pupils[vitalDetail.pupils],'pupils')">
+        <select id="Pupils" cust-blur ng-model="vitalDetail.pupils" ng-options="pupil for pupil in pupils" ng-change="monitorVitalChange(vitalDetail,vitalDetail.pupils,'pupils')">
 	        <option style="display:none;" value="" selected>Please Choose</option>
         </select>
       </div>
@@ -288,7 +288,7 @@
     <div class="row">
   <div class="col col-50">
 	  <label class="item item-input">
-	  <input type="number" id="Vital.tempDegreesReading" ng-model-onblur ng-maxlength=5 name="tempDegreesReading" placeholder="Degrees" ng-model="vitalDetail.tempDegreesReading" ng-change="monitorVitalChange(vitalDetail,vitalDetail.tempDegreesReading,'tempDegreesReading')">
+	  <input type="number" id="Vital.tempDegreesReading" cust-blur ng-maxlength=5 name="tempDegreesReading" placeholder="Degrees" ng-model="vitalDetail.tempDegreesReading" ng-change="monitorVitalChange(vitalDetail,vitalDetail.tempDegreesReading,'tempDegreesReading')">
     </label>
     <div class="error">
       <small class="error"
@@ -303,7 +303,7 @@
 	   <div class="input-label">
           Degrees
         </div>
-        <select id="Degrees" ng-custom-blur ng-model="vitalDetail.tempDegrees" ng-options="tempDegree.value as tempDegree.name for tempDegree in tempDegrees" ng-change="monitorVitalChange(vitalDetail,vitalDetail.tempDegrees,'tempDegrees')">
+        <select id="Degrees" cust-blur ng-model="vitalDetail.tempDegrees" ng-options="tempDegree.value as tempDegree.name for tempDegree in tempDegrees" ng-change="monitorVitalChange(vitalDetail,vitalDetail.tempDegrees,'tempDegrees')">
 	        <option style="display:none;" value="" selected>Please Choose</option>
         </select>
       </div>

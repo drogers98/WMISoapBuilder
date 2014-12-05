@@ -437,8 +437,10 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
           soap.patientGender = 'Male';
         }else if(soap.patientGender == 'F' || soap.patientGender == 'Female'){
           soap.patientGender = 'Female';
-        }else {
+        }else if(soap.patientGender == 'T') {
           soap.patientGender = 'Transgender';
+        }else {
+          soap.patientGender = '';
         }
         return soap.patientGender;
       }
@@ -625,9 +627,6 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
   })
 
   $scope.monitorSoapOverviewChange = function(soap,soapVal,attrElem){
-    console.log(soap)
-    console.log(soapVal)
-    console.log(attrElem)
     var kindElem = attrElem,kindId = soap.id,kindVal = soapVal;
     Soaps.updateSoap(kindElem,kindId,kindVal);
   }
@@ -818,6 +817,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
   if(typeof analytics !== "undefined") {analytics.trackView("SOAP IMAGES");}
   $scope.takeNewImg = function(imgDetail,type) {
     Camera.getNewImg(type,function(err,imgAttr){
+      console.log(imgAttr);
       Camera.updateImg("imageURI", imgDetail.id,imgAttr)
       updateImgFlag(imgDetail.id)
     })

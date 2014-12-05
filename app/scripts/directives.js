@@ -36,10 +36,10 @@ angular.module('WMISoapBuilder.directives', ['angular-websql', 'debounce'])
               //ngModelCtrl.$setViewValue(console.log(elm.css()));
             })
             elm.bind('focusout', function(){
-              //scope.$apply(function() {
-              //  console.log(elm);
-              //  ngModelCtrl.$setViewValue(elm.val());
-              //});
+              scope.$apply(function() {
+                console.log(elm);
+                ngModelCtrl.$setViewValue(elm.val());
+              });
             })
             elm.bind('blur', function() {
               elm.parent().parent().find('h6').toggleClass("turnOn");
@@ -50,6 +50,28 @@ angular.module('WMISoapBuilder.directives', ['angular-websql', 'debounce'])
             });
         }
     };
+})
+
+.directive('custBlur', function() {
+  return {
+    restrict: 'A',
+    priority: 1,
+    link: function(scope, elm, attr) {
+      if (attr.type === 'radio' || attr.type === 'checkbox') return;
+
+      //elm.unbind('input').unbind('keydown').unbind('change');
+      elm.bind('focus', function() {
+        elm.parent().parent().find('h6').toggleClass("turnOn");
+        elm.parent().parent().find('h5').toggleClass("turnOn");
+        //ngModelCtrl.$setViewValue(console.log(elm.css()));
+      })
+
+      elm.bind('blur', function() {
+        elm.parent().parent().find('h6').toggleClass("turnOn");
+        elm.parent().parent().find('h5').toggleClass("turnOn");
+      });
+    }
+  };
 })
 
 .directive('customBlur', function() {
