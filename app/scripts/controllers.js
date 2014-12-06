@@ -193,13 +193,20 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
     $ionicModal.fromTemplateUrl()
 
   // Modal 1
-     $ionicModal.fromTemplateUrl('modal-1.html', {
+  $ionicModal.fromTemplateUrl('modal-'+passedId+'.html',{
+    id: passedId,
+    scope: $scope,
+    animation: 'slide-in-up'
+  }).then(function(modal){
+    $scope.oModal = modal;
+  })
+  /*   $ionicModal.fromTemplateUrl('modal-1.html', {
        id: '1', // We need to use and ID to identify the modal that is firing the event!
        scope: $scope,
        animation: 'slide-in-up'
      }).then(function(modal) {
        $scope.oModal1 = modal;
-     });
+     });*/
 
      // Modal 2
      $ionicModal.fromTemplateUrl('modal-2.html', {
@@ -342,7 +349,8 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
      })
 
      $scope.openModal = function(index) {
-       if(index == 1) $scope.oModal1.show();
+       $scope.oModal.show();
+       //if(index == 1) $scope.oModal1.show();
        if(index == 2) $scope.oModal2.show();
        if(index == 3) $scope.oModal3.show();
        if(index == 4) $scope.oModal4.show();
@@ -365,7 +373,8 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
      };
 
      $scope.closeModal = function(index) {
-       if(index == 1) $scope.oModal1.hide();
+       $scope.oModal.hide();
+       //if(index == 1) $scope.oModal1.hide();
        if(index == 2) $scope.oModal2.hide();
        if(index == 3) $scope.oModal3.hide();
        if(index == 4) $scope.oModal4.hide();
@@ -386,6 +395,8 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
 
      };
 
+
+     //this will get annoying in the logs...?
      $scope.$on('modal.shown', function(event, modal) {
        console.log('Modal ' + modal.id + ' is shown!');
      });
@@ -399,7 +410,8 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
      // and removing the scope from its parent.
      $scope.$on('$destroy', function() {
        console.log('Destroying modals...');
-       $scope.oModal1.remove();
+       $scope.oModal.remove();
+       //$scope.oModal1.remove();
        $scope.oModal2.remove();
        $scope.oModal3.remove();
        $scope.oModal4.remove();
