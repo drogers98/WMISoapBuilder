@@ -16,7 +16,7 @@ angular.module('WMISoapBuilder', ['ionic', 'WMISoapBuilder.controllers', 'WMISoa
   $ionicPlatform.ready(function() {
 
     if(typeof analytics !== "undefined"){
-      analytics.startTrackerWithId('UA-57147829-1');
+      analytics.startTrackerWithId('UA-57279344-1');
     }else {
       console.log("GA unavailable")
     }
