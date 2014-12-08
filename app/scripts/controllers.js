@@ -460,30 +460,31 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
       var runMessage = function(soapVitals) {
 
         var messagePartI = '<h2>Location</h2>'+
-        '<strong>Date of Incident</strong>: ' + soap.incidentDate + '<br/>' +
-        '<strong>Location</strong>: ' + soap.incidentLocation + '<br/>' +
-        '<strong>Coordinates</strong>: ' + soap.incidentLat + ', ' + soap.incidentLon + '<br/>' +
-        '<strong>Responder</strong>: ' + soap.responderFirstName + ' ' + soap.responderLastName + ', ' + soap.responderTrainingLevel + '<br/>' +
+        '<span style="display:block;margin-bottom:10px;"><strong>Date of Incident</strong>: ' + soap.incidentDate + '<br/></span>' +
+        '<span style="display:block;margin-bottom:10px;"><strong>Location</strong>: ' + 
+        '<pre style="font-family: inherit;margin-top:0;margin-bottom:0;">' + soap.incidentLocation + '</pre></span>' +
+        '<span style="display:block;margin-bottom:10px;"><strong>Coordinates</strong>: ' + soap.incidentLat + ', ' + soap.incidentLon + '<br/></span>' +
+        '<span style="display:block;margin-bottom:10px;"><strong>Responder</strong>: ' + soap.responderFirstName + ' ' + soap.responderLastName + ', ' + soap.responderTrainingLevel + '<br/></span>' +
         '<h2>Subjective</h2>'+
-        '<strong>Initials</strong>: ' + soap.patientInitials + '<br/>' +
-        '<strong>DOB</strong>: ' + soap.patientDob + '<br/>' +
-        '<strong>Age</strong>: ' + soap.patientAge + '<br/>' +
-        '<strong>Sex</strong>: ' + genderFull() + '<br/>' +
-        '<strong>Chief Complaint</strong>: ' +
-        '<pre style="font-family: inherit;margin-top:0;">' + soap.patientComplaint + '</pre><br/>' +
-        '<strong>Onset</strong>: ' + soap.patientOnset + '<br/>' +
-        '<strong>Onset Date</strong>: ' + soap.patientOnsetDate + '<br/>' +
-        '<strong>Onset Time</strong>: ' + soap.patientOnsetTime + '<br/>' +
-        '<strong>Provokes/Palliates</strong>: <pre style="font-family: inherit;margin-top:0;">' + soap.patientPPalliates + '</pre><br/>' +
-        '<strong>Quality</strong>: ' + soap.patientQuality + '<br/>' +
-        '<strong>Radiation/Region/Referred</strong>: <pre style="font-family: inherit;margin-top:0;">' + soap.patientRadiates + '</pre><br/>' +
-        '<strong>Severity</strong>: ' + soap.patientSeverity + '<br/>' +
-        '<strong>MOI/HPI</strong>: <pre style="font-family: inherit;margin-top:0;">' + soap.patientHPI + '</pre><br/>' +
-        '<strong>Spinal MOI</strong>: ' + soap.patientSpinal + '<br/>' +
+        '<span style="display:block;margin-bottom:10px;"><strong>Initials</strong>: ' + soap.patientInitials + '<br/></span>' +
+        '<span style="display:block;margin-bottom:10px;"><strong>DOB</strong>: ' + soap.patientDob + '<br/></span>' +
+        '<span style="display:block;margin-bottom:10px;"><strong>Age</strong>: ' + soap.patientAge + '<br/></span>' +
+        '<span style="display:block;margin-bottom:10px;"><strong>Sex</strong>: ' + genderFull() + '<br/></span>' +
+        '<span style="display:block;margin-bottom:10px;"><strong>Chief Complaint</strong>: ' +
+        '<pre style="font-family: inherit;margin-top:0;margin-bottom:0;">' + soap.patientComplaint + '</pre></span>' +
+        '<span style="display:block;margin-bottom:10px;"><strong>Onset</strong>: ' + soap.patientOnset + '<br/></span>' +
+        '<span style="display:block;margin-bottom:10px;"><strong>Onset Date</strong>: ' + soap.patientOnsetDate + '<br/></span>' +
+        '<span style="display:block;margin-bottom:10px;"><strong>Onset Time</strong>: ' + soap.patientOnsetTime + '<br/></span>' +
+        '<span style="display:block;margin-bottom:10px;"><strong>Provokes/Palliates</strong>: <pre style="font-family: inherit;margin-top:0;margin-bottom:0;">' + soap.patientPPalliates + '</pre></span>' +
+        '<span style="display:block;margin-bottom:10px;"><strong>Quality</strong>: ' + soap.patientQuality + '<br/></span>' +
+        '<span style="display:block;margin-bottom:10px;"><strong>Radiation/Region/Referred</strong>: <pre style="font-family: inherit;margin-top:0;margin-bottom:0;">' + soap.patientRadiates + '</pre></span>' +
+        '<span style="display:block;margin-bottom:10px;"><strong>Severity</strong>: ' + soap.patientSeverity + '<br/></span>' +
+        '<span style="display:block;margin-bottom:10px;"><strong>MOI/HPI</strong>: <pre style="font-family: inherit;margin-top:0;margin-bottom:0;">' + soap.patientHPI + '</pre></span>' +
+        '<span style="display:block;margin-bottom:10px;"><strong>Spinal MOI</strong>: ' + soap.patientSpinal + '<br/></span>' +
         '<h2>Objective</h2>'+
         //'<h3>General</h3>'+
-        '<strong>Patient Position When Found</strong>: <pre style="font-family: inherit;margin-top:0;">' + soap.patientFound + '</pre><br/>' +
-        '<strong>Patient Exam</strong>: <pre style="font-family: inherit;margin-top:0;">' + soap.patientExamReveals + '</pre><br/>' +
+        '<span style="display:block;margin-bottom:10px;"><strong>Patient Position When Found</strong>: <pre style="font-family: inherit;margin-top:0;margin-bottom:0;">' + soap.patientFound + '</pre></span>' +
+        '<span style="display:block;margin-bottom:10px;"><strong>Patient Exam</strong>: <pre style="font-family: inherit;margin-top:0;margin-bottom:0;">' + soap.patientExamReveals + '</pre></span>' +
         '<h2>Vital Signs</h2>';
 
         //var messagePartIIA = "<table style='width:100%;text-align:center;border:1px solid #EFEFEF;border-collapse:collapse;'>";
@@ -537,17 +538,17 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
         //'<tr>' + "<th style='width:25%;border:1px solid #EFEFEF;border-collapse:collapse;padding:5px;text-align:right;padding-right:10px;background-color:#EFEFEF;text-transform:uppercase'>"
 
         var messagePartIII = '<h3>Patient History</h3>'+
-        '<strong>Symptoms</strong>: <pre style="font-family: inherit;margin-top:0;">' + soap.patientSymptoms + '</pre><br/>' +
-        '<strong>Allergies</strong>: <pre style="font-family: inherit;margin-top:0;">' + soap.patientAllergies + '</pre><br/>' +
-        '<strong>Medications</strong>: <pre style="font-family: inherit;margin-top:0;">' + soap.patientMedications + '</pre><br/>' +
-        '<strong>Pertinent Medical History</strong>: <pre style="font-family: inherit;margin-top:0;">' + soap.patientMedicalHistory + '</pre><br/>' +
-        '<strong>Last Intake/Output</strong>: <pre style="font-family: inherit;margin-top:0;">' + soap.patientLastIntake + '</pre><br/>' +
-        '<strong>Events Leading up to Injury/Illness</strong>: <pre style="font-family: inherit;margin-top:0;">' + soap.patientEventsForCause + '</pre><br/>' +
+        '<span style="display:block;margin-bottom:10px;"><strong>Symptoms</strong>: <pre style="font-family: inherit;margin-top:0;margin-bottom:0;">' + soap.patientSymptoms + '</pre></span>' +
+        '<span style="display:block;margin-bottom:10px;"><strong>Allergies</strong>: <pre style="font-family: inherit;margin-top:0;margin-bottom:0;">' + soap.patientAllergies + '</pre></span>' +
+        '<span style="display:block;margin-bottom:10px;"><strong>Medications</strong>: <pre style="font-family: inherit;margin-top:0;margin-bottom:0;">' + soap.patientMedications + '</pre></span>' +
+        '<span style="display:block;margin-bottom:10px;"><strong>Pertinent Medical History</strong>: <pre style="font-family: inherit;margin-top:0;margin-bottom:0;">' + soap.patientMedicalHistory + '</pre></span>' +
+        '<span style="display:block;margin-bottom:10px;"><strong>Last Intake/Output</strong>: <pre style="font-family: inherit;margin-top:0;margin-bottom:0;">' + soap.patientLastIntake + '</pre></span>' +
+        '<span style="display:block;margin-bottom:10px;"><strong>Events Leading up to Injury/Illness</strong>: <pre style="font-family: inherit;margin-top:0;margin-bottom:0;">' + soap.patientEventsForCause + '</pre></span>' +
         '<h2>Assessment</h2>'+
-        '<pre style="font-family: inherit;margin-top:0;">' + soap.patientAssessment + '</pre>' +
+        '<span style="display:block;margin-bottom:10px;"><pre style="font-family: inherit;margin-top:0;margin-bottom:0;">' + soap.patientAssessment + '</pre></span>' +
         '<h2>Plan</h2>'+
-        '<pre style="font-family: inherit;margin-top:0;">' + soap.patientPlan + '</pre>' +
-        '<strong>Anticipated Problems</strong>: <pre style="font-family: inherit;margin-top:0;">' + soap.patientAnticipatedProblems + '</pre><br/>';
+        '<span style="display:block;margin-bottom:10px;"><pre style="font-family: inherit;margin-top:0;margin-bottom:0;">' + soap.patientPlan + '</pre></span>' +
+        '<span style="display:block;margin-bottom:10px;"><strong>Anticipated Problems</strong>: <pre style="font-family: inherit;margin-top:0;margin-bottom:0;">' + soap.patientAnticipatedProblems + '</pre></span>';
 
         var messagePartIVA = '<h2>Photos</h2>';
         var messagePartIV = function(soapImages) {
