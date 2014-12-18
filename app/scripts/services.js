@@ -604,6 +604,7 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce', 'ngCord
       //do something
     },
     getNewImg: function(type,callback){
+
       var getType = type === 'lib' ? Camera.PictureSourceType.PHOTOLIBRARY : Camera.PictureSourceType.CAMERA
       var save = type === 'lib' ? false : true
 
@@ -615,6 +616,7 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce', 'ngCord
         encodingType: Camera.EncodingType.JPEG,
         targetWidth: 350,
         targetHeight: 350,
+	correctOrientation: true,
         saveToPhotoAlbum: save
       };
 
