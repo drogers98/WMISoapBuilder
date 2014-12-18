@@ -1,10 +1,6 @@
 'use strict';
 angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCordova'])
-
-.controller('MenuCtrl', function($scope,$state,$stateParams,$location,$ionicSideMenuDelegate, Soaps) {
-  Soaps.all('mySoaps', function(err,soaps){
-    $scope.soaps = soaps;
-  })
+.controller('MenuCtrl', function($scope,$state,$stateParams,$location,$ionicSideMenuDelegate) {
 
   $scope.$location = $location;
   var path = $scope.$location.path();
@@ -21,59 +17,58 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
   };
 })
 
-.controller('FirstResponderCtrl', function($scope, $state, $location,
-                                           $stateParams,$timeout,
-                                           Responders, Soaps, Nols,uiState) {
-  //Nols.cutLifeLine();
-  $scope.mySoaps = function() {$state.go('soaps');}
-  $scope.termsPage = function() {$state.go('terms');}
+.controller('FirstResponderCtrl', function($scope, $state, $location,$stateParams,$timeout,
+  Responders, Soaps, Nols,uiState) {
+    //Nols.cutLifeLine();
+    $scope.mySoaps = function() {$state.go('soaps');}
+    $scope.termsPage = function() {$state.go('terms');}
 
-  $scope.trainingLevels = ['WFA','WAFA','WFR','WEMT','OTHER'];
+    $scope.trainingLevels = ['WFA','WAFA','WFR','WEMT','OTHER'];
 
-  $scope.$location = $location;
-
-  //INTRO LOGIC
-  Responders.createResponderTable();
+    $scope.$location = $location;
+  
+    //INTRO LOGIC
+    Responders.createResponderTable();
     Responders.all(function(err,responders){
-    if(!responders) {
-      Responders.saveResponder({},function(err,responder){
-        if(typeof analytics !== "undefined") {
-          analytics.trackView('Responder Sign Up');
+      if(!responders) {
+        Responders.saveResponder({},function(err,responder){
+          if(typeof analytics !== "undefined") {
+            analytics.trackView('Responder Sign Up');
           }
-        $scope.responder = responder;
-        return $scope.responder;
-      })
-    }else{
-      Responders.get(function(err,responder) {
-        if(responder !== null){
           $scope.responder = responder;
-          if($scope.$location.path() == '/' && responder.acceptedTerms === 'true') {
-            $scope.mySoaps();
+          return $scope.responder;
+        })
+      }else{
+        Responders.get(function(err,responder) {
+          if(responder !== null){
+            $scope.responder = responder;
+            if($scope.$location.path() == '/' && responder.acceptedTerms === 'true') {
+              $scope.mySoaps();
+            }
+          }else {
+            return;
           }
-        }else {
-          return;
-        }
-      })
-    }
+        })
+      }
     })
 
-  $scope.acceptAndSave = function(responder) {
+    $scope.acceptAndSave = function(responder) {
 
-    if(typeof analytics !== "undefined") {
-      analytics.trackEvent('Responder','Created');
+      if(typeof analytics !== "undefined") {
+        analytics.trackEvent('Responder','Created');
+      }
+
+      Responders.updateResponder('acceptedTerms',responder.id,true);
+      $scope.mySoaps();
+    };
+
+    $scope.monitorResponderChange = function(responder, responderVal, attrElem) {
+      console.log(responderVal)
+      var kindElem = attrElem,kindId = responder.id,kindVal = responderVal;
+      Responders.updateResponder(kindElem,kindId,kindVal);
     }
 
-    Responders.updateResponder('acceptedTerms',responder.id,true);
-    $scope.mySoaps();
-  };
-
-  $scope.monitorResponderChange = function(responder, responderVal, attrElem) {
-    console.log(responderVal)
-    var kindElem = attrElem,kindId = responder.id,kindVal = responderVal;
-    Responders.updateResponder(kindElem,kindId,kindVal);
-  }
-
-})
+  })
 
 .controller('SoapCtrl', function($scope, $state, $stateParams,
                                  $ionicModal, $timeout, $location,
@@ -435,6 +430,10 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
     }
 
     });
+
+    $scope.continueToSubjective = function(id){
+      $state.go('tab.subjective',{soapId: id})
+    }
   })
 
   $scope.monitorSoapOverviewChange = function(soap,soapVal,attrElem){

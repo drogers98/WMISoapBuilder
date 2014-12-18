@@ -380,6 +380,7 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce', 'ngCord
   var responderNewParams = [];
   var responderKind = 'Responder';
 
+
   return {
     createResponderTable: function(){
       nolsDB.createResponderTable();
@@ -594,8 +595,10 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce', 'ngCord
   }
 })
 
-.factory('Camera', function(nolsDB, $cordovaCamera, $cordovaFile) {
+.factory('Camera', function(nolsDB, $cordovaCamera, $cordovaFile, $cordovaDevice) {
   var imgKind = "Camera";
+  var platform = $cordovaDevice.getPlatform();
+
   return {
     createImgTable: function(){
       return nolsDB.createImgTable();
@@ -604,6 +607,7 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce', 'ngCord
       //do something
     },
     getNewImg: function(type,callback){
+      var tSize = platform === 'iOS' ? 350 : 150
       var getType = type === 'lib' ? Camera.PictureSourceType.PHOTOLIBRARY : Camera.PictureSourceType.CAMERA
       var save = type === 'lib' ? false : true
 
@@ -613,8 +617,9 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce', 'ngCord
         sourceType : getType,
         allowEdit : false,
         encodingType: Camera.EncodingType.JPEG,
-        targetWidth: 350,
-        targetHeight: 350,
+        targetWidth: tSize,
+        targetHeight: tSize,
+        correctOrientation: true,
         saveToPhotoAlbum: save
       };
 
