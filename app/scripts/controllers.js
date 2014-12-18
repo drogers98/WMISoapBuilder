@@ -1,10 +1,6 @@
 'use strict';
 angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCordova'])
-
-.controller('MenuCtrl', function($scope,$state,$stateParams,$location,$ionicSideMenuDelegate, Soaps) {
-  Soaps.all('mySoaps', function(err,soaps){
-    $scope.soaps = soaps;
-  })
+.controller('MenuCtrl', function($scope,$state,$stateParams,$location,$ionicSideMenuDelegate) {
 
   $scope.$location = $location;
   var path = $scope.$location.path();
@@ -21,59 +17,58 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
   };
 })
 
-.controller('FirstResponderCtrl', function($scope, $state, $location,
-                                           $stateParams,$timeout,
-                                           Responders, Soaps, Nols,uiState) {
-  //Nols.cutLifeLine();
-  $scope.mySoaps = function() {$state.go('soaps');}
-  $scope.termsPage = function() {$state.go('terms');}
+.controller('FirstResponderCtrl', function($scope, $state, $location,$stateParams,$timeout,
+  Responders, Soaps, Nols,uiState) {
+    //Nols.cutLifeLine();
+    $scope.mySoaps = function() {$state.go('soaps');}
+    $scope.termsPage = function() {$state.go('terms');}
 
-  $scope.trainingLevels = ['WFA','WAFA','WFR','WEMT','OTHER'];
+    $scope.trainingLevels = ['WFA','WAFA','WFR','WEMT','OTHER'];
 
-  $scope.$location = $location;
-
-  //INTRO LOGIC
-  Responders.createResponderTable();
+    $scope.$location = $location;
+  
+    //INTRO LOGIC
+    Responders.createResponderTable();
     Responders.all(function(err,responders){
-    if(!responders) {
-      Responders.saveResponder({},function(err,responder){
-        if(typeof analytics !== "undefined") {
-          analytics.trackView('Responder Sign Up');
+      if(!responders) {
+        Responders.saveResponder({},function(err,responder){
+          if(typeof analytics !== "undefined") {
+            analytics.trackView('Responder Sign Up');
           }
-        $scope.responder = responder;
-        return $scope.responder;
-      })
-    }else{
-      Responders.get(function(err,responder) {
-        if(responder !== null){
           $scope.responder = responder;
-          if($scope.$location.path() == '/' && responder.acceptedTerms === 'true') {
-            $scope.mySoaps();
+          return $scope.responder;
+        })
+      }else{
+        Responders.get(function(err,responder) {
+          if(responder !== null){
+            $scope.responder = responder;
+            if($scope.$location.path() == '/' && responder.acceptedTerms === 'true') {
+              $scope.mySoaps();
+            }
+          }else {
+            return;
           }
-        }else {
-          return;
-        }
-      })
-    }
+        })
+      }
     })
 
-  $scope.acceptAndSave = function(responder) {
+    $scope.acceptAndSave = function(responder) {
 
-    if(typeof analytics !== "undefined") {
-      analytics.trackEvent('Responder','Created');
+      if(typeof analytics !== "undefined") {
+        analytics.trackEvent('Responder','Created');
+      }
+
+      Responders.updateResponder('acceptedTerms',responder.id,true);
+      $scope.mySoaps();
+    };
+
+    $scope.monitorResponderChange = function(responder, responderVal, attrElem) {
+      console.log(responderVal)
+      var kindElem = attrElem,kindId = responder.id,kindVal = responderVal;
+      Responders.updateResponder(kindElem,kindId,kindVal);
     }
 
-    Responders.updateResponder('acceptedTerms',responder.id,true);
-    $scope.mySoaps();
-  };
-
-  $scope.monitorResponderChange = function(responder, responderVal, attrElem) {
-    console.log(responderVal)
-    var kindElem = attrElem,kindId = responder.id,kindVal = responderVal;
-    Responders.updateResponder(kindElem,kindId,kindVal);
-  }
-
-})
+  })
 
 .controller('SoapCtrl', function($scope, $state, $stateParams,
                                  $ionicModal, $timeout, $location,
@@ -192,200 +187,29 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
 
     $ionicModal.fromTemplateUrl()
 
-  // Modal 1
-     $ionicModal.fromTemplateUrl('modal-1.html', {
-       id: '1', // We need to use and ID to identify the modal that is firing the event!
-       scope: $scope,
-       animation: 'slide-in-up'
-     }).then(function(modal) {
-       $scope.oModal1 = modal;
-     });
-
-     // Modal 2
-     $ionicModal.fromTemplateUrl('modal-2.html', {
-       id: '2', // We need to use and ID to identify the modal that is firing the event!
-       scope: $scope,
-       animation: 'slide-in-up'
-     }).then(function(modal) {
-       $scope.oModal2 = modal;
-     });
-
-         // Modal 3
-     $ionicModal.fromTemplateUrl('modal-3.html', {
-       id: '3', // We need to use and ID to identify the modal that is firing the event!
-       scope: $scope,
-       animation: 'slide-in-up'
-     }).then(function(modal) {
-       $scope.oModal3 = modal;
-     });
-
-             // Modal 4
-     $ionicModal.fromTemplateUrl('modal-4.html', {
-       id: '4', // We need to use and ID to identify the modal that is firing the event!
-       scope: $scope,
-       animation: 'slide-in-up'
-     }).then(function(modal) {
-       $scope.oModal4 = modal;
-     });
-
-                 // Modal 5
-     $ionicModal.fromTemplateUrl('modal-5.html', {
-       id: '5', // We need to use and ID to identify the modal that is firing the event!
-       scope: $scope,
-       animation: 'slide-in-up'
-     }).then(function(modal) {
-       $scope.oModal5 = modal;
-     });
-
-     $ionicModal.fromTemplateUrl('modal-6.html', {
-       id: '6', // We need to use and ID to identify the modal that is firing the event!
-       scope: $scope,
-       animation: 'slide-in-up'
-     }).then(function(modal) {
-       $scope.oModal6 = modal;
-     });
-
-     $ionicModal.fromTemplateUrl('modal-7.html', {
-       id: '7', // We need to use and ID to identify the modal that is firing the event!
-       scope: $scope,
-       animation: 'slide-in-up'
-     }).then(function(modal) {
-       $scope.oModal7 = modal;
-     });
-
-     $ionicModal.fromTemplateUrl('modal-8.html', {
-       id: '8', // We need to use and ID to identify the modal that is firing the event!
-       scope: $scope,
-       animation: 'slide-in-up'
-     }).then(function(modal) {
-       $scope.oModal8 = modal;
-     });
-
-     $ionicModal.fromTemplateUrl('modal-9.html', {
-       id: '9', // We need to use and ID to identify the modal that is firing the event!
-       scope: $scope,
-       animation: 'slide-in-up'
-     }).then(function(modal) {
-       $scope.oModal9 = modal;
-     });
-
-     $ionicModal.fromTemplateUrl('modal-10.html', {
-       id: '10', // We need to use and ID to identify the modal that is firing the event!
-       scope: $scope,
-       animation: 'slide-in-up'
-     }).then(function(modal) {
-       $scope.oModal10 = modal;
-     });
-
-     $ionicModal.fromTemplateUrl('modal-11.html', {
-       id: '11', // We need to use and ID to identify the modal that is firing the event!
-       scope: $scope,
-       animation: 'slide-in-up'
-     }).then(function(modal) {
-       $scope.oModal11 = modal;
-     });
-
-     $ionicModal.fromTemplateUrl('modal-12.html', {
-       id: '12', // We need to use and ID to identify the modal that is firing the event!
-       scope: $scope,
-       animation: 'slide-in-up'
-     }).then(function(modal) {
-       $scope.oModal12 = modal;
-     });
-
-     $ionicModal.fromTemplateUrl('modal-13.html', {
-       id: '13', // We need to use and ID to identify the modal that is firing the event!
-       scope: $scope,
-       animation: 'slide-in-up'
-     }).then(function(modal) {
-       $scope.oModal13 = modal;
-     });
-
-     $ionicModal.fromTemplateUrl('modal-14.html', {
-       id: '14', // We need to use and ID to identify the modal that is firing the event!
-       scope: $scope,
-       animation: 'slide-in-up'
-     }).then(function(modal) {
-       $scope.oModal14 = modal;
-     });
-
-     $ionicModal.fromTemplateUrl('modal-15.html', {
-       id: '15', // We need to use and ID to identify the modal that is firing the event!
-       scope: $scope,
-       animation: 'slide-in-up'
-     }).then(function(modal) {
-       $scope.oModal15 = modal;
-     });
-
-     $ionicModal.fromTemplateUrl('modal-16.html', {
-       id: '16', // We need to use and ID to identify the modal that is firing the event!
-       scope: $scope,
-       animation: 'slide-in-up'
-     }).then(function(modal) {
-       $scope.oModal16 = modal;
-     });
-
-     $ionicModal.fromTemplateUrl('modal-17.html', {
-       id: '17', // We need to use and ID to identify the modal that is firing the event!
-       scope: $scope,
-       animation: 'slide-in-up'
-     }).then(function(modal) {
-       $scope.oModal17 = modal;
-     });
-
-     $ionicModal.fromTemplateUrl('modal-18.html', {
-       id: '18',
-       scope: $scope,
-       animation: 'slide-in-up'
-     }).then(function(modal){
-       $scope.oModal18 = modal;
-     })
+     var wmiModal = function(index,callback){
+       $ionicModal.fromTemplateUrl('modal-'+index+'.html',{
+         id: index,
+         scope: $scope,
+         animation: 'slide-in-up'
+       }).then(function(modal){
+         $scope.oModal = modal;
+         callback(null,$scope.oModal)
+       })
+     }
 
      $scope.openModal = function(index) {
-       if(index == 1) $scope.oModal1.show();
-       if(index == 2) $scope.oModal2.show();
-       if(index == 3) $scope.oModal3.show();
-       if(index == 4) $scope.oModal4.show();
-       if(index == 5) $scope.oModal5.show();
-       if(index == 6) $scope.oModal6.show();
-       if(index == 7) $scope.oModal7.show();
-       if(index == 8) $scope.oModal8.show();
-       if(index == 9) $scope.oModal9.show();
-       if(index == 10) $scope.oModal10.show();
-       if(index == 11) $scope.oModal11.show();
-       if(index == 12) $scope.oModal12.show();
-       if(index == 13) $scope.oModal13.show();
-       if(index == 14) $scope.oModal14.show();
-       if(index == 15) $scope.oModal15.show();
-       if(index == 16) $scope.oModal16.show();
-       if(index == 17) $scope.oModal17.show();
-       if(index == 18) $scope.oModal18.show();
-
-
+       wmiModal(index,function(err,wmiMod){
+         wmiMod.show();
+       })
      };
 
      $scope.closeModal = function(index) {
-       if(index == 1) $scope.oModal1.hide();
-       if(index == 2) $scope.oModal2.hide();
-       if(index == 3) $scope.oModal3.hide();
-       if(index == 4) $scope.oModal4.hide();
-       if(index == 5) $scope.oModal5.hide();
-       if(index == 6) $scope.oModal6.hide();
-       if(index == 7) $scope.oModal7.hide();
-       if(index == 8) $scope.oModal8.hide();
-       if(index == 9) $scope.oModal9.hide();
-       if(index == 10) $scope.oModal10.hide();
-       if(index == 11) $scope.oModal11.hide();
-       if(index == 12) $scope.oModal12.hide();
-       if(index == 13) $scope.oModal13.hide();
-       if(index == 14) $scope.oModal14.hide();
-       if(index == 15) $scope.oModal15.hide();
-       if(index == 16) $scope.oModal16.hide();
-       if(index == 17) $scope.oModal17.hide();
-       if(index == 18) $scope.oModal18.hide();
-
+       $scope.oModal.hide();
      };
 
+
+     //This is annoying in the logs....?
      $scope.$on('modal.shown', function(event, modal) {
        console.log('Modal ' + modal.id + ' is shown!');
      });
@@ -399,24 +223,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
      // and removing the scope from its parent.
      $scope.$on('$destroy', function() {
        console.log('Destroying modals...');
-       $scope.oModal1.remove();
-       $scope.oModal2.remove();
-       $scope.oModal3.remove();
-       $scope.oModal4.remove();
-       $scope.oModal5.remove();
-       $scope.oModal6.remove();
-       $scope.oModal7.remove();
-       $scope.oModal8.remove();
-       $scope.oModal9.remove();
-       $scope.oModal10.remove();
-       $scope.oModal11.remove();
-       $scope.oModal12.remove();
-       $scope.oModal13.remove();
-       $scope.oModal14.remove();
-       $scope.oModal15.remove();
-       $scope.oModal16.remove();
-       $scope.oModal17.remove();
-       $scope.oModal18.remove();
+       $scope.oModal.remove();
      });
  // end modals
 
@@ -448,31 +255,30 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
       var runMessage = function(soapVitals) {
 
         var messagePartI = '<h2>Location</h2>'+
-        '<span style="display:block;margin-bottom:10px;"><strong>Date of Incident</strong>: ' + soap.incidentDate + '<br/></span>' +
-        '<span style="display:block;margin-bottom:10px;"><strong>Location</strong>: ' + 
-        '<pre style="font-family: inherit;margin-top:0;margin-bottom:0;">' + soap.incidentLocation + '</pre></span>' +
-        '<span style="display:block;margin-bottom:10px;"><strong>Coordinates</strong>: ' + soap.incidentLat + ', ' + soap.incidentLon + '<br/></span>' +
-        '<span style="display:block;margin-bottom:10px;"><strong>Responder</strong>: ' + soap.responderFirstName + ' ' + soap.responderLastName + ', ' + soap.responderTrainingLevel + '<br/></span>' +
+        '<strong>Date of Incident</strong>: ' + soap.incidentDate + '<br/>' +
+        '<strong>Location</strong>: ' + soap.incidentLocation + '<br/>' +
+        '<strong>Coordinates</strong>: ' + soap.incidentLat + ', ' + soap.incidentLon + '<br/>' +
+        '<strong>Responder</strong>: ' + soap.responderFirstName + ' ' + soap.responderLastName + ', ' + soap.responderTrainingLevel + '<br/>' +
         '<h2>Subjective</h2>'+
-        '<span style="display:block;margin-bottom:10px;"><strong>Initials</strong>: ' + soap.patientInitials + '<br/></span>' +
-        '<span style="display:block;margin-bottom:10px;"><strong>DOB</strong>: ' + soap.patientDob + '<br/></span>' +
-        '<span style="display:block;margin-bottom:10px;"><strong>Age</strong>: ' + soap.patientAge + '<br/></span>' +
-        '<span style="display:block;margin-bottom:10px;"><strong>Sex</strong>: ' + genderFull() + '<br/></span>' +
-        '<span style="display:block;margin-bottom:10px;"><strong>Chief Complaint</strong>: ' +
-        '<pre style="font-family: inherit;margin-top:0;margin-bottom:0;">' + soap.patientComplaint + '</pre></span>' +
-        '<span style="display:block;margin-bottom:10px;"><strong>Onset</strong>: ' + soap.patientOnset + '<br/></span>' +
-        '<span style="display:block;margin-bottom:10px;"><strong>Onset Date</strong>: ' + soap.patientOnsetDate + '<br/></span>' +
-        '<span style="display:block;margin-bottom:10px;"><strong>Onset Time</strong>: ' + soap.patientOnsetTime + '<br/></span>' +
-        '<span style="display:block;margin-bottom:10px;"><strong>Provokes/Palliates</strong>: <pre style="font-family: inherit;margin-top:0;margin-bottom:0;">' + soap.patientPPalliates + '</pre></span>' +
-        '<span style="display:block;margin-bottom:10px;"><strong>Quality</strong>: ' + soap.patientQuality + '<br/></span>' +
-        '<span style="display:block;margin-bottom:10px;"><strong>Radiation/Region/Referred</strong>: <pre style="font-family: inherit;margin-top:0;margin-bottom:0;">' + soap.patientRadiates + '</pre></span>' +
-        '<span style="display:block;margin-bottom:10px;"><strong>Severity</strong>: ' + soap.patientSeverity + '<br/></span>' +
-        '<span style="display:block;margin-bottom:10px;"><strong>MOI/HPI</strong>: <pre style="font-family: inherit;margin-top:0;margin-bottom:0;">' + soap.patientHPI + '</pre></span>' +
-        '<span style="display:block;margin-bottom:10px;"><strong>Spinal MOI</strong>: ' + soap.patientSpinal + '<br/></span>' +
+        '<strong>Initials</strong>: ' + soap.patientInitials + '<br/>' +
+        '<strong>DOB</strong>: ' + soap.patientDob + '<br/>' +
+        '<strong>Age</strong>: ' + soap.patientAge + '<br/>' +
+        '<strong>Sex</strong>: ' + genderFull() + '<br/>' +
+        '<strong>Chief Complaint</strong>: '+
+        '<pre style="font-family: inherit;margin-top:0;">' + soap.patientComplaint + '</pre><br/>' +
+        '<strong>Onset</strong>: ' + soap.patientOnset + '<br/>' +
+        '<strong>Onset Date</strong>: ' + soap.patientOnsetDate + '<br/>' +
+        '<strong>Onset Time</strong>: ' + soap.patientOnsetTime + '<br/>' +
+        '<strong>Provokes/Palliates</strong>: <pre style="font-family: inherit;margin-top:0;">' + soap.patientPPalliates + '</pre><br/>' +
+        '<strong>Quality</strong>: ' + soap.patientQuality + '<br/>' +
+        '<strong>Radiation/Region/Referred</strong>: <pre style="font-family: inherit;margin-top:0;">' + soap.patientRadiates + '</pre><br/>' +
+        '<strong>Severity</strong>: ' + soap.patientSeverity + '<br/>' +
+        '<strong>MOI/HPI</strong>: <pre style="font-family: inherit;margin-top:0;">' + soap.patientHPI + '</pre><br/>' +
+        '<strong>Spinal MOI</strong>: ' + soap.patientSpinal + '<br/>' +
         '<h2>Objective</h2>'+
         //'<h3>General</h3>'+
-        '<span style="display:block;margin-bottom:10px;"><strong>Patient Position When Found</strong>: <pre style="font-family: inherit;margin-top:0;margin-bottom:0;">' + soap.patientFound + '</pre></span>' +
-        '<span style="display:block;margin-bottom:10px;"><strong>Patient Exam</strong>: <pre style="font-family: inherit;margin-top:0;margin-bottom:0;">' + soap.patientExamReveals + '</pre></span>' +
+        '<strong>Patient Position When Found</strong>: <pre style="font-family: inherit;margin-top:0;">' + soap.patientFound + '</pre><br/>' +
+        '<strong>Patient Exam</strong>: <pre style="font-family: inherit;margin-top:0;">' + soap.patientExamReveals + '</pre><br/>' +
         '<h2>Vital Signs</h2>';
 
         //var messagePartIIA = "<table style='width:100%;text-align:center;border:1px solid #EFEFEF;border-collapse:collapse;'>";
@@ -526,17 +332,17 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
         //'<tr>' + "<th style='width:25%;border:1px solid #EFEFEF;border-collapse:collapse;padding:5px;text-align:right;padding-right:10px;background-color:#EFEFEF;text-transform:uppercase'>"
 
         var messagePartIII = '<h3>Patient History</h3>'+
-        '<span style="display:block;margin-bottom:10px;"><strong>Symptoms</strong>: <pre style="font-family: inherit;margin-top:0;margin-bottom:0;">' + soap.patientSymptoms + '</pre></span>' +
-        '<span style="display:block;margin-bottom:10px;"><strong>Allergies</strong>: <pre style="font-family: inherit;margin-top:0;margin-bottom:0;">' + soap.patientAllergies + '</pre></span>' +
-        '<span style="display:block;margin-bottom:10px;"><strong>Medications</strong>: <pre style="font-family: inherit;margin-top:0;margin-bottom:0;">' + soap.patientMedications + '</pre></span>' +
-        '<span style="display:block;margin-bottom:10px;"><strong>Pertinent Medical History</strong>: <pre style="font-family: inherit;margin-top:0;margin-bottom:0;">' + soap.patientMedicalHistory + '</pre></span>' +
-        '<span style="display:block;margin-bottom:10px;"><strong>Last Intake/Output</strong>: <pre style="font-family: inherit;margin-top:0;margin-bottom:0;">' + soap.patientLastIntake + '</pre></span>' +
-        '<span style="display:block;margin-bottom:10px;"><strong>Events Leading up to Injury/Illness</strong>: <pre style="font-family: inherit;margin-top:0;margin-bottom:0;">' + soap.patientEventsForCause + '</pre></span>' +
+        '<strong>Symptoms</strong>: <pre style="font-family: inherit;margin-top:0;">' + soap.patientSymptoms + '</pre><br/>' +
+        '<strong>Allergies</strong>: <pre style="font-family: inherit;margin-top:0;">' + soap.patientAllergies + '</pre><br/>' +
+        '<strong>Medications</strong>: <pre style="font-family: inherit;margin-top:0;">' + soap.patientMedications + '</pre><br/>' +
+        '<strong>Pertinent Medical History</strong>: <pre style="font-family: inherit;margin-top:0;">' + soap.patientMedicalHistory + '</pre><br/>' +
+        '<strong>Last Intake/Output</strong>: <pre style="font-family: inherit;margin-top:0;">' + soap.patientLastIntake + '</pre><br/>' +
+        '<strong>Events Leading up to Injury/Illness</strong>: <pre style="font-family: inherit;margin-top:0;">' + soap.patientEventsForCause + '</pre><br/>' +
         '<h2>Assessment</h2>'+
-        '<span style="display:block;margin-bottom:10px;"><pre style="font-family: inherit;margin-top:0;margin-bottom:0;">' + soap.patientAssessment + '</pre></span>' +
+        '<pre style="font-family: inherit;margin-top:0;">' + soap.patientAssessment + '</pre>' +
         '<h2>Plan</h2>'+
-        '<span style="display:block;margin-bottom:10px;"><pre style="font-family: inherit;margin-top:0;margin-bottom:0;">' + soap.patientPlan + '</pre></span>' +
-        '<span style="display:block;margin-bottom:10px;"><strong>Anticipated Problems</strong>: <pre style="font-family: inherit;margin-top:0;margin-bottom:0;">' + soap.patientAnticipatedProblems + '</pre></span>';
+        '<pre style="font-family: inherit;margin-top:0;">' + soap.patientPlan + '</pre>' +
+        '<strong>Anticipated Problems</strong>: <pre style="font-family: inherit;margin-top:0;">' + soap.patientAnticipatedProblems + '</pre><br/>';
 
         var messagePartIVA = '<h2>Photos</h2>';
         var messagePartIV = function(soapImages) {
@@ -624,6 +430,10 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
     }
 
     });
+
+    $scope.continueToSubjective = function(id){
+      $state.go('tab.subjective',{soapId: id})
+    }
   })
 
   $scope.monitorSoapOverviewChange = function(soap,soapVal,attrElem){

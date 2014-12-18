@@ -1,6 +1,7 @@
 'use strict';
 angular.module('WMISoapBuilder.directives', ['angular-websql', 'debounce'])
 
+
 .directive('input', function(uiState) {
   return {
     restrict: 'E',

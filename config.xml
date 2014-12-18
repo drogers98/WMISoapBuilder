@@ -8,9 +8,11 @@
         Eye Byte Solutions
     </author>
     <content src="index.html" />
+
     <feature name="Camera">
         <param name="ios-package" value="CDVCamera" />
     </feature>
+    
     <preference name="iosPersistentFileLocation" value="Library" />
 
     <access origin="*" />
