@@ -18,7 +18,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
 })
 
 .controller('FirstResponderCtrl', function($scope, $state, $location,$stateParams,$timeout,
-  Responders, Soaps, Nols,uiState) {
+  Responders, Soaps, Nols,uiState, $cordovaDevice) {
     //Nols.cutLifeLine();
     $scope.mySoaps = function() {$state.go('soaps');}
     $scope.termsPage = function() {$state.go('terms');}
@@ -26,7 +26,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
     $scope.trainingLevels = ['WFA','WAFA','WFR','WEMT','OTHER'];
 
     $scope.$location = $location;
-  
+
     //INTRO LOGIC
     Responders.createResponderTable();
     Responders.all(function(err,responders){
@@ -72,8 +72,9 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
 
 .controller('SoapCtrl', function($scope, $state, $stateParams,
                                  $ionicModal, $timeout, $location,
-                                 Soaps, Responders, Nols,$ionicPopup,$cordovaSocialSharing){
+                                 Soaps, Responders, Nols,$ionicPopup,$cordovaSocialSharing, $cordovaDevice){
   "use strict";
+
 
   Soaps.createSoapTable();
 
@@ -282,6 +283,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
         '<h2>Vital Signs</h2>';
 
         //var messagePartIIA = "<table style='width:100%;text-align:center;border:1px solid #EFEFEF;border-collapse:collapse;'>";
+        var platform = $cordovaDevice.getPlatform()
         var messagePartIIB = function(soapVitals) {
           var vitalListTime = [], vitalListDate = [],vitalListLor = [],vitalListHR = [],vitalListRR = [],
               vitalListSkin = [],vitalListBP = [],vitalListPupils = [],vitalListTemp = [];
@@ -289,20 +291,32 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
           var filteredVitals = filteredVitalsBefore.sort(function(a,b){
             return new Date('1970/01/01 ' + a.timeTaken) - new Date('1970/01/01 ' + b.timeTaken);
           })
+
+          //IOS
           for(var key in filteredVitals){
-            var tdStyle = "style='width:25%;border:1px solid #EFEFEF;padding:5px'";
-            var thStyle = "style='width:25%;border:1px solid #EFEFEF;border-collapse:collapse;padding:5px;text-align:right;padding-right:10px;background-color:#EFEFEF;text-transform:uppercase'";
-            var tbStyle = "style='width:100%;text-align:center;border:1px solid #EFEFEF;border-collapse:collapse;";
+            var tdStyle = platform == 'iOS' ? "style='width:25%;border:1px solid #EFEFEF;padding:5px'" : ""
+            var thStyle = platform == 'iOS' ? "style='width:25%;border:1px solid #EFEFEF;border-collapse:collapse;padding:5px;text-align:right;padding-right:10px;background-color:#EFEFEF;text-transform:uppercase'" : ""
+            var tbStyle = platform == 'iOS' ? "style='width:100%;text-align:center;border:1px solid #EFEFEF;border-collapse:collapse;" : ""
+            var tablePlatformOpen = platform == 'iOS' ? "<table style='width:100%;text-align:center;border:1px solid #EFEFEF;border-collapse:collapse;'>" : "<div>"
+            var tablePlatformClose = platform == 'iOS' ? "</table>" : "</div>"
+            var tBracket = platform == 'iOS' ? '>' : ''
+            var tdOpen = platform == 'iOS' ? '<td ' : '' //was <p '
+            var tdClose = platform == 'iOS' ? '</td>' : ' | ' //was </p>
+            var trOpen = platform == 'iOS' ? '<tr>' : '<p>'
+            var trClose = platform == 'iOS' ? '</tr>' : '</p>'
+            var thOpen = platform == 'iOS' ? '<th ' : '<strong '
+            var thClose = platform == 'iOS' ? '</th>' : '</strong><br/>'
+
             var emailVitalObj = {};
-            vitalListTime.push('<td '+tdStyle+'>'+ filteredVitals[key].timeTaken + '</td>');
-            vitalListDate.push('<td '+tdStyle+'>'+ filteredVitals[key].dateTaken + '</td>');
-            vitalListLor.push('<td '+tdStyle+'>'+ filteredVitals[key].lor + '</td>');
-            vitalListHR.push('<td '+tdStyle+'>'+ filteredVitals[key].rate + ' ' + filteredVitals[key].heartRythm + ' ' + filteredVitals[key].heartQuality +'</td>');
-            vitalListRR.push('<td '+tdStyle+'>'+ filteredVitals[key].respRate + ' ' + filteredVitals[key].respRhythm + ' ' + filteredVitals[key].respQuality +'</td>');
-            vitalListSkin.push('<td '+tdStyle+'>'+ filteredVitals[key].sctmcolor + ' ' + filteredVitals[key].sctmtemp + ' ' + filteredVitals[key].sctmmoisture +'</td>');
-            vitalListBP.push('<td '+tdStyle+'>'+ filteredVitals[key].brsystolic.replace('.0', '')+'/'+filteredVitals[key].diastolic.replace('.0', '') + '</td>');
-            vitalListPupils.push('<td '+tdStyle+'>'+ filteredVitals[key].pupils + '</td>');
-            vitalListTemp.push('<td '+tdStyle+'>'+ filteredVitals[key].tempDegreesReading + ' ' + filteredVitals[key].tempDegrees+'</td>');
+            vitalListTime.push(tdOpen+tdStyle+tBracket+ filteredVitals[key].timeTaken + tdClose);
+            vitalListDate.push(tdOpen+tdStyle+tBracket+ filteredVitals[key].dateTaken + tdClose);
+            vitalListLor.push(tdOpen+tdStyle+tBracket+ filteredVitals[key].lor + tdClose);
+            vitalListHR.push(tdOpen+tdStyle+tBracket+ filteredVitals[key].rate + ' ' + filteredVitals[key].heartRythm + ' ' + filteredVitals[key].heartQuality +tdClose);
+            vitalListRR.push(tdOpen+tdStyle+tBracket+ filteredVitals[key].respRate + ' ' + filteredVitals[key].respRhythm + ' ' + filteredVitals[key].respQuality +tdClose);
+            vitalListSkin.push(tdOpen+tdStyle+tBracket+ filteredVitals[key].sctmcolor + ' ' + filteredVitals[key].sctmtemp + ' ' + filteredVitals[key].sctmmoisture +tdClose);
+            vitalListBP.push(tdOpen+tdStyle+tBracket+ filteredVitals[key].brsystolic.replace('.0', '')+'/'+filteredVitals[key].diastolic.replace('.0', '') + tdClose);
+            vitalListPupils.push(tdOpen+tdStyle+tBracket+ filteredVitals[key].pupils + tdClose);
+            vitalListTemp.push(tdOpen+tdStyle+tBracket+ filteredVitals[key].tempDegreesReading + ' ' + filteredVitals[key].tempDegrees+tdClose);
             emailVitalObj['timeTaken'] = vitalListTime.join("");
             emailVitalObj['dateTaken'] = vitalListDate.join("");
             emailVitalObj['lor'] = vitalListLor.join("");
@@ -313,19 +327,20 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
             emailVitalObj['pupils'] = vitalListPupils.join("");
             emailVitalObj['temp'] = vitalListTemp.join("");
 
-            var message = "<table style='width:100%;text-align:center;border:1px solid #EFEFEF;border-collapse:collapse;'>"
-                          +'<tr>'+'<th '+thStyle+'>Date</td>'+emailVitalObj.dateTaken+'</tr>'
-                          +'<tr>'+'<th '+thStyle+'>Time</th>'+emailVitalObj.timeTaken+'</tr>'
-                          +'<tr>'+'<th '+thStyle+'>Lor</th>'+emailVitalObj.lor+'</tr>'
-                          +'<tr>'+'<th '+thStyle+'>HR</th>'+emailVitalObj.hr+'</tr>'
-                          +'<tr>'+'<th '+thStyle+'>RR</th>'+emailVitalObj.rr+'</tr>'
-                          +'<tr>'+'<th '+thStyle+'>Skin</th>'+emailVitalObj.skin+'</tr>'
-                          +'<tr>'+'<th '+thStyle+'>BP</th>'+emailVitalObj.bp+'</tr>'
-                          +'<tr>'+'<th '+thStyle+'>Pupils</th>'+emailVitalObj.pupils+'</tr>'
-                          +'<tr>'+'<th '+thStyle+'>TEMP</th>'+emailVitalObj.temp+'</tr>'
-                          +'</table>';
+            var message = tablePlatformOpen
+                          +trOpen+thOpen+thStyle+'>Date'+thClose+emailVitalObj.dateTaken+trClose
+                          +trOpen+thOpen+thStyle+'>Time'+thClose+emailVitalObj.timeTaken+trClose
+                          +trOpen+thOpen+thStyle+'>Lor'+thClose+emailVitalObj.lor+trClose
+                          +trOpen+thOpen+thStyle+'>HR'+thClose+emailVitalObj.hr+trClose
+                          +trOpen+thOpen+thStyle+'>RR'+thClose+emailVitalObj.rr+trClose
+                          +trOpen+thOpen+thStyle+'>Skin'+thClose+emailVitalObj.skin+trClose
+                          +trOpen+thOpen+thStyle+'>BP'+thClose+emailVitalObj.bp+trClose
+                          +trOpen+thOpen+thStyle+'>Pupils'+thClose+emailVitalObj.pupils+trClose
+                          +trOpen+thOpen+thStyle+'>TEMP'+thClose+emailVitalObj.temp+trClose
+                          +tablePlatformClose;
           }
           return message;
+
         }
 
 
