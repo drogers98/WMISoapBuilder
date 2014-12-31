@@ -1,7 +1,7 @@
 WMISoapBuilder
 ==============
 
-Soap Note builder Mobile App for NOLS - Wilderness Medicine Institute. Angular/WebSQL
+Soap Note builder Mobile App for NOLS - Wilderness Medicine Institute. ionic/Angular/WebSQL
 
 Dependencies:
 - node.js
@@ -17,15 +17,23 @@ Dependencies:
  - npm install cordova
  - npm update -g cordova
 
-Hints:
+CLI Hints:
+- grunt build - basic app build
 - grunt serve:dist  -  will run in browser, once it boots up it will show ip
+- grunt platform add:ios, grunt platform add:android
 - grunt build and then grunt emulate:iOS will open up xcode emulator
+- grunt run:ios - runs app on ios connected device
+- grunt run:android - runs on connected device, or genymotion emulator
 
 Compiling for release (all):
 - Change version in config.xml
 - grunt build
 - Change visible version in about template
 - change android:versionCode= in platforms/android/AndroidManifest.xml
+
+Compiling for iOS:
+- Check info > bundle display name
+- 
 
 Compiling release version for android:
 - cordova build --release android
