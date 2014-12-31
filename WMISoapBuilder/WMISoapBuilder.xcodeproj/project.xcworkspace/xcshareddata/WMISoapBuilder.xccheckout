@@ -10,29 +10,29 @@
 	<string>WMISoapBuilder</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>57AFCBA2-B892-49CB-A371-9BE8D50D7944</key>
-		<string>ssh://github.com/EyeByteSolutions/WMISoapBuilder.git</string>
+		<key>B08BB97E32AFE063A21F5526EBBE5A10809F8CBE</key>
+		<string>https://github.com/EyeByteSolutions/WMISoapBuilder.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>WMISoapBuilder/WMISoapBuilder.xcodeproj/project.xcworkspace</string>
+	<string>WMISoapBuilder/WMISoapBuilder.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>57AFCBA2-B892-49CB-A371-9BE8D50D7944</key>
+		<key>B08BB97E32AFE063A21F5526EBBE5A10809F8CBE</key>
 		<string>../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>ssh://github.com/EyeByteSolutions/WMISoapBuilder.git</string>
+	<string>https://github.com/EyeByteSolutions/WMISoapBuilder.git</string>
 	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
+	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>57AFCBA2-B892-49CB-A371-9BE8D50D7944</string>
+	<string>B08BB97E32AFE063A21F5526EBBE5A10809F8CBE</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>57AFCBA2-B892-49CB-A371-9BE8D50D7944</string>
+			<string>B08BB97E32AFE063A21F5526EBBE5A10809F8CBE</string>
 			<key>IDESourceControlWCCName</key>
 			<string>WMISoapBuilder</string>
 		</dict>

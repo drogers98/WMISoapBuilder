@@ -607,37 +607,66 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce', 'ngCord
       //do something
     },
     getNewImg: function(type,callback){
-
-      var tSize = platform === 'iOS' ? 350 : 150
       var getType = type === 'lib' ? Camera.PictureSourceType.PHOTOLIBRARY : Camera.PictureSourceType.CAMERA
+      var getQuality = type === 'lib' ? 90 : 60 
       var save = type === 'lib' ? false : true
 
-      var options = {
-        quality : 49, //setting below 50 to avoid memory errors
+      var optionIOS = {
+        quality : 49, //setting below 50 to avoid memory errors on ios
         destinationType : Camera.DestinationType.FILE_URI,
         sourceType : getType,
         allowEdit : false,
         encodingType: Camera.EncodingType.JPEG,
-        targetWidth: tSize,
-        targetHeight: tSize,
+        targetWidth: 350,
+        targetHeight: 350,
         correctOrientation: true,
         saveToPhotoAlbum: save
       };
+      
+      var optionANDROID = {
+        quality: getQuality,
+        destinationType : Camera.DestinationType.FILE_URI,
+        sourceType : getType,
+        allowEdit : false,
+        encodingType : Camera.EncodingType.JPEG,
+        correctOrientation : true,
+        saveToPhotoAlbum : save
+      }
 
-      $cordovaCamera.getPicture(options).then(function(imgData){
-        window.resolveLocalFileSystemURI(imgData, wmiImgSuccess, fail);
+      var optionParam = function() {
+       var optionPlatformParams = platform === 'iOS' ? optionIOS : optionANDROID
+       return optionPlatformParams
+      }
+
+      $cordovaCamera.getPicture(optionParam()).then(function(imgData){
+        if(imgData.substring(0,21)=="content://com.android"){
+         var photo_split = imgData.split("%3A");
+   	 imgData = "content://media/external/images/media/"+photo_split[1]
+        }
+        
+        window.resolveLocalFileSystemURL(imgData, wmiImgSuccess, fail);
 
         function wmiImgSuccess(fileEntry) {
           var image = imgData.substr(imgData.lastIndexOf('/') + 1)
+          var extension;
+    	  if(imgData.indexOf('content://') != -1) {
+	    if(imgData.lastIndexOf('.') > imgData.lastIndexOf('/')){
+   	      extension = imgData.substr(imgData.lastIndexOf('.') + 1);
+	    }else{
+ 	       extension = "jpg";
+	       image = image + ".jpg"
+	     }
+	  }
+
           window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSys) {
             fileSys.root.getDirectory("photos", {create: true, exclusive: false}, function(dir) {
               fileEntry.copyTo(dir, image, returnCopy, fail);
-            }, fail);
-          }, fail);
+            }, console.log(fail));
+          }, console.log(fail));
         }
 
         function returnCopy(entry) {
-          callback(null, entry.nativeURL)
+         callback(null, entry.nativeURL)
         }
 
         function fail(error) {

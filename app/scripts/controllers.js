@@ -18,8 +18,9 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
 })
 
 .controller('FirstResponderCtrl', function($scope, $state, $location,$stateParams,$timeout,
-  Responders, Soaps, Nols,uiState, $cordovaDevice) {
+  Responders, Soaps, Nols,uiState,$ionicPlatform, $cordovaDevice) {
     //Nols.cutLifeLine();
+
     $scope.mySoaps = function() {$state.go('soaps');}
     $scope.termsPage = function() {$state.go('terms');}
 
@@ -229,7 +230,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
  // end modals
 
      $scope.shareSOAP = function(soap,soapVitals,soapImages) {
-
+      
       var imgURIS = function(soapImages){
         var imageURIS = [];
         for(var i=0;i<soapImages.length;i++){
@@ -255,31 +256,46 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
 
       var runMessage = function(soapVitals) {
 
+        var tdStyle = platform == 'iOS' ? "style='width:25%;border:1px solid #EFEFEF;padding:5px'" : ""
+        var thStyle = platform == 'iOS' ? "style='width:25%;border:1px solid #EFEFEF;border-collapse:collapse;padding:5px;text-align:right;padding-right:10px;background-color:#EFEFEF;text-transform:uppercase'" : ""
+        var tbStyle = platform == 'iOS' ? "style='width:100%;text-align:center;border:1px solid #EFEFEF;border-collapse:collapse;" : ""
+        var tablePlatformOpen = platform == 'iOS' ? "<table style='width:100%;text-align:center;border:1px solid #EFEFEF;border-collapse:collapse;'>" : "<div>"
+        var tablePlatformClose = platform == 'iOS' ? "</table>" : "</div>"
+        var tBracket = platform == 'iOS' ? '>' : ''
+        var tdOpen = platform == 'iOS' ? '<td ' : '' //was <p '
+        var tdClose = platform == 'iOS' ? '</td>' : ' | ' //was </p>
+        var trOpen = platform == 'iOS' ? '<tr>' : '<p>'
+        var trClose = platform == 'iOS' ? '</tr>' : '</p>'
+        var thOpen = platform == 'iOS' ? '<th ' : '<strong '
+        var thClose = platform == 'iOS' ? '</th>' : '</strong><br>'
+        var preOpen = platform == 'iOS' ? '<pre style="font-family: inherit;margin-top:0;">' : ''
+        var preClose = platform == 'iOS' ? '</pre>' : ''
+
         var messagePartI = '<h2>Location</h2>'+
-        '<strong>Date of Incident</strong>: ' + soap.incidentDate + '<br/>' +
-        '<strong>Location</strong>: ' + soap.incidentLocation + '<br/>' +
-        '<strong>Coordinates</strong>: ' + soap.incidentLat + ', ' + soap.incidentLon + '<br/>' +
-        '<strong>Responder</strong>: ' + soap.responderFirstName + ' ' + soap.responderLastName + ', ' + soap.responderTrainingLevel + '<br/>' +
+        '<strong>Date of Incident</strong>: ' + soap.incidentDate + '<br>' +
+        '<strong>Location</strong>: ' + soap.incidentLocation.replace(/\n/g, '<br>') + '<br>' +
+        '<strong>Coordinates</strong>: ' + soap.incidentLat + ', ' + soap.incidentLon + '<br>' +
+        '<strong>Responder</strong>: ' + soap.responderFirstName + ' ' + soap.responderLastName + ', ' + soap.responderTrainingLevel + '<br>' +
         '<h2>Subjective</h2>'+
-        '<strong>Initials</strong>: ' + soap.patientInitials + '<br/>' +
-        '<strong>DOB</strong>: ' + soap.patientDob + '<br/>' +
-        '<strong>Age</strong>: ' + soap.patientAge + '<br/>' +
-        '<strong>Sex</strong>: ' + genderFull() + '<br/>' +
+        '<strong>Initials</strong>: ' + soap.patientInitials + '<br>' +
+        '<strong>DOB</strong>: ' + soap.patientDob + '<br>' +
+        '<strong>Age</strong>: ' + soap.patientAge + '<br>' +
+        '<strong>Sex</strong>: ' + genderFull() + '<br>' +
         '<strong>Chief Complaint</strong>: '+
-        '<pre style="font-family: inherit;margin-top:0;">' + soap.patientComplaint + '</pre><br/>' +
-        '<strong>Onset</strong>: ' + soap.patientOnset + '<br/>' +
-        '<strong>Onset Date</strong>: ' + soap.patientOnsetDate + '<br/>' +
-        '<strong>Onset Time</strong>: ' + soap.patientOnsetTime + '<br/>' +
-        '<strong>Provokes/Palliates</strong>: <pre style="font-family: inherit;margin-top:0;">' + soap.patientPPalliates + '</pre><br/>' +
-        '<strong>Quality</strong>: ' + soap.patientQuality + '<br/>' +
-        '<strong>Radiation/Region/Referred</strong>: <pre style="font-family: inherit;margin-top:0;">' + soap.patientRadiates + '</pre><br/>' +
-        '<strong>Severity</strong>: ' + soap.patientSeverity + '<br/>' +
-        '<strong>MOI/HPI</strong>: <pre style="font-family: inherit;margin-top:0;">' + soap.patientHPI + '</pre><br/>' +
-        '<strong>Spinal MOI</strong>: ' + soap.patientSpinal + '<br/>' +
+        preOpen + soap.patientComplaint.replace(/\n/g, '<br>') + preClose + '<br>' +
+        '<strong>Onset</strong>: ' + soap.patientOnset + '<br>' +
+        '<strong>Onset Date</strong>: ' + soap.patientOnsetDate + '<br>' +
+        '<strong>Onset Time</strong>: ' + soap.patientOnsetTime + '<br>' +
+        '<strong>Provokes/Palliates</strong>: '+ preOpen + soap.patientPPalliates.replace(/\n/g, '<br>') + preClose + '<br>' +
+        '<strong>Quality</strong>: ' + soap.patientQuality + '<br>' +
+        '<strong>Radiation/Region/Referred</strong>: '+ preOpen + soap.patientRadiates.replace(/\n/g, '<br>') + preClose + '<br>' +
+        '<strong>Severity</strong>: ' + soap.patientSeverity + '<br>' +
+        '<strong>MOI/HPI</strong>: '+ preOpen + soap.patientHPI.replace(/\n/g, '<br>') + preClose + '<br>' +
+        '<strong>Spinal MOI</strong>: ' + soap.patientSpinal + '<br>' +
         '<h2>Objective</h2>'+
         //'<h3>General</h3>'+
-        '<strong>Patient Position When Found</strong>: <pre style="font-family: inherit;margin-top:0;">' + soap.patientFound + '</pre><br/>' +
-        '<strong>Patient Exam</strong>: <pre style="font-family: inherit;margin-top:0;">' + soap.patientExamReveals + '</pre><br/>' +
+        '<strong>Patient Position When Found</strong>: '+ preOpen + soap.patientFound.replace(/\n/g, '<br>') + preClose + '<br>' +
+        '<strong>Patient Exam</strong>: '+ preOpen + soap.patientExamReveals.replace(/\n/g, '<br>') + preClose + '<br>' +
         '<h2>Vital Signs</h2>';
 
         //var messagePartIIA = "<table style='width:100%;text-align:center;border:1px solid #EFEFEF;border-collapse:collapse;'>";
@@ -294,18 +310,6 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
 
           //IOS
           for(var key in filteredVitals){
-            var tdStyle = platform == 'iOS' ? "style='width:25%;border:1px solid #EFEFEF;padding:5px'" : ""
-            var thStyle = platform == 'iOS' ? "style='width:25%;border:1px solid #EFEFEF;border-collapse:collapse;padding:5px;text-align:right;padding-right:10px;background-color:#EFEFEF;text-transform:uppercase'" : ""
-            var tbStyle = platform == 'iOS' ? "style='width:100%;text-align:center;border:1px solid #EFEFEF;border-collapse:collapse;" : ""
-            var tablePlatformOpen = platform == 'iOS' ? "<table style='width:100%;text-align:center;border:1px solid #EFEFEF;border-collapse:collapse;'>" : "<div>"
-            var tablePlatformClose = platform == 'iOS' ? "</table>" : "</div>"
-            var tBracket = platform == 'iOS' ? '>' : ''
-            var tdOpen = platform == 'iOS' ? '<td ' : '' //was <p '
-            var tdClose = platform == 'iOS' ? '</td>' : ' | ' //was </p>
-            var trOpen = platform == 'iOS' ? '<tr>' : '<p>'
-            var trClose = platform == 'iOS' ? '</tr>' : '</p>'
-            var thOpen = platform == 'iOS' ? '<th ' : '<strong '
-            var thClose = platform == 'iOS' ? '</th>' : '</strong><br/>'
 
             var emailVitalObj = {};
             vitalListTime.push(tdOpen+tdStyle+tBracket+ filteredVitals[key].timeTaken + tdClose);
@@ -330,7 +334,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
             var message = tablePlatformOpen
                           +trOpen+thOpen+thStyle+'>Date'+thClose+emailVitalObj.dateTaken+trClose
                           +trOpen+thOpen+thStyle+'>Time'+thClose+emailVitalObj.timeTaken+trClose
-                          +trOpen+thOpen+thStyle+'>Lor'+thClose+emailVitalObj.lor+trClose
+                          +trOpen+thOpen+thStyle+'>LOR'+thClose+emailVitalObj.lor+trClose
                           +trOpen+thOpen+thStyle+'>HR'+thClose+emailVitalObj.hr+trClose
                           +trOpen+thOpen+thStyle+'>RR'+thClose+emailVitalObj.rr+trClose
                           +trOpen+thOpen+thStyle+'>Skin'+thClose+emailVitalObj.skin+trClose
@@ -347,17 +351,17 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
         //'<tr>' + "<th style='width:25%;border:1px solid #EFEFEF;border-collapse:collapse;padding:5px;text-align:right;padding-right:10px;background-color:#EFEFEF;text-transform:uppercase'>"
 
         var messagePartIII = '<h3>Patient History</h3>'+
-        '<strong>Symptoms</strong>: <pre style="font-family: inherit;margin-top:0;">' + soap.patientSymptoms + '</pre><br/>' +
-        '<strong>Allergies</strong>: <pre style="font-family: inherit;margin-top:0;">' + soap.patientAllergies + '</pre><br/>' +
-        '<strong>Medications</strong>: <pre style="font-family: inherit;margin-top:0;">' + soap.patientMedications + '</pre><br/>' +
-        '<strong>Pertinent Medical History</strong>: <pre style="font-family: inherit;margin-top:0;">' + soap.patientMedicalHistory + '</pre><br/>' +
-        '<strong>Last Intake/Output</strong>: <pre style="font-family: inherit;margin-top:0;">' + soap.patientLastIntake + '</pre><br/>' +
-        '<strong>Events Leading up to Injury/Illness</strong>: <pre style="font-family: inherit;margin-top:0;">' + soap.patientEventsForCause + '</pre><br/>' +
+        '<strong>Symptoms</strong>: '+ preOpen  + soap.patientSymptoms.replace(/\n/g, '<br>') + preClose + '<br>' +
+        '<strong>Allergies</strong>: '+ preOpen + soap.patientAllergies.replace(/\n/g, '<br>') + preClose + '<br>'+
+        '<strong>Medications</strong>:'+ preOpen + soap.patientMedications.replace(/\n/g, '<br>') + preClose + '<br>' +
+        '<strong>Pertinent Medical History</strong>: '+ preOpen + soap.patientMedicalHistory.replace(/\n/g, '<br>') + preClose + '<br>' +
+        '<strong>Last Intake/Output</strong>: '+ preOpen + soap.patientLastIntake.replace(/\n/g, '<br>') + preClose + '<br>' +
+        '<strong>Events Leading up to Injury/Illness</strong>: '+ preOpen + soap.patientEventsForCause.replace(/\n/g, '<br>') + preClose + '<br>' +
         '<h2>Assessment</h2>'+
-        '<pre style="font-family: inherit;margin-top:0;">' + soap.patientAssessment + '</pre>' +
+        preOpen + soap.patientAssessment.replace(/\n/g, '<br>') + preClose +
         '<h2>Plan</h2>'+
-        '<pre style="font-family: inherit;margin-top:0;">' + soap.patientPlan + '</pre>' +
-        '<strong>Anticipated Problems</strong>: <pre style="font-family: inherit;margin-top:0;">' + soap.patientAnticipatedProblems + '</pre><br/>';
+        preOpen + soap.patientPlan.replace(/\n/g, '<br>') + preClose + '<br>' +
+        '<strong>Anticipated Problems</strong>:'+ preOpen  + soap.patientAnticipatedProblems.replace(/\n/g, '<br>') + preClose + '<br>';
 
         var messagePartIVA = '<h2>Photos</h2>';
         var messagePartIV = function(soapImages) {
@@ -368,7 +372,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
 	          var imgNumPlus = imgNum++;
             var captionIntroA = 'Image ' + imgNumPlus + ': ';
             var captionIntro = soapImages[i].imgCaption ? captionIntroA : captionIntroA + "No Caption Provided"
-            captions.push(captionIntro + soapImages[i].imgCaption + '</br>');
+            captions.push(captionIntro + soapImages[i].imgCaption + '<br>');
           }
           return captions.join("");
         }
@@ -376,6 +380,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
 
         return messagePartI + messagePartIIB(soapVitals) + messagePartIII + messagePartIVA + messagePartIV(soapImages);
       }
+      //console.log(runMessage(soapVitals))
 
 
      /*window.plugin.email.open({
@@ -388,7 +393,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
         isHtml:  true
      });*/
 
-     var soapSubject = 'Soap Note ' + soap.incidentDate + ' | ' + soap.patientAge + ', ' + soap.patientGender + ' | ' + soap.patientInitials,
+     var soapSubject = 'SOAP Note ' + soap.incidentDate + ' | ' + soap.patientAge + ', ' + soap.patientGender + ' | ' + soap.patientInitials,
          goTo = [''],bccArr = [];
 
 
@@ -642,7 +647,6 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
   if(typeof analytics !== "undefined") {analytics.trackView("SOAP IMAGES");}
   $scope.takeNewImg = function(imgDetail,type) {
     Camera.getNewImg(type,function(err,imgAttr){
-      console.log(imgAttr);
       Camera.updateImg("imageURI", imgDetail.id,imgAttr)
       updateImgFlag(imgDetail.id)
     })

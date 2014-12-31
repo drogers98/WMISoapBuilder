@@ -1,6 +1,6 @@
 <ion-view title="Add Photos">
 <ion-nav-buttons side="left">
-    <a class="button icon ion-ios7-arrow-back" href="#/tab/ap/{{soapImg.id}}">A & P</a>
+    <a class="button icon ion-ios7-arrow-back" style="white-space: nowrap !important" href="#/tab/ap/{{soapImg.id}}">A & P</a>
   </ion-nav-buttons>
 
   <ion-nav-buttons side="right">
@@ -18,7 +18,6 @@
     </a>
     <div class="item item-image">
       <img style="display:block" ng-src="{{img.imageURI}}">
-
       <textarea id="Camera.imgCaption" type="text" ng-model="img.imgCaption" ng-model-onblur ng-controller="SoapImgDetailCtrl" ng-change="addACaption(img,img.imgCaption,'imgCaption')" placeholder="Add a Caption" ng-keyup="expandText($event)" ng-keydown="expandText($event)>
     </div>
   </div>

@@ -1,6 +1,6 @@
 <ion-view title="{{soapReview.patientGender}}, {{soapReview.patientAge}} | {{soapReview.patientInitials}}">
 <ion-nav-buttons side="left">
-    <a class="button icon ion-ios7-arrow-back" href="#/tab/ap/{{soapReview.id}}">Back</a>
+    <a class="button icon ion-ios7-arrow-back" style="white-space: nowrap !important" href="#/tab/ap/{{soapReview.id}}">Back</a>
   </ion-nav-buttons>
 
   <ion-nav-buttons side="right">
@@ -177,10 +177,11 @@
           </div>
         </div>
       </div>
-
-<a class="button button-block button-light icon icon-right ion-app-share margin" ng-controller="SoapCtrl" ng-click="shareSOAP(soapReview,recentAllSoapReviewVitals,soapImgs)">Share This SOAP</a>
-
       </div>
+<div class="continueGroup">
+<a class="button continue button-light icon icon-right ion-app-share margin" ng-controller="SoapCtrl" ng-click="shareSOAP(soapReview,recentAllSoapReviewVitals,soapImgs)">Share This SOAP</a>
+</div>
+      
   </ion-content>
 
 </ion-view>

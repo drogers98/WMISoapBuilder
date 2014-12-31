@@ -1,7 +1,7 @@
 <ion-view title="Overview">
 
   <ion-nav-buttons side="left">
-    <a class="button icon ion-ios7-arrow-back" id="route" ng-hide="edit" ng-controller="SoapCtrl" ng-click="cancelSoap(soapOverview)">My SOAPs</a>
+    <a class="button icon ion-ios7-arrow-back" style="white-space: nowrap !important"id="route" ng-hide="edit" ng-controller="SoapCtrl" ng-click="cancelSoap(soapOverview)">My SOAPs</a>
     <a class="button icon ion-ios7-arrow-back" id="route" ng-show="edit" href="javascript: history.go(-1)">Cancel</a>
   </ion-nav-buttons>
 
@@ -10,8 +10,9 @@
   </ion-nav-buttons>
 
   <ion-content has-header="true" padding="false"has-bouncing="false">
-  <div class="SOAP">
-    <div class="list">
+<div class="SOAP">
+<div class="list">
+	    
   <h5>Date & Location<a ng-controller="SoapCtrl" ng-click="openModal(1)"><span>i</span></a></h5>
         <div class="titleParent">
           <h6>Date of Incident</h6>
@@ -65,12 +66,18 @@ autocorrect="off">
              <option style="display:none;" value="" selected>Please Choose</option>
            </select>
          </div>
+        </div>
+         
+
+</div>
+</div>
+
+<div class="continueGroup">
+<a class="button continue button-light icon-right ion-ios7-arrow-right" ng-click="continueToSubjective(soapOverview.id)">Continue to Subjective</a>
+<a class="button continue button-calm" href="#/review/{{soapOverview.id}}">Review SOAP Note</a>
+</div>
 
 
-       </div>
-     </div>
-<a class="button button-block button-light icon-right ion-ios7-arrow-right margin" ng-click="continueToSubjective(soapOverview.id)">Continue to Subjective</a>
-<a class="button button-block button-calm margin" href="#/review/{{soapOverview.id}}">Review SOAP Note</a>
-
+  
 </ion-content>
 </ion-view>

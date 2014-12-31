@@ -1,7 +1,7 @@
 <ion-view title="{{soapDetail.patientGender}}, {{soapDetail.patientAge}} | {{soapDetail.patientInitials}}">
 <ion-nav-buttons side="left">
 
-    <a class="button icon ion-ios7-arrow-back" href="#/soaps">My SOAPs</a>
+    <a class="button icon ion-ios7-arrow-back"  style="white-space: nowrap !important" href="#/soaps">My SOAPs</a>
   </ion-nav-buttons>
 
 
@@ -183,10 +183,11 @@
           </div>
         </div>
       </div>
-
-<a class="button button-block button-light icon icon-right ion-app-share margin" ng-controller="SoapCtrl" ng-click="shareSOAP(soapDetail,recentAllSoapDetailVitals,soapImgs)">Share This SOAP</a>
-
       </div>
+<div class="continueGroup">
+<a class="button continue button-light icon icon-right ion-app-share margin" ng-controller="SoapCtrl" ng-click="shareSOAP(soapDetail,recentAllSoapDetailVitals,soapImgs)">Share This SOAP</a>
+</div>
+      
   </ion-content>
 
 </ion-view>

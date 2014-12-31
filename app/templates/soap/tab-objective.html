@@ -151,10 +151,14 @@
            <textarea id="Soap.patientEventsForCause" type="text" placeholder="Cause?" ng-model="soapObjective.patientEventsForCause" ng-model-onblur custom-blur ng-change="monitorSoapObjectiveChange(soapObjective,soapObjective.patientEventsForCause,'patientEventsForCause')" ng-keyup="expandText($event)" ng-keydown="expandText($event)" ng-focus="expandText($event)"></textarea>
         </label>
       </div>
+      
+        </div>
     </div>
-  </div>
-      <a class="button button-block button-light icon-right ion-ios7-arrow-right margin last" href="#/tab/ap/{{soapObjective.id}}">Continue to Assessment & Plan</a>
-      <a class="button button-block button-calm margin" href="#/review/{{soapObjective.id}}">Review SOAP Note</a>
 
+     <div class="continueGroup">
+
+          <a class="button continue button-light icon icon-right ion-ios7-arrow-right" href="#/tab/ap/{{soapObjective.id}}">Continue to Assessment & Plan</a>
+           <a class="button continue button-calm" href="#/review/{{soapObjective.id}}">Review SOAP Note</a>
+     </div>
   </ion-content>
 </ion-view>
