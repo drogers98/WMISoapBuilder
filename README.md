@@ -4,6 +4,7 @@ WMISoapBuilder
 Soap Note builder Mobile App for NOLS - Wilderness Medicine Institute. ionic/Angular/WebSQL
 
 Environment Dependencies:
+Fully set up ios, and android environments needed. In addition:
 - node.js
 - Grunt.js
  - npm install -g grunt-cli
