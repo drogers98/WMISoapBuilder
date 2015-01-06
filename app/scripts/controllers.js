@@ -1,3 +1,6 @@
+//All Class methods called are on services
+//ToDo sep all controllers 
+
 'use strict';
 angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCordova'])
 .controller('MenuCtrl', function($scope,$state,$stateParams,$location,$ionicSideMenuDelegate) {
@@ -17,6 +20,8 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
   };
 })
 
+
+//Responder sign up
 .controller('FirstResponderCtrl', function($scope, $state, $location,$stateParams,$timeout,
   Responders, Soaps, Nols,uiState,$ionicPlatform, $cordovaDevice) {
     //Nols.cutLifeLine();
@@ -71,11 +76,12 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
 
   })
 
+
+//MAIN SOAP LOGIC
 .controller('SoapCtrl', function($scope, $state, $stateParams,
                                  $ionicModal, $timeout, $location,
                                  Soaps, Responders, Nols,$ionicPopup,$cordovaSocialSharing, $cordovaDevice){
   "use strict";
-
 
   Soaps.createSoapTable();
 
@@ -85,6 +91,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
       if($state.includes('soaps')){
       Soaps.getLast(function(err,lastSoap){
         if(lastSoap === null || lastSoap.starterFlag === 'true'){
+          //To avoid duplication
           Soaps.saveNewSoap({},{},function(err,starterSoap){
             if(typeof analytics !== "undefined"){
               analytics.trackEvent('Soap', 'Created')
@@ -115,9 +122,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
 
   $scope.onItemDelete = function(soap) {
 
-
     console.log($scope.$location.path());
-
 
     var confirmPopup = $ionicPopup.confirm({
        title: soap.incidentDate + ' | ' + soap.patientAge + ' , ' + soap.patientGender + ' | ' + soap.patientInitials,
@@ -144,14 +149,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
          }
        ]
      });
-    /* confirmPopup.then(function(res) {
-       if(res) {
-        Soaps.deleteSoap(.id);
-        $scope.soaps.splice($scope.soaps.indexOf(soap.id), 1)
-       } else {
-         return;
-       }
-     });*/
+
   }
 
  $scope.remove=function(item){
@@ -185,7 +183,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
   }
 
 
-  //Nols.cutLifeLine();
+  //Nols.cutLifeLine(); //will drop table
 
     $ionicModal.fromTemplateUrl()
 
@@ -210,7 +208,6 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
        $scope.oModal.hide();
      };
 
-
      //This is annoying in the logs....?
      $scope.$on('modal.shown', function(event, modal) {
        console.log('Modal ' + modal.id + ' is shown!');
@@ -220,23 +217,21 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
        console.log('Modal ' + modal.id + ' is hidden!');
      });
 
-     // Cleanup the modals when we're done with them (i.e: state change)
-     // Angular will broadcast a $destroy event just before tearing down a scope
-     // and removing the scope from its parent.
      $scope.$on('$destroy', function() {
        console.log('Destroying modals...');
        $scope.oModal.remove();
      });
- // end modals
 
+
+      //Email
      $scope.shareSOAP = function(soap,soapVitals,soapImages) {
-      
+
+      //Images
       var imgURIS = function(soapImages){
         var imageURIS = [];
         for(var i=0;i<soapImages.length;i++){
           var uri = soapImages[i].imageURI;
           imageURIS.push(uri);
-          //ToDo add captions => put img and caption in an array and cycle
         }
         return imageURIS;
       }
@@ -382,17 +377,6 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
       }
       //console.log(runMessage(soapVitals))
 
-
-     /*window.plugin.email.open({
-        to:      ['rogers@eyebytesolutions.com'],
-        cc:      ['vehr@eyebytesolutions.com'],
-        bcc:     [''],
-        subject: 'Soap Note: ' + soap.incidentDate + '|' + soap.patientAge + ',' + soap.patientGender + '|' + soap.patientInitials,
-        attachments: imgURIS(soapImages),
-        body:    runMessage(soapVitals),
-        isHtml:  true
-     });*/
-
      var soapSubject = 'SOAP Note ' + soap.incidentDate + ' | ' + soap.patientAge + ', ' + soap.patientGender + ' | ' + soap.patientInitials,
          goTo = [''],bccArr = [];
 
@@ -400,9 +384,11 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
     Soaps.sendEmail(runMessage(soapVitals),soapSubject,goTo,bccArr,imgURIS(soapImages),function(soapEmailSuccess){
         if(typeof analytics !== "undefined"){analytics.trackEvent('Email','Sent');}
 
+        //Handle email end;
+        //todo if/when possible - distiniguish between cancel and sending email drafts
         var confirmPopup = $ionicPopup.confirm({
           title: 'Where would you like to go?',
-       template: 'You can stay on the review page or go to My SOAPs',
+          template: 'You can stay on the review page or go to My SOAPs',
           buttons: [
             {
               text: 'Review',
@@ -422,8 +408,6 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
         })
      })
  }
-
-
 
 })
 
@@ -556,41 +540,7 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
           return $scope.starterVital = starterVital;
         })
       }
-      //WOW YOU COULD JUST CHECK AGAINST THE SOAPS VITALS AND NOT ALL VITALS MAYBE
-      //PROPER LOGIC ON THIS IS GOING TO BE GO THROUGH ALL VITALS
-      //LOOP THROUGH ARRAY
-      /*BECAUSE WHAT HAPPENS WHEN YOU HAVE THIS SCENERIO
-        id = 1 - flag = false
-        id = 2 - flag = false
-        id = 3 - flag = false
-        id = 4 - flag = false
-        if you're checking only against the last you could save same soaps with multiple false flag
-      */
-      /*Vitals.getLast(function(err,lastVital){
-        if(lastVital === null || lastVital.starterFlag === 'true'){
-          Vitals.saveNewVital({},soapObjective.id, function(err,starterVital){
-            $scope.starterVital = starterVital;
-            console.log('called if')
-            console.log(starterVital)
-          })
-        }else if(lastVital.starterFlag === 'false' && lastVital.soapId !== soapObjective.id){
-          $scope.findMatchVitalSet = $scope.recentSoapVitals.filter(function(entry){return entry.soapId === lastVital.soapId})
-          if($scope.findMatchVitalSet) {
-            console.log($scope.findMatchVitalSet);
-            $scope.starterVital = $scope.findMatchVitalSet;
-          }else {
-            Vitals.saveNewVital({},soapObjective.id, function(err,starterVital){
-              console.log('called else if')
-              console.log(starterVital)
-              $scope.starterVital = starterVital;
-            })
-          }
-        }else {
-          console.log('called else')
-          console.log(lastVital)
-          $scope.starterVital = lastVital;
-        }
-      })*/
+
     })
   })
 
@@ -717,21 +667,6 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
 
   })
 
-/*  $scope.takeNewImg = function() {
-    Soaps.get($stateParams.soapId, function(err,soapImg){
-      Camera.getNewImg(function(err,imgAttr){
-        Camera.saveNewImg(imgAttr, soapImg);
-      })
-    })
-  }
-
-  $scope.addACaption = function(img,imgVal,attrElem) {
-    var kindElem = attrElem,kindId = img.id,kindVal = imgVal;
-    Camera.updateImg(kindElem,kindId,kindVal);
-  }
-
-
-*/
 })
 
 .controller('SoapDetailCtrl', function($scope,$state,$stateParams,Soaps,Responders,Vitals,Camera,Nols){
@@ -909,99 +844,6 @@ angular.module('WMISoapBuilder.controllers', ['angular-websql', 'debounce','ngCo
 
 
 })
-
-/*
-
-  //$scope.dt = new Date();
-
-//modals. DRY up, and seperate templates later.
- // Modal 1
-    $ionicModal.fromTemplateUrl('modal-1.html', {
-      id: '1', // We need to use and ID to identify the modal that is firing the event!
-      scope: $scope,
-      animation: 'slide-in-up'
-    }).then(function(modal) {
-      $scope.oModal1 = modal;
-    });
-
-    // Modal 2
-    $ionicModal.fromTemplateUrl('modal-2.html', {
-      id: '2', // We need to use and ID to identify the modal that is firing the event!
-      scope: $scope,
-      animation: 'slide-in-up'
-    }).then(function(modal) {
-      $scope.oModal2 = modal;
-    });
-
-        // Modal 3
-    $ionicModal.fromTemplateUrl('modal-3.html', {
-      id: '3', // We need to use and ID to identify the modal that is firing the event!
-      scope: $scope,
-      animation: 'slide-in-up'
-    }).then(function(modal) {
-      $scope.oModal3 = modal;
-    });
-
-            // Modal 4
-    $ionicModal.fromTemplateUrl('modal-4.html', {
-      id: '4', // We need to use and ID to identify the modal that is firing the event!
-      scope: $scope,
-      animation: 'slide-in-up'
-    }).then(function(modal) {
-      $scope.oModal4 = modal;
-    });
-
-                // Modal 5
-    $ionicModal.fromTemplateUrl('modal-5.html', {
-      id: '5', // We need to use and ID to identify the modal that is firing the event!
-      scope: $scope,
-      animation: 'slide-in-up'
-    }).then(function(modal) {
-      $scope.oModal5 = modal;
-    });
-
-    $scope.openModal = function(index) {
-      if(index == 1) $scope.oModal1.show();
-      if(index == 2) $scope.oModal2.show();
-      if(index == 3) $scope.oModal3.show();
-      if(index == 4) $scope.oModal4.show();
-      if(index == 5) $scope.oModal5.show();
-
-    };
-
-    $scope.closeModal = function(index) {
-      if(index == 1) $scope.oModal1.hide();
-      if(index == 2) $scope.oModal2.hide();
-      if(index == 3) $scope.oModal3.hide();
-      if(index == 4) $scope.oModal4.hide();
-      if(index == 5) $scope.oModal5.hide();
-
-    };
-
-    $scope.$on('modal.shown', function(event, modal) {
-      console.log('Modal ' + modal.id + ' is shown!');
-    });
-
-    $scope.$on('modal.hidden', function(event, modal) {
-      console.log('Modal ' + modal.id + ' is hidden!');
-    });
-
-    // Cleanup the modals when we're done with them (i.e: state change)
-    // Angular will broadcast a $destroy event just before tearing down a scope
-    // and removing the scope from its parent.
-    $scope.$on('$destroy', function() {
-      console.log('Destroying modals...');
-      $scope.oModal1.remove();
-      $scope.oModal2.remove();
-      $scope.oModal3.remove();
-      $scope.oModal4.remove();
-      $scope.oModal5.remove();
-    });
-// end modals
-
-})*/
-
-// coundown controls.
 
 .controller('VitalEditCtrl', function($scope,$state,$stateParams,$timeout,$ionicPopup,Vitals){
   Vitals.get($stateParams.vitalId, function(err,vitalEdit){

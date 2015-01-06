@@ -608,7 +608,7 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce', 'ngCord
     },
     getNewImg: function(type,callback){
       var getType = type === 'lib' ? Camera.PictureSourceType.PHOTOLIBRARY : Camera.PictureSourceType.CAMERA
-      var getQuality = type === 'lib' ? 90 : 60 
+      var getQuality = type === 'lib' ? 90 : 60
       var save = type === 'lib' ? false : true
 
       var optionIOS = {
@@ -622,7 +622,7 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce', 'ngCord
         correctOrientation: true,
         saveToPhotoAlbum: save
       };
-      
+
       var optionANDROID = {
         quality: getQuality,
         destinationType : Camera.DestinationType.FILE_URI,
@@ -641,22 +641,22 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce', 'ngCord
       $cordovaCamera.getPicture(optionParam()).then(function(imgData){
         if(imgData.substring(0,21)=="content://com.android"){
          var photo_split = imgData.split("%3A");
-   	 imgData = "content://media/external/images/media/"+photo_split[1]
+   	     imgData = "content://media/external/images/media/"+photo_split[1]
         }
-        
+
         window.resolveLocalFileSystemURL(imgData, wmiImgSuccess, fail);
 
         function wmiImgSuccess(fileEntry) {
           var image = imgData.substr(imgData.lastIndexOf('/') + 1)
           var extension;
-    	  if(imgData.indexOf('content://') != -1) {
-	    if(imgData.lastIndexOf('.') > imgData.lastIndexOf('/')){
-   	      extension = imgData.substr(imgData.lastIndexOf('.') + 1);
-	    }else{
- 	       extension = "jpg";
-	       image = image + ".jpg"
-	     }
-	  }
+    	    if(imgData.indexOf('content://') != -1) {
+	           if(imgData.lastIndexOf('.') > imgData.lastIndexOf('/')){
+   	           extension = imgData.substr(imgData.lastIndexOf('.') + 1);
+	           }else{
+ 	            extension = "jpg";
+	            image = image + ".jpg"
+	           }
+	          }
 
           window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSys) {
             fileSys.root.getDirectory("photos", {create: true, exclusive: false}, function(dir) {
@@ -690,10 +690,6 @@ angular.module('WMISoapBuilder.services', ['angular-websql', 'debounce', 'ngCord
     saveNewImg: function(imgAttr,soapAttr,callback){
       return nolsDB.saveImg(imgAttr,soapAttr,callback);
     },
-    /*
-    saveNewImg: function(imgPath,soap){
-      return nolsDB.saveImg(imgPath,soap);
-    },*/
     updateImg: function(imgEl,imgId,imgVal){
       var imgAttr = {};
       imgAttr[imgEl] = imgVal;
