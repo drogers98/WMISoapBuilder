@@ -51,4 +51,4 @@ Compiling release version for android:
 - delete any old version of SOAPNotes.apk, if present. Otherwise the following will fail.
 - /Users/EBSrockyMtn/Development/adt-bundle-mac-x86_64-20140702/sdk/build-tools/21.1.1/zipalign -v 4 SOAPNotes-release-unsigned.apk SOAPNotes.apk
 
-Hinges on the keystore. Needs to be the same! Password: Rogers200!!!
+
