@@ -7,16 +7,16 @@ Environment Dependencies:
 Fully set up ios, and android environments needed. In addition:
 - node.js
 - Grunt.js
- - npm install -g grunt-cli
- - npm install
+   - npm install -g grunt-cli
+   - npm install
 - Bower.js
- - npm install -g bower
- - bower install
+   - npm install -g bower
+   - bower install
 - Compass 
- - gem install compass
+   - gem install compass
 - Cordova
- - npm install cordova
- - npm update -g cordova
+   - npm install cordova
+   - npm update -g cordova
  
 Install:
 - git clone https://github.com/EyeByteSolutions/WMISoapBuilder.git
