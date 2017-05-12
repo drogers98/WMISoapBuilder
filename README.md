@@ -23,6 +23,8 @@ Install:
 - cd WMISoapBuilder
 - npm install
 - bower install
+- mkdir platforms
+- chmod 777 platforms
 - grunt build
 - grunt platform:add:ios
 - grunt platform:add:android
